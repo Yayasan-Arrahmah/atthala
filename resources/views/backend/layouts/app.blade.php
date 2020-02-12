@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', app_name())</title>
-    <meta name="description" content="@yield('meta_description', 'Laravel 5 Boilerplate')">
+    <meta name="description" content="@yield('meta_description', 'Ar-Rahmah Balikpapan')">
     <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
     @yield('meta')
 
@@ -23,6 +23,27 @@
     <style>
     .card {
         border-radius: .45rem;
+    }
+    .sidebar .nav-link:hover {
+        color: #fff;
+        background: rgb(83, 163, 28);
+    }
+
+    .sidebar .nav-link.active .nav-icon {
+        color: rgb(83, 163, 28);
+    }
+
+    a {
+        color: rgb(83, 163, 28);
+    }
+
+    .switch-primary .switch-input:checked+.switch-slider {
+        background-color: rgb(83, 163, 28);
+        border-color: rgb(83, 163, 28);
+    }
+
+    .switch-primary .switch-input:checked+.switch-slider:before {
+        border-color: rgb(83, 163, 28);
     }
     </style>
 
