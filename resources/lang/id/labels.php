@@ -27,6 +27,7 @@ return [
         'inactive' => 'Non-aktif',
         'none' => 'Tidak ada',
         'show' => 'Tunjukkan',
+        'more' => 'Lainnya',
         'toggle_navigation' => 'Alihkan Navigasi',
     ],
 
@@ -72,6 +73,9 @@ return [
                     'roles' => 'Peran',
                     'social' => 'Social',
                     'total' => 'total pengguna|total pengguna',
+                    'last_name' => 'Username',
+                    'first_name' => 'Nama',
+                    'other_permissions' => 'Akses Lain',
                 ],
 
                 'tabs' => [

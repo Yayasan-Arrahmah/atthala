@@ -22,7 +22,7 @@
 
         <style>
         body{
-            background-color: gray;
+            background-image: url('img/back.jpeg');
         }
         .card {
             border-radius: .45rem;

@@ -16,7 +16,13 @@
             <li class="nav-title">
                 Tahsin
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/jadwals/upload')) }} "
+                href="{{ route('admin.jadwals.upload') }}
+                " > <i class="nav-icon fas fa-list-alt"></i>
+                Upload
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/peserta')) }} "
                 {{-- href="{{ route('admin.dashboard') }} --}}

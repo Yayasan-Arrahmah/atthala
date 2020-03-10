@@ -58,7 +58,9 @@
 						</div><!--col-->
 					</div><!--row-->
 				</div><!--card body-->
-			</div><!--card-->
+            </div><!--card-->
+            <center style="color: #fff">Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
+
 		</div><!-- col-md-8 -->
 	</div><!-- row -->
 @endsection

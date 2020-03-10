@@ -45,6 +45,19 @@
     .switch-primary .switch-input:checked+.switch-slider:before {
         border-color: rgb(83, 163, 28);
     }
+
+    .table td, .table th {
+        vertical-align: inherit;
+    }
+
+    .card-header:first-child {
+        border-top: 1px solid #c8ced3;
+    }
+
+    .form-control-label {
+        padding-top: calc(0.375rem + 1px);
+    }
+
     </style>
 
     @stack('after-styles')
@@ -83,6 +96,14 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+
+    <script>
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>
+
     @stack('after-scripts')
 </body>
 </html>
