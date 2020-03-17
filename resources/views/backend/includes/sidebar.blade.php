@@ -17,36 +17,36 @@
                 Tahsin
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/jadwals/upload')) }} "
-                href="{{ route('admin.jadwals.upload') }}
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/upload')) }} "
+                href="{{ route('admin.tahsins.upload') }}
                 " > <i class="nav-icon fas fa-list-alt"></i>
                 Upload
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/peserta')) }} "
-                {{-- href="{{ route('admin.dashboard') }} --}}
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin')) }} "
+                href="{{ route('admin.tahsins.index') }}
                 " > <i class="nav-icon fas fa-users"></i>
                 Peserta
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/jadwal')) }} "
-                {{-- href="{{ route('admin.dashboard') }} --}}
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal')) }} "
+                href="{{ route('admin.tahsins.jadwal') }}
                 " > <i class="nav-icon fas fa-list-alt"></i>
                 Jadwal
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/pengajar')) }} "
-                {{-- href="{{ route('admin.dashboard') }} --}}
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengajar')) }} "
+                href="{{ route('admin.tahsins.pengajar') }}
                 " > <i class="nav-icon fas fa-user-md"></i>
                 Pengajar
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/pengaturan')) }} "
-                {{-- href="{{ route('admin.dashboard') }} --}}
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengaturan')) }} "
+                {{-- href="{{ route('admin.tahsins.pengaturan') }} --}}
                 " > <i class="nav-icon fas fa-cog"></i>
                 Pengaturan
                 </a>

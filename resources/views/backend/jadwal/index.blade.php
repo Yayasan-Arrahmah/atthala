@@ -34,6 +34,11 @@
                 </a>
             </div><!--col-->
         </div><!--row-->
+        {{-- {{ $duplicates }} --}}
+        @foreach($duplicates as $data)
+            {{ $data->jadwal_tahsin }}, {{ $data->level_peserta }}, {{ $data->nama_pengajar }} -
+            {{ $data->jumlah }} <br>
+        @endforeach
 
         <div class="row mt-4">
             <div class="col">

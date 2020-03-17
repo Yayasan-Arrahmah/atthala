@@ -60,6 +60,8 @@
 
     </style>
 
+    {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+
     @stack('after-styles')
 </head>
 
@@ -97,11 +99,121 @@
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
 
+    {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
+    {!! script('//cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js') !!}
+
     <script>
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+    </script>
+
+    <script>
+        $(document).ready( function () {
+            $('#pengajartahsin').DataTable({
+                "pageLength": 15,
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column( 2 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    total2 = api
+                        .column( 3 )
+                        .data()
+                        .reduce( function (c, d) {
+                            return intVal(c) + intVal(d);
+                        }, 0 );
+
+                    // Total over this page
+                    pageTotal = api
+                        .column( 2, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    pageTotal2 = api
+                        .column( 3, { page: 'current'} )
+                        .data()
+                        .reduce( function (c, d) {
+                            return intVal(c) + intVal(d);
+                        }, 0 );
+
+                    // Update footer
+                    $( api.column( 2 ).footer() ).html(
+                        pageTotal +' ( Total : '+ total +' )'
+                    );
+                    $( api.column( 3 ).footer() ).html(
+                        pageTotal2 +' ( Total : '+ total2 +' )'
+                    );
+                }
+            });
+
+            $('#jadwaltahsin thead tr').clone(true).appendTo( '#jadwaltahsin thead' );
+            $('#jadwaltahsin thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                $(this).html( '<input type="text" placeholder="Cari '+title+'" />' );
+
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+            var table = $('#jadwaltahsin').DataTable({
+                "pageLength": 15,
+                "orderCellsTop": true,
+                "fixedHeader": true,
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column( 3 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Total over this page
+                    pageTotal = api
+                        .column( 3, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Update footer
+                    $( api.column( 3 ).footer() ).html(
+                        pageTotal +' ( Total : '+ total +' )'
+                    );
+                }
+            });
+        } );
     </script>
 
     @stack('after-scripts')

@@ -29,7 +29,8 @@
         "spatie/laravel-html": "^2.4",
         "spatie/laravel-permission": "^2.36",
         "torann/geoip": "^1.0",
-        "webpatser/laravel-uuid": "^3.0"
+        "webpatser/laravel-uuid": "^3.0",
+        "yajra/laravel-datatables-oracle": "^9.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

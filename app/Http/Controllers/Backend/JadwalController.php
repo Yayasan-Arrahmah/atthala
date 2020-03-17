@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Webpatser\Uuid\Uuid;
 use App\Imports\JadwalsImport;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Jadwal;
 use App\Repositories\Backend\JadwalRepository;
@@ -48,7 +49,16 @@ class JadwalController extends Controller
      */
     public function index(ManageJadwalRequest $request)
     {
-        return view('backend.jadwal.index')
+        // $duplicates = collect(DB::table('jadwals')->select('nohp_peserta')->get());
+        $duplicates = DB::table('jadwals')
+                            ->where('angkatan_peserta', '15')
+                            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar',(DB::raw('COUNT(*) as jumlah')))
+                            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar')
+                            ->havingRaw(DB::raw('COUNT(*) > 0'))
+                            ->get();
+
+
+        return view('backend.jadwal.index', compact('duplicates'))
             ->withjadwals($this->jadwalRepository->getActivePaginated(25, 'id', 'asc'));
     }
 
@@ -58,7 +68,8 @@ class JadwalController extends Controller
             ->withjadwals($this->jadwalRepository->getActivePaginated(25, 'id', 'asc'));
     }
 
-    public function import(Request $request){
+    public function import(Request $request)
+    {
 
         //buat session untuk ngakalin ngirim data
         $jenispeserta     = request('jenispeserta');
@@ -96,8 +107,6 @@ class JadwalController extends Controller
         } else {
             return redirect()->route('admin.jadwals.upload')->withFlashSuccess('Upload Gagal');
         }
-
-
     }
 
     /**
