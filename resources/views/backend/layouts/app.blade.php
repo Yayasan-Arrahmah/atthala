@@ -58,6 +58,12 @@
         padding-top: calc(0.375rem + 1px);
     }
 
+    .collapsing {
+        -webkit-transition: none;
+        transition: none;
+        display: none;
+    }
+
     </style>
 
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
@@ -113,6 +119,7 @@
         $(document).ready( function () {
             $('#pengajartahsin').DataTable({
                 "pageLength": 15,
+                "scrollX": true,
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api(), data;
 
@@ -154,10 +161,10 @@
 
                     // Update footer
                     $( api.column( 2 ).footer() ).html(
-                        pageTotal +' ( Total : '+ total +' )'
+                        pageTotal +' ( Total : '+ total +' ) Kelas'
                     );
                     $( api.column( 3 ).footer() ).html(
-                        pageTotal2 +' ( Total : '+ total2 +' )'
+                        pageTotal2 +' ( Total : '+ total2 +' ) Peserta'
                     );
                 }
             });
@@ -178,6 +185,7 @@
             } );
             var table = $('#jadwaltahsin').DataTable({
                 "pageLength": 15,
+                "scrollX": true,
                 "orderCellsTop": true,
                 "fixedHeader": true,
                 "footerCallback": function ( row, data, start, end, display ) {
@@ -209,7 +217,7 @@
 
                     // Update footer
                     $( api.column( 3 ).footer() ).html(
-                        pageTotal +' ( Total : '+ total +' )'
+                        pageTotal +' ( Total : '+ total +' ) Peserta'
                     );
                 }
             });

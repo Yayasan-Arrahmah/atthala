@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | Jadwal Peserta Tahsin')
+@section('title', app_name() . ' | Peserta ' . __('backend_tahsins.labels.management'))
 
 @section('breadcrumb-links')
     @include('backend.tahsin.includes.breadcrumb-links')
@@ -8,32 +8,46 @@
 
 @section('content')
 <div class="card">
+    @include('backend.tahsin.includes.cari')
+</div>
+
+<div class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Jadwal Tahsin<small class="text-muted"> - Angkatan 15</small>
+                    Peserta Tahsin<small class="text-muted"> - Angkatan 15</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
+                @include('backend.tahsin.includes.header-buttons')
+                <a href=" {{ url()->current() }}/upload" >
+                    <button class="float-right btn btn-info">
+                        <i class="fa fa-upload"></i> Upload Excel
+                    </button>
+                </a>
             </div><!--col-->
         </div><!--row-->
 
         <div class="row mt-4">
             <div class="col">
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">
-                    <table class="table display compact nowarp" id="jadwaltahsin" style="width:100%">
-                        <thead>
+                    <table class="table">
+                        <thead class="thead-light">
                             <tr>
-                                {{-- <th class="text-center">No</th> --}}
-                                <th class="text-center">Jadwal</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Nama</th>
                                 <th class="text-center">Level</th>
+                                <th class="text-center">Jadwal</th>
                                 <th class="text-center">Pengajar</th>
-                                <th class="text-center">Jumlah Peserta</th>
                                 <th class="text-center">Jenis</th>
+                                <th class="text-center">Keterangan</th>
+                                <th class="text-center">Daftar Ulang</th>
+                                <th class="text-center">Angkatan</th>
+                                <th width="100" class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,15 +56,18 @@
                             $end    = 0;
                             $number = 1;
                             @endphp
-                            @foreach($datajadwals as $key=> $tahsin)
+                            @foreach($tahsins as $key=> $tahsin)
                             <tr>
-                                {{-- <td class="text-center" >
-                                    {{ $key + $datajadwals->firstItem() }}
-                                </td> --}}
+                                <td class="text-center" >
+                                    {{ $key + $tahsins->firstItem() }}
+                                </td>
                                 <td>
-                                    <div class="text-center">
-                                        <strong>{{ $tahsin->jadwal_tahsin }}</strong>
-                                    </div>
+                                    <a href="/admin/tahsin/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
+                                        <div style="text-transform: uppercase;">{{ $tahsin->nama_peserta }}</div>
+                                        <div class="small text-muted">
+                                            {{ $tahsin->nohp_peserta }}
+                                        </div>
+                                    </a>
                                 </td>
                                 <td class="text-center">
                                     @php
@@ -87,12 +104,15 @@
                                     @endif
                                 </td>
                                 <td>
+                                    {{-- <div>SABTU 07.00</div> --}}
+                                    <div class="text-center">
+                                        <strong>{{ $tahsin->jadwal_tahsin }}</strong>
+                                    </div>
+                                </td>
+                                <td>
                                     <div class="text-center">
                                         <div>{{ $tahsin->nama_pengajar }}</div>
                                     </div>
-                                </td>
-                                <td class="text-center" style="font-weight: bold;">
-                                        {{ $tahsin->jumlah }}
                                 </td>
                                 <td>
                                     @if ($tahsin->jenis_peserta == 'IKHWAN')
@@ -109,20 +129,37 @@
                                         </div>
                                     @endif
                                 </td>
+                                <td>
+                                    <div lass="text-center" style="color: #73818f!important;">
+                                        {{ $tahsin->keterangan_tahsin }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-center">
+                                        {{ $tahsin->sudah_daftar_tahsin }}
+                                        {{ $tahsin->belum_daftar_tahsin }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-center">
+                                        {{ $tahsin->angkatan_peserta }}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{-- <button class="btn btn-danger  btn-sm"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-success  btn-sm"><i class="fa fa-pen"></i></button> --}}
+                                    <div class="text-center">
+                                        {!! $tahsin->action_buttons !!}
+                                    </div>
+                                </td>
                             </tr>
                             @php
-                            $first  = $datajadwals->firstItem();
-                            $end    = $key + $datajadwals->firstItem();
+                            $first  = $tahsins->firstItem();
+                            $end    = $key + $tahsins->firstItem();
                             @endphp
                             @endforeach
 
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th colspan="4" style="text-align:right">Total:</th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div><!--col-->
@@ -130,13 +167,16 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {{-- {!! $first !!} - {!! $end !!} Dari {!! $datajadwals->total() !!} Data --}}
+                    {{-- {!! $tahsins->count() !!} {{ trans_choice('backend_tahsins.table.total', $tahsins->count()) }} --}}
+
+                    {!! $first !!} - {!! $end !!} Dari {!! $tahsins->total() !!} Data
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right">
-                    {{-- {!! $datajadwals->appends(request()->query())->links() !!} --}}
+                    {{-- {!! $tahsins->links() !!} --}}
+                    {!! $tahsins->appends(request()->query())->links() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->

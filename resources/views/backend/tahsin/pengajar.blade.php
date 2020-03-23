@@ -11,6 +11,7 @@
 @stack('after-styles')
 
 @section('content')
+
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -30,11 +31,11 @@
         <div class="row mt-4">
             <div class="col">
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">
-                    <table class="table display compact" id="pengajartahsin">
+                    <table class="table display compact nowarp" id="pengajartahsin" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Pengajar</th>
+                                <th class="text-center" width="350">Pengajar</th>
                                 <th class="text-center">Jumlah Kelas</th>
                                 <th class="text-center">Jumlah Peserta</th>
                                 <th class="text-center">Jenis</th>
@@ -45,25 +46,31 @@
                             $first  = 0;
                             $end    = 0;
                             $number = 1;
+                            $n = 1;
                             @endphp
                             @foreach($datapengajars as $key=> $tahsin)
+
+                            @php
+                            $kelas = DB::table('jadwals')
+                                    ->where('nama_pengajar', $tahsin->nama_pengajar)
+                                    ->select('jadwal_tahsin', (DB::raw('COUNT(*) as jumlahkelas ')))
+                                    ->groupBy('jadwal_tahsin')
+                                    ->havingRaw(DB::raw('COUNT(*) > 0'))
+                                    ->get();
+                            @endphp
+
                             <tr>
                                 <td class="text-center" >
                                     {{ $key + $datapengajars->firstItem() }}
                                 </td>
                                 <td>
-                                    <div class="text-center">
-                                        <div>{{ $tahsin->nama_pengajar }}</div>
+                                    <a data-toggle="collapse" href="#detail{{ $number }}" aria-expanded="false" style="padding-left: 15px">{{ $tahsin->nama_pengajar }}</a>
+                                    <div class="collapse" id="detail{{ $number }}" style="padding: 5px 0 5px 15px">
+                                        @foreach($kelas as $jadwal)
+                                          {{ $n++ }}.  {{ $jadwal->jadwal_tahsin }} = {{ $jadwal->jumlahkelas }} Peserta<br>
+                                        @endforeach
                                     </div>
                                 </td>
-                                @php
-                                    $kelas = DB::table('jadwals')
-                                            ->where('nama_pengajar', $tahsin->nama_pengajar)
-                                            ->select('jadwal_tahsin', (DB::raw('COUNT(*) as jumlahkelas ')))
-                                            ->groupBy('jadwal_tahsin')
-                                            ->havingRaw(DB::raw('COUNT(*) > 0'))
-                                            ->get();
-                                @endphp
                                 <td class="text-center" style="font-weight: bold;">
                                     {{ count($kelas) }}
                                 </td>
@@ -87,6 +94,8 @@
                                 </td>
                             </tr>
                             @php
+                            $number++;
+                            $n = 1;
                             $first  = $datapengajars->firstItem();
                             $end    = $key + $datapengajars->firstItem();
                             @endphp

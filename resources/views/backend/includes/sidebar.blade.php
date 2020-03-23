@@ -19,7 +19,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/upload')) }} "
                 href="{{ route('admin.tahsins.upload') }}
-                " > <i class="nav-icon fas fa-list-alt"></i>
+                " > <i class="nav-icon fas fa-upload"></i>
                 Upload
                 </a>
             </li>
@@ -42,6 +42,13 @@
                 href="{{ route('admin.tahsins.pengajar') }}
                 " > <i class="nav-icon fas fa-user-md"></i>
                 Pengajar
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengajar')) }} "
+                {{-- href="{{ route('admin.tahsins.pengajar') }} --}}
+                " > <i class="nav-icon fas fa-list"></i>
+                Pembayaran
                 </a>
             </li>
             <li class="nav-item">
