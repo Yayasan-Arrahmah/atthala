@@ -45,9 +45,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengajar')) }} "
-                {{-- href="{{ route('admin.tahsins.pengajar') }} --}}
-                " > <i class="nav-icon fas fa-list"></i>
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pembayaran')) }} "
+                href="{{ route('admin.tahsins.pembayaran') }}
+                " > <i class="nav-icon fas fa-credit-card"></i>
                 Pembayaran
                 </a>
             </li>

@@ -19,6 +19,8 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get(	'import', 	[TahsinController::class, 'import']	)->name('tahsins.import');
     Route::get(	'jadwal', 	[TahsinController::class, 'jadwal']	)->name('tahsins.jadwal');
     Route::get(	'pengajar', [TahsinController::class, 'pengajar']	)->name('tahsins.pengajar');
+    Route::get(	'pembayaran', [TahsinController::class, 'pembayaran']	)->name('tahsins.pembayaran');
+    Route::post('createbayar', [TahsinController::class, 'createbayar']	)->name('tahsins.createbayar');
 });
 
 Route::group(['prefix' => 'tahsins/{tahsin}'], function () {

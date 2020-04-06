@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exceptions\GeneralException;
+use App\Models\Pembayaran;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Excel;
 
@@ -45,6 +47,7 @@ class TahsinController extends Controller
      */
     public function index(ManageTahsinRequest $request)
     {
+
         return view('backend.tahsin.index')
             ->withtahsins($this->tahsinRepository->getActivePaginated(50, 'id', 'desc'));
     }
@@ -57,7 +60,7 @@ class TahsinController extends Controller
 
     public function jadwal(ManageTahsinRequest $request)
     {
-        $datajadwals = DB::table('jadwals')
+        $datajadwals = DB::table('tahsins')
                         ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta',(DB::raw('COUNT(*) as jumlah ')))
                         ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
                         ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
@@ -68,7 +71,7 @@ class TahsinController extends Controller
 
     public function pengajar(ManageTahsinRequest $request)
     {
-        $datapengajars = DB::table('jadwals')
+        $datapengajars = DB::table('tahsins')
                         ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                         ->groupBy('nama_pengajar', 'jenis_peserta' )
                         ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
@@ -116,6 +119,29 @@ class TahsinController extends Controller
         } else {
             return redirect()->route('admin.tahsins.upload')->withFlashSuccess('Upload Gagal');
         }
+    }
+
+    public function pembayaran(ManageTahsinRequest $request)
+    {
+        return view('backend.tahsin.pembayaran')
+            ->withtahsins($this->tahsinRepository->getActivePaginated(50, 'id', 'desc'));
+    }
+
+    public function createbayar(Request $request)
+    {
+        $nominal = preg_replace("/[^0-9]/", "", $request->nominalpembayaran);
+
+        $pembayaran = new Pembayaran;
+
+        $pembayaran->uuid_pembayaran    = $request->uuidpembayaran;
+        $pembayaran->nominal_pembayaran = (int)$nominal;
+        $pembayaran->jenis_pembayaran   = $request->jenispembayaran;
+        $pembayaran->admin_pembayaran   = Auth::user()->email;
+
+        $pembayaran->save();
+
+        return redirect()->route('admin.tahsins.pembayaran')
+        ->withFlashSuccess('Pembayaran Atas Nama : <br>'.$request->namapembayaran.'<br>Dengan Nominal '.$request->nominalpembayaran.'<br><strong>Berhasil</strong>');
     }
 
     /**

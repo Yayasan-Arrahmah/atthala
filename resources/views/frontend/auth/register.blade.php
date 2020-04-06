@@ -17,11 +17,11 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    {{ html()->label(__('validation.attributes.frontend.first_name'))->for('first_name') }}
+                                    {{ html()->label('Nama Lengkap')->for('first_name') }}
 
                                     {{ html()->text('first_name')
                                         ->class('form-control')
-                                        ->placeholder(__('validation.attributes.frontend.first_name'))
+                                        ->placeholder('Nama Lengkap')
                                         ->attribute('maxlength', 191)
                                         ->required()}}
                                 </div><!--col-->
@@ -29,11 +29,11 @@
 
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    {{ html()->label(__('validation.attributes.frontend.last_name'))->for('last_name') }}
+                                    {{ html()->label('Divisi')->for('last_name') }}
 
                                     {{ html()->text('last_name')
                                         ->class('form-control')
-                                        ->placeholder(__('validation.attributes.frontend.last_name'))
+                                        ->placeholder('Divisi')
                                         ->attribute('maxlength', 191)
                                         ->required() }}
                                 </div><!--form-group-->

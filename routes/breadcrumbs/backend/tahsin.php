@@ -40,3 +40,12 @@ Breadcrumbs::for('admin.tahsins.pengajar', function ($trail) {
     $trail->push('Pengajar', route('admin.tahsins.pengajar'));
 });
 
+Breadcrumbs::for('admin.tahsins.pembayaran', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Pembayaran', route('admin.tahsins.pembayaran'));
+});
+
+Breadcrumbs::for('admin.tahsins.createbayar', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('createbayar', route('admin.tahsins.createbayar'));
+});

@@ -9,3 +9,4 @@ require __DIR__.'/log-viewer.php';
 
 require __DIR__.'/jadwal.php';
 require __DIR__.'/tahsin.php';
+require __DIR__.'/pembayaran.php';

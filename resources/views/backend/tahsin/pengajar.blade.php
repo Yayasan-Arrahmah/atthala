@@ -51,7 +51,7 @@
                             @foreach($datapengajars as $key=> $tahsin)
 
                             @php
-                            $kelas = DB::table('jadwals')
+                            $kelas = DB::table('tahsins')
                                     ->where('nama_pengajar', $tahsin->nama_pengajar)
                                     ->select('jadwal_tahsin', (DB::raw('COUNT(*) as jumlahkelas ')))
                                     ->groupBy('jadwal_tahsin')
@@ -67,7 +67,7 @@
                                     <a data-toggle="collapse" href="#detail{{ $number }}" aria-expanded="false" style="padding-left: 15px">{{ $tahsin->nama_pengajar }}</a>
                                     <div class="collapse" id="detail{{ $number }}" style="padding: 5px 0 5px 15px">
                                         @foreach($kelas as $jadwal)
-                                          {{ $n++ }}.  {{ $jadwal->jadwal_tahsin }} = {{ $jadwal->jumlahkelas }} Peserta<br>
+                                        {{ $n++ }}.  {{ $jadwal->jadwal_tahsin }} = {{ $jadwal->jumlahkelas }} Peserta<br>
                                         @endforeach
                                     </div>
                                 </td>

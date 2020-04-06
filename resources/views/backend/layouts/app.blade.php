@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', app_name())</title>
     <meta name="description" content="@yield('meta_description', 'Ar-Rahmah Balikpapan')">
-    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
+    <meta name="author" content="@yield('meta_author', 'rimbaborne')">
     @yield('meta')
 
     {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
@@ -23,6 +23,8 @@
     <style>
     .card {
         border-radius: .45rem;
+        -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+        box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
     }
     .sidebar .nav-link:hover {
         color: #fff;
@@ -62,6 +64,23 @@
         -webkit-transition: none;
         transition: none;
         display: none;
+    }
+
+    .kotak {
+        border: #e4e7e9 solid 1px;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .kotak:hover {
+        border: rgb(83, 163, 28) solid 1px;
+    }
+
+    .kotak-atas {
+        padding: 10px;
+        background-color: #e4e7e9;
+        border-radius: 5px;
+        margin-bottom: 4px;
     }
 
     </style>
@@ -113,7 +132,58 @@
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
+    $(document).on('submit', '[id^=form]', function (e) {
+    e.preventDefault();
+    var data = $(this).serialize();
+    swal({
+        title: "Apakah Nominal Sudah Benar ?",
+        text: "Konfirmasi Pembayaran",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, send it!",
+        cancelButtonText: "No, cancel pls!",
+    }).then(function () {
+        $('#form').submit();
+    });
+    return false;
+    });
     </script>
+
+    <script type="text/javascript">
+
+    $('input.nominal').on('blur', function() {
+        // const rupiah = this.value;
+        // rupiah.addEventListener('keyup', function(e){
+        //     // tambahkan 'Rp.' pada saat form di ketik
+        //     // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+        //     rupiah.value = formatRupiah(this.value, 'Rp. ');
+        // });
+
+        const value = this.value.replace(/,/g, '');
+        this.value = formatRupiah(value, 'Rp. ');
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix){
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split   		= number_string.split(','),
+            sisa     		= split[0].length % 3,
+            rupiah     		= split[0].substr(0, sisa),
+            ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if(ribuan){
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+    });
+    </script>
+
+
 
     <script>
         $(document).ready( function () {
