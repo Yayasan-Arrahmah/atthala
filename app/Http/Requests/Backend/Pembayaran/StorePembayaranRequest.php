@@ -28,7 +28,7 @@ class StorePembayaranRequest extends FormRequest
     public function rules()
     {
         return [
-            'uuid_pembayaran'     => ['required', 'max:191'],
+            // 'uuid_pembayaran'     => ['required', 'max:191'],
         ];
     }
 
@@ -40,8 +40,8 @@ class StorePembayaranRequest extends FormRequest
     public function messages()
     {
         return [
-            'uuid_pembayaran.required'    => 'The :attribute field is required.',
-            'uuid_pembayaran.max'         => 'The :attribute field must have less than :max characters',
+            // 'uuid_pembayaran.required'    => 'The :attribute field is required.',
+            // 'uuid_pembayaran.max'         => 'The :attribute field must have less than :max characters',
         ];
     }
 }

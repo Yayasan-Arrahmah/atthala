@@ -26,5 +26,14 @@ class Pembayaran extends Model
      */
     protected $fillable = [
         'uuid_pembayaran',
+        'nominal_pembayaran',
+        'keterangan_pembayaran',
+        'jenis_pembayaran',
+        'admin_pembayaran',
     ];
+
+    public function tahsin()
+    {
+        return $this->belongsTo(Tahsin::class, 'uuid_pembayaran', 'uuid_tahsin');
+    }
 }

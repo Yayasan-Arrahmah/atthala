@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exceptions\GeneralException;
+use App\Imports\TahsinsImport;
+use App\Imports\PembayaransImport;
 use App\Models\Pembayaran;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
+
+// use Maatwebsite\Excel\Excel;
 
 use App\Models\Tahsin;
 use App\Repositories\Backend\TahsinRepository;
@@ -107,7 +111,9 @@ class TahsinController extends Controller
             $file->move('file_import',$nama_file);
 
             // import data
-            $dataimport = Carbon::now();
+            // $dataimport = Carbon::now();
+            $dataimport = new TahsinsImport;
+
 
             Excel::import($dataimport, public_path('/file_import/'.$nama_file));
 
@@ -116,6 +122,49 @@ class TahsinController extends Controller
             // alihkan halaman kembali
             return redirect()->route('admin.tahsins.upload')
             ->withFlashSuccess('Upload File Excel Peserta Berhasil. Total '.$banyakdata.' Data');
+        } else {
+            return redirect()->route('admin.tahsins.upload')->withFlashSuccess('Upload Gagal');
+        }
+    }
+
+    public function importPembayaran(Request $request)
+    {
+
+        //buat session untuk ngakalin ngirim data
+        $jenispeserta     = request('jenispeserta');
+        $angkatanpeserta  = request('angkatanpeserta');
+        $request->session()->put('jenispeserta', $jenispeserta );
+        $request->session()->put('angkatanpeserta', $angkatanpeserta );
+
+        if ($request->hasFile('file')) {
+
+            // validasi
+            $this->validate($request, [
+                'file' => 'required|mimes:csv,xls,xlsx'
+            ]);
+
+            // menangkap file excel
+            $file = $request->file('file');
+
+            // membuat nama file unik
+            $mytime = Carbon::now();
+            $nama_file = $mytime->toDateTimeString().'-'.rand().'-'.$file->getClientOriginalName();
+
+            // upload ke folder file_import di dalam folder public
+            $file->move('file_import',$nama_file);
+
+            // import data
+            // $dataimport = Carbon::now();
+            $dataimport = new PembayaransImport;
+
+
+            Excel::import($dataimport, public_path('/file_import/'.$nama_file));
+
+            $banyakdata = $dataimport->getRowCount();
+
+            // alihkan halaman kembali
+            return redirect()->route('admin.tahsins.upload')
+            ->withFlashSuccess('Upload File Excel Pembayaran Berhasil. Total '.$banyakdata.' Data');
         } else {
             return redirect()->route('admin.tahsins.upload')->withFlashSuccess('Upload Gagal');
         }

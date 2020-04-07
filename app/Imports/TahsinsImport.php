@@ -2,15 +2,16 @@
 
 namespace App\Imports;
 
-use App\Models\Jadwal;
+use App\Models\Tahsin;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class JadwalsImport implements ToModel, WithHeadingRow
+class TahsinsImport implements ToModel, WithStartRow
 {
     use Importable;
     private $rows = 0;
+
     /**
     * @param array $row
     *
@@ -18,32 +19,33 @@ class JadwalsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        // if (!isset($row[0])) {
-        //     return null;
-        // }
         ++$this->rows;
         $jenispeserta = session('jenispeserta');
         $angkatanpeserta = session('angkatanpeserta');
-        return new Jadwal([
+        return new Tahsin([
             'no_jadwal' => @$row[0],
             'nama_peserta' => @$row[1],
             'nohp_peserta' => @$row[2],
             'level_peserta' => @$row[3],
-            'nama_pengajar' => @$row[4],
-            'jadwal_tahsin' => @$row[5],
+            'jadwal_tahsin' => @$row[4],
+            'nama_pengajar' => @$row[6],
+            'status_peserta' => @$row[7],
             // 'sudah_daftar_jadwal' => @$row[6],
             // 'belum_daftar_jadwal' => @$row[7],
-            'keterangan_jadwal' => @$row[7],
+            // 'keterangan_jadwal' => @$row[7],
             // 'pindahan_jadwal' => @$row[9],
             // 'pindahan_jadwal_2' => @$row[10],
+            'status_pembayaran' => @$row[23] === 0 ? 'LUNAS' : 'BELUM LUNAS',
             'jenis_peserta' => $jenispeserta,
             'angkatan_peserta' => $angkatanpeserta,
+
         ]);
     }
-    // public function headingRow(): int
-    // {
-    //     return 2;
-    // }
+
+    public function startRow(): int
+    {
+        return 5;
+    }
 
     public function getRowCount(): int
     {

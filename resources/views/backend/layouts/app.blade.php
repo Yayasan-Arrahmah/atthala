@@ -19,6 +19,8 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
+    @livewireStyles
+
 
     <style>
     .card {
@@ -123,6 +125,8 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    @livewireScripts
+
 
     {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     {!! script('//cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js') !!}
