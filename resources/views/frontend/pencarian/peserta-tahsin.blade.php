@@ -20,17 +20,17 @@
                 @include('frontend.includes.cari')
 
 				<div class="card-body">
-                    <div class="row mt-4">
-                        <div class="col">
-                            <div class="table-responsive" style="min-width: 400px; padding: 0px 15px 15px 15px">
+                    <div class="row mt-4" style=" overflow-x: scroll;">
+                        <div class="col" style="min-width: 1000px; ">
+                            <div class="table-responsive" style="padding: 0px 15px 15px 15px;">
                                 <section>
                                     <div class="row kotak-atas">
                                         {{-- <div class="col-md-1">No</div> --}}
                                         <div class="col">Nama</div>
-                                        <div class="col">Pengajar</div>
-                                        <div class="col">Status Pembayaran</div>
-                                        <div class="col-md-2">Waktu Ujian</div>
-                                        <div class="col-md-2">Penilaian</div>
+                                        <div class="col-2">Pengajar</div>
+                                        <div class="col-3">Status Pembayaran</div>
+                                        <div class="col">Waktu Ujian</div>
+                                        <div class="col">Penilaian</div>
                                     </div>
                                     @php
                                     $first  = 0;
@@ -48,13 +48,13 @@
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="col" style="margin-left: 0px">
+                                        <div class="col-2" style="margin-left: 0px;">
                                             <div style="text-transform: uppercase;"><strong>{{ $tahsin->nama_pengajar }}</strong></div>
                                             <div class="small text-muted">
                                                 {{ $tahsin->jenis_peserta }}<br>
                                             </div>
                                         </div>
-                                        <div class="col" style="margin-top: 0px">
+                                        <div class="col-3" style="margin-top: 0px">
                                             @php
                                             $totalpembayaran = DB::table('pembayarans')
                                                     ->select(DB::raw('SUM(nominal_pembayaran) as total'))
@@ -64,7 +64,7 @@
                                             <div>
                                                 <strong>Rp. {{ number_format($totalpembayaran->total, 0, '.', '.') }} </strong> / Rp. 400.000
                                             </div>
-                                            <div class="small text-muted">
+                                            <div class="small text-muted text-center">
                                                 @if( $totalpembayaran->total < 400000 )
                                                     <label class="badge badge-danger">BELUM LUNAS</label>
                                                 @else
@@ -72,7 +72,8 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col">
+                                            -
                                             {{-- <div class="text-center" style="padding-bottom: 5px">
                                                 <div class="text-value">0</div>
                                                 <div class="text-uppercase text-muted small">Pesan Whatsapp Terkirim</div>
@@ -82,7 +83,8 @@
                                             </button> --}}
                                             {{-- <div class="small text-center"> *chat pengingat pembayaran </div> --}}
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col">
+                                            -
                                         </div>
                                         <div class="col-md-12">
                                             <a data-toggle="collapse" href="#detail{{ $key + $pencarian->firstItem() }}" aria-expanded="false" style="padding-left: 15px">Riwayat Pembayaran</a>
@@ -93,10 +95,10 @@
                                                 <div class="collapse" id="detail{{ $key + $pencarian->firstItem() }}" >
                                                     <hr>
                                                     <div class="row" style="font-weight: 600; padding-bottom: 10px;">
-                                                        <div class="col-md-1">No</div>
-                                                        <div class="col-md-2">Nominal</div>
-                                                        <div class="col-md-4">Admin</div>
-                                                        <div class="col-md-2">Waktu</div>
+                                                        <div class="col-1">No</div>
+                                                        <div class="col-2">Nominal</div>
+                                                        <div class="col-4">Admin</div>
+                                                        <div class="col-3">Waktu</div>
                                                     </div>
                                                     @php
                                                     $noriwayat = 1;
@@ -107,10 +109,10 @@
                                                     @endphp
                                                     @foreach($riwayatpembayaran as $riwayat)
                                                         <div class="row">
-                                                            <div class="col-md-1"> {{ $noriwayat++ }} </div>
-                                                            <div class="col-md-2"> Rp. {{ number_format($riwayat->nominal_pembayaran, 0, '.', '.') }} </div>
-                                                            <div class="col-md-4"> {{ $riwayat->admin_pembayaran }} </div>
-                                                            <div class="col-md-2"> {{ $riwayat->created_at }}</div>
+                                                            <div class="col-1"> {{ $noriwayat++ }} </div>
+                                                            <div class="col-2"> Rp. {{ number_format($riwayat->nominal_pembayaran, 0, '.', '.') }} </div>
+                                                            <div class="col-4"> {{ $riwayat->admin_pembayaran }} </div>
+                                                            <div class="col-3"> {{ $riwayat->created_at }}</div>
                                                         </div>
                                                     @endforeach
                                                 </div>

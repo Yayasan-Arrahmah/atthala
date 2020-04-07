@@ -4,11 +4,11 @@
             <div style="padding-top: 5px; padding-bottom: 5px">
                 <label class="form-check-label">Nama Peserta</label>
             </div>
-            <input onkeyup="this.value = this.value.toUpperCase();"  class="form-control" type="text" name="namapeserta" style="font-size: small" required/>
+            <input onkeyup="this.value = this.value.toUpperCase();"  oninvalid="setCustomValidity('Diisi Minimal 3 Huruf')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control"  pattern=".{3,}" type="text" name="namapeserta" style="font-size: small" required/>
         </div>
         <div class="col alert-secondary" style="border: 1px solid #eee;">
             <div  style="padding-top: 5px; padding-bottom: 5px">
-                <label class="form-check-label">Level</label>
+                <label class="form-check-label">Level Tahsin</label>
             </div>
             <div class="form-group" style="padding-left:0px">
                 <select class="form-control" name="level">
@@ -30,7 +30,7 @@
                 <label class="form-check-label">Ustad / Ustadzah</label>
             </div>
             <select name="pengajar" class="form-control" required>
-                <option value=""> >> NAMA PENGAJAR</option>
+                <option value="">Nama Pengajar...</option>
                 @foreach($datapengajars as $pengajar)
                     <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>
                 @endforeach
