@@ -28,6 +28,9 @@ Route::get('/wa', function () {
 
 });
 
+Route::get('/peserta-tahsin', [HomeController::class, 'pesertaTahsin'])->name('pesertaTahsin');
+
+
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'
