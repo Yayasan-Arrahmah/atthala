@@ -27,7 +27,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>@lang('labels.backend.access.users.table.last_name')</th>
+                            <th>@lang('Status')</th>
                             <th>@lang('labels.backend.access.users.table.first_name')</th>
                             <th>@lang('labels.backend.access.users.table.email')</th>
                             <th>@lang('labels.backend.access.users.table.confirmed')</th>

@@ -19,14 +19,37 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
+    {{-- {{ style('https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap') }} --}}
 
     <style>
         body{
             background-image: url('img/back.jpeg');
+            /* font-family: 'Baloo Bhaina 2'; */
         }
     </style>
 
     <style>
+        .ab {
+            overflow-x: scroll;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .ab td {
+            padding: 7px 3px 2px 5px;
+        }
+        .ab th, td {
+            white-space: nowrap;
+        }
+        .first-col {
+            position: absolute;
+            width: 5em;
+            /* margin-left: -5em; */
+        }
+        .tgl select {
+            max-height: calc(0.5em + 20px);
+            height: calc(0.5em + 20px);
+            background: #fff;
+        }
         .card {
             border-radius: .45rem;
             -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
@@ -92,8 +115,34 @@
     </style>
 
     @stack('after-styles')
+
+    @stack('before-scripts')
+    {!! script(mix('js/manifest.js')) !!}
+    {!! script(mix('js/vendor.js')) !!}
+    {!! script(mix('js/frontend.js')) !!}
+    {{-- {!! script('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') !!} --}}
+
+
+        <script>
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('txt').innerHTML =
+                h + ":" + m + ":" + s;
+                var t = setTimeout(startTime, 500);
+            }
+            function checkTime(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+            }
+        </script>
+    @stack('after-scripts')
 </head>
-<body>
+<body onload="startTime()">
     @include('includes.partials.demo')
 
     <div id="app">
@@ -102,20 +151,15 @@
 
         <div class="container">
             <br>
-            <br>
-            <br>
-            <br>
+            @auth
+                @include('frontend.includes.nav-a')
+            @endauth
             @include('includes.partials.messages')
             @yield('content')
         </div><!-- container -->
-    </div><!-- #app -->
+        <center style="color: #fff">Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
 
-    <!-- Scripts -->
-    @stack('before-scripts')
-    {!! script(mix('js/manifest.js')) !!}
-    {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/frontend.js')) !!}
-    @stack('after-scripts')
+    </div><!-- #app -->
 
     @include('includes.partials.ga')
 </body>

@@ -172,8 +172,16 @@ class TahsinController extends Controller
 
     public function pembayaran(ManageTahsinRequest $request)
     {
-        return view('backend.tahsin.pembayaran')
-            ->withtahsins($this->tahsinRepository->getActivePaginated(50, 'id', 'desc'));
+        $nominal0 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '0')->count();
+        $nominal1 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '100000')->count();
+        $nominal2 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '200000')->count();
+        $nominal3 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '300000')->count();
+        $nominal4 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '400000')->count();
+
+        $belumlunas = DB::table('tahsins')->where('status_pembayaran', '=', 'BELUM LUNAS')->count();
+        $lunas      = DB::table('tahsins')->where('status_pembayaran', '=', 'LUNAS')->count();
+
+        return view('backend.tahsin.pembayaran', compact('nominal0','nominal1','nominal2','nominal3','nominal4', 'belumlunas', 'lunas'));
     }
 
     public function createbayar(Request $request)

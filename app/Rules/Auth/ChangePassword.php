@@ -18,11 +18,12 @@ class ChangePassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        $uppercase = preg_match('@[A-Z]@', $value);
-        $lowercase = preg_match('@[a-z]@', $value);
-        $number = preg_match('@\d@', $value);
+        // $uppercase = preg_match('@[A-Z]@', $value);
+        // $lowercase = preg_match('@[a-z]@', $value);
+        // $number = preg_match('@\d@', $value);
 
-        return $uppercase && $lowercase && $number && \strlen($value) >= 8;
+        // return $uppercase && $lowercase && $number && \strlen($value) >= 8;
+        return \strlen($value) >= 6;
     }
 
     /**

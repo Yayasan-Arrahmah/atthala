@@ -1,14 +1,14 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="row justify-content-center align-items-center mb-3">
-        <div class="col col-sm-10 align-self-center">
+    <div class="row justify-content-center align-items-center mb-4">
+        <div class="col align-self-center">
             <div class="card">
-                <div class="card-header">
+                {{-- <div class="card-header">
                     <strong>
                         @lang('navs.frontend.user.account')
                     </strong>
-                </div>
+                </div> --}}
 
                 <div class="card-body">
                     <div role="tabpanel">

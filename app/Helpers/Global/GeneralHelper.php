@@ -38,6 +38,6 @@ if (! function_exists('home_route')) {
             return 'frontend.user.dashboard';
         }
 
-        return 'frontend.login';
+        return 'frontend.auth.login';
     }
 }

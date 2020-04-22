@@ -1,6 +1,6 @@
 <form action="{{ url()->current() }}">
     <div class="d-print-none row mt-4" style="padding-bottom:20px; margin-right: 0px;padding-left: 15px;">
-        <div class="col-sm-3 alert-secondary" style="border: 1px solid #eee;" >
+        <div class="col-sm-3 alert-secondary" style="border: 1px solid #eee; padding-bottom: 10px" >
             <div style="padding-top: 5px; padding-bottom: 5px">
                 <label class="form-check-label">Nama Peserta</label>
             </div>
@@ -36,7 +36,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-2 alert-secondary" style="padding-top: 23px; border: 1px solid #eee;">
+        <div class="col-md-2 alert-secondary" style="padding-top: 23px; border: 1px solid #eee; padding-bottom: 10px">
             <div class="align-middle">
                 <button type="submit" class="btn btn-primary btn-pill btn-block" > <i class="fas fa-search"></i> Cari</button>
                 </a>

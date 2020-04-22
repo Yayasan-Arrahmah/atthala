@@ -24,24 +24,24 @@
             <div class="row mt-4 mb-4">
                 <div class="col">
                     <div class="form-group row">
-                    {{ html()->label(__('validation.attributes.backend.access.users.first_name'))->class('col-md-2 form-control-label')->for('first_name') }}
+                    {{ html()->label('Nama Lengkap')->class('col-md-2 form-control-label')->for('first_name') }}
 
                         <div class="col-md-10">
                             {{ html()->text('first_name')
                                 ->class('form-control')
-                                ->placeholder(__('validation.attributes.backend.access.users.first_name'))
+                                ->placeholder('Nama Lengkap')
                                 ->attribute('maxlength', 191)
                                 ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.access.users.last_name'))->class('col-md-2 form-control-label')->for('last_name') }}
+                        {{ html()->label('Status')->class('col-md-2 form-control-label')->for('last_name') }}
 
                         <div class="col-md-10">
                             {{ html()->text('last_name')
                                 ->class('form-control')
-                                ->placeholder(__('validation.attributes.backend.access.users.last_name'))
+                                ->placeholder('Status')
                                 ->attribute('maxlength', 191)
                                 ->required() }}
                         </div><!--col-->
@@ -60,14 +60,14 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        {{ html()->label('Abilities')->class('col-md-2 form-control-label') }}
+                        {{ html()->label('Tambahan Akses')->class('col-md-2 form-control-label') }}
 
                         <div class="table-responsive col-md-10">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>@lang('labels.backend.access.users.table.roles')</th>
-                                        <th>@lang('labels.backend.access.users.table.permissions')</th>
+                                        <th>Akses</th>
                                     </tr>
                                 </thead>
                                 <tbody>

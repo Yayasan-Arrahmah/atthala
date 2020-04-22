@@ -3,8 +3,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}"height="65" alt="CoreUI Logo">
-        <img class="navbar-brand-minimized" src="{{ asset('img/sygnet.png') }}" height="40" alt="CoreUI Logo">
+        <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}"height="65" alt="Ar-Rahmah Balikpapan">
+        <img class="navbar-brand-minimized" src="{{ asset('img/logo.png') }}" height="40" alt="Ar-Rahmah Balikpapan">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,7 @@
 
     <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-            <a class="nav-link" href="{{ route('frontend.index') }}"><i class="fas fa-home"></i></a>
+            <a class="nav-link" href="{{ route('frontend.user.dashboard') }}"><i class="fas fa-home"></i></a>
         </li>
 
         @if(config('locale.status') && count(config('locale.languages')) > 1)

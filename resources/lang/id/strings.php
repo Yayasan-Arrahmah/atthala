@@ -29,7 +29,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'Hak Cipta Dilindungi.',
             'are_you_sure' => 'Anda yakin?',
-            'boilerplate_link' => 'Laravel 5 Boilerplate',
+            'boilerplate_link' => '@rimbaborne',
             'continue' => 'Lanjutjan',
             'member_since' => 'Anggota sejak',
             'minutes' => ' menit',
@@ -68,7 +68,7 @@ return [
         'auth' => [
             'account_confirmed' => 'Your account has been confirmed.',
             'error' => 'Aduh!',
-            'greeting' => 'Halo!',
+            'greeting' => 'Ahlan Wa Sahlan!',
             'regards' => 'Salam,',
             'trouble_clicking_button' => 'Jika Anda mengalami kesulitan mengklik tombol ":action_text", copy dan paste URL di bawah ini ke browser Anda:',
             'thank_you_for_using_app' => 'Terima kasih telah menggunakan aplikasi kami!',

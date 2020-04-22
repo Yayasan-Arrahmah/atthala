@@ -94,7 +94,8 @@
                                     ->where('uuid_pembayaran', $tahsin->uuid_tahsin)
                                     ->first();
                             @endphp
-                            <div><strong>Rp. {{ number_format($totalpembayaran->total, 0, '.', '.') }} </strong>
+                            <div>
+                                <strong>Rp. {{ number_format($totalpembayaran->total, 0, '.', '.') }} </strong>
                                 <br>
                                 / Rp. 400.000
                             </div>

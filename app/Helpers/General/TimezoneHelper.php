@@ -27,6 +27,6 @@ class TimezoneHelper
      */
     public function convertFromLocal($date) : Carbon
     {
-        return Carbon::parse($date, auth()->user()->timezone)->setTimezone('UTC');
+        return Carbon::parse($date, auth()->user()->timezone)->setTimezone('Asia/Makassar');
     }
 }

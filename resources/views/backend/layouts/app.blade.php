@@ -19,6 +19,8 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
+    {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
+    {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
     @livewireStyles
 
 
@@ -90,6 +92,12 @@
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
 
     @stack('after-styles')
+    @stack('before-scripts')
+    {!! script(mix('js/manifest.js')) !!}
+    {!! script(mix('js/vendor.js')) !!}
+    {!! script(mix('js/backend.js')) !!}
+    @stack('after-scripts')
+
 </head>
 
 <body class="{{ config('backend.body_classes') }}">
@@ -122,11 +130,11 @@
 
     <!-- Scripts -->
     @stack('before-scripts')
-    {!! script(mix('js/manifest.js')) !!}
-    {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/backend.js')) !!}
     @livewireScripts
+    {!! script('https://coreui.io/demo/2.0/vendors/chart.js/js/Chart.min.js') !!}
 
+    {!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!}
+    {!! script('https://coreui.io/demo/2.0/js/charts.js') !!}
 
     {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     {!! script('//cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js') !!}
