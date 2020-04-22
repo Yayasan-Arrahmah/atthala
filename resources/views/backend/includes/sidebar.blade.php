@@ -12,6 +12,13 @@
                     @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/amalans/*')) }} "
+                href="{{ route('admin.amalans.index') }}
+                " > <i class="nav-icon fas fa-edit"></i>
+                Amalan
+                </a>
+            </li>
 
             <li class="nav-title">
                 Tahsin

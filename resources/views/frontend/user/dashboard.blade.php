@@ -3,6 +3,7 @@
 @section('title', app_name() . ' | ' . __('navs.frontend.dashboard') )
 
 @section('content')
+{{ \GeniusTS\HijriDate\Hijri::setDefaultAdjustment(-1) }}
 <div class="row mb-4" >
     <div class="col">
         <div class="card">

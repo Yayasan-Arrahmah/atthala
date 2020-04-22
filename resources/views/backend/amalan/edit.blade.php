@@ -24,16 +24,27 @@
             <div class="row mt-4 mb-4">
                 <div class="col">
                     <div class="form-group row">
-                    {{ html()->label(__('backend_amalans.validation.attributes.title'))->class('col-md-2 form-control-label')->for('title') }}
+                    {{ html()->label('Nama Amalan')->class('col-md-2 form-control-label')->for('title') }}
 
                         <div class="col-md-10">
-                            {{ html()->text('title')
+                            {{ html()->text('nama_amalan')
                                 ->class('form-control')
-                                ->placeholder(__('backend_amalans.validation.attributes.title'))
+                                ->placeholder('Nama Amalan')
                                 ->attribute('maxlength', 191)
                                 ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
+                    <div class="form-group row">
+                        {{ html()->label('Deskripsi Amalan')->class('col-md-2 form-control-label')->for('title') }}
+
+                            <div class="col-md-10">
+                                {{ html()->text('deskripsi_amalan')
+                                    ->class('form-control')
+                                    ->placeholder('Deskripsi Amalan')
+                                    ->attribute('maxlength', 191)
+                                    ->required() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-body-->
