@@ -206,7 +206,7 @@
 
                                                             @if ($check == $i || is_null($check) )
                                                                 <td>
-                                                                    <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('Apakah anda yakin untuk menghapusnya?');" method="post">
+                                                                    <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('{{ $amalan_list->nama_amalan_list }} Tanggal {{ $i }}, Apakah anda yakin untuk menghapusnya?');" method="post">
                                                                         @csrf
                                                                         <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
                                                                         <button type="submit" class="fas fa-check-circle" style="color: rgb(83, 163, 28);border: 0px; background: rgba(83, 163, 28, 0); padding: 0px;"></button>

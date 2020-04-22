@@ -44,7 +44,10 @@
 								<button type="submit" style="background-color: rgb(83, 163, 28);border: rgb(83, 163, 28);" class="btn btn-primary px-4" type="button">Login</button>
 							</div>
 							<div class="col-6 text-right">
-								<a style="color: rgb(83, 163, 28);" href="{{ route('frontend.auth.password.reset') }}">@lang('labels.frontend.passwords.forgot_password')</a>
+                                <a style="color: rgb(83, 163, 28);" href="{{ route('frontend.auth.password.reset') }}">@lang('labels.frontend.passwords.forgot_password')</a>
+                                <a href="{{ route('frontend.auth.register') }}" style="color: rgb(83, 163, 28);">
+                                    Register <i class="fas fa-angle-double-right"></i>
+                                </a>
 							</div>
 						</div>
 					{{ html()->form()->close() }}
@@ -53,6 +56,7 @@
 					<div class="row">
 						<div class="col">
 							<div class="text-center">
+
 								{!! $socialiteLinks !!}
 							</div>
 						</div><!--col-->
