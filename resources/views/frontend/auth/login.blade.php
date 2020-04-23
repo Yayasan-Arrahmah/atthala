@@ -41,7 +41,7 @@
 						</div><!--row-->
 						<div class="row">
 							<div class="col-6">
-								<button type="submit" style="background-color: rgb(83, 163, 28);border: rgb(83, 163, 28);" class="btn btn-primary px-4" type="button">Login</button>
+								<button type="submit" style="background-color: rgb(83, 163, 28);border: rgb(83, 163, 28); padding-top:10px; padding-bottom:10px;" class="btn btn-primary px-4" type="button">Login</button>
 							</div>
 							<div class="col-6 text-right">
                                 <a style="color: rgb(83, 163, 28);" href="{{ route('frontend.auth.password.reset') }}">@lang('labels.frontend.passwords.forgot_password')</a>

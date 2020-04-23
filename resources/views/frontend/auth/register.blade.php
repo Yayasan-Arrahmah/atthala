@@ -103,6 +103,16 @@
                                 </div><!--form-group-->
                             </div><!--col-->
                         </div><!--row-->
+
+                        <div class="row" style="padding-top: 10px">
+                            <div class="col">
+                                <div class="text-left">
+                                    <a href="{{ route('frontend.auth.login') }}" style="color: rgb(83, 163, 28);">
+                                        <i class="fas fa-angle-double-left"></i> Login
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     {{ html()->form()->close() }}
 
                     <div class="row">
