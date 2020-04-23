@@ -204,6 +204,7 @@ class AmalanController extends Controller
         $absen->user_amalan_list                = $request->user_amalan_list;
         $absen->waktu_hijriyah_amalan_list      = $request->waktu_hijriyah_amalan_list;
         $absen->tanggal_hijriyah_amalan_list    = $request->tanggal_hijriyah_amalan_list;
+        $absen->ket_hijriyah_amalan_list        = $request->ket_hijriyah_amalan_list;
 
         if ($absen->save()){
             return redirect()->route('frontend.user.dashboard', ['tgl' => $request->tanggal_hijriyah_amalan_list])

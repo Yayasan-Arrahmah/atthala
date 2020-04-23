@@ -35,7 +35,7 @@
             margin: 0 auto;
         }
         .ab td {
-            padding: 7px 3px 2px 5px;
+            padding: 2px 3px 2px 5px;
         }
         .ab th, td {
             white-space: nowrap;

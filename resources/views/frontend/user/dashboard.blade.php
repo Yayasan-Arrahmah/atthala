@@ -134,6 +134,7 @@
                                                 <thead>
                                                     <th></th>
                                                     <th></th>
+                                                    <th></th>
                                                 </thead>
                                                 <tbody>
                                                     @php
@@ -151,17 +152,27 @@
                                                         @endphp
 
                                                         @if ( empty($amalan_list_absen->tanggal_hijriyah_amalan_list) )
+                                                        <form action="{{ route('frontend.amalans.tambahabsen') }}" method="post">
+                                                            @csrf
                                                             <td>
-                                                                <form action="{{ route('frontend.amalans.tambahabsen') }}" method="post">
-                                                                    @csrf
-                                                                    <input hidden="hidden" name="id_amalan_list" value="{{ $amalan_list->id }}">
-                                                                    <input hidden="hidden" name="user_amalan_list" value="{{ $logged_in_user->id }}">
-                                                                    <input hidden="hidden" name="waktu_hijriyah_amalan_list" value="{{ $hijriyah_select->format('F-o') }}">
-                                                                    <input hidden="hidden" name="tanggal_hijriyah_amalan_list" value="{{ intval($hijriyah_select->format('d')) }}">
-                                                                    <button class="btn btn-light btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
-                                                                </form>
+                                                                <select name="ket_hijriyah_amalan_list" class="form-control">
+                                                                    <option value=" ">-</option>
+                                                                    <option value="SAKIT">Sakit</option>
+                                                                    {{-- @if ($logged_in_user->jenis == 'AKHWAT') --}}
+                                                                        <option value="HAID">Haid</option>
+                                                                    {{-- @endif --}}
+                                                                </select>
                                                             </td>
+                                                            <td>
+                                                                <input hidden="hidden" name="id_amalan_list" value="{{ $amalan_list->id }}">
+                                                                <input hidden="hidden" name="user_amalan_list" value="{{ $logged_in_user->id }}">
+                                                                <input hidden="hidden" name="waktu_hijriyah_amalan_list" value="{{ $hijriyah_select->format('F-o') }}">
+                                                                <input hidden="hidden" name="tanggal_hijriyah_amalan_list" value="{{ intval($hijriyah_select->format('d')) }}">
+                                                                <button class="btn btn-light btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                                            </td>
+                                                        </form>
                                                         @else
+                                                            <td></td>
                                                             <td>
                                                                 <button disabled class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
                                                             </td>
@@ -209,7 +220,22 @@
                                                                     <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('{{ $amalan_list->nama_amalan_list }} Tanggal {{ $i }}, Apakah anda yakin untuk menghapusnya?');" method="post">
                                                                         @csrf
                                                                         <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
-                                                                        <button type="submit" class="fas fa-check-circle" style="color: rgb(83, 163, 28);border: 0px; background: rgba(83, 163, 28, 0); padding: 0px;"></button>
+                                                                        <center>
+                                                                        @if ($amalan_list_absen->ket_hijriyah_amalan_list == "HAID")
+                                                                            <button type="submit" class="btn" style="color: rgb(255, 56, 156); border: 0px; padding: 0px;">
+                                                                                <i class="fas fa-venus"></i>
+                                                                            </button>
+                                                                        @elseif ($amalan_list_absen->ket_hijriyah_amalan_list == "SAKIT")
+                                                                            <button type="submit" class="btn" style="color: rgb(83, 163, 28); border: 0px; padding: 0px;">
+                                                                                <i class="fas fa-user-times"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="submit" class="btn" style="color: rgb(0, 184, 255); border: 0px; padding: 0px;">
+                                                                                <i class="fas fa-check-circle"></i>
+                                                                            </button>
+                                                                        @endif
+                                                                        </center>
+
                                                                     </form>
                                                                 </td>
                                                             @else
