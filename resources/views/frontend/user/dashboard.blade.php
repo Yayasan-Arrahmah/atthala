@@ -158,9 +158,9 @@
                                                                 <select name="ket_hijriyah_amalan_list" class="form-control">
                                                                     <option value=" ">-</option>
                                                                     <option value="SAKIT">Sakit</option>
-                                                                    {{-- @if ($logged_in_user->jenis == 'AKHWAT') --}}
+                                                                    @if ($logged_in_user->jenis == 'AKHWAT')
                                                                         <option value="HAID">Haid</option>
-                                                                    {{-- @endif --}}
+                                                                    @endif
                                                                 </select>
                                                             </td>
                                                             <td>
