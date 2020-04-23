@@ -39,6 +39,35 @@
         </div><!--col-->
     </div><!--row-->
 
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="last_name">Status</label>
+                <select class="form-control" name="last_name" aria-placeholder="Status" required>
+                    <option value="{{ $logged_in_user->last_name }}">{{ $logged_in_user->last_name }}</option>
+                    <option value="">----------</option>
+                    <option value="PENGAJAR">Pengajar</option>
+                    <option value="KARYAWAN">Karyawan</option>
+                    <option value="SANTRI">Santri</option>
+                </select>
+            </div><!--form-group-->
+        </div><!--col-->
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="jenis">Gender</label>
+                <select class="form-control" name="jenis" aria-placeholder="Status" required>
+                    <option value="{{ $logged_in_user->jenis }}">{{ $logged_in_user->jenis }}</option>
+                    <option value="">----------</option>
+                    <option value="IKHWAN">Ikhwan</option>
+                    <option value="AKHWAT">Akhwat</option>
+                </select>
+            </div><!--form-group-->
+        </div><!--col-->
+    </div>
+
     @if ($logged_in_user->canChangeEmail())
         <div class="row">
             <div class="col">
