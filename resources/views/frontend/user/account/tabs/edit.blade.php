@@ -39,20 +39,6 @@
         </div><!--col-->
     </div><!--row-->
 
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                {{ html()->label('Nama Belakang')->for('last_name') }}
-
-                {{ html()->text('last_name')
-                    ->class('form-control')
-                    ->placeholder('Nama Belakang')
-                    ->attribute('maxlength', 191)
-                    ->required() }}
-            </div><!--form-group-->
-        </div><!--col-->
-    </div><!--row-->
-
     @if ($logged_in_user->canChangeEmail())
         <div class="row">
             <div class="col">
