@@ -10,47 +10,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col col-sm-3 order-2 order-sm-1  mb-4">
-                        <div class="card mb-4">
-                            {{-- <img class="card-img-top" src="{{ $logged_in_user->picture }}" alt="Profile Picture"> --}}
-                            <div style="text-align: center; padding-top: 15px">
-                                <img class="card-img-top" src="{{ $logged_in_user->picture }}" alt="Profile Picture"
-                                style="
-                                object-fit: cover;
-                                height: 120px;
-                                width: 120px;
-                                border-radius: 50%;
-                                ">
-                            </div>
-
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    {{ $logged_in_user->first_name }}<br/>
-                                </h4>
-
-                                <p class="card-text">
-                                    <small>
-                                        <i class="fas fa-envelope"></i> {{ $logged_in_user->email }}<br/>
-                                        <i class="fas fa-suitcase"></i> {{ ucwords(strtolower($logged_in_user->last_name)) }}<br/>
-                                        <i class="fas fa-user"></i> {{ ucwords(strtolower($logged_in_user->jenis)) }}<br/>
-                                        <i class="fas fa-check"></i> {{ ucwords(strtolower($logged_in_user->status)) }}<br/>
-                                        <i class="fas fa-calendar-check"></i> @lang('strings.frontend.general.joined') {{ timezone()->convertToLocal($logged_in_user->created_at, 'F jS, Y') }}
-                                    </small>
-                                </p>
-
-                                <p class="card-text">
-
-                                    <a href="{{ route('frontend.user.account')}}" class="btn btn-info btn-sm mb-1">
-                                        <i class="fas fa-user-circle"></i> @lang('navs.frontend.user.account')
-                                    </a>
-
-                                    @can('view backend')
-                                    &nbsp;<a href="{{ route('admin.dashboard')}}" class="btn btn-danger btn-sm mb-1">
-                                        <i class="fas fa-user-secret"></i> @lang('navs.frontend.user.administration')
-                                    </a>
-                                    @endcan
-                                </p>
-                            </div>
-                        </div>
+                        @include('frontend.user.dashboard.user-info')
                     </div><!--col-md-4-->
 
                     <div class="col-md-9 order-1 order-sm-2">
@@ -102,7 +62,7 @@
                                                 $tahun_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('o');
                                                 $hijriyah           = \GeniusTS\HijriDate\Date::now();
 
-                                                $tgl = !empty(request('tgl')) ? request('tgl') : $tanggal_hijriyah;
+                                                $tgl = !empty(request('tgl')) ? request('tgl') : intval($tanggal_hijriyah);
 
                                                 $masehi_select = \GeniusTS\HijriDate\Hijri::convertToGregorian($tgl, $bulan_hijriyah, $tahun_hijriyah);
                                                 $hijriyah_select = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_select->format('o-m-d'));
