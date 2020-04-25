@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col col-sm-3 order-1 order-sm-1  mb-4">
+                    <div class="col col-sm-3 order-2 order-sm-1  mb-4">
                         <div class="card mb-4">
                             {{-- <img class="card-img-top" src="{{ $logged_in_user->picture }}" alt="Profile Picture"> --}}
                             <div style="text-align: center; padding-top: 15px">
@@ -53,7 +53,7 @@
                         </div>
                     </div><!--col-md-4-->
 
-                    <div class="col-md-9 order-2 order-sm-2">
+                    <div class="col-md-9 order-1 order-sm-2">
                         <div class="row" style="padding-bottom: 30px">
                             <div class="col">
                                 <div class="" style="font-size: 24px">
@@ -64,9 +64,7 @@
 
                         <div class="row" style="padding-bottom: 20px">
                             <div class="col">
-                                <center>
-                                    <img src="{{ asset('img/banner.png') }}" class="img-fluid" />
-                                </center>
+                                    <img src="{{ asset('img/banner-1.png') }}" class="img-fluid" />
                             </div>
                         </div>
 

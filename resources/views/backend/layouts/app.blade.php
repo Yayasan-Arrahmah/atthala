@@ -199,6 +199,11 @@
 
     <script>
         $(document).ready( function () {
+            $('#user').DataTable({
+                "pageLength": 15,
+                "scrollX": true,
+            });
+
             $('#pengajartahsin').DataTable({
                 "pageLength": 15,
                 "scrollX": true,

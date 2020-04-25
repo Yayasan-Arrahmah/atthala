@@ -23,18 +23,19 @@
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table-responsive">
-                    <table class="table">
+                <div class="table-responsive-sm table-hover mb-0 table-sm">
+                    <table class="table display compact nowarp" id="pengajartahsin" style="width:100%">
                         <thead>
                         <tr>
                             <th>@lang('Status')</th>
                             <th>@lang('labels.backend.access.users.table.first_name')</th>
+                            <th>Jenis</th>
                             <th>@lang('labels.backend.access.users.table.email')</th>
                             <th>@lang('labels.backend.access.users.table.confirmed')</th>
                             <th>@lang('labels.backend.access.users.table.roles')</th>
                             <th>@lang('labels.backend.access.users.table.other_permissions')</th>
-                            <th>@lang('labels.backend.access.users.table.social')</th>
-                            <th>@lang('labels.backend.access.users.table.last_updated')</th>
+                            {{-- <th>@lang('labels.backend.access.users.table.social')</th> --}}
+                            {{-- <th>@lang('labels.backend.access.users.table.last_updated')</th> --}}
                             <th>@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
@@ -43,12 +44,13 @@
                             <tr>
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->first_name }}</td>
+                                <td>{{ $user->jenis }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{!! $user->confirmed_label !!}</td>
                                 <td>{!! $user->roles_label !!}</td>
                                 <td>{!! $user->permissions_label !!}</td>
-                                <td>{!! $user->social_buttons !!}</td>
-                                <td>{{ $user->updated_at->diffForHumans() }}</td>
+                                {{-- <td>{!! $user->social_buttons !!}</td> --}}
+                                {{-- <td>{{ $user->updated_at->diffForHumans() }}</td> --}}
                                 <td>{!! $user->action_buttons !!}</td>
                             </tr>
                         @endforeach
