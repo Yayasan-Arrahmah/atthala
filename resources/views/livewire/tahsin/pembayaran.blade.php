@@ -24,12 +24,11 @@
         </div>
 
         <div class="col-md-2">
-            {{-- <select class="form-control" wire:model="statusTanda">
-                <option value="0">PILIH STATUS</option>
-                <option value="1">PILIH STATUS</option>
+            <select class="pembayaran form-control" wire:model="pembayaran">
+                <option>STATUS</option>
+                <option value="1">BELUM LUNAS</option>
                 <option value="2">LUNAS</option>
-                <option value="3">BELUM LUNAS</option>
-            </select> --}}
+            </select>
         </div>
 
         <div class="col-md-4 pull-right">

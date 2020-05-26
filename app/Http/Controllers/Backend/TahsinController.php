@@ -178,8 +178,8 @@ class TahsinController extends Controller
         $nominal3 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '300000')->count();
         $nominal4 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '400000')->count();
 
-        $belumlunas = DB::table('tahsins')->where('status_pembayaran', '=', 'BELUM LUNAS')->count();
-        $lunas      = DB::table('tahsins')->where('status_pembayaran', '=', 'LUNAS')->count();
+        $belumlunas = DB::table('tahsins')->where('status_pembayaran', '=', '1')->count();
+        $lunas      = DB::table('tahsins')->where('status_pembayaran', '=', '2')->count();
 
         return view('backend.tahsin.pembayaran', compact('nominal0','nominal1','nominal2','nominal3','nominal4', 'belumlunas', 'lunas'));
     }

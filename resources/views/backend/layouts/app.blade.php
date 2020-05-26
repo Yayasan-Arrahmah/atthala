@@ -311,6 +311,12 @@
         } );
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.pembayaran').select2();
+        });
+    </script>
+
     @stack('after-scripts')
 </body>
 </html>

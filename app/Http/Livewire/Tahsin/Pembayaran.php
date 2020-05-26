@@ -10,7 +10,7 @@ class Pembayaran extends Component
 {
     use WithPagination;
     public $search = '';
-    public $statusTanda = '2';
+    public $pembayaran = '';
     public $perPage = 5;
     public $sortAsc = true;
     public $sortField = 'created_at';
@@ -31,8 +31,10 @@ class Pembayaran extends Component
     {
         return view('livewire.tahsin.pembayaran', [
             'tahsins' => \App\Models\Tahsin::search($this->search)
+            ->when($this->pembayaran, function ($query) {
+                return $query->where('status_pembayaran', '=', $this->pembayaran);
+            })
             ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
-            // ->search($this->statusTanda)
             ->paginate($this->perPage),
         ]);
     }

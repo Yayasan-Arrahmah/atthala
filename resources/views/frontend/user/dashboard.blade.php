@@ -56,10 +56,16 @@
                                                 "Sabtu"
                                                 );
 
-                                                $hari_hijriyah      = \GeniusTS\HijriDate\Date::now()->format('w');
-                                                $tanggal_hijriyah   = \GeniusTS\HijriDate\Date::now()->format('d');
-                                                $bulan_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('m');
-                                                $tahun_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('o');
+                                                // $hari_hijriyah      = \GeniusTS\HijriDate\Date::now()->format('w');
+                                                // $tanggal_hijriyah   = \GeniusTS\HijriDate\Date::now()->format('d');
+                                                // $bulan_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('m');
+                                                // $tahun_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('o');
+                                                // $hijriyah           = \GeniusTS\HijriDate\Date::now();
+
+                                                // Ganti Ramadhan
+                                                $tanggal_hijriyah   = 30;
+                                                $bulan_hijriyah     = 9;
+                                                $tahun_hijriyah     = 1441;
                                                 $hijriyah           = \GeniusTS\HijriDate\Date::now();
 
                                                 $tgl = !empty(request('tgl')) ? request('tgl') : intval($tanggal_hijriyah);
@@ -74,14 +80,15 @@
                                                             {{ $hari_[$masehi_select->format('w')] }}, {{ $hijriyah_select->format('d F o') }}
                                                         </option>
                                                         <option>-------------------</option>
-                                                        @for ($i = $hijriyah->format('d'); $i >= 1; $i--)
-                                                        @php
-                                                        $masehi_ = \GeniusTS\HijriDate\Hijri::convertToGregorian($i, $bulan_hijriyah, $tahun_hijriyah);
-                                                        $hijriyah_ = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_->format('o-m-d'));
-                                                        @endphp
-                                                        <option value="{{ intval($hijriyah_->format('d')) }}">
-                                                            {{ $hari_[$masehi_->format('w')] }}, {{ $hijriyah_->format('d F o') }}
-                                                        </option>
+                                                        {{-- @for ($i = $hijriyah->format('d'); $i >= 1; $i--) --}}
+                                                        @for ($i = 30 ; $i >= 1; $i--)
+                                                            @php
+                                                            $masehi_ = \GeniusTS\HijriDate\Hijri::convertToGregorian($i, $bulan_hijriyah, $tahun_hijriyah);
+                                                            $hijriyah_ = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_->format('o-m-d'));
+                                                            @endphp
+                                                            <option value="{{ intval($hijriyah_->format('d')) }}">
+                                                                {{ $hari_[$masehi_->format('w')] }}, {{ $hijriyah_->format('d F o') }}
+                                                            </option>
                                                         @endfor
                                                     </select>
                                                     <div id="txt"></div>

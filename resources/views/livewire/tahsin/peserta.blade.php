@@ -31,6 +31,10 @@
         <div class="col">
         </div>
 
+        <div class="col">
+
+        </div>
+
         <div class="col-md-4 pull-right">
             <div class="input-group">
                 <div class="input-group-prepend">

@@ -35,7 +35,7 @@ class TahsinsImport implements ToModel, WithStartRow
             // 'keterangan_jadwal' => @$row[7],
             // 'pindahan_jadwal' => @$row[9],
             // 'pindahan_jadwal_2' => @$row[10],
-            'status_pembayaran' => @$row[23] === 0 ? 'LUNAS' : 'BELUM LUNAS',
+            'status_pembayaran' => @$row[23] === 0 ? '2' : '1',   // 2 = BELUM LUNAS . 1 = LUNAS
             'jenis_peserta' => $jenispeserta,
             'angkatan_peserta' => $angkatanpeserta,
 

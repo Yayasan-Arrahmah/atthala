@@ -59,16 +59,4 @@ class Tahsin extends Model
                 ->orWhere('nama_pengajar', 'like', '%'.$query.'%')
                 ->where('angkatan_peserta', '=', '15');
     }
-    public static function statusLunas($query)
-    {
-        if ($query = '1') {
-            return static::query();
-        } elseif ($query = '2') {
-            return static::where('nama_peserta', '=', 'LUNAS');
-        } elseif ($query = '3') {
-            return static::where('nama_peserta', '=', 'BELUM LUNAS');
-        } else {
-            return static::query();
-        }
-    }
 }
