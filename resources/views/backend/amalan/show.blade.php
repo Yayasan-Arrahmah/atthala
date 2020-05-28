@@ -143,7 +143,7 @@
                             </tr>
                         </thead>
                         @php
-                        $pesertas = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->paginate(100);
+                        $pesertas = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->paginate(200);
                         @endphp
                         <tbody>
                             @foreach($pesertas as $key=> $peserta)
@@ -242,8 +242,6 @@ $akhwat   = DB::table('users')->where('jenis', '=', 'AKHWAT')->count();
 
 @stack('before-scripts')
 {!! script('https://cdn.jsdelivr.net/npm/chart.js@2.8.0') !!}
-{{-- {!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!} --}}
-{{-- {!! script('https://coreui.io/demo/2.0/js/charts.js') !!} --}}
 <script type="text/javascript">
     $( document ).ready(function() {
         $("#open").focus();

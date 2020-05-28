@@ -24,12 +24,103 @@
 
                         <div class="row" style="padding-bottom: 20px">
                             <div class="col">
-                                    <img src="{{ asset('img/banner-1.png') }}" class="img-fluid" />
+                                <img src="{{ asset('img/banner-1.png') }}" class="img-fluid" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-4 mb-4">
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6 class="card-title mb-0 text-center">
+                                            @php
+                                            $totalpeserta = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->count();
+                                            @endphp
+                                            Peserta
+                                        </h6>
+                                    </div><!--col-->
+                                </div>
+                                <br />
+                                <div class="chart-wrapper">
+                                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="jenis-peserta" width="500" height="400" class="chartjs-render-monitor" style="display: block; width: 300px; height: 265px;"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6 class="card-title mb-0 text-center">
+                                            @php
+                                            $totalpeserta = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->count();
+                                            @endphp
+                                            Total Peserta : {{ $totalpeserta }}
+                                        </h6>
+                                    </div><!--col-->
+                                </div>
+                                <br />
+                                <div class="chart-wrapper">
+                                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="total-peserta" width="500" height="400" class="chartjs-render-monitor" style="display: block; width: 300px; height: 265px;"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col">
+                                    <div class="table-responsive" style="font-size: 12px">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50" style="text-align: center">No.</th>
+                                                    <th>Nama Amalan</th>
+                                                    <th style="text-align: center">Total Absen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                $amalan_lists = DB::table('amalans_lists')->where('id_amalan', '=', 1)->paginate(100);
+
+                                                $first  = 0;
+                                                $end    = 0;
+                                                $number = 1;
+                                                @endphp
+                                                @foreach($amalan_lists as $key=> $amalan_list)
+                                                <tr>
+                                                    <td style="text-align: center">{{  $key+ $amalan_lists->firstItem() }}</a></td>
+                                                    <td>{{ $amalan_list->nama_amalan_list }}</td>
+                                                    <td style="text-align: center">
+                                                        @php
+                                                        $amalan_list_absens = DB::table('amalans_lists_absens')->where('id_amalan_list', '=', $amalan_list->id)->count();
+                                                        @endphp
+                                                        {{ $amalan_list_absens }}
+                                                    </td>
+                                                </tr>
+                                                @php
+                                                $first  = $amalan_lists->firstItem();
+                                                $end    = $key + $amalan_lists->firstItem();
+                                                @endphp
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!--col-->
                             </div>
                         </div>
 
                         <div class="row">
-                                <div class="col">
+                            <div class="col">
                                 <div class="text-center" style="font-size: 20px; weight:500">
                                     Amal Yaumiah Ramadhan 1441
                                 </div>
@@ -81,13 +172,13 @@
                                                         <option>-------------------</option>
                                                         {{-- @for ($i = $hijriyah->format('d'); $i >= 1; $i--) --}}
                                                         @for ($i = 30 ; $i >= 1; $i--)
-                                                            @php
-                                                            $masehi_ = \GeniusTS\HijriDate\Hijri::convertToGregorian($i, $bulan_hijriyah, $tahun_hijriyah);
-                                                            $hijriyah_ = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_->format('o-m-d'));
-                                                            @endphp
-                                                            <option value="{{ intval($hijriyah_->format('d')) }}">
-                                                                {{ $hari_[$masehi_->format('w')] }}, {{ $hijriyah_->format('d F o') }}
-                                                            </option>
+                                                        @php
+                                                        $masehi_ = \GeniusTS\HijriDate\Hijri::convertToGregorian($i, $bulan_hijriyah, $tahun_hijriyah);
+                                                        $hijriyah_ = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_->format('o-m-d'));
+                                                        @endphp
+                                                        <option value="{{ intval($hijriyah_->format('d')) }}">
+                                                            {{ $hari_[$masehi_->format('w')] }}, {{ $hijriyah_->format('d F o') }}
+                                                        </option>
                                                         @endfor
                                                     </select>
                                                     <div id="txt"></div>
@@ -109,10 +200,10 @@
                                                         <td class="align-middle">{{ $amalan_list->nama_amalan_list }}</td>
                                                         @php
                                                         $amalan_list_absen = DB::table('amalans_lists_absens')
-                                                                                ->where('id_amalan_list', '=', $amalan_list->id)
-                                                                                ->where('user_amalan_list', '=', $logged_in_user->id)
-                                                                                ->where('tanggal_hijriyah_amalan_list', '=', $tgl)
-                                                                                ->first();
+                                                        ->where('id_amalan_list', '=', $amalan_list->id)
+                                                        ->where('user_amalan_list', '=', $logged_in_user->id)
+                                                        ->where('tanggal_hijriyah_amalan_list', '=', $tgl)
+                                                        ->first();
                                                         @endphp
 
                                                         @if ( empty($amalan_list_absen->tanggal_hijriyah_amalan_list) )
@@ -123,7 +214,7 @@
                                                                     <option value=" ">-</option>
                                                                     <option value="SAKIT">Sakit</option>
                                                                     @if ($logged_in_user->jenis == 'AKHWAT')
-                                                                        <option value="HAID">Haid</option>
+                                                                    <option value="HAID">Haid</option>
                                                                     @endif
                                                                 </select>
                                                             </td>
@@ -136,10 +227,10 @@
                                                             </td>
                                                         </form>
                                                         @else
-                                                            <td></td>
-                                                            <td>
-                                                                <button disabled class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
-                                                            </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button disabled class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                                        </td>
                                                         @endif
 
                                                     </tr>
@@ -164,47 +255,47 @@
                                                     <tr>
                                                         <td style="z-index: 50;">{{ $amalan_list->nama_amalan_list }}</td>
                                                         @for ($i = 1; $i <= 30; $i++)
-                                                            @php
-                                                            $amalan_list_absen = DB::table('amalans_lists_absens')
-                                                                                    ->where('id_amalan_list', '=', $amalan_list->id)
-                                                                                    ->where('user_amalan_list', '=', $logged_in_user->id)
-                                                                                    ->where('tanggal_hijriyah_amalan_list', '=', $i)
-                                                                                    ->first();
+                                                        @php
+                                                        $amalan_list_absen = DB::table('amalans_lists_absens')
+                                                        ->where('id_amalan_list', '=', $amalan_list->id)
+                                                        ->where('user_amalan_list', '=', $logged_in_user->id)
+                                                        ->where('tanggal_hijriyah_amalan_list', '=', $i)
+                                                        ->first();
 
-                                                            if (isset($amalan_list_absen->tanggal_hijriyah_amalan_list)) {
-                                                                $check = $amalan_list_absen->tanggal_hijriyah_amalan_list;
-                                                            } else {
-                                                                $check = '';
-                                                            }
+                                                        if (isset($amalan_list_absen->tanggal_hijriyah_amalan_list)) {
+                                                            $check = $amalan_list_absen->tanggal_hijriyah_amalan_list;
+                                                        } else {
+                                                            $check = '';
+                                                        }
 
-                                                            @endphp
+                                                        @endphp
 
-                                                            @if ($check == $i || is_null($check) )
-                                                                <td>
-                                                                    <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('{{ $amalan_list->nama_amalan_list }} Tanggal {{ $i }}, Apakah anda yakin untuk menghapusnya?');" method="post">
-                                                                        @csrf
-                                                                        <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
-                                                                        <center>
-                                                                        @if ($amalan_list_absen->ket_hijriyah_amalan_list == "HAID")
-                                                                            <button type="submit" class="btn" style="color: rgb(255, 56, 156); border: 0px; padding: 0px;">
-                                                                                <i class="fas fa-venus"></i>
-                                                                            </button>
-                                                                        @elseif ($amalan_list_absen->ket_hijriyah_amalan_list == "SAKIT")
-                                                                            <button type="submit" class="btn" style="color: rgb(83, 163, 28); border: 0px; padding: 0px;">
-                                                                                <i class="fas fa-user-times"></i>
-                                                                            </button>
-                                                                        @else
-                                                                            <button type="submit" class="btn" style="color: rgb(0, 184, 255); border: 0px; padding: 0px;">
-                                                                                <i class="fas fa-check-circle"></i>
-                                                                            </button>
-                                                                        @endif
-                                                                        </center>
+                                                        @if ($check == $i || is_null($check) )
+                                                        <td>
+                                                            <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('{{ $amalan_list->nama_amalan_list }} Tanggal {{ $i }}, Apakah anda yakin untuk menghapusnya?');" method="post">
+                                                                @csrf
+                                                                <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
+                                                                <center>
+                                                                    @if ($amalan_list_absen->ket_hijriyah_amalan_list == "HAID")
+                                                                    <button type="submit" class="btn" style="color: rgb(255, 56, 156); border: 0px; padding: 0px;">
+                                                                        <i class="fas fa-venus"></i>
+                                                                    </button>
+                                                                    @elseif ($amalan_list_absen->ket_hijriyah_amalan_list == "SAKIT")
+                                                                    <button type="submit" class="btn" style="color: rgb(83, 163, 28); border: 0px; padding: 0px;">
+                                                                        <i class="fas fa-user-times"></i>
+                                                                    </button>
+                                                                    @else
+                                                                    <button type="submit" class="btn" style="color: rgb(0, 184, 255); border: 0px; padding: 0px;">
+                                                                        <i class="fas fa-check-circle"></i>
+                                                                    </button>
+                                                                    @endif
+                                                                </center>
 
-                                                                    </form>
-                                                                </td>
-                                                            @else
-                                                                <td></td>
-                                                            @endif
+                                                            </form>
+                                                        </td>
+                                                        @else
+                                                        <td></td>
+                                                        @endif
 
                                                         @endfor
                                                     </tr>
@@ -221,18 +312,66 @@
             </div> <!-- card-body -->
         </div><!-- card -->
     </div><!-- row -->
-</div><!-- row -->
+</div>
+@php
+$karyawan = DB::table('users')->where('last_name', '=', 'KARYAWAN')->count();
+$pengajar = DB::table('users')->where('last_name', '=', 'PENGAJAR')->count();
+$santri   = DB::table('users')->where('last_name', '=', 'SANTRI')->count();
+$ikhwan   = DB::table('users')->where('jenis', '=', 'IKHWAN')->count();
+$akhwat   = DB::table('users')->where('jenis', '=', 'AKHWAT')->count();
+@endphp
 @stack('before-scripts')
+{!! script('https://cdn.jsdelivr.net/npm/chart.js@2.8.0') !!}
 <script type="text/javascript">
-$(function() {
-    $('.tglselect').on('change', function (){
-        var url = "{{ request()->url() }}";
-        if($("#tgl").val()!="{{ $tgl }}") {
-            url_ = url+'?tgl='+$("#tgl").val();
-            window.location=url_;
+    $( document ).ready(function() {
+        $("#open").focus();
+    });
+
+    var pieChart = new Chart($('#total-peserta'), {
+        type: 'pie',
+        data: {
+            labels: ['Karyawan - {!! $karyawan !!}','Pengajar - {!! $pengajar !!}', 'Santri - {!! $santri !!}', ],
+            datasets: [{
+                data: [ {!! $karyawan !!}, {!! $pengajar !!}, {!! $santri !!} ],
+                backgroundColor: ['#FF6384', '#4DBD74', '#FFCE56'],
+                // hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#52c0c0']
+            }]
+        },
+        options: {
+            responsive: true
         }
     });
-});
+
+    var doughnutChart = new Chart($('#jenis-peserta'), {
+        type: 'bar',
+        data: {
+            labels: ['Ikhwan - {!! $ikhwan !!}', 'Akhwat - {!! $akhwat !!}'],
+            datasets: [{
+                label: 'Ikhwan',
+                data: [{!! $ikhwan !!}],
+                backgroundColor: ['#36A2EB'],
+            },{
+                label: 'Akhwat',
+                data: [{!! $akhwat !!}],
+                backgroundColor: ['#E83E8C'],
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('.tglselect').on('change', function (){
+            var url = "{{ request()->url() }}";
+            if($("#tgl").val()!="{{ $tgl }}") {
+                url_ = url+'?tgl='+$("#tgl").val();
+                window.location=url_;
+            }
+        });
+    });
 </script>
 @stack('after-scripts')
 @endsection
