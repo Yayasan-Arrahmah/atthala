@@ -87,6 +87,11 @@
         margin-bottom: 4px;
     }
 
+    .noborder td, .noborder th, .noborder thead {
+        border: none;
+        font-size: 11px
+    }
+
     </style>
 
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
@@ -200,6 +205,11 @@
     <script>
         $(document).ready( function () {
             $('#user').DataTable({
+                "pageLength": 15,
+                "scrollX": true,
+            });
+
+            $('#amalan').DataTable({
                 "pageLength": 15,
                 "scrollX": true,
             });

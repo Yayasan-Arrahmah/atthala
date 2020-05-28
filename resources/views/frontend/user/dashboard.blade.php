@@ -62,11 +62,10 @@
                                                 // $tahun_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('o');
                                                 // $hijriyah           = \GeniusTS\HijriDate\Date::now();
 
-                                                // Ganti Ramadhan
+                                                // Ganti Ramadhan Statis
                                                 $tanggal_hijriyah   = 30;
                                                 $bulan_hijriyah     = 9;
                                                 $tahun_hijriyah     = 1441;
-                                                $hijriyah           = \GeniusTS\HijriDate\Date::now();
 
                                                 $tgl = !empty(request('tgl')) ? request('tgl') : intval($tanggal_hijriyah);
 

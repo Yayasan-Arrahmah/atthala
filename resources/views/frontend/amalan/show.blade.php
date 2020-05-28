@@ -24,10 +24,9 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
-
                         <div class="col">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover table-sm">
                                     <tr>
                                         <th>@lang('frontend_amalans.labels.title')</th>
                                         <td>{{ $amalan->title }}</td>
@@ -35,7 +34,6 @@
                                 </table>
                             </div><!--table-responsive-->
                         </div><!--col-->
-
                     </div><!--tab-->
                 </div><!--tab-content-->
             </div><!--col-->
