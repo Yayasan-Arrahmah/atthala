@@ -357,7 +357,14 @@ $akhwat   = DB::table('users')->where('jenis', '=', 'AKHWAT')->count();
             }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     });
 
