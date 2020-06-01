@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('backend_amalans.labels.management') . ' | ' . __('backend_amalans.labels.view'))
+@section('title', ' Yayasan Arrahmah Balikpapan - Amal Yaumiah 2020')
 
 @section('breadcrumb-links')
 @include('backend.amalan.includes.breadcrumb-links')

@@ -95,6 +95,7 @@
     </style>
 
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+    {{ style('https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css') }}
 
     @stack('after-styles')
     @stack('before-scripts')
@@ -143,6 +144,9 @@
 
     {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     {!! script('//cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js') !!}
+    {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
+    {!! script('https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js') !!}
+    {!! script('https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js') !!}
 
     <script>
     $(".custom-file-input").on("change", function() {
@@ -212,6 +216,10 @@
             $('#amalan').DataTable({
                 "pageLength": 15,
                 "scrollX": true,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'List Data Peserta Amal Yaumiah 2020' }
+                ]
             });
 
             $('#pengajartahsin').DataTable({
