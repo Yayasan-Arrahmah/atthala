@@ -40,9 +40,9 @@ class TahsinController extends Controller
             'nama_peserta'           => 'required',
             'nohp_peserta'           => 'required',
             'jenis_peserta'          => 'required',
-            'fotoktp_peserta'        => 'required|file|image|mimes:jpg,jpeg,png,gif,webp|max:3072',
-            'rekaman_peserta'        => 'required|file|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,m4a|max:20480',
-            'bukti_transfer_peserta' => 'required|file|image|mimes:jpg,jpeg,png,gif,webp|max:3072'
+            'fotoktp_peserta'        => 'required|file|image|mimes:jpg,jpeg,png,gif,webp|max:30720',
+            'rekaman_peserta'        => 'required|file|max:20480',
+            'bukti_transfer_peserta' => 'required|file|image|mimes:jpg,jpeg,png,gif,webp|max:30720'
         ]);
 
         $tahsin     = new Tahsin;
