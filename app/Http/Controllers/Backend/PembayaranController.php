@@ -69,7 +69,7 @@ class PembayaranController extends Controller
     public function store(StorePembayaranRequest $request)
     {
         $this->pembayaranRepository->create($request->only(
-            'uuid_pembayaran'
+            'id_peserta'
         ));
 
         // Fire create event (PembayaranCreated)

@@ -190,7 +190,7 @@ class TahsinController extends Controller
 
         $pembayaran = new Pembayaran;
 
-        $pembayaran->uuid_pembayaran    = $request->uuidpembayaran;
+        $pembayaran->id_peserta         = $request->id_peserta;
         $pembayaran->nominal_pembayaran = (int)$nominal;
         $pembayaran->jenis_pembayaran   = $request->jenispembayaran;
         $pembayaran->admin_pembayaran   = Auth::user()->email;

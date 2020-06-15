@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col col-sm-3 order-2 order-sm-1  mb-4">
+                    <div class="col col-sm-3 order-2 order-sm-1 mb-4 ">
                         @include('frontend.user.dashboard.user-info')
                     </div><!--col-md-4-->
 

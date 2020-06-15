@@ -53,6 +53,27 @@ return [
             'visibility' => 'public',
         ],
 
+        'ktp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/ktp'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'rekaman' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/rekaman'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'bukti-transfer' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/bukti-transfer'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

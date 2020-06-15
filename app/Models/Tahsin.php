@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Traits\Attribute\TahsinAttribute;
-use Webpatser\Uuid\Uuid;
 
 class Tahsin extends Model
 {
@@ -39,17 +38,27 @@ class Tahsin extends Model
         'pindahan_tahsin_2',
         'jenis_peserta',
         'angkatan_peserta',
+        'pilih_jadwal_peserta',
+        'pilih_jadwal_cadangan_1_peserta',
+        'pilih_jadwal_cadangan_2_peserta',
+        'alamat_peserta',
+        'pekerjaan_peserta',
+        'tempat_lahir_peserta',
+        'waktu_lahir_peserta',
+        'fotoktp_peserta',
+        'rekaman_peserta',
         'status_peserta',
-        'status_pembayaran'
+        'status_pembayaran',
+        'status_kelulusan'
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->uuid_tahsin = (string) Uuid::generate(4);
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->uuid_tahsin = (string) Uuid::generate(4);
+    //     });
+    // }
 
     public static function search($query)
     {

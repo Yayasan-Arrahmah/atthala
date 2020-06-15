@@ -16,10 +16,11 @@ class CreatePembayaransTable extends Migration
         if (!Schema::hasTable('pembayarans')) {
             Schema::create('pembayarans', function (Blueprint $table) {
                 $table->increments('id');
-                $table->text('uuid_pembayaran', 100);
+                $table->text('id_peserta', 20);
                 $table->integer('nominal_pembayaran');
                 $table->text('keterangan_pembayaran')->nullable();
                 $table->text('jenis_pembayaran', 100);
+                $table->text('bukti_transfer_pembayaran')->nullable();
                 $table->text('admin_pembayaran', 100);
                 $table->softDeletes();
                 $table->timestamps();

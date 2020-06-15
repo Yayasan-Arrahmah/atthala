@@ -23,7 +23,8 @@
 
     <style>
         body{
-            background-image: url('img/back.jpeg');
+            background-image: url('/img/back.jpeg');
+
             /* font-family: 'Baloo Bhaina 2'; */
         }
     </style>
@@ -119,27 +120,29 @@
     @stack('before-scripts')
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/frontend.js')) !!}
-    {{-- {!! script('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') !!} --}}
+    {!! script(mix('js/backend.js')) !!}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
+    {!! script('https://printjs-4de6.kxcdn.com/print.min.js') !!}
+    {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js') !!} --}}
 
 
-        <script>
-            function startTime() {
-                var today = new Date();
-                var h = today.getHours();
-                var m = today.getMinutes();
-                var s = today.getSeconds();
-                m = checkTime(m);
-                s = checkTime(s);
-                document.getElementById('txt').innerHTML =
-                h + ":" + m + ":" + s;
-                var t = setTimeout(startTime, 500);
-            }
-            function checkTime(i) {
-                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-                return i;
-            }
-        </script>
+    <script>
+
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('uploads').innerHTML = h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
+    </script>
     @stack('after-scripts')
 </head>
 <body onload="startTime()">
@@ -162,5 +165,6 @@
     </div><!-- #app -->
 
     @include('includes.partials.ga')
+
 </body>
 </html>
