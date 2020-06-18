@@ -53,7 +53,7 @@ window.print();
                         <li style="width:30%;list-style-type:none;padding-bottom:5px">Pekerjaan</li>
                         <li style="width:70%;list-style-type:none">: <strong>{{ $data->pekerjaan_peserta }}</strong></li>
                         <li style="width:30%;list-style-type:none;padding-bottom:5px">Tempat, Tanggal Lahir</li>
-                        <li style="width:70%;list-style-type:none">: <strong>{{ $data->tempat_lahir_peserta }}, {{ $data->tanggal_lahir_peserta }}</strong></li>
+                        <li style="width:70%;list-style-type:none">: <strong>{{ $data->tempat_lahir_peserta }}, {{ $data->waktu_lahir_peserta }}</strong></li>
                         <label style="width:30%"></label><label style="width:70%"></label>
 
                     </div>

@@ -90,7 +90,7 @@
                             @php
                             $totalpembayaran = DB::table('pembayarans')
                                     ->select(DB::raw('SUM(nominal_pembayaran) as total'))
-                                    ->where('uuid_pembayaran', $tahsin->uuid_tahsin)
+                                    ->where('id_peserta', $tahsin->no_tahsin)
                                     ->first();
                             @endphp
                             <div>
@@ -120,7 +120,7 @@
                                         name="nominalpembayaran">
                                     <input type="hidden" name="jenispembayaran" value="TAHSIN">
                                     <input type="hidden" name="namapembayaran" value="{{ $tahsin->nama_peserta }} - {{ $tahsin->nohp_peserta }}, {{ $tahsin->level_peserta }} - {{ $tahsin->jadwal_tahsin }}">
-                                    <input type="hidden" name="uuidpembayaran" value="{{ $tahsin->uuid_tahsin }}">
+                                    <input type="hidden" name="uuidpembayaran" value="{{ $tahsin->no_tahsin }}">
                                     <button class="btn btn-primary btn-sm btn-block"
                                         @if ( $totalpembayaran->total >= 400000  )
                                             disabled
@@ -149,7 +149,7 @@
                                     $noriwayat = 1;
                                     $riwayatpembayaran = DB::table('pembayarans')
                                             ->select('nominal_pembayaran', 'admin_pembayaran', 'created_at' )
-                                            ->where('uuid_pembayaran', $tahsin->uuid_tahsin)
+                                            ->where('id_peserta', $tahsin->no_tahsin)
                                             ->get();
                                     @endphp
                                     @foreach($riwayatpembayaran as $riwayat)

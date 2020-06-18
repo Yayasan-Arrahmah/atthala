@@ -10,11 +10,14 @@ Route::bind('tahsin', function ($value) {
 });
 
 Route::group(['prefix' => 'tahsin'], function () {
-    Route::get('',         [TahsinController::class, 'index'])->name('tahsin.index');
-    Route::post('simpan',     [TahsinController::class, 'simpan'])->name('tahsin.simpan');
-    Route::get('pendaftaran',     [TahsinController::class, 'pendaftaran'])->name('tahsin.pendaftaran');
-    Route::get('selesai',     [TahsinController::class, 'selesai'])->name('tahsin.selesai');
-    Route::get('pdf',     [TahsinController::class, 'pdf'])->name('tahsin.print.daftar');
+    Route::get('',                     [TahsinController::class, 'index'])->name('tahsin.index');
+    Route::post('uploadktp',           [TahsinController::class, 'uploadktp'])->name('tahsin.uploadktp');
+    Route::post('uploadrekaman',       [TahsinController::class, 'uploadrekaman'])->name('tahsin.uploadrekaman');
+    Route::post('uploadbuktitransfer', [TahsinController::class, 'uploadbuktitransfer'])->name('tahsin.uploadbuktitransfer');
+    Route::post('simpan',              [TahsinController::class, 'simpan'])->name('tahsin.simpan');
+    Route::get('pendaftaran',          [TahsinController::class, 'pendaftaran'])->name('tahsin.pendaftaran');
+    Route::get('selesai',              [TahsinController::class, 'selesai'])->name('tahsin.selesai');
+    Route::get('pdf',                  [TahsinController::class, 'pdf'])->name('tahsin.print.daftar');
     // Route::post('store', 	[TahsinController::class, 'store']		)->name('tahsins.store');
     // Route::get(	'deleted', 	[TahsinController::class, 'deleted']	)->name('tahsins.deleted');
 });

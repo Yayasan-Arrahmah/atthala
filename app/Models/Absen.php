@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Traits\Attribute\PembayaranAttribute;
+use App\Models\Traits\Attribute\AbsenAttribute;
 
-class Pembayaran extends Model
+class Absen extends Model
 {
-    use PembayaranAttribute,
+    use AbsenAttribute,
         SoftDeletes;
 
     /**
@@ -25,15 +25,6 @@ class Pembayaran extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid_pembayaran',
-        'nominal_pembayaran',
-        'keterangan_pembayaran',
-        'jenis_pembayaran',
-        'admin_pembayaran',
+        'id_peserta',
     ];
-
-    public function tahsin()
-    {
-        return $this->belongsTo(Tahsin::class, 'id_peserta', 'no_tahsin');
-    }
 }
