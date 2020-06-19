@@ -6,7 +6,7 @@
 @stack('before-styles')
 <link rel="stylesheet" type="text/css" href="/filepond/app.css">
 @stack('after-styles')
-{{ $sesidaftar }}
+{{-- {{ $sesidaftar }} --}}
 <form action="{{ route('frontend.tahsin.simpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
@@ -362,17 +362,31 @@
 </form>
 @stack('before-scripts')
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
 <script src="/filepond/app.js"></script>
 <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
 <script>
     $(function(){
-        $.fn.filepond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
+        $.fn.filepond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginFileValidateType,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImageResize
+        );
     });
 
     $(function(){
             $('.upload-ktp').filepond({
+                labelIdle: 'Pilih File/Foto KTP <span class="filepond--label-action">Browse</span>',
                 allowMultiple: false,
                 acceptedFileTypes: ['image/*'],
+                allowFileSizeValidation: true,
+                maxFileSize: '10MB',
+                allowImageResize: true,
+                imageResizeTargetWidth: 100,
+                imageResizeTargetHeight: null,
+                imageResizeMode: 'cover',
                 server: {
                     url: '/tahsin/uploadktp',
                     process: {
@@ -383,8 +397,10 @@
                 }
             });
             $('.upload-rekaman').filepond({
+                labelIdle: 'Pilih File/Rekaman Tilawah <span class="filepond--label-action">Browse</span>',
                 allowMultiple: false,
-                acceptedFileTypes: ['audio/*'],
+                allowFileSizeValidation: true,
+                maxFileSize: '15MB',
                 server: {
                     url: '/tahsin/uploadrekaman',
                     process: {
@@ -395,8 +411,11 @@
                 }
             });
             $('.upload-buktitransfer').filepond({
+                labelIdle: 'Pilih File/Foto Bukti Transfer <span class="filepond--label-action">Browse</span>',
                 allowMultiple: false,
                 acceptedFileTypes: ['image/*'],
+                allowFileSizeValidation: true,
+                maxFileSize: '10MB',
                 server: {
                     url: '/tahsin/uploadbuktitransfer',
                     process: {
