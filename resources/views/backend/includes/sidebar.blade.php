@@ -38,6 +38,13 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen')) }} "
+                href="{{ route('admin.tahsins.absen') }}
+                " > <i class="nav-icon fas fa-users"></i>
+                Absen
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal')) }} "
                 href="{{ route('admin.tahsins.jadwal') }}
                 " > <i class="nav-icon fas fa-list-alt"></i>
@@ -60,7 +67,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengaturan')) }} "
-                {{-- href="{{ route('admin.tahsins.pengaturan') }} --}}
+                href="{{ route('admin.tahsins.pengaturan') }}
                 " > <i class="nav-icon fas fa-cog"></i>
                 Pengaturan
                 </a>

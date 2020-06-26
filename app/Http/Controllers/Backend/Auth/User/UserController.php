@@ -11,6 +11,7 @@ use App\Repositories\Backend\Auth\PermissionRepository;
 use App\Http\Requests\Backend\Auth\User\StoreUserRequest;
 use App\Http\Requests\Backend\Auth\User\ManageUserRequest;
 use App\Http\Requests\Backend\Auth\User\UpdateUserRequest;
+use Illuminate\Http\Request;
 
 /**
  * Class UserController.
@@ -37,10 +38,33 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(ManageUserRequest $request)
+    public function index(Request $request)
     {
-        return view('backend.auth.user.index')
-            ->withUsers($this->userRepository->getActivePaginated(25, 'id', 'asc'));
+        $paged   = $request->input('paged') ?? 10;
+        $orderBy = 'created_at';
+        $sort    = 'desc';
+        $cari    = $request->input('cari');
+        $jenis   = $request->input('jenis');
+        $status  = $request->input('status');
+
+        // $users = User::with('roles', 'permissions', 'providers')
+        $users = User::with('roles', 'permissions', 'providers')
+                    ->when($cari, function ($query, $cari) {
+                        return $query->where('first_name', 'like', '%'.$cari.'%')
+                                    ->orWhere('email', 'like', '%'.$cari.'%');
+                    })
+                    ->when($jenis, function ($query, $jenis) {
+                        return $query->where('jenis', $jenis);
+                    })
+                    ->when($status, function ($query, $status) {
+                        return $query->where('status', $status);
+                    })
+                    ->active()
+                    ->orderBy($orderBy, $sort)
+                    ->paginate($paged);
+        return view('backend.auth.user.index', compact('users', 'paged'));
+
+            // ->withUsers($this->userRepository->getActivePaginated(25, 'id', 'asc'));
     }
 
     /**

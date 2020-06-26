@@ -31,6 +31,9 @@ return [
         // The default role all new registered users get added to
         'default_role' => 'user',
 
+        // The default role all new registered users get added to
+        'pengajar_role' => 'pengajar',
+
         /*
          * Whether or not new users need to be approved by an administrator before logging in
          * If this is set to true, then confirm_email is not in effect

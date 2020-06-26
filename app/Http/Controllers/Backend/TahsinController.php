@@ -24,6 +24,8 @@ use App\Http\Requests\Backend\Tahsin\UpdateTahsinRequest;
 use App\Events\Backend\Tahsin\TahsinCreated;
 use App\Events\Backend\Tahsin\TahsinUpdated;
 use App\Events\Backend\Tahsin\TahsinDeleted;
+use App\Models\PengaturanTahsin;
+
 
 class TahsinController extends Controller
 {
@@ -370,5 +372,15 @@ class TahsinController extends Controller
     {
         return view('backend.tahsin.deleted')
             ->withtahsins($this->tahsinRepository->getDeletedPaginated(25, 'id', 'asc'));
+    }
+
+    public function pengaturan(ManageTahsinRequest $request)
+    {
+        return view('backend.tahsin.pengaturan');
+    }
+
+    public function absen(ManageTahsinRequest $request)
+    {
+        return view('backend.tahsin.absen');
     }
 }

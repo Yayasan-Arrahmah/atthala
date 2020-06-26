@@ -76,6 +76,11 @@ trait UserMethod
         return $this->hasRole(config('access.users.admin_role'));
     }
 
+    public function isPengajar()
+    {
+        return $this->hasRole(config('access.users.pengajar_role'));
+    }
+
     /**
      * @return bool
      */

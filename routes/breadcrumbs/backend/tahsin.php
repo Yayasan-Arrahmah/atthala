@@ -49,3 +49,13 @@ Breadcrumbs::for('admin.tahsins.createbayar', function ($trail) {
     $trail->parent('admin.tahsins.index');
     $trail->push('createbayar', route('admin.tahsins.createbayar'));
 });
+
+Breadcrumbs::for('admin.tahsins.pengaturan', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Pengaturan', route('admin.tahsins.pengaturan'));
+});
+
+Breadcrumbs::for('admin.tahsins.absen', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Absen', route('admin.tahsins.absen'));
+});
