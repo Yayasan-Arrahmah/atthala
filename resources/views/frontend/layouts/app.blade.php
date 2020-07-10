@@ -19,6 +19,10 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
+    {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css') }} --}}
+
+    {{-- {{ style('css/bootstrap-editable.css') }} --}}
+
     {{-- {{ style('https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap') }} --}}
 
     <style>
@@ -113,21 +117,28 @@
             margin-bottom: 4px;
         }
 
+        .info-absen {
+            font-weight: 700;
+        }
+
     </style>
 
     @stack('after-styles')
 
     @stack('before-scripts')
+
+
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
-    {!! script('https://printjs-4de6.kxcdn.com/print.min.js') !!}
-    {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js') !!} --}}
 
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
+
+    {{-- {!! script('https://printjs-4de6.kxcdn.com/print.min.js') !!} --}}
+    {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js') !!} --}}
+    {{-- {!! script('js/bootstrap-editable.min.js') !!} --}}
 
     <script>
-
         function startTime() {
             var today = new Date();
             var h = today.getHours();
@@ -144,27 +155,32 @@
         }
     </script>
     @stack('after-scripts')
+    @livewireStyles
+
 </head>
-<body onload="startTime()">
+<body>
+    {{-- <body onload="startTime()"> --}}
     @include('includes.partials.demo')
 
     <div id="app">
-        {{-- @include('includes.partials.logged-in-as')
-        @include('frontend.includes.nav') --}}
+        @include('includes.partials.logged-in-as')
+        {{-- @include('frontend.includes.nav') --}}
 
         <div class="container">
-            <br>
             @auth
                 @include('frontend.includes.nav-a')
             @endauth
-            @include('includes.partials.messages')
+            {{-- @include('includes.partials.messages') --}}
+            @include('includes.partials.notif')
+
             @yield('content')
         </div><!-- container -->
-        <center style="color: #fff">Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
+        <center style="color: #fff; padding-bottom: 20px">Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
 
     </div><!-- #app -->
 
     @include('includes.partials.ga')
+    @livewireScripts
 
 </body>
 </html>

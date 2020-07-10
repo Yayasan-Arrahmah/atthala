@@ -26,5 +26,13 @@ class Absen extends Model
      */
     protected $fillable = [
         'id_peserta',
+        'user_create_absen',
+        'pertemuan_ke_absen',
+        'jenis_absen',
+        'level_kelas_absen',
+        'waktu_kelas_absen',
+        'jenis_kelas_absen',
+        'angkatan_absen',
+        'keterangan_absen',
     ];
 }

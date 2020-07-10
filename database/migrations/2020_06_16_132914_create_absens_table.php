@@ -19,6 +19,11 @@ class CreateAbsensTable extends Migration
                 $table->text('id_peserta', 80);
                 $table->text('user_create_absen', 180)->nullable();
                 $table->text('pertemuan_ke_absen', 180)->nullable();
+                $table->text('jenis_absen', 80)->nullable();
+                $table->text('angkatan_absen', 80)->nullable();
+                $table->text('level_kelas_absen', 80)->nullable();
+                $table->text('waktu_kelas_absen', 80)->nullable();
+                $table->text('jenis_kelas_absen', 80)->nullable();
                 $table->text('keterangan_absen', 180)->nullable();
                 $table->softDeletes();
                 $table->timestamps();

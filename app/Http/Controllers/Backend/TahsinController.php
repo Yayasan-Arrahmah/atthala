@@ -67,10 +67,10 @@ class TahsinController extends Controller
     public function jadwal(ManageTahsinRequest $request)
     {
         $datajadwals = DB::table('tahsins')
-                        ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta',(DB::raw('COUNT(*) as jumlah ')))
-                        ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
-                        ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
-                        ->paginate(5000);
+            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->paginate(5000);
 
         return view('backend.tahsin.jadwal', compact('datajadwals'));
     }
@@ -78,10 +78,10 @@ class TahsinController extends Controller
     public function pengajar(ManageTahsinRequest $request)
     {
         $datapengajars = DB::table('tahsins')
-                        ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
-                        ->groupBy('nama_pengajar', 'jenis_peserta' )
-                        ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-                        ->paginate(5000);
+            ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->paginate(5000);
 
         return view('backend.tahsin.pengajar', compact('datapengajars'));
     }
@@ -92,8 +92,8 @@ class TahsinController extends Controller
         //buat session untuk ngakalin ngirim data
         $jenispeserta     = request('jenispeserta');
         $angkatanpeserta  = request('angkatanpeserta');
-        $request->session()->put('jenispeserta', $jenispeserta );
-        $request->session()->put('angkatanpeserta', $angkatanpeserta );
+        $request->session()->put('jenispeserta', $jenispeserta);
+        $request->session()->put('angkatanpeserta', $angkatanpeserta);
 
         if ($request->hasFile('file')) {
 
@@ -107,23 +107,23 @@ class TahsinController extends Controller
 
             // membuat nama file unik
             $mytime = Carbon::now();
-            $nama_file = $mytime->toDateTimeString().'-'.rand().'-'.$file->getClientOriginalName();
+            $nama_file = $jenispeserta . '-' . $angkatanpeserta . '-' . $mytime->toDateTimeString() . '-' . rand() . '-' . $file->getClientOriginalName();
 
             // upload ke folder file_import di dalam folder public
-            $file->move('file_import',$nama_file);
+            $file->move('file_import', $nama_file);
 
             // import data
             // $dataimport = Carbon::now();
             $dataimport = new TahsinsImport;
 
 
-            Excel::import($dataimport, public_path('/file_import/'.$nama_file));
+            Excel::import($dataimport, public_path('/file_import/' . $nama_file));
 
             $banyakdata = $dataimport->getRowCount();
 
             // alihkan halaman kembali
             return redirect()->route('admin.tahsins.upload')
-            ->withFlashSuccess('Upload File Excel Peserta Berhasil. Total '.$banyakdata.' Data');
+                ->withFlashSuccess('Upload File Excel Peserta Berhasil. Total ' . $banyakdata . ' Data');
         } else {
             return redirect()->route('admin.tahsins.upload')->withFlashSuccess('Upload Gagal');
         }
@@ -135,8 +135,8 @@ class TahsinController extends Controller
         //buat session untuk ngakalin ngirim data
         $jenispeserta     = request('jenispeserta');
         $angkatanpeserta  = request('angkatanpeserta');
-        $request->session()->put('jenispeserta', $jenispeserta );
-        $request->session()->put('angkatanpeserta', $angkatanpeserta );
+        $request->session()->put('jenispeserta', $jenispeserta);
+        $request->session()->put('angkatanpeserta', $angkatanpeserta);
 
         if ($request->hasFile('file')) {
 
@@ -150,23 +150,23 @@ class TahsinController extends Controller
 
             // membuat nama file unik
             $mytime = Carbon::now();
-            $nama_file = $mytime->toDateTimeString().'-'.rand().'-'.$file->getClientOriginalName();
+            $nama_file = $mytime->toDateTimeString() . '-' . rand() . '-' . $file->getClientOriginalName();
 
             // upload ke folder file_import di dalam folder public
-            $file->move('file_import',$nama_file);
+            $file->move('file_import', $nama_file);
 
             // import data
             // $dataimport = Carbon::now();
             $dataimport = new PembayaransImport;
 
 
-            Excel::import($dataimport, public_path('/file_import/'.$nama_file));
+            Excel::import($dataimport, public_path('/file_import/' . $nama_file));
 
             $banyakdata = $dataimport->getRowCount();
 
             // alihkan halaman kembali
             return redirect()->route('admin.tahsins.upload')
-            ->withFlashSuccess('Upload File Excel Pembayaran Berhasil. Total '.$banyakdata.' Data');
+                ->withFlashSuccess('Upload File Excel Pembayaran Berhasil. Total ' . $banyakdata . ' Data');
         } else {
             return redirect()->route('admin.tahsins.upload')->withFlashSuccess('Upload Gagal');
         }
@@ -183,7 +183,7 @@ class TahsinController extends Controller
         $belumlunas = DB::table('tahsins')->where('status_pembayaran', '=', '1')->count();
         $lunas      = DB::table('tahsins')->where('status_pembayaran', '=', '2')->count();
 
-        return view('backend.tahsin.pembayaran', compact('nominal0','nominal1','nominal2','nominal3','nominal4', 'belumlunas', 'lunas'));
+        return view('backend.tahsin.pembayaran', compact('nominal0', 'nominal1', 'nominal2', 'nominal3', 'nominal4', 'belumlunas', 'lunas'));
     }
 
     public function createbayar(Request $request)
@@ -193,14 +193,14 @@ class TahsinController extends Controller
         $pembayaran = new Pembayaran;
 
         $pembayaran->id_peserta         = $request->id_peserta;
-        $pembayaran->nominal_pembayaran = (int)$nominal;
+        $pembayaran->nominal_pembayaran = (int) $nominal;
         $pembayaran->jenis_pembayaran   = $request->jenispembayaran;
         $pembayaran->admin_pembayaran   = Auth::user()->email;
 
         $pembayaran->save();
 
         return redirect()->route('admin.tahsins.pembayaran')
-        ->withFlashSuccess('Pembayaran Atas Nama : <br>'.$request->namapembayaran.'<br>Dengan Nominal '.$request->nominalpembayaran.'<br><strong>Berhasil</strong>');
+            ->withFlashSuccess('Pembayaran Atas Nama : <br>' . $request->namapembayaran . '<br>Dengan Nominal ' . $request->nominalpembayaran . '<br><strong>Berhasil</strong>');
     }
 
     /**

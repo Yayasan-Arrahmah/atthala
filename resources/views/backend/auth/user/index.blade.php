@@ -40,21 +40,21 @@
             </div>
             <div class="col-md-2 text-center">
                 <select class="form-control" name="status" onchange='this.form.submit()'>
-                    <option value="">{{ request()->input('status') ?? 'Pilih Status' }}</option>
+                    <option value="{{ request()->input('status') ?? '' }}">{{ request()->input('status') ?? 'Pilih Status' }}</option>
                     <option>---</option>
                     <option value="">Semua</option>
-                    <option value="KARYAWAN">Karyawan</option>
-                    <option value="PENGAJAR">Pengajar</option>
-                    <option value="SANTRI">Santir</option>
+                    <option value="KARYAWAN">KARYAWAN</option>
+                    <option value="PENGAJAR">PENGAJAR</option>
+                    <option value="SANTRI">SANTRI</option>
                 </select>
             </div>
             <div class="col-md-2 text-center">
                 <select class="form-control" name="jenis" onchange='this.form.submit()'>
-                    <option value="">{{ request()->input('jenis') ?? 'Pilih Jenis' }}</option>
+                    <option value="{{ request()->input('jenis') ?? '' }}">{{ request()->input('jenis') ?? 'Pilih Jenis' }}</option>
                     <option>---</option>
                     <option value="">Semua</option>
-                    <option value="IKHWAN">Ikhwan</option>
-                    <option value="AKHWAT">Akhwat</option>
+                    <option value="IKHWAN">IKHWAN</option>
+                    <option value="AKHWAT">AKHWAT</option>
                 </select>
             </div>
             <div class="col-md-4 pull-right">

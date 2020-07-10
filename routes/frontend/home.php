@@ -11,6 +11,7 @@ use Utils\Twilio;
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
+
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
@@ -25,7 +26,6 @@ Route::get('/wa', function () {
     } catch (\Throwable $th) {
         dd($th);
     }
-
 });
 
 Route::get('/peserta-tahsin', [HomeController::class, 'pesertaTahsin'])->name('pesertaTahsin');
@@ -46,5 +46,13 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
 
         // User Profile Specific
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+        //User All
+        Route::get('amal-yaumiah', [DashboardController::class, 'amalyaumiah'])->name('amal-yaumiah');
+
+        //User Pengajar
+        Route::get('absen/tahsin',         [DashboardController::class, 'absentahsin'])->name('absentahsin');
+        Route::get('absen/tahsin/kelas',  [DashboardController::class, 'absentahsinkelas'])->name('absentahsinkelas');
+        Route::post('absen/tahsin/input',  [DashboardController::class, 'absentahsininput'])->name('absentahsininput');
     });
 });
