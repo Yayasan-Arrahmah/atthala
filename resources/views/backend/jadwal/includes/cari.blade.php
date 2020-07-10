@@ -19,7 +19,7 @@
                     <option value="TAMHIDI">TAMHIDI</option>
                     <option value="TAWATSUTHI">TAWATSUTHI</option>
                     <option value="TILAWAH TAWATSUTHI">TILAWAH TAWATSUTHI</option>
-                    <option value="I'DADI">I'DADI</option>
+                    <option value="IDADI">IDADI</option>
                     <option value="TAKMILI">TAKMILI</option>
                     <option value="TAHSINI">TAHSINI</option>
                     <option value="ITQON">ITQON</option>

@@ -91,7 +91,7 @@
                                                 $warna = "#6610f2";
                                             } elseif ($jadwal->level_peserta  == "TILAWAH TAWATSUTHI") {
                                                 $warna = "#ffc107";
-                                            } elseif ($jadwal->level_peserta  == "I'DADI") {
+                                            } elseif ($jadwal->level_peserta  == "IDADI") {
                                                 $warna = "#e83e8c";
                                             } elseif ($jadwal->level_peserta  == "TAKMILI") {
                                                 $warna = "#4dbd74";

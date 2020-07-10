@@ -1,25 +1,6 @@
 @extends('frontend.user.layout')
 
 @section('user')
-@stack('before-styles')
-<style>
-    th:first-child, td:first-child
-    {
-        position:sticky;
-        left:0px;
-        /* border: 1px solid #c8ced3; */
-    }
-    tr:nth-child(odd) > td{
-        background-color: #f2f2f2;
-    }
-    tr:nth-child(even) > td{
-        background-color: #fff;
-    }
-    tr:nth-child(odd) > th{
-        background-color: white;
-    }
-</style>
-@stack('after-styles')
 
 <div class="row" >
     <div class="col-md-12">
