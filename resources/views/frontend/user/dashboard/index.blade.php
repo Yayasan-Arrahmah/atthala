@@ -16,7 +16,7 @@
             Ahlan wa Sahlan, {{ auth()->user()->first_name }}
         </div>
     </div>
-    <div class="col-6 col-lg-6">
+    <div class="col-xs-12 col-md-6">
         <div class="card">
             <div class="card-body p-0 d-flex align-items-center">
                 <i class="fa fa-edit bg-primary p-4 px-2 font-2xl mr-3"></i>
@@ -29,20 +29,20 @@
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-6">
+    <div class="col-xs-12 col-md-6">
         <div class="card">
             <div class="card-body p-0 d-flex align-items-center">
-                <i class="fa fa-tasks bg-success p-4 px-2 font-2xl mr-2"></i>
+                <i class="fa fa-tasks bg-success p-4 px-2 font-2xl mr-3"></i>
                 <div>
                     <a href="{{ route('frontend.user.amal-yaumiah') }}">
-                        <div class="text-sm text-success">Amal Yaumiah</div>
-                        <div class="text-muted font-weight-bold small">Ramadhan 1441 H</div>
+                        <div class="text-value-sm text-success">Amal Yaumiah</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Ramadhan 1441 H</div>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-6">
+    <div class="col-xs-12 col-md-6">
         <div class="card">
             <div class="card-body p-0 d-flex align-items-center">
                 <i class="fa fa-th-list bg-danger p-4 px-2 font-2xl mr-3"></i>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-6">
+    <div class="col-xs-12 col-md-6">
         <div class="card">
             <div class="card-body p-0 d-flex align-items-center">
                 <i class="fa fa-user bg-warning p-4 px-2 font-2xl mr-3"></i>
