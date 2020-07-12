@@ -88,9 +88,13 @@ class DashboardController extends Controller
         $cekabsen = Absen::find($request->input('idabsen'));
 
         if (isset($cekabsen)) {
-            $cekabsen->update([
-                'keterangan_absen' => $request->input('keteranganabsen'),
-            ]);
+            if ($request->input('keteranganabsen') == '-') {
+                $cekabsen->delete();
+            } else {
+                $cekabsen->update([
+                    'keterangan_absen' => $request->input('keteranganabsen'),
+                ]);
+            }
         } else {
             $absen->create([
                 'id_peserta'             => $request->input('peserta'),

@@ -143,7 +143,7 @@
                                             @isset($cek)
                                             <option value="{{ $cek->keterangan_absen }}">{{ $cek->keterangan_absen }}</option>
                                             @endisset
-                                            <option value="0">-</option>
+                                            <option value="-">-</option>
                                             <option value="HADIR">HADIR</option>
                                             <option value="TIDAK HADIR">TIDAK HADIR</option>
                                             <option value="IZIN">IZIN</option>
@@ -169,7 +169,7 @@
                                             @isset($cek)
                                             <option value="{{ $cek->keterangan_absen }}">{{ $cek->keterangan_absen }}</option>
                                             @endisset
-                                            <option value="0">-</option>
+                                            <option value="-">-</option>
                                             <option value="HADIR">HADIR</option>
                                             <option value="TIDAK HADIR">TIDAK HADIR</option>
                                             <option value="IZIN">IZIN</option>
