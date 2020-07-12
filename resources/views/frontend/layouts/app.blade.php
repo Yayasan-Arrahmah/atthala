@@ -19,6 +19,8 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
+    {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css') }} --}}
 
     {{-- {{ style('css/bootstrap-editable.css') }} --}}
@@ -131,6 +133,12 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#jadwal').DataTable();
+        });
+    </script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
 
@@ -138,7 +146,7 @@
     {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js') !!} --}}
     {{-- {!! script('js/bootstrap-editable.min.js') !!} --}}
 
-    <script>
+    {{-- <script>
         function startTime() {
             var today = new Date();
             var h = today.getHours();
@@ -153,7 +161,7 @@
             if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
             return i;
         }
-    </script>
+    </script> --}}
     @stack('after-scripts')
     @livewireStyles
 

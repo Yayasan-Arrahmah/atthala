@@ -7,7 +7,7 @@
         <ol class="breadcrumb" style="padding: .3rem .3rem;">
             <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="/absen/tahsin">Absen</a></li>
-            <li class="breadcrumb-item active">Tahsin</li>
+            <li class="breadcrumb-item active">Tahsin - {{ $level }} {{ $waktu }}</li>
         </ol>
     </div>
 </div>

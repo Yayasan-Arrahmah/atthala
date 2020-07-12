@@ -4,6 +4,14 @@
     <div class="row justify-content-center align-items-center mb-4">
         <div class="col align-self-center">
             <div class="card">
+                <div class="row" style="padding: 20px" >
+                    <div class="col-md-12">
+                        <ol class="breadcrumb" style="padding: .3rem .3rem;">
+                            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Akun</li>
+                        </ol>
+                    </div>
+                </div>
                 {{-- <div class="card-header">
                     <strong>
                         @lang('navs.frontend.user.account')

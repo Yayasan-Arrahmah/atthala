@@ -28,6 +28,17 @@ class DashboardController extends Controller
         return view('frontend.user.amal-yaumiah.index');
     }
 
+    public function jadwaltahsin(Request $request)
+    {
+        $datajadwals = DB::table('tahsins')
+            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->paginate(500);
+
+        return view('frontend.user.jadwal.tahsin', compact('datajadwals'));
+    }
+
     public function absentahsin(Request $request)
     {
         $datajadwals = DB::table('tahsins')

@@ -3,6 +3,15 @@
 @section('user')
 {{ \GeniusTS\HijriDate\Hijri::setDefaultAdjustment(-1) }}
 
+<div class="row" >
+    <div class="col-md-12">
+        <ol class="breadcrumb" style="padding: .3rem .3rem;">
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active">Amal Yaumiah</li>
+        </ol>
+    </div>
+</div>
+
 <div class="row" style="padding-bottom: 30px">
     <div class="col">
         <div class="" style="font-size: 24px">
