@@ -1,6 +1,19 @@
 @extends('frontend.user.layout')
 
 @section('user')
+@stack('before-styles')
+    {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+@stack('after-styles')
+
+@stack('before-scripts')
+    {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#jadwal').DataTable();
+        });
+    </script>
+@stack('after-scripts')
+
 <div class="row" >
     <div class="col-md-12">
         <ol class="breadcrumb" style="padding: .3rem .3rem;">

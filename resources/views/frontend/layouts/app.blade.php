@@ -19,7 +19,7 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
-    {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+    {{-- {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }} --}}
 
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css') }} --}}
 
@@ -133,12 +133,12 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
-    {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
+    {{-- {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     <script type="text/javascript">
         $(document).ready(function() {
             $('#jadwal').DataTable();
         });
-    </script>
+    </script> --}}
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
 
@@ -163,7 +163,7 @@
         }
     </script> --}}
     @stack('after-scripts')
-    @livewireStyles
+    {{-- @livewireStyles --}}
 
 </head>
 <body>
@@ -188,7 +188,7 @@
     </div><!-- #app -->
 
     @include('includes.partials.ga')
-    @livewireScripts
+    {{-- @livewireScripts --}}
 
 </body>
 </html>
