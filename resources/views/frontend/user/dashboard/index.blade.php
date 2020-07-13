@@ -33,7 +33,7 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="js-flickity"
-        data-flickity-options='{ "wrapAround": false }'>
+        data-flickity-options='{ "wrapAround": false, "autoPlay": 3000 }'>
         <div class="col-11 p-1">
             <div class="card" style="background: url('{{ asset('img/frontend/web-slide-1.png') }}') no-repeat center; background-size: cover;">
                 <div class="card-body d-flex align-items-center" >
