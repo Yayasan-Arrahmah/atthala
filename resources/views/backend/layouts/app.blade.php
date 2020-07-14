@@ -213,7 +213,13 @@
                 "scrollX": true,
             });
 
-            $('#jadwaltahsinabsen').DataTable();
+            $('#jadwaltahsinabsen').DataTable({
+                "scrollX": true,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'Pertemuan Kelas Tahsin' }
+                ]
+            });
 
             $('#amalan').DataTable({
                 "pageLength": 15,

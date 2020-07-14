@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | Peserta ' . __('backend_tahsins.labels.management'))
+@section('title', app_name() . ' - Pengajar Tahsin Angkatan 16 ')
 
 @section('breadcrumb-links')
     @include('backend.tahsin.includes.breadcrumb-links')
@@ -54,9 +54,6 @@
                                 <td>
                                     <a href="{{ route('admin.tahsins.absenkelas') }}?pengajar={{ $tahsin->nama_pengajar }}&level={{ $tahsin->level_peserta }}&waktu={{ $tahsin->jadwal_tahsin }}&jenis={{ $tahsin->jenis_peserta }}">
                                         <strong>{{ $tahsin->nama_pengajar }}</strong> - {{ $tahsin->level_peserta }}, {{ $tahsin->jadwal_tahsin }}
-                                        <div class="text-muted">
-                                            {{ $tahsin->jenis_peserta }}, {{ $tahsin->jumlah }} Peserta
-                                        </div>
                                     </a>
                                 </td>
                                 @php
@@ -68,8 +65,7 @@
                                     @endphp
                                     <td class="text-center text-muted">
                                         @if (isset($cek))
-                                        {{ $cek->updated_at->format("H:i") }} WITA<br>
-                                        {{ $cek->updated_at->format("d-M-Y") }}
+                                        {{ $cek->created_at->format("H:i") }} WITA, {{ $cek->created_at->format("d-M-Y") }}
                                         @else
                                             -
                                         @endif
