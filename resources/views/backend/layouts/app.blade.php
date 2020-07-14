@@ -213,6 +213,8 @@
                 "scrollX": true,
             });
 
+            $('#jadwaltahsinabsen').DataTable();
+
             $('#amalan').DataTable({
                 "pageLength": 15,
                 "scrollX": true,

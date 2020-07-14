@@ -12,7 +12,7 @@
                     <div style="padding-top: 20px">
                         <h4>Pencarian Peserta Tahsin</h4>
                         <div class="text-muted">
-                            Angkatan 15
+                            Angkatan 16
                         </div>
                     </div>
                 </center>

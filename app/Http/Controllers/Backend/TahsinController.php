@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 // use Maatwebsite\Excel\Excel;
-
+use App\Models\Auth\User;
+use App\Models\Absen;
 use App\Models\Tahsin;
 use App\Repositories\Backend\TahsinRepository;
 use App\Http\Requests\Backend\Tahsin\ManageTahsinRequest;
@@ -84,6 +85,57 @@ class TahsinController extends Controller
             ->paginate(5000);
 
         return view('backend.tahsin.pengajar', compact('datapengajars'));
+    }
+
+    public function pengaturan(ManageTahsinRequest $request)
+    {
+        return view('backend.tahsin.pengaturan');
+    }
+
+    public function absen(ManageTahsinRequest $request)
+    {
+        $dataabsen = new Absen;
+        $datauser = new User;
+        $angkatan     = '16';
+
+        $datajadwals = DB::table('tahsins')
+            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->paginate(5000);
+
+        return view('backend.tahsin.absen', compact('datajadwals', 'angkatan', 'datauser', 'dataabsen'));
+    }
+
+    public function absenkelas(ManageTahsinRequest $request)
+    {
+        $absen = new Absen;
+
+        $waktu        = $request->input('waktu') ?? '!!ERROR!!';
+        $level        = $request->input('level') ?? '!!ERROR!!';
+        $jenis        = $request->input('jenis') ?? '!!ERROR!!';
+        $userpengajar = $request->input('pengajar');
+        $pertemuanke  = $request->input('ke');
+        $angkatan     = '16';
+
+        $datapeserta = DB::table('tahsins')
+            ->where('nama_pengajar', $userpengajar)
+            ->where('level_peserta', $level)
+            ->where('jadwal_tahsin', $waktu)
+            ->where('angkatan_peserta', $angkatan)
+            ->where('jenis_peserta', $jenis)
+            ->paginate(50);
+
+        if (isset($pertemuanke)) {
+            $pertemuanke = $request->input('ke');
+        } else {
+            $pertemuanke = 'semua';
+        }
+
+        return view(
+            'backend.tahsin.absen-kelas',
+            compact('absen', 'pertemuanke', 'waktu', 'level', 'userpengajar', 'datapeserta', 'jenis', 'angkatan')
+        );
     }
 
     public function import(Request $request)
@@ -372,15 +424,5 @@ class TahsinController extends Controller
     {
         return view('backend.tahsin.deleted')
             ->withtahsins($this->tahsinRepository->getDeletedPaginated(25, 'id', 'asc'));
-    }
-
-    public function pengaturan(ManageTahsinRequest $request)
-    {
-        return view('backend.tahsin.pengaturan');
-    }
-
-    public function absen(ManageTahsinRequest $request)
-    {
-        return view('backend.tahsin.absen');
     }
 }

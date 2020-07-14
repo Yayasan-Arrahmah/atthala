@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Pengajar Tahsin<small class="text-muted"> - Angkatan 15</small>
+                    Pengajar Tahsin<small class="text-muted"> - Angkatan 16</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>

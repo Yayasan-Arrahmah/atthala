@@ -13,13 +13,13 @@
 
 <div class="card">
     {{-- <div class="card-header">
-        Tahsin Angkatan 15 Tahun 2020
+        Tahsin Angkatan 16 Tahun 2020
     </div> --}}
     <div class="card-body">
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan 15</small>
+                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan 16</small>
                     {{-- {{ __('backend_jadwals.labels.management') }} <small class="text-muted">{{ __('backend_jadwals.labels.active') }}</small> --}}
                 </h4>
             </div><!--col-->
