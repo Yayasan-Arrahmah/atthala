@@ -193,17 +193,18 @@
                         </div> --}}
                         <div class="">
                             <form action="/amal-yaumiah" method="get">
+                                <div class="text-center">
+                                    Tanggal :
+                                </div>
                                 <div class="row">
-                                    <div class="col-2">
-                                    </div>
-                                    <select name="tanggal" class="col-2 form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                    <select name="tanggal" class="col-3 form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
                                         <option value="{{ !empty(request('tanggal')) ? request('tanggal') : $tanggalan->day }}">{{ !empty(request('tanggal')) ? request('tanggal') : $tanggalan->day }}</option>
                                         <option value="">-----</option>
                                         @for ($i = $tanggalan->endOfMonth()->day ; $i >= 1; $i--)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
                                     </select>
-                                    <select class="col-3 form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                    <select class="col-5 form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
                                         <option value="{{ !empty(request('bulan')) ? request('bulan') : $tanggalan->month }}">{{ !empty(request('bulan')) ? $bulan_[request('bulan')] : $bulan_[$tanggalan->month] }}</option>
                                         {{-- <option value="">-----</option>
                                         <option value="1">Januari</option>
@@ -219,7 +220,7 @@
                                         <option value="11">November</option>
                                         <option value="12">Desember</option> --}}
                                     </select>
-                                    <select class="col-3 form-control">
+                                    <select class="col-4 form-control">
                                         <option value="2020">2020</option>
                                         {{-- <option value="{{ !empty(request('tahun')) ? request('tahun') : $tanggalan->year }}">{{ !empty(request('tahun')) ? request('tahun') : $tanggalan->year }}</option>
                                         <option value="">-----</option>
