@@ -1,4 +1,4 @@
-@stack('before-styles')
+{{-- @stack('before-styles')
 {{  style('css/kalender.css')  }}
 @stack('after-styles')
 
@@ -188,4 +188,4 @@
       <li>? use of success state color and info state color ?</li>
       <li><a href="http://www.reddit.com/r/css/comments/2gvw4n/i_refactored_my_less_to_follow_fats_guidelines/">can do better with css rules</a></li>
     </ul>
-  </div>
+  </div> --}}

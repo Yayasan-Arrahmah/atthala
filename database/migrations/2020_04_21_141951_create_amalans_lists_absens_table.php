@@ -17,9 +17,12 @@ class CreateAmalansListsAbsensTable extends Migration
             $table->bigIncrements('id');
             $table->integer('id_amalan_list');
             $table->text('user_amalan_list');
-            $table->text('waktu_hijriyah_amalan_list');
-            $table->text('tanggal_hijriyah_amalan_list');
+            $table->text('waktu_hijriyah_amalan_list')->nullable();
+            $table->text('tanggal_hijriyah_amalan_list')->nullable();
             $table->text('ket_hijriyah_amalan_list')->nullable();
+            $table->text('waktu_amalan_list')->nullable();
+            $table->text('tanggal_amalan_list')->nullable();
+            $table->text('ket_amalan_list')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

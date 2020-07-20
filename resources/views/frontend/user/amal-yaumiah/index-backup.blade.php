@@ -1,10 +1,8 @@
 @extends('frontend.user.layout')
 
 @section('user')
-{{-- {{ \GeniusTS\HijriDate\Hijri::setDefaultAdjustment(-1) }} --}}
-@php
-    $tanggalan = \Carbon\Carbon::now();
-@endphp
+{{ \GeniusTS\HijriDate\Hijri::setDefaultAdjustment(-1) }}
+
 <div class="row" >
     <div class="col-md-12">
         <ol class="breadcrumb" style="padding: .3rem .3rem;">
@@ -22,13 +20,13 @@
     </div><!--col-md-6-->
 </div><!--row-->
 
-{{-- <div class="row" style="padding-bottom: 20px">
+<div class="row" style="padding-bottom: 20px">
     <div class="col">
         <img src="{{ asset('img/banner-1.png') }}" class="img-fluid" />
     </div>
-</div> --}}
+</div>
 
-{{-- <div class="row mt-4 mb-4">
+<div class="row mt-4 mb-4">
     <div class="col-md-3">
         <div class="row">
             <div class="col-sm-12">
@@ -117,12 +115,12 @@
             </div>
         </div><!--col-->
     </div>
-</div> --}}
+</div>
 
 <div class="row">
     <div class="col">
         <div class="text-center" style="font-size: 20px; weight:500">
-            Amal Yaumiah
+            Amal Yaumiah Ramadhan 1441
         </div>
         <div class="text-center text-muted">
             Program Ar-Rahmah Balikpapan
@@ -147,38 +145,30 @@
                         "Sabtu"
                         );
 
-                        $bulan_ = array(
-                        "NAMA BULAN",
-                        "Januari",
-                        "Februari",
-                        "Maret",
-                        "April",
-                        "Mei",
-                        "Juni",
-                        "Juli",
-                        "Agustus",
-                        "September",
-                        "Oktober",
-                        "November",
-                        "Desember"
-                        );
+                        // $hari_hijriyah      = \GeniusTS\HijriDate\Date::now()->format('w');
+                        // $tanggal_hijriyah   = \GeniusTS\HijriDate\Date::now()->format('d');
+                        // $bulan_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('m');
+                        // $tahun_hijriyah     = \GeniusTS\HijriDate\Date::now()->format('o');
+                        // $hijriyah           = \GeniusTS\HijriDate\Date::now();
 
-                        // $tanggal_hijriyah   = 30;
-                        // $bulan_hijriyah     = 9;
-                        // $tahun_hijriyah     = 1441;
+                        // Ganti Ramadhan Statis
+                        $tanggal_hijriyah   = 30;
+                        $bulan_hijriyah     = 9;
+                        $tahun_hijriyah     = 1441;
 
-                        // $tgl = !empty(request('tgl')) ? request('tgl') : intval($tanggal_hijriyah);
+                        $tgl = !empty(request('tgl')) ? request('tgl') : intval($tanggal_hijriyah);
 
-                        // $masehi_select = \GeniusTS\HijriDate\Hijri::convertToGregorian($tgl, $bulan_hijriyah, $tahun_hijriyah);
-                        // $hijriyah_select = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_select->format('o-m-d'));
+                        $masehi_select = \GeniusTS\HijriDate\Hijri::convertToGregorian($tgl, $bulan_hijriyah, $tahun_hijriyah);
+                        $hijriyah_select = \GeniusTS\HijriDate\Hijri::convertToHijri($masehi_select->format('o-m-d'));
 
                         @endphp
-                        {{-- <div class="tgl">
+                        <div class="tgl">
                             <select class="tglselect" id="tgl" name="tanggal" required>
                                 <option value="{{ $tgl }}">
                                     {{ $hari_[$masehi_select->format('w')] }}, {{ $hijriyah_select->format('d F o') }}
                                 </option>
                                 <option>-------------------</option>
+                                {{-- @for ($i = $hijriyah->format('d'); $i >= 1; $i--) --}}
                                 @for ($i = 30 ; $i >= 1; $i--)
                                 @php
                                 $masehi_ = \GeniusTS\HijriDate\Hijri::convertToGregorian($i, $bulan_hijriyah, $tahun_hijriyah);
@@ -190,46 +180,7 @@
                                 @endfor
                             </select>
                             <div id="txt"></div>
-                        </div> --}}
-                        <div class="">
-                            <form action="/amal-yaumiah" method="get">
-                                <div class="row">
-                                    <div class="col-2">
-                                    </div>
-                                    <select name="tanggal" class="col-2 form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
-                                        <option value="{{ !empty(request('tanggal')) ? request('tanggal') : $tanggalan->day }}">{{ !empty(request('tanggal')) ? request('tanggal') : $tanggalan->day }}</option>
-                                        <option value="">-----</option>
-                                        @for ($i = $tanggalan->endOfMonth()->day ; $i >= 1; $i--)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                    <select class="col-3 form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
-                                        <option value="{{ !empty(request('bulan')) ? request('bulan') : $tanggalan->month }}">{{ !empty(request('bulan')) ? $bulan_[request('bulan')] : $bulan_[$tanggalan->month] }}</option>
-                                        {{-- <option value="">-----</option>
-                                        <option value="1">Januari</option>
-                                        <option value="2">Februari</option>
-                                        <option value="3">Maret</option>
-                                        <option value="4">April</option>
-                                        <option value="5">Mei</option>
-                                        <option value="6">Juni</option>
-                                        <option value="7">Juli</option>
-                                        <option value="8">Agustus</option>
-                                        <option value="9">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option> --}}
-                                    </select>
-                                    <select class="col-3 form-control">
-                                        <option value="2020">2020</option>
-                                        {{-- <option value="{{ !empty(request('tahun')) ? request('tahun') : $tanggalan->year }}">{{ !empty(request('tahun')) ? request('tahun') : $tanggalan->year }}</option>
-                                        <option value="">-----</option>
-                                        @for ($j = $tanggalan->year ; $j >= 2020; $j--)
-                                            <option value="{{ $j }}">{{ $j }}</option>
-                                        @endfor --}}
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
+                        </div><!--form-group-->
                     </div>
 
                     <table class="table-bordered text-center">
@@ -240,50 +191,47 @@
                         </thead>
                         <tbody>
                             @php
-                            $tanggalan_ = \Carbon\Carbon::now();
-                            $amalan_tanggal = !empty(request('tanggal')) ? request('tanggal') : $tanggalan_->day;
                             $amalan_lists = DB::table('amalans_lists')->where('id_amalan', '=', '1')->paginate(100);
                             @endphp
                             @foreach($amalan_lists as $key=> $amalan_list)
-                            <form action="{{ route('frontend.amalans.tambahabsen') }}" method="post">
-                                <tr>
-                                    <td class="align-middle">{{ $amalan_list->nama_amalan_list }}</td>
-                                    @php
-                                    $amalan_list_absen = DB::table('amalans_lists_absens')
-                                    ->where('id_amalan_list', '=', $amalan_list->id)
-                                    ->where('user_amalan_list', '=', $logged_in_user->id)
-                                    ->where('tanggal_amalan_list', '=', $amalan_tanggal)
-                                    ->first();
-                                    @endphp
+                            <tr>
+                                <td class="align-middle">{{ $amalan_list->nama_amalan_list }}</td>
+                                @php
+                                $amalan_list_absen = DB::table('amalans_lists_absens')
+                                ->where('id_amalan_list', '=', $amalan_list->id)
+                                ->where('user_amalan_list', '=', $logged_in_user->id)
+                                ->where('tanggal_hijriyah_amalan_list', '=', $tgl)
+                                ->first();
+                                @endphp
 
-                                    @if ( empty($amalan_list_absen->tanggal_amalan_list) )
-                                        @csrf
-                                        <td>
-                                            <select name="ket_amalan_list" class="form-control">
-                                                <option value=" ">-</option>
-                                                <option value="SAKIT">Sakit</option>
-                                                @if ($logged_in_user->jenis == 'AKHWAT')
-                                                <option value="HAID">Haid</option>
-                                                @endif
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input hidden="hidden" name="id_amalan_list" value="{{ $amalan_list->id }}">
-                                            <input hidden="hidden" name="user_amalan_list" value="{{ $logged_in_user->id }}">
-                                            <input hidden="hidden" name="waktu_amalan_list" value="{{ !empty(request('bulan')) ? $bulan_[request('bulan')] : $bulan_[$tanggalan_->month] }}-{{ !empty(request('tahun')) ? request('tahun') : $tanggalan_->year }}">
-                                            <input hidden="hidden" name="tanggal_amalan_list" value="{{ !empty(request('tanggal')) ? request('tanggal') : $tanggalan_->day }}">
-                                            <input hidden="hidden" name="bulan_amalan_list" value="{{ !empty(request('bulan')) ? request('bulan') : $tanggalan_->month }}">
-                                            <button class="btn btn-light btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
-                                        </td>
-                                    @else
-                                    <td></td>
+                                @if ( empty($amalan_list_absen->tanggal_hijriyah_amalan_list) )
+                                <form action="{{ route('frontend.amalans.tambahabsen') }}" method="post">
+                                    @csrf
                                     <td>
-                                        <button disabled class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                        <select name="ket_hijriyah_amalan_list" class="form-control">
+                                            <option value=" ">-</option>
+                                            <option value="SAKIT">Sakit</option>
+                                            @if ($logged_in_user->jenis == 'AKHWAT')
+                                            <option value="HAID">Haid</option>
+                                            @endif
+                                        </select>
                                     </td>
-                                    @endif
-                                </tr>
-                            </form>
+                                    <td>
+                                        <input hidden="hidden" name="id_amalan_list" value="{{ $amalan_list->id }}">
+                                        <input hidden="hidden" name="user_amalan_list" value="{{ $logged_in_user->id }}">
+                                        <input hidden="hidden" name="waktu_hijriyah_amalan_list" value="{{ $hijriyah_select->format('F-o') }}">
+                                        <input hidden="hidden" name="tanggal_hijriyah_amalan_list" value="{{ intval($hijriyah_select->format('d')) }}">
+                                        <button class="btn btn-light btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                    </td>
+                                </form>
+                                @else
+                                <td></td>
+                                <td>
+                                    <button disabled class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                </td>
+                                @endif
 
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -294,8 +242,8 @@
                     <table class="table table-bordered table-striped table-sm" style="min-width: 800px; margin: 5px">
                         <thead >
                             <tr>
-                                <th width="200" class="text-center">{{ $bulan_[$tanggalan_->month] }}</th>
-                                @for ($i = 1; $i <= $tanggalan_->endOfMonth()->format('d'); $i++)
+                                <th width="200"></th>
+                                @for ($i = 1; $i <= 30; $i++)
                                 <th width="200" class="text-center">{{ $i }}</th>
                                 @endfor
                             </tr>
@@ -304,16 +252,16 @@
                             @foreach($amalan_lists as $key=> $amalan_list)
                             <tr>
                                 <td style="z-index: 50;">{{ $amalan_list->nama_amalan_list }}</td>
-                                @for ($i = 1; $i <= $tanggalan_->endOfMonth()->format('d'); $i++)
+                                @for ($i = 1; $i <= 30; $i++)
                                 @php
                                 $amalan_list_absen = DB::table('amalans_lists_absens')
                                 ->where('id_amalan_list', '=', $amalan_list->id)
                                 ->where('user_amalan_list', '=', $logged_in_user->id)
-                                ->where('tanggal_amalan_list', '=', $i)
+                                ->where('tanggal_hijriyah_amalan_list', '=', $i)
                                 ->first();
 
-                                if (isset($amalan_list_absen->tanggal_amalan_list)) {
-                                    $check = $amalan_list_absen->tanggal_amalan_list;
+                                if (isset($amalan_list_absen->tanggal_hijriyah_amalan_list)) {
+                                    $check = $amalan_list_absen->tanggal_hijriyah_amalan_list;
                                 } else {
                                     $check = '';
                                 }
@@ -326,11 +274,11 @@
                                         @csrf
                                         <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
                                         <center>
-                                            @if ($amalan_list_absen->ket_amalan_list == "HAID")
+                                            @if ($amalan_list_absen->ket_hijriyah_amalan_list == "HAID")
                                             <button type="submit" class="btn" style="color: rgb(255, 56, 156); border: 0px; padding: 0px;">
                                                 <i class="fas fa-venus"></i>
                                             </button>
-                                            @elseif ($amalan_list_absen->ket_amalan_list == "SAKIT")
+                                            @elseif ($amalan_list_absen->ket_hijriyah_amalan_list == "SAKIT")
                                             <button type="submit" class="btn" style="color: rgb(83, 163, 28); border: 0px; padding: 0px;">
                                                 <i class="fas fa-user-times"></i>
                                             </button>
@@ -413,7 +361,7 @@ $akhwat   = DB::table('users')->where('jenis', '=', 'AKHWAT')->count();
     });
 
 </script>
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     $(function() {
         $('.tglselect').on('change', function (){
             var url = "{{ request()->url() }}";
@@ -423,6 +371,6 @@ $akhwat   = DB::table('users')->where('jenis', '=', 'AKHWAT')->count();
             }
         });
     });
-</script> --}}
+</script>
 @stack('after-scripts')
 @endsection

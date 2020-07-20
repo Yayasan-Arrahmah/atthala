@@ -38,9 +38,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen')) }} "
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }} "
                 href="{{ route('admin.tahsins.absen') }}
-                " > <i class="nav-icon fas fa-users"></i>
+                " > <i class="nav-icon fas fa-edit"></i>
                 Absen
                 </a>
             </li>

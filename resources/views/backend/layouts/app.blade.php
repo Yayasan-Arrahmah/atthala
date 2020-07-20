@@ -221,6 +221,14 @@
                 ]
             });
 
+            $('#jadwaltahsinabsenpengajar').DataTable({
+                "scrollX": true,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'Rekapan Data Pengajar' }
+                ]
+            });
+
             $('#amalan').DataTable({
                 "pageLength": 15,
                 "scrollX": true,

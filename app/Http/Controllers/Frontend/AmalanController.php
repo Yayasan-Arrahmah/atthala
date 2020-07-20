@@ -197,33 +197,45 @@ class AmalanController extends Controller
             ->withamalans($this->amalanRepository->getDeletedPaginated(25, 'id', 'asc'));
     }
 
-    public function tambahabsen(Request $request) {
+    public function tambahabsen(Request $request)
+    {
         $absen = new AmalansListsAbsens;
+        $hariini_ = \Carbon\Carbon::now();
 
-        $absen->id_amalan_list                  = $request->id_amalan_list;
-        $absen->user_amalan_list                = $request->user_amalan_list;
-        $absen->waktu_hijriyah_amalan_list      = $request->waktu_hijriyah_amalan_list;
-        $absen->tanggal_hijriyah_amalan_list    = $request->tanggal_hijriyah_amalan_list;
-        $absen->ket_hijriyah_amalan_list        = $request->ket_hijriyah_amalan_list;
+        $cektanggal = \Carbon\Carbon::create($hariini_->year, $request->bulan_amalan_list, $request->tanggal_amalan_list);
 
-        if ($absen->save()){
-            return redirect()->route('frontend.user.dashboard', ['tgl' => $request->tanggal_hijriyah_amalan_list])
-            ->withFlashSuccess('Laporan Berhasil Diperbaruhi. Syukron !');
+        // dd($hariini_->timestamp, $cektanggal->timestamp);
+
+        if ($cektanggal > $hariini_) {
+            return redirect()->route('frontend.user.amal-yaumiah', ['tanggal' => $request->tanggal_amalan_list])
+                ->withFlashDanger('Maaf, Pilihan Tanggal Melampaui Tanggal Hari Ini. Input Gagal !');
         } else {
-            return redirect()->route('frontend.user.dashboard', ['tgl' => $request->tanggal_hijriyah_amalan_list])
-            ->withFlashDanger('Laporan Tidak Berhasil Diperbaruhi. Afwan !. Mohon Ulangi.');
+            $absen->id_amalan_list      = $request->id_amalan_list;
+            $absen->user_amalan_list    = $request->user_amalan_list;
+            $absen->waktu_amalan_list   = $request->waktu_amalan_list;
+            $absen->tanggal_amalan_list = $request->tanggal_amalan_list;
+            $absen->ket_amalan_list     = $request->ket_amalan_list;
+
+            if ($absen->save()) {
+                return redirect()->route('frontend.user.amal-yaumiah', ['tanggal' => $request->tanggal_amalan_list])
+                    ->withFlashSuccess('Amalan Berhasil Diperbaruhi. Syukron !');
+            } else {
+                return redirect()->route('frontend.user.amal-yaumiah', ['tanggal' => $request->tanggal_amalan_list])
+                    ->withFlashDanger('Amalan Tidak Berhasil Diperbaruhi. Afwan !. Mohon Ulangi.');
+            }
         }
     }
 
-    public function hapusabsen(Request $request) {
+    public function hapusabsen(Request $request)
+    {
         $absen = AmalansListsAbsens::find($request->id);
 
-        if ($absen->delete()){
-            return redirect()->route('frontend.user.dashboard', ['tgl' => $request->tanggal_hijriyah_amalan_list])
-            ->withFlashSuccess('Laporan Berhasil Dihapus. Syukron !');
+        if ($absen->delete()) {
+            return redirect()->route('frontend.user.amal-yaumiah', ['tanggal' => $request->tanggal_amalan_list])
+                ->withFlashSuccess('Amalan Berhasil Dihapus. Syukron !');
         } else {
-            return redirect()->route('frontend.user.dashboard', ['tgl' => $request->tanggal_hijriyah_amalan_list])
-            ->withFlashDanger('Laporan Tidak Berhasil Dihapus. Afwan !. Mohon Ulangi.');
+            return redirect()->route('frontend.user.amal-yaumiah', ['tanggal' => $request->tanggal_amalan_list])
+                ->withFlashDanger('Amalan Tidak Berhasil Dihapus. Afwan !. Mohon Ulangi.');
         }
     }
 }

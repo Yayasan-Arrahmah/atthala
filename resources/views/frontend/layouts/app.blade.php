@@ -178,8 +178,8 @@
             @auth
                 @include('frontend.includes.nav-a')
             @endauth
-            {{-- @include('includes.partials.messages') --}}
-            @include('includes.partials.notif')
+            @include('includes.partials.messages')
+            {{-- @include('includes.partials.notif') --}}
 
             @yield('content')
         </div><!-- container -->

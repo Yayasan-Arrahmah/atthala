@@ -104,7 +104,13 @@ class TahsinController extends Controller
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->paginate(5000);
 
-        return view('backend.tahsin.absen', compact('datajadwals', 'angkatan', 'datauser', 'dataabsen'));
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->paginate(5000);
+
+        return view('backend.tahsin.absen', compact('datajadwals', 'datapengajars', 'angkatan', 'datauser', 'dataabsen'));
     }
 
     public function absenkelas(ManageTahsinRequest $request)
