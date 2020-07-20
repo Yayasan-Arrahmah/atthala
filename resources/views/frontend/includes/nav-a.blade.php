@@ -15,7 +15,9 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}"> <i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li class="nav-item"><a href="{{route('frontend.user.absentahsin')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.absen')) }}"> <i class="fas fa-list-alt"></i> Absen</a></li>
+                        @if (auth()->user()->last_name == 'PENGAJAR')
+                            <li class="nav-item"><a href="{{route('frontend.user.absentahsin')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.absen')) }}"> <i class="fas fa-list-alt"></i> Absen</a></li>
+                        @endif
                         <li class="nav-item"><a href="{{route('frontend.user.amal-yaumiah')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.amal-yaumiah')) }}"> <i class="fas fa-edit"></i> Amal Yaumiah</a></li>
                         <li class="nav-item"><a href="{{route('frontend.user.account')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.account')) }}"> <i class="fas fa-user"></i> Akun, {{ $logged_in_user->email }}</a></li>
                         <li class="nav-item dropdown">
