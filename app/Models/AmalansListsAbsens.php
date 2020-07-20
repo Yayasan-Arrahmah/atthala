@@ -29,5 +29,8 @@ class AmalansListsAbsens extends Model
         'waktu_hijriyah_amalan_list',
         'tanggal_hijriyah_amalan_list',
         'ket_hijriyah_amalan_list',
+        'waktu_amalan_list',
+        'tanggal_amalan_list',
+        'ket_amalan_list',
     ];
 }
