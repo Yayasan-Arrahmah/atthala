@@ -124,6 +124,8 @@
         }
 
     </style>
+    {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+    {{ style('https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css') }}
 
     @stack('after-styles')
 
@@ -133,12 +135,19 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
-    {{-- {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
+    {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
+    {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
+    {!! script('https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js') !!}
+    {!! script('https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js') !!}
     <script type="text/javascript">
         $(document).ready(function() {
             $('#jadwal').DataTable();
+            $('#amalan').DataTable({
+                "pageLength": 15,
+                "scrollX": true,
+            });
         });
-    </script> --}}
+    </script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
 

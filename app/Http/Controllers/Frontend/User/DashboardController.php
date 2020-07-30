@@ -28,6 +28,13 @@ class DashboardController extends Controller
         return view('frontend.user.amal-yaumiah.index');
     }
 
+    public function amalyaumiahpeserta()
+    {
+        $pesertayaumiah = DB::table('users')->where('last_name', 'SANTRI')->get();
+
+        return view('frontend.user.amal-yaumiah.peserta', compact('pesertayaumiah'));
+    }
+
     public function jadwaltahsin(Request $request)
     {
         $datajadwals = DB::table('tahsins')

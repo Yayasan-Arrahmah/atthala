@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
 
         //User All
         Route::get('amal-yaumiah', [DashboardController::class, 'amalyaumiah'])->name('amal-yaumiah');
+        Route::get('amal-yaumiah/peserta', [DashboardController::class, 'amalyaumiahpeserta'])->name('amal-yaumiah.peserta');
 
         //User Pengajar
         Route::get('absen/tahsin',         [DashboardController::class, 'absentahsin'])->name('absentahsin');
