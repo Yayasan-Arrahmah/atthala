@@ -95,8 +95,8 @@ class TahsinController extends Controller
     public function absen(ManageTahsinRequest $request)
     {
         $dataabsen = new Absen;
-        $datauser = new User;
-        $angkatan     = '16';
+        $datauser  = new User;
+        $angkatan  = '16';
 
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))

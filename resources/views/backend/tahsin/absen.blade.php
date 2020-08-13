@@ -40,19 +40,27 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active show" id="pengajar" role="tabpanel">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4 class="card-title mb-0">
+                        Absensi Pengajar
+                        <small class="text-muted">Akumulasi Perbulan</small>
+                    </h4>
+                </div><!--col-->
+            </div><!--row-->
             <div class="row mt-4">
                 <div class="col">
                     <div class="table table-responsive-sm table-hover mb-0 table-sm">
                         <table class="table display compact nowarp" id="jadwaltahsinabsenpengajar" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th class="text-center" width="350">Pengajar</th>
+                                    <th class="text-center" width="150">Pengajar</th>
                                     <th class="text-center">Juni - Juli</th>
-                                    <th class="text-center">Juli - Agus</th>
-                                    <th class="text-center">Agus - Sept</th>
+                                    <th class="text-center">Juli - Agust</th>
+                                    <th class="text-center">Agust - Sept</th>
                                     <th class="text-center">Sept - Nov</th>
+                                    <th class="text-center">Total Pertemuan</th>
                                     <th class="text-center">Jumlah Kelas</th>
-                                    <th class="text-center">Jumlah Peserta</th>
                                     <th class="text-center">Jenis</th>
                                 </tr>
                             </thead>
@@ -66,42 +74,198 @@
                                 @foreach($datapengajars as $key=> $tahsin)
 
                                 @php
+                                // ngambil data per-kelas per-pengajar
                                 $kelas = DB::table('tahsins')
                                         ->where('nama_pengajar', $tahsin->nama_pengajar)
-                                        ->select('jadwal_tahsin', (DB::raw('COUNT(*) as jumlahkelas ')))
-                                        ->groupBy('jadwal_tahsin')
+                                        ->select('jadwal_tahsin', 'level_peserta', (DB::raw('COUNT(*) as jumlahkelas ')))
+                                        ->groupBy('jadwal_tahsin', 'level_peserta')
                                         ->havingRaw(DB::raw('COUNT(*) > 0'))
                                         ->get();
+
+                                // deklarasi var hasil penjumlahan angkatan 16
+                                $numjunjul_ = 0;
+                                $numjulgus_ = 0;
+                                $numgussep_ = 0;
+                                $numsepokt_ = 0;
                                 @endphp
 
                                 <tr>
                                     <td>
-                                        <a data-toggle="collapse" href="#detail{{ $number }}" aria-expanded="false" style="padding-left: 15px">{{ $tahsin->nama_pengajar }}</a>
-                                        <div class="collapse" id="detail{{ $number }}" style="padding: 5px 0 5px 15px">
-                                            @foreach($kelas as $jadwal)
-                                            {{ $n++ }}.  {{ $jadwal->jadwal_tahsin }} = {{ $jadwal->jumlahkelas }} Peserta<br>
+                                        {{ $tahsin->nama_pengajar }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{-- Subtitusi jadwal untuk akumulasi pertemuan --}}
+                                        @foreach($kelas as $jadwal)
+
+                                            {{-- Mengambil data per-pertemuan absen --}}
+                                            @php
+                                                $junjul = DB::table('absens')
+                                                        ->where('deleted_at', null)
+                                                        ->where('jenis_absen', 'TAHSIN')
+                                                        ->where('angkatan_absen', '16')
+                                                        ->where('level_kelas_absen', $jadwal->level_peserta)
+                                                        ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
+                                                        ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
+                                                        ->whereBetween('created_at', ['2020-06-15','2020-07-14']) // perhitungan waktu yg diambil
+                                                        ->select('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen', (DB::raw('COUNT(*) as jumlahhadir ')))
+                                                        ->groupBy('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen')
+                                                        ->havingRaw(DB::raw('COUNT(*) > 0'))
+                                                        ->get();
+                                                $numjunjul = 0;
+                                            @endphp
+
+                                            {{-- subtitusi data per-pertemuan --}}
+                                            @foreach($junjul as $tes)
+                                                @php
+                                                // perhitungan pertemuan
+                                                    $numjunjul++;
+                                                @endphp
                                             @endforeach
-                                        </div>
+
+                                            {{-- <div style="font-size: 10px">
+                                                ( {{ $jadwal->jadwal_tahsin }} - {{ $jadwal->level_peserta }} = {{ $jadwal->jumlahkelas }} Peserta, {{ $numjunjul }} Pertemuan )
+                                            </div> --}}
+
+                                            @php
+                                            // penjumlahan data pertemuan sesuai pengambilan waktu hitungan bulan
+                                            $numjunjul_ = $numjunjul + $numjunjul_;
+                                            @endphp
+
+                                        @endforeach
+                                        {{ $numjunjul_ }}
                                     </td>
-                                    <td>
-                                        {{-- @php
-                                        $kelas = DB::table('absens')
-                                                ->where('nama_pengajar', $userpengajar)
-                                                ->where('level_peserta', $level)
-                                                ->where('jadwal_tahsin', $waktu)
-                                                ->where('angkatan_peserta', $angkatan)
-                                                ->where('jenis_peserta', $jenis)
-                                                ->get();
-                                        @endphp --}}
+                                    <td class="text-center">
+                                        {{-- Subtitusi jadwal untuk akumulasi pertemuan --}}
+                                        @foreach($kelas as $jadwal)
+
+                                            {{-- Mengambil data per-pertemuan absen --}}
+                                            @php
+                                                $julgus = DB::table('absens')
+                                                        ->where('deleted_at', null)
+                                                        ->where('jenis_absen', 'TAHSIN')
+                                                        ->where('angkatan_absen', '16')
+                                                        ->where('level_kelas_absen', $jadwal->level_peserta)
+                                                        ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
+                                                        ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
+                                                        ->whereBetween('created_at', ['2020-07-15','2020-08-14']) // perhitungan waktu yg diambil
+                                                        ->select('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen', (DB::raw('COUNT(*) as jumlahhadir ')))
+                                                        ->groupBy('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen')
+                                                        ->havingRaw(DB::raw('COUNT(*) > 0'))
+                                                        ->get();
+                                                $numjulgus = 0;
+                                            @endphp
+
+                                            {{-- subtitusi data per-pertemuan --}}
+                                            @foreach($julgus as $tes)
+                                                @php
+                                                // perhitungan pertemuan
+                                                    $numjulgus++;
+                                                @endphp
+                                            @endforeach
+
+                                            {{-- <div style="font-size: 10px">
+                                                ( {{ $jadwal->jadwal_tahsin }} - {{ $jadwal->level_peserta }} = {{ $jadwal->jumlahkelas }} Peserta, {{ $numjulgus }} Pertemuan )
+                                            </div> --}}
+
+                                            @php
+                                            // penjumlahan data pertemuan sesuai pengambilan waktu hitungan bulan
+                                            $numjulgus_ = $numjulgus + $numjulgus_;
+                                            @endphp
+
+                                        @endforeach
+                                        {{ $numjulgus_ }}
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="text-center">
+                                        {{-- Subtitusi jadwal untuk akumulasi pertemuan --}}
+                                        @foreach($kelas as $jadwal)
+
+                                            {{-- Mengambil data per-pertemuan absen --}}
+                                            @php
+                                                $gussep = DB::table('absens')
+                                                        ->where('deleted_at', null)
+                                                        ->where('jenis_absen', 'TAHSIN')
+                                                        ->where('angkatan_absen', '16')
+                                                        ->where('level_kelas_absen', $jadwal->level_peserta)
+                                                        ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
+                                                        ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
+                                                        ->whereBetween('created_at', ['2020-08-15','2020-09-14']) // perhitungan waktu yg diambil
+                                                        ->select('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen', (DB::raw('COUNT(*) as jumlahhadir ')))
+                                                        ->groupBy('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen')
+                                                        ->havingRaw(DB::raw('COUNT(*) > 0'))
+                                                        ->get();
+                                                $numgussep = 0;
+                                            @endphp
+
+                                            {{-- subtitusi data per-pertemuan --}}
+                                            @foreach($gussep as $tes)
+                                                @php
+                                                // perhitungan pertemuan
+                                                    $numgussep++;
+                                                @endphp
+                                            @endforeach
+
+                                            {{-- <div style="font-size: 10px">
+                                                ( {{ $jadwal->jadwal_tahsin }} - {{ $jadwal->level_peserta }} = {{ $jadwal->jumlahkelas }} Peserta, {{ $numgussep }} Pertemuan )
+                                            </div> --}}
+
+                                            @php
+                                            // penjumlahan data pertemuan sesuai pengambilan waktu hitungan bulan
+                                            $numgussep_ = $numgussep + $numgussep_;
+                                            @endphp
+
+                                        @endforeach
+                                        {{ $numgussep_ }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{-- Subtitusi jadwal untuk akumulasi pertemuan --}}
+                                        @foreach($kelas as $jadwal)
+
+                                            {{-- Mengambil data per-pertemuan absen --}}
+                                            @php
+                                                $sepokt = DB::table('absens')
+                                                        ->where('deleted_at', null)
+                                                        ->where('jenis_absen', 'TAHSIN')
+                                                        ->where('angkatan_absen', '16')
+                                                        ->where('level_kelas_absen', $jadwal->level_peserta)
+                                                        ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
+                                                        ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
+                                                        ->whereBetween('created_at', ['2020-09-15','2020-10-14']) // perhitungan waktu yg diambil
+                                                        ->select('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen', (DB::raw('COUNT(*) as jumlahhadir ')))
+                                                        ->groupBy('level_kelas_absen', 'waktu_kelas_absen', 'pertemuan_ke_absen')
+                                                        ->havingRaw(DB::raw('COUNT(*) > 0'))
+                                                        ->get();
+                                                $numsepokt = 0;
+                                            @endphp
+
+                                            {{-- subtitusi data per-pertemuan --}}
+                                            @foreach($sepokt as $tes)
+                                                @php
+                                                // perhitungan pertemuan
+                                                    $numsepokt++;
+                                                @endphp
+                                            @endforeach
+
+                                            {{-- <div style="font-size: 10px">
+                                                ( {{ $jadwal->jadwal_tahsin }} - {{ $jadwal->level_peserta }} = {{ $jadwal->jumlahkelas }} Peserta, {{ $numsepokt }} Pertemuan )
+                                            </div> --}}
+
+                                            @php
+                                            // penjumlahan data pertemuan sesuai pengambilan waktu hitungan bulan
+                                            $numsepokt_ = $numsepokt + $numsepokt_;
+                                            @endphp
+
+                                        @endforeach
+                                        {{ $numsepokt_ }}
+                                    </td>
+                                    <td class="text-center" style="font-weight: bold;">
+                                        {{-- {{ $tahsin->jumlah }} --}}
+                                        @php
+                                            $totalp = $numjunjul_ + $numjulgus_ + $numgussep_ + $numsepokt_;
+                                        @endphp
+                                        {{ $totalp }}
+                                    </td>
                                     <td class="text-center" style="font-weight: bold;">
                                         {{ count($kelas) }}
-                                    </td>
-                                    <td class="text-center" style="font-weight: bold;">
-                                        {{ $tahsin->jumlah }}
                                     </td>
                                     <td>
                                         @if ($tahsin->jenis_peserta == 'IKHWAN')
@@ -143,6 +307,14 @@
             </div><!--row-->
         </div>
         <div class="tab-pane" id="kelas" role="tabpanel">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4 class="card-title mb-0">
+                        Jadwal Absensi
+                        <small class="text-muted">Waktu Per-pertemuan</small>
+                    </h4>
+                </div><!--col-->
+            </div><!--row-->
             <div class="row mt-4">
                 <div class="col">
                     <div class="table table-responsive-sm table-hover mb-0 table-sm">
@@ -174,23 +346,24 @@
                                             <strong>{{ $tahsin->nama_pengajar }}</strong> - {{ $tahsin->level_peserta }}, {{ $tahsin->jadwal_tahsin }}
                                         </a>
                                     </td>
-                                    @php
-                                    $cekuser = $datauser->where('user_pengajar', $tahsin->nama_pengajar )->first()
-                                    @endphp
+                                    {{-- @php
+                                    $cekuser = DB::table('users')->where('user_pengajar', $tahsin->nama_pengajar )->first();
+                                    @endphp --}}
                                     @for ($b = 1; $b <= 15; $b++)
                                     @php
-                                    $cek = $dataabsen->where('user_create_absen', $cekuser->id ?? 0 )
-                                    ->where('pertemuan_ke_absen', $b)
-                                    ->where('angkatan_absen', $angkatan)
-                                    ->where('level_kelas_absen', $tahsin->level_peserta)
-                                    ->where('waktu_kelas_absen', $tahsin->jadwal_tahsin)
-                                    ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
-                                    ->where('jenis_absen', 'TAHSIN')
-                                    ->first()
+                                    $cek = DB::table('absens')
+                                            // ->where('user_create_absen', $cekuser->id ?? 0 )
+                                            ->where('pertemuan_ke_absen', $b)
+                                            ->where('angkatan_absen', '16')
+                                            ->where('level_kelas_absen', $tahsin->level_peserta)
+                                            ->where('waktu_kelas_absen', $tahsin->jadwal_tahsin)
+                                            ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
+                                            ->where('jenis_absen', 'TAHSIN')
+                                            ->first();
                                     @endphp
-                                    <td class="text-center text-muted">
+                                    <td class="text-center" style="font-size: 11px">
                                         @if (isset($cek))
-                                        {{ $cek->created_at->format("H:i") }} WITA, {{ $cek->created_at->format("d-M-Y") }}
+                                        {{ $cek->created_at }}
                                         @else
                                         -
                                         @endif

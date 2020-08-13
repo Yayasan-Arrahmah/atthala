@@ -128,7 +128,7 @@
                                         <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Tarawih">8</th>
                                         <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Qiyamul Lail">9</th>
                                         <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Puasa Sunnah">10</th>
-                                        <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="	Olahraga">11</th>
+                                        <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Olahraga">11</th>
                                         <th style="text-align: center">Jumlah</th>
                                     </tr>
                                 </thead>

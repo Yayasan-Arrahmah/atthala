@@ -108,6 +108,19 @@
             </div>
         </div>
     </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="card" style="margin-bottom: .3rem">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="fa fa-tasks bg-dark p-3 px-2 font-1xl mr-3" style="border-radius: 5px 0px 0px 5px"></i>
+                <div>
+                    <a href="{{ route('frontend.user.amal-yaumiah.peserta') }}">
+                        <div class="text-value-sm text-dark">Peserta Amal Yaumiah</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Melihat Amalan Harian Peserta</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endif
     <div class="col-xs-12 col-md-6">
         <div class="card" style="margin-bottom: .3rem">
