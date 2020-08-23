@@ -1,6 +1,10 @@
 @extends('frontend.user.layout')
 
 @section('user')
+{{-- @stack('before-styles')
+
+@stack('after-styles') --}}
+<a href="#" id="username" data-type="text" data-pk="1" data-url="/post" data-title="Enter username">superuser</a>
 
 <div class="row" >
     <div class="col-md-12">
@@ -189,4 +193,14 @@
     </div>
 </div><!--row-->
 {{-- @livewire('absen-tahsin') --}}
+@stack('before-scripts')
+
+{{-- {!! script('https://code.jquery.com/jquery-2.0.3.min.js') !!} --}}
+{!! script('https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.min.js') !!}
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $('#username').editable();
+    });
+</script>
+@stack('after-scripts')
 @endsection

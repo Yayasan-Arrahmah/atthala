@@ -306,47 +306,48 @@
                             <tr>
                                 <td style="z-index: 50;">{{ $amalan_list->nama_amalan_list }}</td>
                                 @for ($i = 1; $i <= $tanggalan_->endOfMonth()->format('d'); $i++)
-                                @php
-                                $amalan_list_absen = DB::table('amalans_lists_absens')
-                                ->where('id_amalan_list', '=', $amalan_list->id)
-                                ->where('user_amalan_list', '=', $logged_in_user->id)
-                                ->where('tanggal_amalan_list', '=', $i)
-                                ->first();
+                                    @php
 
-                                if (isset($amalan_list_absen->tanggal_amalan_list)) {
-                                    $check = $amalan_list_absen->tanggal_amalan_list;
-                                } else {
-                                    $check = '';
-                                }
+                                    $amalan_list_absen = DB::table('amalans_lists_absens')
+                                    ->where('id_amalan_list', '=', $amalan_list->id)
+                                    ->where('user_amalan_list', '=', $logged_in_user->id)
+                                    ->where('tanggal_amalan_list', '=', $i)
+                                    ->where('waktu_amalan_list', '=', $bulan_[$tanggalan_->month].'-2020')
+                                    ->first();
 
-                                @endphp
+                                    if (isset($amalan_list_absen->tanggal_amalan_list)) {
+                                        $check = $amalan_list_absen->tanggal_amalan_list;
+                                    } else {
+                                        $check = '';
+                                    }
 
-                                @if ($check == $i || is_null($check) )
-                                <td>
-                                    <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('{{ $amalan_list->nama_amalan_list }} Tanggal {{ $i }}, Apakah anda yakin untuk menghapusnya?');" method="post">
-                                        @csrf
-                                        <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
-                                        <center>
-                                            @if ($amalan_list_absen->ket_amalan_list == "HAID")
-                                            <button type="submit" class="btn" style="color: rgb(255, 56, 156); border: 0px; padding: 0px;">
-                                                <i class="fas fa-venus"></i>
-                                            </button>
-                                            @elseif ($amalan_list_absen->ket_amalan_list == "SAKIT")
-                                            <button type="submit" class="btn" style="color: rgb(83, 163, 28); border: 0px; padding: 0px;">
-                                                <i class="fas fa-user-times"></i>
-                                            </button>
-                                            @else
-                                            <button type="submit" class="btn" style="color: rgb(0, 184, 255); border: 0px; padding: 0px;">
-                                                <i class="fas fa-check-circle"></i>
-                                            </button>
-                                            @endif
-                                        </center>
+                                    @endphp
 
-                                    </form>
-                                </td>
-                                @else
-                                <td></td>
-                                @endif
+                                    @if ($check == $i || is_null($check) )
+                                    <td>
+                                        <form action="{{ route('frontend.amalans.hapusabsen') }}" onsubmit="return confirm('{{ $amalan_list->nama_amalan_list }} Tanggal {{ $i }}, Apakah anda yakin untuk menghapusnya?');" method="post">
+                                            @csrf
+                                            <input hidden="hidden" name="id" value="{{ $amalan_list_absen->id }}" />
+                                            <center>
+                                                @if ($amalan_list_absen->ket_amalan_list == "HAID")
+                                                <button type="submit" class="btn" style="color: rgb(255, 56, 156); border: 0px; padding: 0px;">
+                                                    <i class="fas fa-venus"></i>
+                                                </button>
+                                                @elseif ($amalan_list_absen->ket_amalan_list == "SAKIT")
+                                                <button type="submit" class="btn" style="color: rgb(83, 163, 28); border: 0px; padding: 0px;">
+                                                    <i class="fas fa-user-times"></i>
+                                                </button>
+                                                @else
+                                                <button type="submit" class="btn" style="color: rgb(0, 184, 255); border: 0px; padding: 0px;">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
+                                                @endif
+                                            </center>
+                                        </form>
+                                    </td>
+                                    @else
+                                    <td></td>
+                                    @endif
 
                                 @endfor
                             </tr>
