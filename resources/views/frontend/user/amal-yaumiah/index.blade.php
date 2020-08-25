@@ -254,6 +254,7 @@
                                     ->where('id_amalan_list', '=', $amalan_list->id)
                                     ->where('user_amalan_list', '=', $logged_in_user->id)
                                     ->where('tanggal_amalan_list', '=', $amalan_tanggal)
+                                    ->where('waktu_amalan_list', '=', $bulan_[$tanggalan_->month].'-2020')
                                     ->first();
                                     @endphp
 
