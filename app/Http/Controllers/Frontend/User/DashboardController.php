@@ -7,6 +7,7 @@ use App\Models\Absen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tahsin;
+use Illuminate\Support\Carbon;
 // use Illuminate\Support\Facades\Request;
 
 
@@ -117,5 +118,28 @@ class DashboardController extends Controller
         }
 
         return back()->withFlashSuccess('Absen Berhasil Diperbaruhi !');
+    }
+
+    public function absentahsinkelasgantiabsen(Request $request)
+    {
+        $level       = $request->input('level');
+        $waktu       = $request->input('waktu');
+        $jenis       = $request->input('jenis');
+        $angkatan    = $request->input('angkatan');
+        $pertemuan   = $request->input('pertemuan');
+        $tanggalbaru = Carbon::createFromFormat('d-m-Y', $request->input('tanggalbaru'))->toDateTimeString();
+
+        $cekabsen  = Absen::where('level_kelas_absen', $level)
+            ->where('waktu_kelas_absen', $waktu)
+            ->where('angkatan_absen', $angkatan)
+            ->where('pertemuan_ke_absen', $pertemuan)
+            ->where('jenis_kelas_absen', $jenis);
+
+        if (isset($cekabsen)) {
+            $cekabsen->update(['created_at' => $tanggalbaru]);
+            return back()->withFlashSuccess('Tanggal Absen Berhasil Diperbaruhi !');
+        } else {
+            return back()->withFlashSuccess('Tanggal Absen Gagal Diperbaruhi !');
+        }
     }
 }

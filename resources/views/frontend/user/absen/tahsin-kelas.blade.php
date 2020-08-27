@@ -4,7 +4,6 @@
 {{-- @stack('before-styles')
 
 @stack('after-styles') --}}
-<a href="#" id="username" data-type="text" data-pk="1" data-url="/post" data-title="Enter username">superuser</a>
 
 <div class="row" >
     <div class="col-md-12">
@@ -83,7 +82,8 @@
                                 <th style="vertical-align: middle;">Peserta</th>
                                 @if($pertemuanke == 'semua' || !isset($pertemuanke))
                                 @for ($i = 1; $i <= 15; $i++)
-                                <th class="text-center" style="padding: 4px 25px 4px 25px;">{{ $i }}
+                                {{-- <th class="text-center" style="padding: 4px 25px 4px 25px;">{{ $i }} --}}
+                                <th class="text-center">{{ $i }}
                                     @php
                                     $cektanggal = $absen->where('user_create_absen', auth()->user()->id)
                                     ->where('pertemuan_ke_absen', $i)
@@ -95,7 +95,19 @@
                                     @endphp
                                     @isset($cektanggal)
                                     <div class="text-muted" style="font-size: 10px">
-                                        {{ $cektanggal->created_at->format('d-m-Y') }}
+                                        <a data-toggle="collapse" href="#detail{{ $i }}" aria-expanded="false" style="padding-left: 15px">{{ $cektanggal->created_at->format('d-m-Y') }}</a>
+                                        <div class="collapse" id="detail{{ $i }}" style="padding: 5px 0 5px 15px">
+                                            <form action="{{ route('frontend.user.absentahsinkelas.gantiabsen') }}" method="post">
+                                                @csrf
+                                                <input name="pertemuan" value="{{ $i }}" hidden>
+                                                <input name="angkatan" value="{{ $cektanggal->angkatan_absen }}" hidden>
+                                                <input name="waktu" value="{{ $cektanggal->waktu_kelas_absen }}" hidden>
+                                                <input name="jenis" value="{{ $cektanggal->jenis_kelas_absen }}" hidden>
+                                                <input name="level" value="{{ $cektanggal->level_kelas_absen }}" hidden>
+                                                <input name="tanggalbaru" style="font-size: 11px; font-weight: 800; height: calc(0.45em + .75rem + 2px);" type="text" class="form-control datepicker" data-date-format="dd-mm-yyyy">
+                                                <button style="padding: .1rem .4rem; margin-top: 5px;" class="btn btn-info btn-sm btn-block">UBAH</button>
+                                            </form>
+                                        </div>
                                     </div>
                                     @endisset
                                 </th>

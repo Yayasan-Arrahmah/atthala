@@ -39,22 +39,23 @@ Route::get('/peserta-tahsin', [HomeController::class, 'pesertaTahsin'])->name('p
 Route::group(['middleware' => ['auth', 'password_expires']], function () {
     Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         // User Dashboard Specific
-        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('dashboard',             [DashboardController::class, 'index'])->name('dashboard');
 
         // User Account Specific
-        Route::get('account', [AccountController::class, 'index'])->name('account');
+        Route::get('account',               [AccountController::class, 'index'])->name('account');
 
         // User Profile Specific
-        Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('profile/update',      [ProfileController::class, 'update'])->name('profile.update');
 
-        //User All
-        Route::get('amal-yaumiah', [DashboardController::class, 'amalyaumiah'])->name('amal-yaumiah');
-        Route::get('amal-yaumiah/peserta', [DashboardController::class, 'amalyaumiahpeserta'])->name('amal-yaumiah.peserta');
+        // User All
+        Route::get('amal-yaumiah',          [DashboardController::class, 'amalyaumiah'])->name('amal-yaumiah');
+        Route::get('amal-yaumiah/peserta',  [DashboardController::class, 'amalyaumiahpeserta'])->name('amal-yaumiah.peserta');
 
-        //User Pengajar
-        Route::get('absen/tahsin',         [DashboardController::class, 'absentahsin'])->name('absentahsin');
-        Route::get('absen/tahsin/kelas',  [DashboardController::class, 'absentahsinkelas'])->name('absentahsinkelas');
-        Route::post('absen/tahsin/input',  [DashboardController::class, 'absentahsininput'])->name('absentahsininput');
-        Route::get('jadwal/tahsin',         [DashboardController::class, 'jadwaltahsin'])->name('jadwaltahsin');
+        // User Pengajar
+        Route::get('absen/tahsin',                   [DashboardController::class, 'absentahsin'])->name('absentahsin');
+        Route::get('absen/tahsin/kelas',             [DashboardController::class, 'absentahsinkelas'])->name('absentahsinkelas');
+        Route::post('absen/tahsin/kelas/gantiabsen', [DashboardController::class, 'absentahsinkelasgantiabsen'])->name('absentahsinkelas.gantiabsen');
+        Route::post('absen/tahsin/input',            [DashboardController::class, 'absentahsininput'])->name('absentahsininput');
+        Route::get('jadwal/tahsin',                  [DashboardController::class, 'jadwaltahsin'])->name('jadwaltahsin');
     });
 });

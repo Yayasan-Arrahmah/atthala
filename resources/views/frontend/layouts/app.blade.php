@@ -19,6 +19,7 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
+    {{ style('css/bootstrap-datepicker.css') }}
     {{ style('https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css')  }}
 
     {{-- {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }} --}}
@@ -137,6 +138,7 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    {!! script('js/bootstrap-datepicker.js') !!}
     {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
     {!! script('https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js') !!}
@@ -148,6 +150,10 @@
                 "pageLength": 15,
                 "scrollX": true,
             });
+
+            $('.datepicker').datepicker();
+
+
         });
     </script>
 
