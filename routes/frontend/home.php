@@ -30,6 +30,11 @@ Route::get('/wa', function () {
 
 Route::get('/peserta-tahsin', [HomeController::class, 'pesertaTahsin'])->name('pesertaTahsin');
 
+//EKONOMI
+Route::get('/ekonomi/sembako', [HomeController::class, 'sembako'])->name('sembako');
+Route::post('/ekonomi/sembako/simpan', [HomeController::class, 'sembakosimpan'])->name('sembakosimpan');
+Route::post('/ekonomi/sembako/data-pemesanan', [HomeController::class, 'sembakodata'])->name('sembakodata');
+
 
 /*
  * These frontend controllers require the user to be logged in
