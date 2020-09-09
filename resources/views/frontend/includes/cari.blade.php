@@ -12,7 +12,7 @@
             </div>
             <div class="form-group" style="padding-left:0px">
                 <select class="form-control" name="level">
-                    <option value="ASAASI 1">ASAASI 1</option>
+                    {{-- <option value="ASAASI 1">ASAASI 1</option>
                     <option value="ASAASI 2">ASAASI 2</option>
                     <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
                     <option value="TAMHIDI">TAMHIDI</option>
@@ -21,8 +21,13 @@
                     <option value="IDADI">IDADI</option>
                     <option value="TAKMILI">TAKMILI</option>
                     <option value="TAHSINI">TAHSINI</option>
-                    <option value="ITQON">ITQON</option>
+                    <option value="ITQON">ITQON</option> --}}
+                    <option value="">Level Kelas...</option>
+                    @foreach($datalevel as $level)
+                        <option value="{{ $level->level_peserta }}">{{ $level->level_peserta }}</option>
+                    @endforeach
                 </select>
+
             </div>
         </div>
         <div class="col alert-secondary" style="border: 1px solid #eee;">

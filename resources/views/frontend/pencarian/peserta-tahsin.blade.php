@@ -6,19 +6,16 @@
 	<div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
-
                 <center>
                     <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}" width="150" alt="arrahmah" style="padding-top: 10px">
                     <div style="padding-top: 20px">
                         <h4>Pencarian Peserta Tahsin</h4>
                         <div class="text-muted">
-                            Angkatan 16
+                            Angkatan 17
                         </div>
                     </div>
                 </center>
-
                 @include('frontend.includes.cari')
-
 				<div class="card-body">
                     <div class="row mt-4" style=" overflow-x: scroll;">
                         <div class="col" style="min-width: 1000px; ">
@@ -58,7 +55,7 @@
                                             @php
                                             $totalpembayaran = DB::table('pembayarans')
                                                     ->select(DB::raw('SUM(nominal_pembayaran) as total'))
-                                                    ->where('uuid_pembayaran', $tahsin->uuid_tahsin)
+                                                    ->where('id_peserta', $tahsin->no_tahsin)
                                                     ->first();
                                             @endphp
                                             <div>
@@ -104,7 +101,7 @@
                                                     $noriwayat = 1;
                                                     $riwayatpembayaran = DB::table('pembayarans')
                                                             ->select('nominal_pembayaran', 'admin_pembayaran', 'created_at' )
-                                                            ->where('uuid_pembayaran', $tahsin->uuid_tahsin)
+                                                            ->where('id_peserta', $tahsin->no_tahsin)
                                                             ->get();
                                                     @endphp
                                                     @foreach($riwayatpembayaran as $riwayat)

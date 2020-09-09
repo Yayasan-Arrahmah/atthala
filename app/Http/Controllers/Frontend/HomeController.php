@@ -42,7 +42,13 @@ class HomeController extends Controller
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
             ->get();
 
-        return view('frontend.pencarian.peserta-tahsin', compact('datapengajars', 'pencarian'));
+        $datalevel = DB::table('tahsins')
+            ->select('level_peserta')
+            ->groupBy('level_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->get();
+
+        return view('frontend.pencarian.peserta-tahsin', compact('datapengajars', 'datalevel', 'pencarian'));
     }
 
     public function sembako(Request $request)
@@ -61,7 +67,7 @@ class HomeController extends Controller
                 'gula'   => $request->input('gula'),
                 'telur'  => $request->input('telur')
             ];
-            $total = ($request->input('beras') * 62000) + ($request->input('minyak') * 27000) + ($request->input('gula') * 14000) + ($request->input('telur') * 50000);
+            $total = ($request->input('beras') * 62000) + ($request->input('minyak') * 25000) + ($request->input('gula') * 14000) + ($request->input('telur') * 50000);
 
             $sembako = new Sembako;
             $sembako->nama    = $request->input('nama');
