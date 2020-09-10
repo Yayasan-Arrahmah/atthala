@@ -64,8 +64,8 @@ class Tahsin extends Model
     {
         return empty($query)
             ? static::query()
-            : static::where('nama_peserta', 'like', '%'.$query.'%')
-                ->orWhere('nama_pengajar', 'like', '%'.$query.'%')
-                ->where('angkatan_peserta', '=', '15');
+            : static::where('nama_peserta', 'like', '%' . $query . '%')
+            ->orWhere('nama_pengajar', 'like', '%' . $query . '%')
+            ->where('angkatan_peserta', '=', '16');
     }
 }

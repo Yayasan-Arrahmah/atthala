@@ -10,7 +10,7 @@
 {{-- <div class="card">
     @include('backend.tahsin.includes.cari')
 </div> --}}
-<div class="row">
+{{-- <div class="row">
     <div class="col-md-12">
         <div class="card card-body">
             <div class="text-muted" style="font-size: 13px">
@@ -48,16 +48,16 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="card" style="min-width: 800px;">
     @livewire('tahsin.pembayaran')
 </div><!--card-->
 
-@stack('before-scripts')
+{{-- @stack('before-scripts')
 {!! script('https://cdn.jsdelivr.net/npm/chart.js@2.8.0') !!}
-{{-- {!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!} --}}
-{{-- {!! script('https://coreui.io/demo/2.0/js/charts.js') !!} --}}
+{!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!}
+{!! script('https://coreui.io/demo/2.0/js/charts.js') !!}
 <script type="text/javascript">
     $( document ).ready(function() {
         $("#open").focus();
@@ -93,6 +93,6 @@
         }
     });
 </script>
-@stack('after-scripts')
+@stack('after-scripts') --}}
 @endsection
 

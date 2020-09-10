@@ -247,15 +247,96 @@ class TahsinController extends Controller
     public function createbayar(Request $request)
     {
         $nominal = preg_replace("/[^0-9]/", "", $request->nominalpembayaran);
+        $id = $request->id;
 
         $pembayaran = new Pembayaran;
 
-        $pembayaran->id_peserta         = $request->id_peserta;
+        $pembayaran->id_peserta         = $id;
         $pembayaran->nominal_pembayaran = (int) $nominal;
         $pembayaran->jenis_pembayaran   = $request->jenispembayaran;
         $pembayaran->admin_pembayaran   = Auth::user()->email;
+        // dd($pembayaran);
 
         $pembayaran->save();
+
+        $data = Tahsin::where('no_tahsin', $id)->first();
+        $totalpembayaran = DB::table('pembayarans')
+            ->select(DB::raw('SUM(nominal_pembayaran) as total'))
+            ->where('id_peserta', $id)
+            ->first();
+
+        $subtotal = $totalpembayaran->total;
+        $kekurangan = 400000 - $subtotal;
+
+        $notelp = ltrim($data->nohp_peserta, '-');
+        $notelp = ltrim($notelp, ' ');
+
+        if (substr($notelp, 0, 1) === '0') {
+            $notelp = substr($notelp, 1);
+        } elseif (substr($notelp, 0, 2) === '62') {
+            $notelp = substr($notelp, 2);
+        } elseif (substr($notelp, 0, 3) === '+62') {
+            $notelp = substr($notelp, 3);
+        } else {
+            $notelp = $notelp;
+        }
+
+        // dd($notelp);
+
+        $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+        $phone = '62' . $notelp;
+
+        if ($kekurangan > 0) {
+
+            $message =
+                'Assalamualaikum Warohmatullahi Wabarokaatuh,
+
+Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
+Terima kasih telah melakukan pembayaran SPP kepada bagian keuangan kami sebesar *Rp. ' . number_format($nominal, 0, ',', '.') . '*-.
+Kekurangan pembayaran anda hingga saat ini adalah sebesar *Rp. ' . number_format($kekurangan, 0, ',', '.') . '*,-
+Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
+
+Kami membuka kesempatan untuk bapak/ibu dalam program pengembangan dakwah Rumah Tahfizh QUran Ar Rahmah dengan berinfak sebesar Rp 20.000,- melalui transfer ke rekening 2182182226 a.n. Rumah Tahfidz Quran Putra Ar Rahmah. Tambahkan angka 26 untuk kode transaksi pengembangan dakwah. contoh Transfer : Rp 20.026,-
+
+Tetap jaga kesehatan dan ikuti protokol kesehatan selama masa pembatasan sosial skala besar.
+Semoga Allah Subhanahu Wa Taala senantiasa melindungi kita semua. Aamiin Yaa Robbal Aalamiin
+
+Salam,
+*LTTQ Ar Rahmah Balikpapan*';
+        } else {
+            $message =
+                'Assalamualaikum Warohmatullahi Wabarokaatuh,
+
+Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
+Terima kasih telah melakukan pembayaran SPP kepada bagian keuangan kami sebesar *Rp. ' . number_format($nominal, 0, ',', '.') . '*-.
+Alhamdulillah pembayaran bapak/ibu telah tercatat lunas pada sistem kami. Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
+
+Saat ini kami membuka kesempatan untuk bapak/ibu dalam program pengembangan dakwah Rumah Tahfizh QUran Ar Rahmah dengan berinfak sebesar Rp 20.000,- melalui transfer ke rekening 2182182226 (BNI Syariah) a.n. Rumah Tahfidz Quran Putra Ar Rahmah. Tambahkan angka 26 untuk kode transaksi pengembangan dakwah. contoh Transfer : Rp 20.026,-
+
+Tetap jaga kesehatan dan ikuti protokol kesehatan selama masa pembatasan sosial skala besar.
+Semoga Allah Subhanahu Wa Taala senantiasa melindungi kita semua. Aamiin Yaa Robbal Aalamiin
+
+Salam,
+*LTTQ Ar Rahmah Balikpapan*';
+        }
+
+        $url = 'https://api.wanotif.id/v1/send';
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            'Apikey'    => $apikey,
+            'Phone'     => $phone,
+            'Message'   => $message,
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
 
         return redirect()->route('admin.tahsins.pembayaran')
             ->withFlashSuccess('Pembayaran Atas Nama : <br>' . $request->namapembayaran . '<br>Dengan Nominal ' . $request->nominalpembayaran . '<br><strong>Berhasil</strong>');

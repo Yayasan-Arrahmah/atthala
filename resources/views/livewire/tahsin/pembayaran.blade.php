@@ -94,7 +94,7 @@
                                     ->first();
                             @endphp
                             <div>
-                                <strong>Rp. {{ number_format($totalpembayaran->total, 0, '.', '.') }} </strong>
+                                <strong>Rp. {{ number_format(400000-$totalpembayaran->total, 0, '.', '.') }} </strong>
                                 <br>
                                 / Rp. 400.000
                             </div>
@@ -120,7 +120,7 @@
                                         name="nominalpembayaran">
                                     <input type="hidden" name="jenispembayaran" value="TAHSIN">
                                     <input type="hidden" name="namapembayaran" value="{{ $tahsin->nama_peserta }} - {{ $tahsin->nohp_peserta }}, {{ $tahsin->level_peserta }} - {{ $tahsin->jadwal_tahsin }}">
-                                    <input type="hidden" name="uuidpembayaran" value="{{ $tahsin->no_tahsin }}">
+                                    <input type="hidden" name="id" value="{{ $tahsin->no_tahsin }}">
                                     <button class="btn btn-primary btn-sm btn-block"
                                         @if ( $totalpembayaran->total >= 400000  )
                                             disabled

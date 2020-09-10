@@ -19,7 +19,7 @@ class Pembayaran extends Component
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
-            $this->sortAsc = ! $this->sortAsc;
+            $this->sortAsc = !$this->sortAsc;
         } else {
             $this->sortAsc = true;
         }
@@ -31,11 +31,11 @@ class Pembayaran extends Component
     {
         return view('livewire.tahsin.pembayaran', [
             'tahsins' => \App\Models\Tahsin::search($this->search)
-            ->when($this->pembayaran, function ($query) {
-                return $query->where('status_pembayaran', '=', $this->pembayaran);
-            })
-            ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
-            ->paginate($this->perPage),
+                ->when($this->pembayaran, function ($query) {
+                    return $query->where('status_pembayaran', '=', $this->pembayaran);
+                })
+                ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                ->paginate($this->perPage),
         ]);
     }
 }

@@ -21,7 +21,6 @@
     {{ style(mix('css/backend.css')) }}
     {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
-    @livewireStyles
 
 
     <style>
@@ -103,6 +102,7 @@
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
     @stack('after-scripts')
+    @livewireStyles
 
 </head>
 
@@ -131,16 +131,16 @@
 
         @include('backend.includes.aside')
     </div><!--app-body-->
+    @livewireScripts
 
     @include('backend.includes.footer')
 
     <!-- Scripts -->
     @stack('before-scripts')
-    @livewireScripts
-    {!! script('https://coreui.io/demo/2.0/vendors/chart.js/js/Chart.min.js') !!}
+    {{-- {!! script('https://coreui.io/demo/2.0/vendors/chart.js/js/Chart.min.js') !!}
 
     {!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!}
-    {!! script('https://coreui.io/demo/2.0/js/charts.js') !!}
+    {!! script('https://coreui.io/demo/2.0/js/charts.js') !!} --}}
 
     {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     {!! script('//cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js') !!}
@@ -345,11 +345,11 @@
         } );
     </script>
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(document).ready(function() {
             $('.pembayaran').select2();
         });
-    </script>
+    </script> --}}
 
     @stack('after-scripts')
 </body>
