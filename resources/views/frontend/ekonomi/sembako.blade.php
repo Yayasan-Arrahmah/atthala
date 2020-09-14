@@ -269,7 +269,7 @@
                     <div class="form-group row">
                         <label class="col-6 form-control-label" >
                             Minyak SIFF 2 Liter
-                            <div class="text-muted">Rp. 27.000</div>
+                            <div class="text-muted">Rp. 25.000</div>
                         </label>
                         <div class="col-3">
                             <select name="minyak" class="form-control">
