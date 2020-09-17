@@ -55,8 +55,13 @@ class TahsinController extends Controller
     public function index(ManageTahsinRequest $request)
     {
 
-        return view('backend.tahsin.index')
-            ->withtahsins($this->tahsinRepository->getActivePaginated(50, 'id', 'desc'));
+        $nama = $request->input('nama') ?? null;
+        $tahsins = \App\Models\Tahsin::search($nama)
+            // ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+            ->paginate(25);
+
+        return view('backend.tahsin.index', compact('tahsins'));
+        // ->withtahsins($this->tahsinRepository->getActivePaginated(50, 'id', 'desc'));
     }
 
     public function upload(ManageTahsinRequest $request)
@@ -173,7 +178,6 @@ class TahsinController extends Controller
             // import data
             // $dataimport = Carbon::now();
             $dataimport = new TahsinsImport;
-
 
             Excel::import($dataimport, public_path('/file_import/' . $nama_file));
 
@@ -459,12 +463,15 @@ Salam,
     public function destroy(ManageTahsinRequest $request, Tahsin $tahsin)
     {
         $this->tahsinRepository->deleteById($tahsin->id);
-
+        // $data  = Tahsin::where('id', $tahsin->id)->first();
+        // $nama  = $data->nama_peserta;
+        // $level = $data->level_peserta;
         // Fire delete event (TahsinDeleted)
         event(new TahsinDeleted($request));
 
-        return redirect()->route('admin.tahsins.deleted')
-            ->withFlashSuccess(__('backend_tahsins.alerts.deleted'));
+        return redirect()->route('admin.tahsins.index')
+            // ->withFlashSuccess($nama . ' - ' . $level . ' Berhasil Dihapus');
+            ->withFlashSuccess(' Berhasil Dihapus');
     }
 
     /**

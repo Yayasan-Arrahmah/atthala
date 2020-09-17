@@ -28,6 +28,10 @@ Route::get('/wa', function () {
     }
 });
 
+Route::get('/tes-moota', function () {
+    return 'tes';
+});
+
 Route::get('/peserta-tahsin', [HomeController::class, 'pesertaTahsin'])->name('pesertaTahsin');
 
 //EKONOMI

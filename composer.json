@@ -35,7 +35,8 @@
         "torann/geoip": "^1.0",
         "twilio/sdk": "^6.1",
         "webpatser/laravel-uuid": "^3.0",
-        "yajra/laravel-datatables-oracle": "^9.9"
+        "yajra/laravel-datatables-oracle": "^9.9",
+        "yugo/moota": "^1.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
