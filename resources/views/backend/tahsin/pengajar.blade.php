@@ -36,6 +36,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center" width="350">Pengajar</th>
+                                <th class="text-center" width="150"></th>
                                 <th class="text-center">Jumlah Kelas</th>
                                 <th class="text-center">Jumlah Peserta</th>
                                 <th class="text-center">Jenis</th>
@@ -65,6 +66,8 @@
                                 </td>
                                 <td>
                                     <a data-toggle="collapse" href="#detail{{ $number }}" aria-expanded="false" style="padding-left: 15px">{{ $tahsin->nama_pengajar }}</a>
+                                </td>
+                                <td>
                                     <div class="collapse" id="detail{{ $number }}" style="padding: 5px 0 5px 15px">
                                         @foreach($kelas as $jadwal)
                                         {{ $n++ }}.  {{ $jadwal->jadwal_tahsin }} = {{ $jadwal->jumlahkelas }} Peserta<br>

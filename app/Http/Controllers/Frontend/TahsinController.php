@@ -213,4 +213,65 @@ class TahsinController extends Controller
     {
         //
     }
+
+    public function calonpesertaujian(Tahsin $tahsin)
+    {
+        return view('frontend.tahsin.calonpesertaujian');
+    }
+
+    public function simpancalonpesertaujian(Request $request)
+    {
+        $this->validate($request, [
+            'nama_peserta'           => 'required',
+            'nohp_peserta'           => 'required',
+            'jenis_peserta'          => 'required',
+        ]);
+
+        $tahsin     = new Tahsin;
+        $pembayaran = new Pembayaran;
+
+        //angkatan 16. masih tulis manual blum dinamis seting angkatan
+        $banyakid   = Tahsin::where('angkatan_peserta', 16)->count();
+        $generateid = $banyakid + 1;
+
+        try {
+
+            if ($request->jenis_peserta == "IKHWAN") {
+                $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta;
+                $jenisid                         = "TI";
+            } elseif ($request->jenis_peserta == "AKHWAT") {
+                $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta_hari . ' ' . $request->pilih_jadwal_peserta_jam;
+                $jenisid                         = "TA";
+            }
+
+            $no_tahsin = $jenisid . '-16-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+
+            $waktu_lahir_peserta = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
+
+            $tahsin->no_tahsin                       = $no_tahsin;
+            $tahsin->nama_peserta                    = $request->nama_peserta;
+            $tahsin->nohp_peserta                    = $request->nohp_peserta;
+            $tahsin->jenis_peserta                   = $request->jenis_peserta;
+            $tahsin->angkatan_peserta                = "16";
+            $tahsin->alamat_peserta                  = $request->alamat_peserta;
+            $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
+            $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
+            $tahsin->waktu_lahir_peserta             = $waktu_lahir_peserta;
+            $tahsin->pilih_jadwal_peserta            = $pilih_jadwal_peserta;
+            $tahsin->fotoktp_peserta                 = Session::get('filektp');
+            $tahsin->save();
+
+            $pembayaran->id_peserta                = $no_tahsin;
+            $pembayaran->jenis_pembayaran          = "TAHSIN";
+            $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransfer');
+            $pembayaran->save();
+
+            $info = "berhasil";
+        } catch (\Throwable $th) {
+            $info      = "gagal";
+            $no_tahsin = "null";
+        }
+        return redirect()->route('frontend.tahsin.selesai', ['info' => $info, 'id' => $no_tahsin]);
+
+    }
 }

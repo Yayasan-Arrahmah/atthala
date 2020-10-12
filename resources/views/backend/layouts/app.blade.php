@@ -221,6 +221,14 @@
                 ]
             });
 
+            $('#ujiantahsin').DataTable({
+                "scrollX": true,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'Jadwal Ujian Tahsin' }
+                ]
+            });
+
             $('#jadwaltahsinabsenpengajar').DataTable({
                 "scrollX": true,
                 "dom": 'Blfrtip',
@@ -241,6 +249,10 @@
             $('#pengajartahsin').DataTable({
                 "pageLength": 15,
                 "scrollX": true,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'List Data Pengajar' }
+                ],
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api(), data;
 

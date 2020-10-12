@@ -346,6 +346,18 @@ Salam,
             ->withFlashSuccess('Pembayaran Atas Nama : <br>' . $request->namapembayaran . '<br>Dengan Nominal ' . $request->nominalpembayaran . '<br><strong>Berhasil</strong>');
     }
 
+    public function ujian(ManageTahsinRequest $request)
+    {
+        $datajadwals = DB::table('tahsins')
+            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->where('jenis_peserta', 'IKHWAN')
+            ->paginate(2000);
+
+        return view('backend.tahsin.ujian', compact('datajadwals'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

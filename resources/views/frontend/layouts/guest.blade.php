@@ -134,10 +134,10 @@
     @include('includes.partials.demo')
 
     <div id="app">
-        @include('includes.partials.logged-in-as')
+        {{-- @include('includes.partials.logged-in-as') --}}
         {{-- @include('frontend.includes.nav') --}}
 
-        <div class="container">
+        <div class="container" style="margin-top: 30px">
             @include('includes.partials.messages')
             {{-- @include('includes.partials.notif') --}}
 

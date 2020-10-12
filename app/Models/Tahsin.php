@@ -68,4 +68,8 @@ class Tahsin extends Model
             ->orWhere('nama_pengajar', 'like', '%' . $query . '%')
             ->where('angkatan_peserta', '=', '16');
     }
+
+    public function absens(){
+        return $this->hasMany('App\Models\Absen');
+    }
 }

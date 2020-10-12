@@ -64,3 +64,8 @@ Breadcrumbs::for('admin.tahsins.absenkelas', function ($trail) {
     $trail->parent('admin.tahsins.absen');
     $trail->push('Kelas', route('admin.tahsins.absenkelas'));
 });
+
+Breadcrumbs::for('admin.tahsins.ujian', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Kelas', route('admin.tahsins.ujian'));
+});

@@ -25,6 +25,7 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get('absen',             [TahsinController::class, 'absen'])->name('tahsins.absen');
     Route::get('absen/kelas',             [TahsinController::class, 'absenkelas'])->name('tahsins.absenkelas');
     Route::get('pengaturan',        [TahsinController::class, 'pengaturan'])->name('tahsins.pengaturan');
+    Route::get('ujian',        [TahsinController::class, 'ujian'])->name('tahsins.ujian');
 });
 
 Route::group(['prefix' => 'tahsins/{tahsin}'], function () {
