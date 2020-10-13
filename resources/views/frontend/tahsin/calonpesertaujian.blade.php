@@ -26,7 +26,7 @@
 
 @else
 
-<form action="{{ route('frontend.tahsin.simpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
+<form action="#" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
             <div class="card">
