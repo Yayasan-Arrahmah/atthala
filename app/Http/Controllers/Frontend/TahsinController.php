@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use DB;
 
 class TahsinController extends Controller
 {
@@ -214,9 +215,46 @@ class TahsinController extends Controller
         //
     }
 
-    public function calonpesertaujian(Tahsin $tahsin)
+    public function caricalonpesertaujian(Tahsin $tahsin)
     {
-        return view('frontend.tahsin.calonpesertaujian');
+        if (!empty(request('namapeserta'))) {
+            $pencarian = DB::table('tahsins')
+                ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
+                ->where('level_peserta', '=', request('level'))
+                ->where('nama_pengajar', '=', request('pengajar'))
+                ->paginate(10);
+        } else {
+            $pencarian = DB::table('tahsins')
+                ->where('level_peserta', '=', 'xyz')
+                ->paginate(10);
+        }
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar')
+            ->groupBy('nama_pengajar')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->get();
+
+        $datalevel = DB::table('tahsins')
+            ->select('level_peserta')
+            ->groupBy('level_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->get();
+
+        return view('frontend.tahsin.cari-calonpesertaujian', compact('datapengajars', 'datalevel', 'pencarian'));
+    }
+
+
+    public function calonpesertaujian(Request $request)
+    {
+        $notahsin = $request->get('id');
+        $notelp   = $request->get('notelp');
+
+        $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
+                            ->where('nohp_peserta', $notelp)
+                            ->where('angkatan_peserta', '16')
+                            ->first();
+
+        return view('frontend.tahsin.calonpesertaujian', compact('calonpeserta'));
     }
 
     public function simpancalonpesertaujian(Request $request)
@@ -237,10 +275,10 @@ class TahsinController extends Controller
         try {
 
             if ($request->jenis_peserta == "IKHWAN") {
-                $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta;
+                $pilih_jadwal_peserta            = $request->jadwal_peserta;
                 $jenisid                         = "TI";
             } elseif ($request->jenis_peserta == "AKHWAT") {
-                $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta_hari . ' ' . $request->pilih_jadwal_peserta_jam;
+                $jadwal_peserta                  = $request->jadwal_peserta_hari . ' ' . $request->jadwal_peserta_jam;
                 $jenisid                         = "TA";
             }
 
@@ -257,7 +295,7 @@ class TahsinController extends Controller
             $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
             $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
             $tahsin->waktu_lahir_peserta             = $waktu_lahir_peserta;
-            $tahsin->pilih_jadwal_peserta            = $pilih_jadwal_peserta;
+            $tahsin->jadwal_peserta                  = $jadwal_peserta;
             $tahsin->fotoktp_peserta                 = Session::get('filektp');
             $tahsin->save();
 

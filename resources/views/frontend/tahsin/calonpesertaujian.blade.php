@@ -7,6 +7,25 @@
 <link rel="stylesheet" type="text/css" href="/filepond/app.css">
 @stack('after-styles')
 {{-- {{ $sesidaftar }} --}}
+@if (is_null($calonpeserta))
+
+<div class="row justify-content-center align-items-center">
+    <div class="col col-sm-5 align-self-center ">
+        <div class="card pb-4">
+            @csrf
+            <center>
+                <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="Arrahmah">
+            </center>
+            <div class="text-center">
+                <h4> Data Tidak Ditemukan </h4>
+                <div class="text-muted">LTTQ Arrahmah Balikpapan</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@else
+
 <form action="{{ route('frontend.tahsin.simpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
@@ -21,63 +40,112 @@
                 </h1>
                 @csrf
                 <center>
-                    <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}" width="150" alt="Arrahmah" style="padding-top: 20px">
+                    <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="Arrahmah">
                 </center>
                 <div class="text-center">
-                    <h4> Formulir Calon Peserta Ujian Tahsin </h4>
+                    <h4> Formulir <br>Calon Peserta Ujian Tahsin </h4>
                     <div class="text-muted">Angkatan 16</div>
                 </div>
 
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-md-12">
-                            <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="nama_peserta" placeholder="Nama Peserta (Sesuai KTP)" maxlength="191" required="">
+                        <div class="col-5">
+                            <label class="form-control-label">Nomor / ID Tahsin</label>
+                        </div>
+                        <div class="col-7">
+                            <input disabled class="form-control" type="text" placeholder="No Tahsin" value="{{ $calonpeserta->no_tahsin }}" maxlength="191" required="">
+                        </div><!--col-->
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label class="form-control-label">Nama</label>
+                        </div>
+                        <div class="col-10">
+                            <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Nama Peserta (Sesuai KTP)" value="{{ strtoupper($calonpeserta->nama_peserta) }}" maxlength="191" required="">
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required="">
+                            <div class="text-muted" style="font-size: 10px; font-weight: 700">Tidak Pakai Angka 0 . Contoh : 81234563789</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        +62
+                                    </span>
+                                </div>
+                                <input id="notelp" type="number" name="notelp" value="{{ old('notelp') }}" oninvalid="setCustomValidity('Masukkan No. HP Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Masukkan Nomor HP WhatsApp" required="">
+                            </div><!--form-group-->
+                            {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12">
-                            <select name="jenis_peserta" class="gender form-control" required>
-                                <option value="IKHWAN">IKHWAN</option>
-                                <option value="AKHWAT">AKHWAT</option>
+                        <div class="col-5">
+                            <label class="form-control-label">Jenis Peserta</label>
+                        </div>
+                        <div class="col-7">
+                            <select name="jenis_peserta" class="gender form-control" disabled>
+                                <option value="{{ $calonpeserta->jenis_peserta }}">{{ $calonpeserta->jenis_peserta }}</option>
                             </select>
                         </div><!--col-->
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <div class="col-4" style="padding-right: 2px;">
                             <input style="font-size: 11px; height: calc(1.5em + .75rem + 7px)" onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="tempat_lahir_peserta" placeholder="Tempat Kelahiran" maxlength="191" required="">
                         </div><!--col-->
                         <div class="col-2" style="padding-right: 2px; padding-left: 2px">
-                            <select name="tanggal_lahir" class="gender form-control" required>
+                            <select name="tanggal_lahir_peserta" class="gender form-control" required>
                                 <option value="">-- Tanggal Lahir --</option>
-                                @for ($i = 1; $i < 31; $i++)
-                                <option value="{{ $i }}">{{ $i }}</option>
-                                @endfor
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
                             </select>
                         </div>
                         <div class="col-3" style="padding-right: 2px; padding-left: 2px">
-                            <select name="bulan_lahir" class="gender form-control" required>
+                            <select name="bulan_lahir_peserta" class="gender form-control" required>
                                 <option value="">-- Bulan Lahir --</option>
-                                <option value="1">Januari</option>
-                                <option value="2">Februari</option>
-                                <option value="3">Maret</option>
-                                <option value="4">April</option>
-                                <option value="5">Mei</option>
-                                <option value="6">Juni</option>
-                                <option value="7">Juli</option>
-                                <option value="8">Agustus</option>
-                                <option value="9">September</option>
+                                <option value="01">Januari</option>
+                                <option value="02">Februari</option>
+                                <option value="03">Maret</option>
+                                <option value="04">April</option>
+                                <option value="05">Mei</option>
+                                <option value="06">Juni</option>
+                                <option value="07">Juli</option>
+                                <option value="08">Agustus</option>
+                                <option value="09">September</option>
                                 <option value="10">Oktober</option>
                                 <option value="11">November</option>
                                 <option value="12">Desember</option>
                             </select>
                         </div>
                         <div class="col-3" style="padding-left: 2px">
-                            <select name="tahun_lahir" class="gender form-control" required>
+                            <select name="tahun_lahir_peserta" class="gender form-control" required>
                                 <option value="">-- Tahun Lahir --</option>
                                 @for ($i = 2012; $i > 1950; $i--)
                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -109,16 +177,16 @@
                             <div class="col-6">
                                 <select name="jadwal_peserta" class="form-control">
                                     <option value="">Pilih...</option>
-                                    <option value="SABTU 08.00">SABTU 08.00 WITA</option>
-                                    <option value="SABTU 10.00">SABTU 10.00 WITA</option>
-                                    <option value="SABTU 13.00">SABTU 13.00 WITA</option>
-                                    <option value="SABTU 16.00">SABTU 16.00 WITA</option>
-                                    <option value="SABTU 20.00">SABTU 20.00 WITA</option>
-                                    <option value="AHAD 08.00">AHAD 08.00 WITA</option>
-                                    <option value="AHAD 10.00">AHAD 10.00 WITA</option>
-                                    <option value="AHAD 13.00">AHAD 13.00 WITA</option>
-                                    <option value="AHAD 16.00">AHAD 16.00 WITA</option>
-                                    <option value="AHAD 20.00">AHAD 20.00 WITA</option>
+                                    <option value="SABTU 08.00">SABTU - 08.00 WITA</option>
+                                    <option value="SABTU 10.00">SABTU - 10.00 WITA</option>
+                                    <option value="SABTU 13.00">SABTU - 13.00 WITA</option>
+                                    <option value="SABTU 16.00">SABTU - 16.00 WITA</option>
+                                    <option value="SABTU 20.00">SABTU - 20.00 WITA</option>
+                                    <option value="AHAD 08.00">AHAD - 08.00 WITA</option>
+                                    <option value="AHAD 10.00">AHAD - 10.00 WITA</option>
+                                    <option value="AHAD 13.00">AHAD - 13.00 WITA</option>
+                                    <option value="AHAD 16.00">AHAD - 16.00 WITA</option>
+                                    <option value="AHAD 20.00">AHAD - 20.00 WITA</option>
                                     <option value="SENIN 20.00">SENIN - 20.00 WITA</option>
                                     <option value="SELASA 20.00">SELASA - 20.00 WITA</option>
                                     <option value="RABU 20.00">RABU - 20.00 WITA</option>
@@ -130,7 +198,7 @@
                         <div class="form-group row">
                             <label class="col-6 form-control-label" >Pengajar Tahsin</label>
                             <div class="col-6">
-                                <select name="pilih_pengajar_peserta" class="form-control">
+                                <select name="pengajar_tahsin" class="form-control">
                                     <option value="UST. ARIEF">UST. ARIEF</option>
                                     <option value="UST. HILMAN">UST. HILMAN</option>
                                     <option value="UST. ILHAM">UST. ILHAM</option>
@@ -155,9 +223,9 @@
                     </div>
                     <div id="akhwat">
                         <div class="form-group row">
-                            <label class="col-6 form-control-label" >Pilih Jadwal Utama</label>
+                            <label class="col-6 form-control-label" >Jadwal Tahsin</label>
                             <div class="col-3" style="padding-right: 2px; padding-left: 2px">
-                                <select  name="pilih_jadwal_peserta_hari" class="form-control">
+                                <select  name="jadwal_peserta_hari" class="form-control">
                                     <option value="">Pilih Hari...</option>
                                     <option value="SABTU">SABTU</option>
                                     <option value="AHAD">AHAD</option>
@@ -168,7 +236,7 @@
                                 </select>
                             </div><!--col-->
                             <div class="col-3" style="padding-left: 2px">
-                                <select  name="pilih_jadwal_peserta_jam" class="form-control">
+                                <select  name="jadwal_peserta_jam" class="form-control">
                                     <option value="">Pilih Jam...</option>
                                     <option value="07.00">07.00 WITA</option>
                                     <option value="08.00">08.00 WITA</option>
@@ -182,7 +250,7 @@
                         <div class="form-group row">
                             <label class="col-6 form-control-label" >Pengajar Tahsin</label>
                             <div class="col-6">
-                                <select name="pilih_pengajar_peserta" class="form-control">
+                                <select name="pengajar_tahsin" class="form-control">
                                     <option value="ADE">ADE</option>
                                     <option value="AFAENI">AFAENI</option>
                                     <option value="AGUS DIANA">AGUS DIANA</option>
@@ -222,7 +290,7 @@
                                 </select>
                             </div><!--col-->
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- <div class="form-group row">
                         <div class="col-md-12">
                             <textarea onkeyup="this.value = this.value.toUpperCase();" class="form-control" name="alamat_peserta" placeholder="Alamat Tinggal"></textarea>
@@ -333,19 +401,26 @@
                             </div> --}}
                         </div><!--col-->
                         <div class="col-12">
-                            <p class="text-muted" style="font-weight: 700">
-                                Apabila tidak memiliki bukti transfer, mohon hubungi kontak dibawah ini.
+                            <p class="text-muted" style="font-weight: 700; text-align:justify">
+                                Apabila sudah membayar / melunasi infaq SPP namun tidak memiliki bukti pembayaran, maka kami akan memverifikasi sendiri ke bagian keuangan.
                             </p>
                         </div>
                     </div>
                     <div id="non-bukti-tf" class="form-group row">
                         <div class="col-12">
-                            <p class="text-muted" style="font-weight: 700">
-                                Silahkan hubungi kontak dibawah ini untuk mengkonfirmasi apa bila sudah melakukan pelunasan. Terima Kasih.
+                            <p class="text-muted" style="font-weight: 700; text-align:justify">
+                                Apabila saudara belum sempat melunasi pembayaran infaq SPP, maka saudara bisa melakukan pembayaran setelah selesai ujian.
                             </p>
                         </div>
                     </div>
-                    <div id="admin-ikhwan" class="form-group row">
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <p class="text-muted" style="font-weight: 700; text-align:justify">
+                                Terima kasih atas perhatiannya. Semoga Allah Subhanahu Wa Ta'ala memberikan kelancaran dalam kegiatan ujian saudara.
+                            </p>
+                        </div>
+                    </div>
+                    {{-- <div id="admin-ikhwan" class="form-group row">
                         <div class="col-md-12 table-responsive">
                             <div class="alert alert-success" role="alert" style="margin-bottom: 0rem; font-size: 17px">
                                 <p>
@@ -364,25 +439,22 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- <div class="form-group row">
                         <div class="col-md-12">
                             <img class="img-fluid" src="https://lh5.googleusercontent.com/fa9h1brjURoz-uilFI0C881v4VXDR2HJxbOWc4hH7hGdItrftVaU6eWRncRHpcexyq5H6KDwoGAfBNYVLYh_jpSxdl-i4lhbnU1tigImh3SXQlmayuYAtJRk77-g=w675" alt="">
                         </div>
                     </div> --}}
                     <div class="form-group row">
-                        <div class="col-2 text-right">
-                            <input id="setuju" type="checkbox" value="" required/>
-                        </div>
-                        <div class="col-10">
-                            <label>Data yang diisi sudah benar.</label>
+                        <div class="col">
+                            <input oninvalid="setCustomValidity('Centang Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" id="setuju" type="checkbox" value="" required/> <label style="margin-bottom: 2px">Data yang diisi sudah benar.</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group mb-0 clearfix">
                                 {{-- {{ form_submit(__('labels.frontend.auth.register_button')) }} --}}
-                                <button type="submit" class="btn btn-primary px-4 btn-block" style="background-color: rgb(83, 163, 28); border: rgb(83, 163, 28);">Daftar</button>
+                                <button type="submit" class="btn btn-primary px-4 btn-block" style="background-color: rgb(83, 163, 28); border: rgb(83, 163, 28);">Daftar & Simpan Kartu Ujian</button>
                             </div><!--form-group-->
                         </div><!--col-->
                     </div><!--row-->
@@ -523,5 +595,8 @@
         }).change();
     });
 </script>
+@endif
+
 @stack('after-scripts')
+
 @endsection

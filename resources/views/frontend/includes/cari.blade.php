@@ -1,5 +1,5 @@
 <form action="{{ url()->current() }}">
-    <div class="d-print-none row mt-4" style="padding-bottom:20px; margin-right: 0px;padding-left: 15px;">
+    <div class="d-print-none row mt-4" style="padding-bottom:10px; margin-right: 0px;padding-left: 15px;">
         <div class="col-sm-3 alert-secondary" style="border: 1px solid #eee; padding-bottom: 10px" >
             <div style="padding-top: 5px; padding-bottom: 5px">
                 <label class="form-check-label">Nama Peserta</label>
@@ -11,7 +11,7 @@
                 <label class="form-check-label">Level Tahsin</label>
             </div>
             <div class="form-group" style="padding-left:0px">
-                <select class="form-control" name="level">
+                <select class="form-control" name="level" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Dipilih Terlebih Dahulu')" required>
                     {{-- <option value="ASAASI 1">ASAASI 1</option>
                     <option value="ASAASI 2">ASAASI 2</option>
                     <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
@@ -34,7 +34,7 @@
             <div  style="padding-top: 5px; padding-bottom: 5px">
                 <label class="form-check-label">Ustad / Ustadzah</label>
             </div>
-            <select name="pengajar" class="form-control" required>
+            <select name="pengajar" class="form-control" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Dipilih Terlebih Dahulu')" required>
                 <option value="">Nama Pengajar...</option>
                 @foreach($datapengajars as $pengajar)
                     <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>

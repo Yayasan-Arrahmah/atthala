@@ -18,7 +18,8 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get('pendaftaran',          [TahsinController::class, 'pendaftaran'])->name('tahsin.pendaftaran');
     Route::get('selesai',              [TahsinController::class, 'selesai'])->name('tahsin.selesai');
     Route::get('pdf',                  [TahsinController::class, 'pdf'])->name('tahsin.print.daftar');
-    Route::get('calon-peserta-ujian',  [TahsinController::class, 'calonpesertaujian'])->name('tahsin.calonpesertaujian');
+    Route::get('calon-peserta-ujian/daftar',  [TahsinController::class, 'calonpesertaujian'])->name('tahsin.calonpesertaujian');
+    Route::get('calon-peserta-ujian/cari',  [TahsinController::class, 'caricalonpesertaujian'])->name('tahsin.caricalonpesertaujian');
     // Route::post('store', 	[TahsinController::class, 'store']		)->name('tahsins.store');
     // Route::get(	'deleted', 	[TahsinController::class, 'deleted']	)->name('tahsins.deleted');
 });
