@@ -360,7 +360,7 @@ Panitia Ujian Tahsin Angkatan 16
 
         $pdf = PDF::loadView('frontend.tahsin.print-calonpesertaujian', $data)->setPaper('a5', 'landscape');
         // return $pdf->download('medium.pdf');
-        return $pdf->stream();
+        return $pdf->stream($data->nama_peserta.' - Kartu Ujian Tahsin LTTQ Arrahmah Balikpapan.pdf');
 
         // return view('frontend.tahsin.print-calonpesertaujian', compact('data'));
     }
