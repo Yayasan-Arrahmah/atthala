@@ -277,6 +277,13 @@ class TahsinController extends Controller
 
         $pesertaujian = new PesertaUjian;
 
+        $cekterdaftarujian = PesertaUjian::where('no_tahsin', $request->input('notahsin'))->where('angkatan_ujian', '16')->first();
+        $datacekpeserta = Tahsin::where('no_tahsin', $cekterdaftarujian->no_tahsin)->first();
+
+        if(isset($cekterdaftarujian)){
+            return redirect()->to('/tahsin/calon-peserta-ujian/daftar?id='.$cekterdaftarujian->no_tahsin.'&notelp='.$datacekpeserta->nohp_peserta);
+        } else {
+
         try {
 
             $updatepeserta = Tahsin::where('no_tahsin',  $request->input('notahsin'))
@@ -348,6 +355,8 @@ Panitia Ujian Tahsin Angkatan 16
         }
         // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
         return redirect()->to('/tahsin/calon-peserta-ujian/print?id='.$uuid);
+
+        }
 
     }
     public function printcalonpesertaujian(Request $request)
