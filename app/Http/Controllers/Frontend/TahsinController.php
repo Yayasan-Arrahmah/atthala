@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
 use App\Models\Tahsin;
 use App\Models\PesertaUjian;
-use Barryvdh\DomPDF\Facade as PDF;
+// use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use DB;
+use PDF;
 
 class TahsinController extends Controller
 {
@@ -354,6 +355,13 @@ Panitia Ujian Tahsin Angkatan 16
 
         $data = Tahsin::where('no_tahsin', $notahsin)->first();
 
-        return view('frontend.tahsin.print-calonpesertaujian', compact('data'));
+        // dd($data);
+        // $data = ['created_at' => 'Welcome to belajarphp.net'];
+
+        $pdf = PDF::loadView('frontend.tahsin.print-calonpesertaujian', $data)->setPaper('a5', 'landscape');
+        // return $pdf->download('medium.pdf');
+        return $pdf->stream();
+
+        // return view('frontend.tahsin.print-calonpesertaujian', compact('data'));
     }
 }
