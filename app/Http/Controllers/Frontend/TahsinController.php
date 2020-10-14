@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
 use App\Models\Tahsin;
+use App\Models\PesertaUjian;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use DB;
 
 class TahsinController extends Controller
@@ -59,6 +61,14 @@ class TahsinController extends Controller
         $file_bukti_transfer      = $request->file('filepond');
         $nama_file_bukti_transfer = '16-'.Session::get('sesidaftar').'.'.$file_bukti_transfer->getClientOriginalExtension();
         Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+        Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+    }
+
+    public function uploadbuktitransferpesertaujian(Request $request)
+    {
+        $file_bukti_transfer      = $request->file('filepond');
+        $nama_file_bukti_transfer = $request->get('notahsin').'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
+        Session::put('filebuktitransferujian', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
     }
 
@@ -222,11 +232,9 @@ class TahsinController extends Controller
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->paginate(10);
+                ->paginate(15);
         } else {
-            $pencarian = DB::table('tahsins')
-                ->where('level_peserta', '=', 'xyz')
-                ->paginate(10);
+            $pencarian = null;
         }
         $datapengajars = DB::table('tahsins')
             ->select('nama_pengajar')
@@ -260,56 +268,92 @@ class TahsinController extends Controller
     public function simpancalonpesertaujian(Request $request)
     {
         $this->validate($request, [
-            'nama_peserta'           => 'required',
-            'nohp_peserta'           => 'required',
-            'jenis_peserta'          => 'required',
+            'notelp'           => 'required',
+            'pelunasan_tahsin' => 'required',
         ]);
 
-        $tahsin     = new Tahsin;
-        $pembayaran = new Pembayaran;
-
-        //angkatan 16. masih tulis manual blum dinamis seting angkatan
-        $banyakid   = Tahsin::where('angkatan_peserta', 16)->count();
-        $generateid = $banyakid + 1;
+        $pesertaujian = new PesertaUjian;
 
         try {
 
-            if ($request->jenis_peserta == "IKHWAN") {
-                $pilih_jadwal_peserta            = $request->jadwal_peserta;
-                $jenisid                         = "TI";
-            } elseif ($request->jenis_peserta == "AKHWAT") {
-                $jadwal_peserta                  = $request->jadwal_peserta_hari . ' ' . $request->jadwal_peserta_jam;
-                $jenisid                         = "TA";
+            $updatepeserta = Tahsin::where('no_tahsin',  $request->input('notahsin'))
+                    ->update([
+                        'nohp_peserta'         => $request->input('notelp'),
+                        'tempat_lahir_peserta' => $request->input('tempat_lahir_peserta'),
+                        'waktu_lahir_peserta'  => $request->input('tanggal_lahir_peserta').'-'.$request->input('bulan_lahir_peserta').'-'.$request->input('tahun_lahir_peserta')
+                    ]);
+
+            $uuid = Str::uuid();
+            $pesertaujian->uuid             = $uuid;
+            $pesertaujian->no_tahsin        = $request->get('notahsin');
+            $pesertaujian->status_pelunasan = $request->get('pelunasan_tahsin');
+            $pesertaujian->angkatan_ujian   = "16";
+            $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
+            $pesertaujian->save();
+
+            $nohp = $request->input('notelp');
+            if (substr($nohp, 0, 1) === '0') {
+                $nohp = substr($nohp, 1);
+            } elseif (substr($nohp, 0, 2) === '62') {
+                $nohp = substr($nohp, 2);
+            } elseif (substr($nohp, 0, 3) === '+62') {
+                $nohp = substr($nohp, 3);
+            } else {
+                $nohp = $nohp;
             }
 
-            $no_tahsin = $jenisid . '-16-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone = '62' . $nohp;
+            $message =
+                "Assalamualaikum Warrohmarullah Wabarokatuh
 
-            $waktu_lahir_peserta = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
+Terima kasih telah mendaftarkan diri sebagai *Peserta Ujian Tahsin di angkatan 16*.
 
-            $tahsin->no_tahsin                       = $no_tahsin;
-            $tahsin->nama_peserta                    = $request->nama_peserta;
-            $tahsin->nohp_peserta                    = $request->nohp_peserta;
-            $tahsin->jenis_peserta                   = $request->jenis_peserta;
-            $tahsin->angkatan_peserta                = "16";
-            $tahsin->alamat_peserta                  = $request->alamat_peserta;
-            $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
-            $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
-            $tahsin->waktu_lahir_peserta             = $waktu_lahir_peserta;
-            $tahsin->jadwal_peserta                  = $jadwal_peserta;
-            $tahsin->fotoktp_peserta                 = Session::get('filektp');
-            $tahsin->save();
+Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
 
-            $pembayaran->id_peserta                = $no_tahsin;
-            $pembayaran->jenis_pembayaran          = "TAHSIN";
-            $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransfer');
-            $pembayaran->save();
+Tetap waspada dan jaga kesehatan diri dan keluarga sesuai dengan sunnah Baginda Rasulullah shallallahu 'alaihi wasallam.
+
+Jazaakumullah Khoiron Katsiron,
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Salam,
+Panitia Ujian Tahsin Angkatan 16
+*Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+
+            $url = 'https://api.wanotif.id/v1/send';
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+                'Apikey'    => $apikey,
+                'Phone'     => $phone,
+                'Message'   => $message,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
 
             $info = "berhasil";
         } catch (\Throwable $th) {
             $info      = "gagal";
             $no_tahsin = "null";
         }
-        return redirect()->route('frontend.tahsin.selesai', ['info' => $info, 'id' => $no_tahsin]);
+        // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
+        return redirect()->to('/tahsin/calon-peserta-ujian/print?id='.$uuid);
 
+    }
+    public function printcalonpesertaujian(Request $request)
+    {
+        $pesertaujian = PesertaUjian::where('uuid', $request->get('id'))->first();
+        $notahsin     = $pesertaujian->no_tahsin;
+
+        $data = Tahsin::where('no_tahsin', $notahsin)->first();
+
+        return view('frontend.tahsin.print-calonpesertaujian', compact('data'));
     }
 }

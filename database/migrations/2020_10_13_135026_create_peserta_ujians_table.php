@@ -15,6 +15,11 @@ class CreatePesertaUjiansTable extends Migration
     {
         Schema::create('peserta_ujians', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
+            $table->text('no_tahsin', 180)->nullable();
+            $table->text('status_pelunasan', 180)->nullable();
+            $table->text('bukti_transfer', 180)->nullable();
+            $table->text('angkatan_ujian', 10)->nullable();
             $table->timestamps();
         });
     }

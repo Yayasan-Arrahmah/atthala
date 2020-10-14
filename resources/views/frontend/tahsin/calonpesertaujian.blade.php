@@ -26,7 +26,7 @@
 
 @else
 
-<form action="#" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
+<form action="{{ route('frontend.tahsin.simpancalonpesertaujian') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
             <div class="card">
@@ -49,10 +49,11 @@
 
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-5">
+                        <div class="col-6">
                             <label class="form-control-label">Nomor / ID Tahsin</label>
                         </div>
-                        <div class="col-7">
+                        <div class="col-6">
+                            <input hidden name="notahsin" type="text" value="{{ $calonpeserta->no_tahsin }}">
                             <input disabled class="form-control" type="text" placeholder="No Tahsin" value="{{ $calonpeserta->no_tahsin }}" maxlength="191" required="">
                         </div><!--col-->
                     </div>
@@ -61,7 +62,7 @@
                             <label class="form-control-label">Nama</label>
                         </div>
                         <div class="col-10">
-                            <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Nama Peserta (Sesuai KTP)" value="{{ strtoupper($calonpeserta->nama_peserta) }}" maxlength="191" required="">
+                            <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Nama Peserta (Sesuai KTP)" name="namapeserta" value="{{ strtoupper($calonpeserta->nama_peserta) }}" maxlength="191" required="">
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
@@ -88,12 +89,12 @@
                             </select>
                         </div><!--col-->
                     </div>
-                    {{-- <div class="form-group row">
-                        <div class="col-4" style="padding-right: 2px;">
-                            <input style="font-size: 11px; height: calc(1.5em + .75rem + 7px)" onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="tempat_lahir_peserta" placeholder="Tempat Kelahiran" maxlength="191" required="">
+                     <div class="form-group row">
+                        <div class="col-12" style="padding-bottom: 7px;">
+                            <input style="font-size: 11px; height: calc(1.5em + .75rem + 7px)" onkeyup="this.value = this.value.toUpperCase();" oninvalid="setCustomValidity('Isi Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" type="text" name="tempat_lahir_peserta" placeholder="Tempat Kelahiran" maxlength="191" required="">
                         </div><!--col-->
-                        <div class="col-2" style="padding-right: 2px; padding-left: 2px">
-                            <select name="tanggal_lahir_peserta" class="gender form-control" required>
+                        <div class="col-4" style="padding-right: 2px;">
+                            <select oninvalid="setCustomValidity('Pilih Tanggal Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="tanggal_lahir_peserta" class="gender form-control" required>
                                 <option value="">-- Tanggal Lahir --</option>
                                 <option value="01">01</option>
                                 <option value="02">02</option>
@@ -125,10 +126,11 @@
                                 <option value="28">28</option>
                                 <option value="29">29</option>
                                 <option value="30">30</option>
+                                <option value="31">31</option>
                             </select>
                         </div>
-                        <div class="col-3" style="padding-right: 2px; padding-left: 2px">
-                            <select name="bulan_lahir_peserta" class="gender form-control" required>
+                        <div class="col-4" style="padding-right: 2px; padding-left: 2px">
+                            <select oninvalid="setCustomValidity('Pilih Bulan Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="bulan_lahir_peserta" class="gender form-control" required>
                                 <option value="">-- Bulan Lahir --</option>
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
@@ -144,15 +146,16 @@
                                 <option value="12">Desember</option>
                             </select>
                         </div>
-                        <div class="col-3" style="padding-left: 2px">
-                            <select name="tahun_lahir_peserta" class="gender form-control" required>
+                        <div class="col-4" style="padding-left: 2px">
+                            <select oninvalid="setCustomValidity('Pilih Tahun Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="tahun_lahir_peserta" class="gender form-control" required>
                                 <option value="">-- Tahun Lahir --</option>
-                                @for ($i = 2012; $i > 1950; $i--)
+                                @for ($i = 2017; $i > 1930; $i--)
                                 <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
                     </div>
+                    {{--
                     <div class="form-group row">
                         <label class="col-6 form-control-label" >Level Kelas</label>
                         <div class="col-6" name="level_peserta">
@@ -498,39 +501,7 @@
     });
 
     $(function(){
-            $('.upload-ktp').filepond({
-                labelIdle: 'Pilih File/Foto KTP <span class="filepond--label-action">Browse</span>',
-                allowMultiple: false,
-                acceptedFileTypes: ['image/*'],
-                allowFileSizeValidation: true,
-                maxFileSize: '10MB',
-                allowImageResize: true,
-                imageResizeTargetWidth: 100,
-                imageResizeTargetHeight: null,
-                imageResizeMode: 'cover',
-                server: {
-                    url: '/tahsin/uploadktp',
-                    process: {
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    }
-                }
-            });
-            $('.upload-rekaman').filepond({
-                labelIdle: 'Pilih File/Rekaman Tilawah <span class="filepond--label-action">Browse</span>',
-                allowMultiple: false,
-                allowFileSizeValidation: true,
-                maxFileSize: '15MB',
-                server: {
-                    url: '/tahsin/uploadrekaman',
-                    process: {
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    }
-                }
-            });
+
             $('.upload-buktitransfer').filepond({
                 labelIdle: '<span class="filepond--label-action">Pilih File/Foto Bukti Transfer</span>',
                 allowMultiple: false,
@@ -538,7 +509,7 @@
                 allowFileSizeValidation: true,
                 maxFileSize: '10MB',
                 server: {
-                    url: '/tahsin/uploadbuktitransfer',
+                    url: '/tahsin/calon-peserta-ujian/uploadbuktitransfer',
                     process: {
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
