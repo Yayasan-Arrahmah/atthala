@@ -263,7 +263,9 @@ class TahsinController extends Controller
                             ->where('angkatan_peserta', '16')
                             ->first();
 
-        return view('frontend.tahsin.calonpesertaujian', compact('calonpeserta'));
+        $cekterdaftarujian = PesertaUjian::where('no_tahsin', $calonpeserta->no_tahsin)->where('angkatan_ujian', '16')->first();
+
+        return view('frontend.tahsin.calonpesertaujian', compact('calonpeserta', 'cekterdaftarujian'));
     }
 
     public function simpancalonpesertaujian(Request $request)
