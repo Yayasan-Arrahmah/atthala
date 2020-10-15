@@ -278,9 +278,9 @@ class TahsinController extends Controller
         $pesertaujian = new PesertaUjian;
 
         $cekterdaftarujian = PesertaUjian::where('no_tahsin', $request->input('notahsin'))->where('angkatan_ujian', '16')->first();
-        $datacekpeserta = Tahsin::where('no_tahsin', $cekterdaftarujian->no_tahsin)->first();
 
         if(isset($cekterdaftarujian)){
+            $datacekpeserta = Tahsin::where('no_tahsin', $cekterdaftarujian->no_tahsin)->first();
             return redirect()->to('/tahsin/calon-peserta-ujian/daftar?id='.$cekterdaftarujian->no_tahsin.'&notelp='.$datacekpeserta->nohp_peserta);
         } else {
 

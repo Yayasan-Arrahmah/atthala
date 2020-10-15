@@ -27,7 +27,7 @@ background-repeat: no-repeat;
             <td>No. Peserta Tahsin</td>
             <td>:</td>
             <td><strong>{{ $no_tahsin }}</strong></td>
-            <td style="color: #fff">----------------------------</td>
+            <td style="color: #fff">-----------------------</td>
             <td>Jenis Peserta</td>
             <td>:</td>
             <td><strong>{{ $jenis_peserta }}</strong></td>
