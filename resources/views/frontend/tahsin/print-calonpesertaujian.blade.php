@@ -77,7 +77,7 @@ background-repeat: no-repeat;
             <br>
             <br>
             <br>
-            <strong>{{ $nama_peserta }}</strong>
+            <strong>{{ strtoupper($nama_peserta) }}</strong>
         </center>
     </div>
 
