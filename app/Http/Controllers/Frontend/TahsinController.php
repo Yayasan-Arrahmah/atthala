@@ -68,7 +68,7 @@ class TahsinController extends Controller
     public function uploadbuktitransferpesertaujian(Request $request)
     {
         $file_bukti_transfer      = $request->file('filepond');
-        $nama_file_bukti_transfer = $request->get('notahsin').'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
+        $nama_file_bukti_transfer = Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
         Session::put('filebuktitransferujian', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
     }
