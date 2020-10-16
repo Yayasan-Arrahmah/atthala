@@ -191,6 +191,14 @@
                                         @endfor
                                     </select>
                                 </div>
+                                <div class="col">
+                                    <div class="text-muted" style="text-align: justify;">
+                                      Gunakan Kode Bulan Lahir dan Tanggal Lahir ketika melakukan transfer. <br>
+                                      <strong>
+                                          Contoh : SPP Rp 100.000 + 0418 (Bulan April Tanggal 18) = Rp 100.418
+                                      </strong>
+                                    </div>
+                                </div>
                             </div>
                             {{--
                             <div class="form-group row">
