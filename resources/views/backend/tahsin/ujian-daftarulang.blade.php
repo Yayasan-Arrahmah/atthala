@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<div class="card">
+<div class="card" style="margin-bottom: 200px">
     <div class="card-body">
         <div class="row">
             <div class="col-sm-5">
