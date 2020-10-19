@@ -45,16 +45,12 @@
             <div class="col">
             </div>
 
-            <div class="col">
-
-            </div>
-
             <div class="col-md-4 pull-right">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                     </div>
-                    <form action="" >
+                    <form action="">
                         <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
                     </form>
                 </div>
@@ -72,8 +68,8 @@
                                 <th class="text-center">Jadwal</th>
                                 <th class="text-center">Pengajar</th>
                                 <th class="text-center">Jenis</th>
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">Daftar Ulang</th>
+                                {{-- <th class="text-center">Keterangan</th>
+                                <th class="text-center">Daftar Ulang</th> --}}
                                 <th class="text-center">Angkatan</th>
                                 <th width="100" class="text-center"></th>
                             </tr>
@@ -157,7 +153,7 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <div lass="text-center" style="color: #73818f!important;">
                                         {{ $tahsin->keterangan_tahsin }}
                                     </div>
@@ -167,7 +163,7 @@
                                         {{ $tahsin->sudah_daftar_tahsin }}
                                         {{ $tahsin->belum_daftar_tahsin }}
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <div class="text-center">
                                         {{ $tahsin->angkatan_peserta }}

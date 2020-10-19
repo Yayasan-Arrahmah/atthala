@@ -91,6 +91,16 @@
         font-size: 11px
     }
 
+    .zoom {
+            position: relative;
+        }
+    .zoom:hover {
+        -ms-transform: scale(13); /* IE 9 */
+        -webkit-transform: scale(13); /* Safari 3-8 */
+        transform: scale(13);
+        z-index: 999;
+    }
+
     </style>
 
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}

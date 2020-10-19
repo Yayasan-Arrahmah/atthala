@@ -65,13 +65,25 @@
                 Pembayaran
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/ujian')) }} "
-                href="{{ route('admin.tahsins.ujian') }}
-                " > <i class="nav-icon fas fa-check"></i>
-                Ujian
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/ujian*'), 'open') }}">
+                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/ujian*')) }}" href="#">
+                    <i class="nav-icon fas fa-check"></i>
+                    Ujian
                 </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/ujian')) }}" href="{{ route('admin.tahsins.ujian') }}">
+                            Peserta
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/ujian/daftar-ulang*')) }}" href="{{ route('admin.tahsins.ujian.daftarulang') }}">
+                            Daftar Ulang
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengaturan')) }} "
                 href="{{ route('admin.tahsins.pengaturan') }}

@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Auth\User;
 use App\Models\Absen;
 use App\Models\Tahsin;
+use App\Models\PesertaUjian;
 use App\Repositories\Backend\TahsinRepository;
 use App\Http\Requests\Backend\Tahsin\ManageTahsinRequest;
 use App\Http\Requests\Backend\Tahsin\StoreTahsinRequest;
@@ -356,6 +357,13 @@ Salam,
             ->paginate(2000);
 
         return view('backend.tahsin.ujian', compact('datajadwals'));
+    }
+
+    public function daftarpesertaujian(ManageTahsinRequest $request)
+    {
+        $paged         = $request->get('paged') ?? 10;
+        $pesertaujians = PesertaUjian::paginate($paged);
+        return view('backend.tahsin.ujian-daftarulang', compact('pesertaujians', 'paged'));
     }
 
     /**

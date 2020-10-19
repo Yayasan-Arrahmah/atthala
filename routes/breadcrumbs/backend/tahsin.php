@@ -67,5 +67,10 @@ Breadcrumbs::for('admin.tahsins.absenkelas', function ($trail) {
 
 Breadcrumbs::for('admin.tahsins.ujian', function ($trail) {
     $trail->parent('admin.tahsins.index');
-    $trail->push('Kelas', route('admin.tahsins.ujian'));
+    $trail->push('Data Ujian', route('admin.tahsins.ujian'));
+});
+
+Breadcrumbs::for('admin.tahsins.ujian.daftarulang', function ($trail) {
+    $trail->parent('admin.tahsins.ujian');
+    $trail->push('Daftar Ulang', route('admin.tahsins.ujian.daftarulang'));
 });

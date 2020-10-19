@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tahsin;
 
 class PesertaUjian extends Model
 {
@@ -15,4 +16,9 @@ class PesertaUjian extends Model
         'bukti_transfer',
         'angkatan_ujian',
     ];
+
+    public function data()
+    {
+        return $this->belongsTo(Tahsin::class, 'no_tahsin', 'no_tahsin');
+    }
 }
