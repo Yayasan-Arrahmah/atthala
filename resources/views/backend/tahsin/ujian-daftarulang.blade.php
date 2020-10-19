@@ -109,13 +109,13 @@
                             </td>
                             <td>
                                 <div class="text-center">
-                                    @isset($pesertaujian->bukti_transfer)
+                                    {{-- @isset($pesertaujian->bukti_transfer) --}}
                                     <div style="">
                                         <img class="zoom"
                                             src="/bukti-transfer/{{ $pesertaujian->bukti_transfer ?? '404.jpg' }}"
                                         alt="" height="50">
                                     </div>
-                                    @endisset
+                                    {{-- @endisset --}}
                                 </div>
                             </td>
                             <td>
