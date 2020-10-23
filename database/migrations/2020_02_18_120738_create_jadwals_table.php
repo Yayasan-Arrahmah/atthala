@@ -16,22 +16,13 @@ class CreateJadwalsTable extends Migration
         if (!Schema::hasTable('jadwals')) {
             Schema::create('jadwals', function (Blueprint $table) {
                 $table->increments('id');
-                $table->text('uuid_jadwal', 180);
-                $table->text('no_jadwal', 180)->nullable();
-                $table->text('nama_peserta', 180)->nullable();
-                $table->text('nohp_peserta', 180)->nullable();
-                $table->text('level_peserta', 180)->nullable();
-                $table->text('nama_pengajar', 180)->nullable();
-                $table->text('jadwal_tahsin', 180)->nullable();
-                $table->text('sudah_daftar_jadwal', 180)->nullable();
-                $table->text('belum_daftar_jadwal', 180)->nullable();
-                $table->text('keterangan_jadwal', 180)->nullable();
-                $table->text('pindahan_jadwal', 180)->nullable();
-                $table->text('pindahan_jadwal_2', 180)->nullable();
-                $table->text('jenis_peserta', 180)->nullable();
-                $table->text('angkatan_peserta', 180)->nullable();
-                $table->text('status_peserta', 180)->nullable();
-                $table->text('status_pembayaran', 180)->nullable();
+                $table->uuid('uuid_jadwal');
+                $table->text('pengajar_jadwal', 30);
+                $table->text('level_jadwal', 80);
+                $table->text('hari_jadwal', 80);
+                $table->text('waktu_jadwal', 80);
+                $table->text('jenis_jadwal', 10);
+                $table->text('angkatan_jadwal', 10);
                 $table->softDeletes();
                 $table->timestamps();
             });

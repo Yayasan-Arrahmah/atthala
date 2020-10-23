@@ -45,8 +45,8 @@
             <div class="col">
             </div>
 
-            <div class="col-md-4 pull-right">
-                <div class="input-group">
+            <div class="col-md-3">
+                <div class="pull-right input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                     </div>
@@ -65,6 +65,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nama</th>
                                 <th class="text-center">Level</th>
+                                <th class="text-center">Kenaikan Level</th>
                                 <th class="text-center">Jadwal</th>
                                 <th class="text-center">Pengajar</th>
                                 <th class="text-center">Jenis</th>
@@ -126,6 +127,32 @@
                                             <i class="fa fa-time-circle-o"></i><strong>{{ $tahsin->level_peserta }}</strong>
                                         </button>
                                     @endif
+                                </td>
+                                <td>
+                                    <form action="{{ Request::fullUrl() }}">
+                                        {{-- @csrf --}}
+                                        <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
+                                        @if(!empty(Request::get('nama')))
+                                            <input name="nama" value="{{ Request::get('nama') }}" hidden>
+                                        @endif
+                                        @if(!empty(Request::get('page')))
+                                            <input name="page" value="{{ Request::get('page') }}" hidden>
+                                        @endif
+                                        <select style="font-weight: 700;" class="form-control" name="kenaikanlevel" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                            <option value="">{{ $tahsin->kenaikan_level_peserta }}</option>
+                                            <option value="">-----</option>
+                                            <option value="ASAASI 1">ASAASI 1</option>
+                                            <option value="ASAASI 2">ASAASI 2</option>
+                                            <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
+                                            <option value="TAMHIDI">TAMHIDI</option>
+                                            <option value="TAWASUTHI">TAWASUTHI</option>
+                                            <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
+                                            <option value="IDADI">IDADI</option>
+                                            <option value="TAKMILI">TAKMILI</option>
+                                            <option value="TAHSINI">TAHSINI</option>
+                                            <option value="ITQON">ITQON</option>
+                                        </select>
+                                    </form>
                                 </td>
                                 <td>
                                     {{-- <div>SABTU 07.00</div> --}}

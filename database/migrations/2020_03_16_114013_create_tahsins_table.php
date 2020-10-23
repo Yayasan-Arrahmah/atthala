@@ -41,6 +41,7 @@ class CreateTahsinsTable extends Migration
                 $table->text('status_peserta', 180)->nullable();
                 $table->text('status_pembayaran', 180)->nullable();
                 $table->text('status_kelulusan', 180)->nullable();
+                $table->text('kenaikan_level_peserta', 180)->nullable();
                 $table->softDeletes();
                 $table->timestamps();
             });
