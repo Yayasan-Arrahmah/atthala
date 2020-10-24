@@ -375,6 +375,13 @@ Salam,
     {
         $paged         = $request->get('paged') ?? 10;
         $nama          = $request->get('nama') ?? null;
+
+        $pesertaujians = PesertaUjian::with('data')
+                    ->whereHas('products', function ($query) use ($nama){
+                        $query->where('nama_peserta', 'like', '%'.$nama.'%');
+                    })
+                    ->paginate($paged);
+
         $pesertaujians = PesertaUjian::paginate($paged);
         return view('backend.tahsin.ujian-daftarulang', compact('pesertaujians', 'paged'));
     }

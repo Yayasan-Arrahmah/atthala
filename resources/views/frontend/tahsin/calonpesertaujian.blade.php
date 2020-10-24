@@ -26,6 +26,9 @@
 
 @else
 
+    @php
+        $cekterdaftarujian = \Models\PesertaUjian::where('no_tahsin', $calonpeserta->no_tahsin)->where('angkatan_ujian', '16')->first();
+    @endphp
     @if (isset($cekterdaftarujian))
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center ">
