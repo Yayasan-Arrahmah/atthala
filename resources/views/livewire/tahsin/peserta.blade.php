@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-5">
             <h4 class="card-title mb-0">
-                Peserta Tahsin<small class="text-muted"> - Angkatan 16</small>
+                Peserta Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
 
                 {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
             </h4>

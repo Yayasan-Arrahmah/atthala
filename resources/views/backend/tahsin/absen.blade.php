@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' - Pengajar Tahsin Angkatan 16 ')
+@section('title', app_name() . ' - Pengajar Tahsin Angkatan'.session('angkatan_tahsin'))
 
 @section('breadcrumb-links')
 @include('backend.tahsin.includes.breadcrumb-links')
@@ -24,7 +24,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title mb-0">
-            Absen Tahsin<small class="text-muted"> - Angkatan 16</small>
+            Absen Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
         </h4>
     </div>
 </div><!--card-->
@@ -102,7 +102,7 @@
                                                 $junjul = DB::table('absens')
                                                         ->where('deleted_at', null)
                                                         ->where('jenis_absen', 'TAHSIN')
-                                                        ->where('angkatan_absen', '16')
+                                                        ->where('angkatan_absen', session('angkatan_tahsin'))
                                                         ->where('level_kelas_absen', $jadwal->level_peserta)
                                                         ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
                                                         ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
@@ -143,7 +143,7 @@
                                                 $julgus = DB::table('absens')
                                                         ->where('deleted_at', null)
                                                         ->where('jenis_absen', 'TAHSIN')
-                                                        ->where('angkatan_absen', '16')
+                                                        ->where('angkatan_absen', session('angkatan_tahsin'))
                                                         ->where('level_kelas_absen', $jadwal->level_peserta)
                                                         ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
                                                         ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
@@ -184,7 +184,7 @@
                                                 $gussep = DB::table('absens')
                                                         ->where('deleted_at', null)
                                                         ->where('jenis_absen', 'TAHSIN')
-                                                        ->where('angkatan_absen', '16')
+                                                        ->where('angkatan_absen', session('angkatan_tahsin'))
                                                         ->where('level_kelas_absen', $jadwal->level_peserta)
                                                         ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
                                                         ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
@@ -225,7 +225,7 @@
                                                 $sepokt = DB::table('absens')
                                                         ->where('deleted_at', null)
                                                         ->where('jenis_absen', 'TAHSIN')
-                                                        ->where('angkatan_absen', '16')
+                                                        ->where('angkatan_absen', session('angkatan_tahsin'))
                                                         ->where('level_kelas_absen', $jadwal->level_peserta)
                                                         ->where('waktu_kelas_absen', $jadwal->jadwal_tahsin)
                                                         ->where('jenis_kelas_absen', $tahsin->jenis_peserta)
@@ -354,7 +354,7 @@
                                     $cek = DB::table('absens')
                                             // ->where('user_create_absen', $cekuser->id ?? 0 )
                                             ->where('pertemuan_ke_absen', $b)
-                                            ->where('angkatan_absen', '16')
+                                            ->where('angkatan_absen', session('angkatan_tahsin'))
                                             ->where('level_kelas_absen', $tahsin->level_peserta)
                                             ->where('waktu_kelas_absen', $tahsin->jadwal_tahsin)
                                             ->where('jenis_kelas_absen', $tahsin->jenis_peserta)

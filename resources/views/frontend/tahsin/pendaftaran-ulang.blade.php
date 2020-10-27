@@ -25,7 +25,7 @@
                 </center>
                 <div class="text-center">
                     <h4> Pendaftaran Tahsin </h4>
-                    <div class="text-muted">Angkatan 16</div>
+                    <div class="text-muted">Angkatan {{ session('angkatan_tahsin') }}</div>
                 </div>
 
                 <div class="card-body">

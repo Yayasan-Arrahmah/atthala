@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exceptions\GeneralException;
 use App\Imports\TahsinsImport;
+use App\Imports\TahsinUpdateLevel;
 use App\Imports\PembayaransImport;
 use App\Models\Pembayaran;
 use Carbon\Carbon;
@@ -27,6 +28,7 @@ use App\Events\Backend\Tahsin\TahsinCreated;
 use App\Events\Backend\Tahsin\TahsinUpdated;
 use App\Events\Backend\Tahsin\TahsinDeleted;
 use App\Models\PengaturanTahsin;
+use Illuminate\Support\Arr;
 
 
 class TahsinController extends Controller
@@ -114,7 +116,7 @@ class TahsinController extends Controller
     {
         $dataabsen = new Absen;
         $datauser  = new User;
-        $angkatan  = '16';
+        $angkatan  = session('angkatan_tahsin');
 
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
@@ -140,7 +142,7 @@ class TahsinController extends Controller
         $jenis        = $request->input('jenis') ?? '!!ERROR!!';
         $userpengajar = $request->input('pengajar');
         $pertemuanke  = $request->input('ke');
-        $angkatan     = '16';
+        $angkatan     = session('angkatan_tahsin');
 
         $datapeserta = DB::table('tahsins')
             ->where('nama_pengajar', $userpengajar)
@@ -244,6 +246,67 @@ class TahsinController extends Controller
                 ->withFlashSuccess('Upload File Excel Pembayaran Berhasil. Total ' . $banyakdata . ' Data');
         } else {
             return redirect()->route('admin.tahsins.upload')->withFlashSuccess('Upload Gagal');
+        }
+    }
+
+    public function updatelevel(ManageTahsinRequest $request)
+    {
+        if ($request->hasFile('file')) {
+
+            // validasi
+            $this->validate($request, [
+                'file' => 'required|mimes:csv,xls,xlsx'
+            ]);
+
+            // // menangkap file excel
+            // $file = $request->file('file');
+
+            // // membuat nama file unik
+            // $mytime = Carbon::now();
+            // $nama_file = $mytime->toDateTimeString() . '-' . rand() . '-' . $file->getClientOriginalName();
+
+            // // upload ke folder file_import di dalam folder public
+            // $file->move('file_update_level', $nama_file);
+
+            // // import data
+            // // $dataimport = Carbon::now();
+            $dataupdate = new TahsinUpdateLevel;
+
+            // Excel::import($dataimport, public_path('/file_update_level/' . $nama_file));
+
+            $data = Excel::toArray(new TahsinUpdateLevel, request()->file('file'));
+
+            // collect(head($data))
+            //     ->each(function ($row, $key) {
+            //         DB::table('tahsins')
+            //             ->where('no_tahsin', $row['id'])
+            //             ->update(array_except($row, ['id']));
+            //     });
+
+            $updatelevel = [];
+            $tahsin = new Tahsin;
+            foreach ($data[0] as $key => $value) {
+                // echo json_encode($value[0]);
+                // echo json_encode($value[6]);
+                $updatelevel[] = array('notahsin' => $value[0], 'level' => $value[6]);
+                // DB::table('tahsins')->where('no_tahsin', json_encode($value[0]))->update(['kenaikan_level_peserta' => json_encode($value[6])]);
+            }
+            // return $updatelevel;
+            foreach ($updatelevel as $data) {
+                // echo Arr::get($data, 'notahsin');
+                DB::table('tahsins')
+                    ->where('no_tahsin', Arr::get($data, 'notahsin'))
+                    ->update(['kenaikan_level_peserta' => Arr::get($data, 'level')]);
+            }
+            // $banyakdata = $dataupdate->getRowCount();
+
+            // DB::table('tahsins')->whereIn('no_tahsin', $data[0])->update(['kenaikan_level_peserta' => $data[6]]);
+
+            // // alihkan halaman kembali
+            return redirect()->back()
+                ->withFlashSuccess('Upload File Kenaikan Level Tahsin.');
+        } else {
+            return redirect()->back()->withFlashSuccess('Upload Gagal');
         }
     }
 

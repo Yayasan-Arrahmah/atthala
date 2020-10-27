@@ -25,7 +25,7 @@ class AbsenTahsin extends Component
                 'user_create_absen'      => auth()->user()->id,
                 'pertemuan_ke_absen'     => $ke,
                 'jenis_absen'            => 'TAHSIN',
-                'angkatan_absen'         => '16',
+                'angkatan_absen'         => session('angkatan_tahsin'),
                 'status_praktikum_nilai' => $this->keteranganabsen,
             ]);
         }
@@ -41,7 +41,7 @@ class AbsenTahsin extends Component
         return view(
             'livewire.absen-tahsin',
             [
-                'tahsins' => Tahsin::where('angkatan_tahsin', '16')
+                'tahsins' => Tahsin::where('angkatan_tahsin', session('angkatan_tahsin'))
                     ->where('pengajar', auth()->user()->email),
             ]
         );

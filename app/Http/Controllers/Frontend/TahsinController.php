@@ -44,7 +44,7 @@ class TahsinController extends Controller
     public function uploadktp(Request $request)
     {
         $file_ktp      = $request->file('filepond');
-        $nama_file_ktp = '16-'.Session::get('sesidaftar').'.'.$file_ktp->getClientOriginalExtension();
+        $nama_file_ktp = session('angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_ktp->getClientOriginalExtension();
         Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('ktp')->put($nama_file_ktp, File::get($file_ktp));
     }
@@ -52,7 +52,7 @@ class TahsinController extends Controller
     public function uploadrekaman(Request $request)
     {
         $file_rekaman      = $request->file('filepond');
-        $nama_file_rekaman = '16-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
+        $nama_file_rekaman = session('angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
         Session::put('filerekaman', $nama_file_rekaman); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('rekaman')->put($nama_file_rekaman, File::get($file_rekaman));
     }
@@ -60,7 +60,7 @@ class TahsinController extends Controller
     public function uploadbuktitransfer(Request $request)
     {
         $file_bukti_transfer      = $request->file('filepond');
-        $nama_file_bukti_transfer = '16-'.Session::get('sesidaftar').'.'.$file_bukti_transfer->getClientOriginalExtension();
+        $nama_file_bukti_transfer = session('angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_bukti_transfer->getClientOriginalExtension();
         Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
     }
@@ -92,8 +92,7 @@ class TahsinController extends Controller
         $tahsin     = new Tahsin;
         $pembayaran = new Pembayaran;
 
-        //angkatan 16. masih tulis manual blum dinamis seting angkatan
-        $banyakid   = Tahsin::where('angkatan_peserta', 16)->count();
+        $banyakid   = Tahsin::where('angkatan_peserta', session('angkatan_tahsin'))->count();
         $generateid = $banyakid + 1;
 
         try {
@@ -110,7 +109,7 @@ class TahsinController extends Controller
                 $jenisid                         = "TA";
             }
 
-            $no_tahsin = $jenisid . '-16-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            $no_tahsin = $jenisid . '-'.session('angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
 
             $nominal_pembayaran  = 200000 + ($request->has('bayar_modul') === true ? 60000 : 0) + ($request->has('bayar_mushaf') === true ? 110000 : 0);
             $waktu_lahir_peserta = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
@@ -138,7 +137,7 @@ class TahsinController extends Controller
             $tahsin->nama_peserta                    = $request->nama_peserta;
             $tahsin->nohp_peserta                    = $request->nohp_peserta;
             $tahsin->jenis_peserta                   = $request->jenis_peserta;
-            $tahsin->angkatan_peserta                = "16";
+            $tahsin->angkatan_peserta                = session('angkatan_tahsin');
             $tahsin->alamat_peserta                  = $request->alamat_peserta;
             $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
             $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
@@ -265,19 +264,22 @@ class TahsinController extends Controller
     {
         $notahsin = $request->get('id');
         $notelp   = $request->get('notelp');
+        $angkatan = session('angkatan_tahsin');
 
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
                             ->where('nohp_peserta', $notelp)
-                            ->where('angkatan_peserta', '16')
+                            ->where('angkatan_peserta', $angkatan)
                             ->first();
 
-        $cekterdaftarujian = PesertaUjian::where('no_tahsin', $notahsin)->where('angkatan_ujian', '16')->first();
+        $cekterdaftarujian = PesertaUjian::where('no_tahsin', $notahsin)->where('angkatan_ujian', $angkatan)->first();
 
         return view('frontend.tahsin.calonpesertaujian', compact('calonpeserta', 'cekterdaftarujian'));
     }
 
     public function simpancalonpesertaujian(Request $request)
     {
+        $angkatan = session('angkatan_tahsin');
+
         $this->validate($request, [
             'notelp'           => 'required',
             'pelunasan_tahsin' => 'required',
@@ -285,7 +287,7 @@ class TahsinController extends Controller
 
         $pesertaujian = new PesertaUjian;
 
-        $cekterdaftarujian = PesertaUjian::where('no_tahsin', $request->input('notahsin'))->where('angkatan_ujian', '16')->first();
+        $cekterdaftarujian = PesertaUjian::where('no_tahsin', $request->input('notahsin'))->where('angkatan_ujian', $angkatan)->first();
 
         if(isset($cekterdaftarujian)){
             $datacekpeserta = Tahsin::where('no_tahsin', $cekterdaftarujian->no_tahsin)->first();
@@ -305,7 +307,7 @@ class TahsinController extends Controller
             $pesertaujian->uuid             = $uuid;
             $pesertaujian->no_tahsin        = $request->get('notahsin');
             $pesertaujian->status_pelunasan = $request->get('pelunasan_tahsin');
-            $pesertaujian->angkatan_ujian   = "16";
+            $pesertaujian->angkatan_ujian   = session('angkatan_tahsin');
             $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
             $pesertaujian->save();
 
@@ -325,7 +327,7 @@ class TahsinController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih telah mendaftarkan diri sebagai *Peserta Ujian Tahsin di angkatan 16*.
+Terima kasih telah mendaftarkan diri sebagai *Peserta Ujian Tahsin di angkatan ".session('angkatan_tahsin')."*.
 
 Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
 
@@ -335,7 +337,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Ujian Tahsin Angkatan 16
+Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             $url = 'https://api.wanotif.id/v1/send';
@@ -382,5 +384,32 @@ Panitia Ujian Tahsin Angkatan 16
         return $pdf->stream($data->nama_peserta.' - Kartu Ujian Tahsin LTTQ Arrahmah Balikpapan.pdf');
 
         // return view('frontend.tahsin.print-calonpesertaujian', compact('data'));
+    }
+
+    public function caripesertadaftarulang(Tahsin $tahsin)
+    {
+        if (!empty(request('namapeserta'))) {
+            $pencarian = DB::table('tahsins')
+                ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
+                ->where('level_peserta', '=', request('level'))
+                ->where('nama_pengajar', '=', request('pengajar'))
+                ->paginate(15);
+
+        } else {
+            $pencarian = null;
+        }
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar')
+            ->groupBy('nama_pengajar')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->get();
+
+        $datalevel = DB::table('tahsins')
+            ->select('level_peserta')
+            ->groupBy('level_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->get();
+
+        return view('frontend.tahsin.cari-calonpesertaujian', compact('datapengajars', 'datalevel', 'pencarian'));
     }
 }

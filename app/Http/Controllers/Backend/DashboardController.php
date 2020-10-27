@@ -14,6 +14,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // session()->forget('angkatan_tahsin');
+
         return view('backend.dashboard');
     }
 }

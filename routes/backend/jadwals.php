@@ -10,7 +10,7 @@ Route::bind('jadwal', function ($value) {
 	return Jadwal::withTrashed()->where($jadwal->getRouteKeyName(), $value)->first();
 });
 
-Route::group(['prefix' => 'jadwals'], function () {
+Route::group(['prefix' => 'jadwal'], function () {
 	Route::get(	'', 		[JadwalController::class, 'index']		)->name('jadwals.index');
     Route::get(	'create', 	[JadwalController::class, 'create']	)->name('jadwals.create');
 	Route::post('store', 	[JadwalController::class, 'store']		)->name('jadwals.store');
@@ -19,7 +19,7 @@ Route::group(['prefix' => 'jadwals'], function () {
     Route::post(	'import', 	[JadwalController::class, 'import']	)->name('jadwals.import');
 });
 
-Route::group(['prefix' => 'jadwals/{jadwal}'], function () {
+Route::group(['prefix' => 'jadwal/{jadwal}'], function () {
 	// Jadwal
 	Route::get('/', [JadwalController::class, 'show'])->name('jadwals.show');
 	Route::get('edit', [JadwalController::class, 'edit'])->name('jadwals.edit');

@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    {{ __('backend_pengajars.labels.management') }} <small class="text-muted">{{ __('backend_pengajars.labels.active') }}</small>
+                    {{ __('backend_pengajars.labels.management') }} <small class="text-muted">Tahsin</small>
                 </h4>
             </div><!--col-->
 
@@ -23,23 +23,37 @@
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table-responsive">
+                <div class="table table-responsive-sm table-hover mb-0 table-sm">
                     <table class="table">
-                        <thead>
+                        <thead class="thead-light">
                         <tr>
-                            <th>@lang('backend_pengajars.table.nama_pengajar')</th>
-                            <th>@lang('backend_pengajars.table.created')</th>
-                            <th>@lang('backend_pengajars.table.last_updated')</th>
-                            <th>@lang('backend_pengajars.table.actions')</th>
+                            <th>No.</th>
+                            <th>ID Pengajar</th>
+                            <th>Nama</th>
+                            <th>No. HP</th>
+                            <th>Jenis</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
+                        @php
+                        $first  = 0;
+                        $end    = 0;
+                        $number = 1;
+                        @endphp
                         @foreach($pengajars as $pengajar)
                             <tr>
-                                <td class="align-middle"><a href="/admin/pengajars/{{ $pengajar->id }}">{{ $pengajar->nama_pengajar }}</a></td>
-                                <td class="align-middle">{!! $pengajar->created_at !!}</td>
-                                <td class="align-middle">{{ $pengajar->updated_at->diffForHumans() }}</td>
-                                <td class="align-middle">{!! $pengajar->action_buttons !!}</td>
+                                <td class="text-center" >
+                                    {{ $key + $pengajar->firstItem() }}
+                                </td>
+                                <td class="align-middle">{!! $pengajar->id_pengajar   !!}</td>
+                                <td class="align-middle"><a href="/admin/pengajar/{{ $pengajar->id }}">{{ $pengajar->nama_pengajar }}</a></td>
+                                <td class="align-middle">{{ $pengajar->nohp_pengajar }}</td>
+                                <td class="align-middle">{{ $pengajar->jenis_pengajar }}</td>
+                                <td class="align-middle text-muted">
+                                    {!! $pengajar->action_buttons !!}
+                                    {{ $pengajar->updated_at->diffForHumans() }}
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -50,13 +64,14 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $pengajars->count() !!} {{ trans_choice('backend_pengajars.table.total', $pengajars->count()) }}
+                    {{-- {!! $pengajars->count() !!} {{ trans_choice('backend_pengajars.table.total', $pengajars->count()) }} --}}
+                    {!! $first !!} - {!! $end !!} Dari {!! $pengajars->total() !!} Data
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right">
-                    {!! $pengajars->links() !!}
+                    {!! $pengajars->appends(request()->query())->links()!!}
                 </div>
             </div><!--col-->
         </div><!--row-->

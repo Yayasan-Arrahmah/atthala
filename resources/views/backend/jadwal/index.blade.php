@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan 16</small>
+                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan {{ session('angkatan_tahsin') }}</small>
                     {{-- {{ __('backend_jadwals.labels.management') }} <small class="text-muted">{{ __('backend_jadwals.labels.active') }}</small> --}}
                 </h4>
             </div><!--col-->
@@ -35,10 +35,10 @@
             </div><!--col-->
         </div><!--row-->
         {{-- {{ $duplicates }} --}}
-        @foreach($duplicates as $data)
-            {{ $data->jadwal_tahsin }}, {{ $data->level_peserta }}, {{ $data->nama_pengajar }} -
+        {{-- @foreach($duplicates as $data)
+            {{ $data->jadwal_tahsin }}, {{ $data->level_jadwal }}, {{ $data->nama_pengajar }} -
             {{ $data->jumlah }} <br>
-        @endforeach
+        @endforeach --}}
 
         <div class="row mt-4">
             <div class="col">
@@ -47,13 +47,11 @@
                         <thead class="thead-light">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Nama</th>
-                                <th class="text-center">Level</th>
-                                <th class="text-center">Jadwal</th>
                                 <th class="text-center">Pengajar</th>
+                                <th class="text-center">Level</th>
+                                <th class="text-center">Hari</th>
+                                <th class="text-center">Waktu</th>
                                 <th class="text-center">Jenis</th>
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">Daftar Ulang</th>
                                 <th class="text-center">Angkatan</th>
                                 <th width="100" class="text-center"></th>
                             </tr>
@@ -71,65 +69,66 @@
                                     </td>
                                     <td>
                                         <a href="/admin/jadwals/{{ $jadwal->id }}/edit" style="color: rgb(56, 56, 56);">
-                                            <div style="text-transform: uppercase;">{{ $jadwal->nama_peserta }}</div>
+                                            <div style="text-transform: uppercase;">{{ $jadwal->pengajar_jadwal }}</div>
                                             <div class="small text-muted">
-                                                {{ $jadwal->nohp_peserta }}
+                                                {{ $jadwal->pengajar_jadwal }}
                                             </div>
                                         </a>
                                     </td>
                                     <td class="text-center">
                                         @php
-                                            if ($jadwal->level_peserta  == "ASAASI 1") {
+                                            if ($jadwal->level_jadwal  == "ASAASI 1") {
                                                 $warna = "#20a8d8";
-                                            } elseif ($jadwal->level_peserta  == "ASAASI 2") {
+                                            } elseif ($jadwal->level_jadwal  == "ASAASI 2") {
                                                 $warna = "#20c997";
-                                            } elseif ($jadwal->level_peserta  == "TILAWAH ASAASI") {
+                                            } elseif ($jadwal->level_jadwal  == "TILAWAH ASAASI") {
                                                 $warna = "#17a2b8";
-                                            } elseif ($jadwal->level_peserta  == "TAMHIDI") {
+                                            } elseif ($jadwal->level_jadwal  == "TAMHIDI") {
                                                 $warna = "#f86c6b";
-                                            } elseif ($jadwal->level_peserta  == "TAWATSUTHI") {
+                                            } elseif ($jadwal->level_jadwal  == "TAWATSUTHI") {
                                                 $warna = "#6610f2";
-                                            } elseif ($jadwal->level_peserta  == "TILAWAH TAWATSUTHI") {
+                                            } elseif ($jadwal->level_jadwal  == "TILAWAH TAWATSUTHI") {
                                                 $warna = "#ffc107";
-                                            } elseif ($jadwal->level_peserta  == "IDADI") {
+                                            } elseif ($jadwal->level_jadwal  == "IDADI") {
                                                 $warna = "#e83e8c";
-                                            } elseif ($jadwal->level_peserta  == "TAKMILI") {
+                                            } elseif ($jadwal->level_jadwal  == "TAKMILI") {
                                                 $warna = "#4dbd74";
-                                            } elseif ($jadwal->level_peserta  == "TAHSINI") {
+                                            } elseif ($jadwal->level_jadwal  == "TAHSINI") {
                                                 $warna = "#b81752";
-                                            } elseif ($jadwal->level_peserta  == "ITQON") {
+                                            } elseif ($jadwal->level_jadwal  == "ITQON") {
                                                 $warna = "#1848f5";
                                             } else {
                                                 $warna = "#2f353a";
                                             }
                                         @endphp
 
-                                        @if ($jadwal->level_peserta == null)
+                                        @if ($jadwal->level_jadwal == null)
                                         @else
                                             <button class="btn btn-sm" style="color: #fff; background-color: {{ $warna }}; border-color: {{ $warna }};">
-                                                <i class="fa fa-time-circle-o"></i><strong>{{ $jadwal->level_peserta }}</strong>
+                                                <i class="fa fa-time-circle-o"></i><strong>{{ $jadwal->level_jadwal }}</strong>
                                             </button>
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- <div>SABTU 07.00</div> --}}
                                         <div class="text-center">
-                                            <strong>{{ $jadwal->jadwal_tahsin }}</strong>
+                                        {{-- <div>SABTU</div> --}}
+                                            <div>{{ $jadwal->hari_jadwal }}</div>
                                         </div>
                                     </td>
                                     <td>
+                                        {{-- <div>07.00</div> --}}
                                         <div class="text-center">
-                                            <div>{{ $jadwal->nama_pengajar }}</div>
+                                            <strong>{{ $jadwal->waktu_jadwal }}</strong>
                                         </div>
                                     </td>
                                     <td>
-                                        @if ($jadwal->jenis_peserta == 'IKHWAN')
+                                        @if ($jadwal->jenis_jadwal == 'IKHWAN')
                                             <div class="text-center">
-                                                <strong  style="color: #20a8d8!important">{{ $jadwal->jenis_peserta }}</strong>
+                                                <strong  style="color: #20a8d8!important">{{ $jadwal->jenis_jadwal }}</strong>
                                             </div>
-                                        @elseif ($jadwal->jenis_peserta == 'AKHWAT')
+                                        @elseif ($jadwal->jenis_jadwal == 'AKHWAT')
                                             <div class="text-center">
-                                                <strong  style="color: #e83e8c!important">{{ $jadwal->jenis_peserta }}</strong>
+                                                <strong  style="color: #e83e8c!important">{{ $jadwal->jenis_jadwal }}</strong>
                                             </div>
                                         @else
                                             <div class="text-center">
@@ -144,13 +143,7 @@
                                     </td>
                                     <td>
                                         <div class="text-center">
-                                            {{ $jadwal->sudah_daftar_jadwal }}
-                                            {{ $jadwal->belum_daftar_jadwal }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            {{ $jadwal->angkatan_peserta }}
+                                            {{ $jadwal->angkatan_jadwal }}
                                         </div>
                                     </td>
                                     <td>

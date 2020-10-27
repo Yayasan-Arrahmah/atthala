@@ -31,7 +31,7 @@
             Jadwal Tahsin
         </div>
         <div class="text-muted text-center">
-            Angkatan 16
+            Angkatan {{ session('angkatan_tahsin') }}
         </div>
     </div><!--col-md-6-->
 </div><!--row-->

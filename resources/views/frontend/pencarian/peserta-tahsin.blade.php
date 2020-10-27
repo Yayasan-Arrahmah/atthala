@@ -11,7 +11,7 @@
                     <div style="padding-top: 20px">
                         <h4>Pencarian Peserta Tahsin</h4>
                         <div class="text-muted">
-                            Angkatan 17
+                            Angkatan {{ session('angkatan_tahsin') }}
                         </div>
                     </div>
                 </center>

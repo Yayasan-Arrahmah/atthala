@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PengaturanTahsin extends Model
+class Pengaturan extends Model
 {
 
     /**
@@ -13,6 +13,7 @@ class PengaturanTahsin extends Model
      * @var array
      */
     // protected $dates = ['deleted_at'];
+    public $table = 'pengaturan';
 
     /**
      * The attributes that are mass assignable.
@@ -20,10 +21,10 @@ class PengaturanTahsin extends Model
      * @var array
      */
     protected $fillable = [
+        'pengaturan',
         'nama_pengaturan',
         'keterangan_pengaturan',
-        'pilihan_pengaturan',
-        'status_pengaturan',
+        'nilai_pengaturan',
         'user_pengaturan',
     ];
 }

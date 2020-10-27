@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Absen Tahsin<small class="text-muted"> - Angkatan 16</small>
+                    Absen Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
                 </h4>
             </div><!--col-->
 

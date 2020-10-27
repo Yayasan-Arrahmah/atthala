@@ -50,15 +50,12 @@ class JadwalController extends Controller
     public function index(ManageJadwalRequest $request)
     {
         // $duplicates = collect(DB::table('jadwals')->select('nohp_peserta')->get());
-        $duplicates = DB::table('jadwals')
-                            ->where('angkatan_peserta', '15')
-                            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar',(DB::raw('COUNT(*) as jumlah')))
-                            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar')
-                            ->havingRaw(DB::raw('COUNT(*) > 0'))
+        $jadwals = DB::table('jadwals')
+                            ->where('angkatan_jadwal', session('angkatan_tahsin'))
                             ->get();
 
 
-        return view('backend.jadwal.index', compact('duplicates'))
+        return view('backend.jadwal.index', compact('jadwals'))
             ->withjadwals($this->jadwalRepository->getActivePaginated(25, 'id', 'asc'));
     }
 

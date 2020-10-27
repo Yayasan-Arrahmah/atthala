@@ -68,7 +68,7 @@ class DashboardController extends Controller
         $jenis        = $request->input('jenis') ?? '!!ERROR!!';
         $userpengajar = auth()->user()->user_pengajar;
         $pertemuanke  = $request->input('ke');
-        $angkatan     = '16';
+        $angkatan     = session('angkatan_tahsin');
 
         $datapeserta = DB::table('tahsins')
             ->where('nama_pengajar', $userpengajar)
@@ -109,7 +109,7 @@ class DashboardController extends Controller
                 'user_create_absen'      => auth()->user()->id,
                 'pertemuan_ke_absen'     => $request->input('pertemuan'),
                 'jenis_absen'            => 'TAHSIN',
-                'angkatan_absen'         => '16',
+                'angkatan_absen'         => session('angkatan_tahsin'),
                 'level_kelas_absen'      => $request->input('level'),
                 'waktu_kelas_absen'      => $request->input('waktu'),
                 'jenis_kelas_absen'      => $request->input('jenis'),

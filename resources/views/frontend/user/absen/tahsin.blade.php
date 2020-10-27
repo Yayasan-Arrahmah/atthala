@@ -74,7 +74,7 @@
                                     </button>
                                 @endif
                                 <div class="small text-muted">
-                                    ANGKATAN 16
+                                    ANGKATAN {{ session('angkatan_tahsin') }}
                                 </div>
                             </div>
                             <div class="col-4">

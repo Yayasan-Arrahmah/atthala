@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan 16</small>
+                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -31,6 +31,26 @@
                 </a>
             </div><!--col-->
         </div><!--row-->
+
+        <div class="row">
+            <form onmouseover="verifikasi()" class="form-horizontal col-md-12" action="{{ route('admin.tahsins.updatelevel') }}" method="POST" enctype="multipart/form-data" style="padding-top: 20px">
+                <div class="form-group row" style="margin-bottom:0px">
+                    {{ csrf_field() }}
+                    <label class="col-md-1 col-form-label" for="file-input">
+                        Pilih File  :
+                    </label>
+                    <div class="col-md-5">
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="upload" required>
+                            <label class="custom-file-label" for="upload">Pilih File Update Kenaikan Tahsin</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="btnupload" type="submit" class="btn btn-primary btn-block" >Upload File</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="row mt-4">
             <div class="col-md-1">

@@ -36,7 +36,7 @@
                 </center>
                 <div class="text-center">
                     <h4> Peserta Telah Terdaftar </h4>
-                    <div class="text-muted">Ujian Tahsin LTTQ Arrahmah Balikpapan Angkatan 16</div>
+                    <div class="text-muted">Ujian Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('angkatan_tahsin') }}</div>
                 </div>
                 <hr>
                 <div class="card-body">
@@ -81,7 +81,7 @@
                         </center>
                         <div class="text-center">
                             <h4> Formulir <br>Calon Peserta Ujian Tahsin </h4>
-                            <div class="text-muted">Angkatan 16</div>
+                            <div class="text-muted">Angkatan {{ session('angkatan_tahsin') }}</div>
                         </div>
 
                         <div class="card-body">

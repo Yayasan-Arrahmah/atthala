@@ -11,7 +11,7 @@
                     <div style="padding-top: 0px">
                         <h4>Pencarian <br>Calon Peserta Ujian Tahsin</h4>
                         <div class="text-muted">
-                            Angkatan {{ session('angkatan_tahsin') }}
+                            Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}
                         </div>
                     </div>
                 </center>
@@ -51,9 +51,10 @@
                                                         $cekujian = DB::table('peserta_ujians')->where('no_tahsin', $tahsin->no_tahsin)->where('angkatan_ujian', session('angkatan_tahsin'))->first();
                                                     @endphp
                                                     @if (isset($cekujian))
-                                                        <a href="/tahsin/calon-peserta-ujian/print?id={{ $cekujian->uuid }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU UJIAN</a>
+                                                        <a href="/tahsin/peserta-daftar-ulang?id={{ $cekujian->uuid }}"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @else
-                                                        <a href="/tahsin/calon-peserta-ujian/daftar?id={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}"  style="color:white" class="btn btn-primary">PILIH</a>
+                                                        {{-- <a href="/tahsin/calon-peserta-ujian/daftar?id={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}"  style="color:white" class="btn btn-primary">PILIH</a> --}}
+                                                        <a href="#"  style="color:white" class="btn btn-danger">BELUM DAFTAR UJIAN</a>
                                                     @endif
                                                 </div>
                                                 <div class="col">

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePengaturanTahsinTable extends Migration
+class CreatePengaturanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePengaturanTahsinTable extends Migration
      */
     public function up()
     {
-        Schema::create('pengaturan_tahsin', function (Blueprint $table) {
+        Schema::create('pengaturan', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('pengaturan', 180);
             $table->text('nama_pengaturan', 180);
-            $table->text('keterangan_pengaturan', 180)->nullable();
-            $table->text('pilihan_pengaturan', 180)->nullable();
-            $table->boolean('status_pengaturan');
-            $table->text('user_pengaturan', 180);
+            $table->text('keterangan_pengaturan')->nullable();
+            $table->text('nilai_pengaturan', 180)->nullable();
+            $table->text('user_pengaturan', 180)->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreatePengaturanTahsinTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengaturan_tahsin');
+        Schema::dropIfExists('pengaturan');
     }
 }

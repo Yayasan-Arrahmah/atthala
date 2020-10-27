@@ -66,7 +66,7 @@ class Tahsin extends Model
             ? static::query()
             : static::where('nama_peserta', 'like', '%' . $query . '%')
             ->orWhere('nama_pengajar', 'like', '%' . $query . '%')
-            ->where('angkatan_peserta', '=', '16');
+            ->where('angkatan_peserta', '=', session('angkatan_tahsin'));
     }
 
     public function absens(){

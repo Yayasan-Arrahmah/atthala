@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan 16</small>
+                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan {{ session('angkatan_tahsin') }}</small>
                     {{-- {{ __('backend_jadwals.labels.management') }} <small class="text-muted">{{ __('backend_jadwals.labels.active') }}</small> --}}
                 </h4>
             </div><!--col-->

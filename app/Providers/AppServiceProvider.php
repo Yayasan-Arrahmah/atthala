@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Session;
 
 /**
  * Class AppServiceProvider.
@@ -48,6 +50,10 @@ class AppServiceProvider extends ServiceProvider
 
         // setLocale to use Carbon source locales. Enables diffForHumans() localized
         Carbon::setLocale(config('app.locale'));
+
+        // Mengambil Angkatan Tahsin Yang Sedang Aktif
+        $angkatantahsinaktif = DB::table('pengaturan')->where('pengaturan', 'angkatan_tahsin')->first();
+        session(['angkatan_tahsin' => $angkatantahsinaktif->nilai_pengaturan]);
 
         /*
          * Set the session variable for whether or not the app is using RTL support
