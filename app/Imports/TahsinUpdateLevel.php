@@ -7,7 +7,8 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithLimit;
-class TahsinUpdateLevel implements ToModel, WithStartRow, WithLimit
+class TahsinUpdateLevel implements ToModel, WithStartRow
+// , WithLimit
 {
     use Importable;
     private $rows = 0;
@@ -27,13 +28,13 @@ class TahsinUpdateLevel implements ToModel, WithStartRow, WithLimit
 
     public function startRow(): int
     {
-        return 1092;
+        return 5;
     }
 
-    public function limit(): int
-    {
-        return 392;
-    }
+    // public function limit(): int
+    // {
+    //     return 392;
+    // }
 
     public function getRowCount(): int
     {
