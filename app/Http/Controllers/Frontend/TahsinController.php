@@ -438,7 +438,7 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
 
         $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta)
+                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
                     ->where('jumlah_peserta', '<', 10)
                     ->select('hari_jadwal')
                     ->groupBy('hari_jadwal')
@@ -461,7 +461,7 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
 
         $datajadwal = Jadwal::where('angkatan_jadwal', $angkatan)
                         ->where('jenis_jadwal', $pesertadaftarulang->jenis_peserta)
-                        ->where('level_jadwal', $pesertadaftarulang->kenaikan_level_peserta)
+                        ->where('level_jadwal', $pesertadaftarulang->kenaikan_level_peserta ?? $pesertadaftarulang->level_peserta)
                         ->where('jumlah_peserta', '<', 10)
                         ->first();
 
@@ -483,7 +483,7 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
             $peserta->nama_peserta         = $pesertadaftarulang->nama_peserta;
             $peserta->jenis_peserta        = $pesertadaftarulang->jenis_peserta;
             $peserta->nohp_peserta         = $nohp;
-            $peserta->level_peserta        = $pesertadaftarulang->kenaikan_level_peserta;
+            $peserta->level_peserta        = $pesertadaftarulang->kenaikan_level_peserta ?? $pesertadaftarulang->level_peserta;
             $peserta->nama_pengajar        = $datajadwal->pengajar_jadwal;
             $peserta->jadwal_tahsin        = $request->get('hari').' '.$request->get('waktu');
             $peserta->tempat_lahir_peserta = $request->input('tempat_lahir_peserta');
@@ -564,7 +564,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
 
         $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                             ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                            ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta)
+                            ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
                             ->where('jumlah_peserta', '<', 10)
                             ->where('hari_jadwal', $jadwalhari)
                             ->get();

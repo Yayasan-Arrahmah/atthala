@@ -35,23 +35,23 @@
                     <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="Arrahmah">
                 </center>
                 <div class="text-center">
-                    <h4> Peserta Telah Terdaftar </h4>
-                    <div class="text-muted">Ujian Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
+                    <h4> Peserta Telah Daftar Ulang </h4>
+                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
                 </div>
                 <hr>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-4">
                                 <a href="/tahsin/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
                         </div>
                         <div class="col">
                             <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_peserta }}</strong></div>
                             <div class="small text-muted">
-                                {{ $calonpeserta->level_peserta }} | {{ $calonpeserta->jadwal_tahsin }}
+                                {{ $calonpeserta->no_tahsin }}
                             </div>
                         </div>
                         <div class="col" style="margin-left: 0px;">
-                            <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_pengajar }}</strong></div>
+                            <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->kenaikan_level_peserta }}</strong></div>
                             <div class="small text-muted">
                                 {{ $calonpeserta->jenis_peserta }}<br>
                             </div>
