@@ -495,7 +495,7 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
             if ($request->get('pelunasan_tahsin') === 'SUDAH'){
                 $pembayaran = new Pembayaran;
                 $pembayaran->id_peserta                = $peserta->id;
-                $pembayaran->nominal_pembayaran        = $request->input('nominaltf');
+                $pembayaran->nominal_pembayaran        = $request->input('nominaltf') ?? '0';
                 $pembayaran->jenis_pembayaran          = "TAHSIN";
                 $pembayaran->admin_pembayaran          = "TRANSFER";
                 $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransfer');
