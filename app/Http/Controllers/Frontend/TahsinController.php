@@ -461,6 +461,8 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
 
         $datajadwal = Jadwal::where('angkatan_jadwal', $angkatan)
                         ->where('jenis_jadwal', $pesertadaftarulang->jenis_peserta)
+                        ->where('hari_jadwal', $request->get('hari'))
+                        ->where('waktu_jadwal', $request->get('waktu'))
                         ->where('level_jadwal', $pesertadaftarulang->kenaikan_level_peserta ?? $pesertadaftarulang->level_peserta)
                         ->where('jumlah_peserta', '<', 10)
                         ->first();
@@ -491,6 +493,11 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
             $peserta->angkatan_peserta     = $angkatan;
             $peserta->status_pembayaran    = $request->get('pelunasan_tahsin');
             $peserta->save();
+
+            $tambahpeserta = Jadwal::where('id',  $datajadwal->id)
+                    ->update([
+                        'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
+                    ]);
 
             if ($request->get('pelunasan_tahsin') === 'SUDAH'){
                 $pembayaran = new Pembayaran;

@@ -60,7 +60,7 @@ background-repeat: no-repeat;
             <td><strong>{{ $nama_pengajar }}</strong></td>
         </tr>
         <tr>
-            <td style="padding-top: 50px"></td>
+            <td style="padding-top: 25px"></td>
             <td></td>
             <td></td>
             <td></td>
@@ -81,7 +81,7 @@ background-repeat: no-repeat;
         </center>
     </div>
 
-    <div style="font: 10px; margin-top: 20px; border: solid 1px #000; padding: 10px">
+    <div style="font: 10px; margin-top: 10px; border: solid 1px #000; padding: 10px">
         <strong>Kontak Ikhwan:</strong> 0857-5131-8937<br>
         <strong>Kontak Akhwat:</strong> 0813 5012 8157
         <br>
