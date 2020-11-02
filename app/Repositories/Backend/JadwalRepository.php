@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Str;
 /**
  * Class JadwalRepository.
  */
@@ -61,19 +61,13 @@ class JadwalRepository extends BaseRepository
     {
         return DB::transaction(function () use ($data) {
             $jadwal = parent::create([
-                'no_jadwal'  => $data['no_jadwal'],
-                'nama_peserta'  => $data['nama_peserta'],
-                'nohp_peserta'  => $data['nohp_peserta'],
-                'level_peserta'  => $data['level_peserta'],
-                'nama_pengajar'  => $data['nama_pengajar'],
-                'jadwal_tahsin'  => $data['jadwal_tahsin'],
-                'sudah_daftar_jadwal'  => $data['sudah_daftar_jadwal'],
-                'belum_daftar_jadwal'  => $data['belum_daftar_jadwal'],
-                'keterangan_jadwal'  => $data['keterangan_jadwal'],
-                'pindahan_jadwal'  => $data['pindahan_jadwal'],
-                'pindahan_jadwal_2'  => $data['pindahan_jadwal_2'],
-                'jenis_peserta' => $data['jenis_peserta'],
-                'angkatan_peserta' => $data['angkatan_peserta']
+                'uuid_jadwal' => Str::uuid(),
+                'pengajar_jadwal' => $data['pengajar_jadwal'],
+                'level_jadwal' => $data['level_jadwal'],
+                'hari_jadwal' => $data['hari_jadwal'],
+                'waktu_jadwal' => $data['waktu_jadwal'],
+                'jenis_jadwal' => $data['jenis_jadwal'],
+                'angkatan_jadwal' => $data['angkatan_jadwal'],
             ]);
 
             if ($jadwal) {
@@ -97,18 +91,12 @@ class JadwalRepository extends BaseRepository
     {
         return DB::transaction(function () use ($jadwal, $data) {
             if ($jadwal->update([
-                'nama_peserta'  => $data['nama_peserta'],
-                'nohp_peserta'  => $data['nohp_peserta'],
-                'level_peserta'  => $data['level_peserta'],
-                'nama_pengajar'  => $data['nama_pengajar'],
-                'jadwal_tahsin'  => $data['jadwal_tahsin'],
-                'sudah_daftar_jadwal'  => $data['sudah_daftar_jadwal'],
-                'belum_daftar_jadwal'  => $data['belum_daftar_jadwal'],
-                'keterangan_jadwal'  => $data['keterangan_jadwal'],
-                'pindahan_jadwal'  => $data['pindahan_jadwal'],
-                'pindahan_jadwal_2'  => $data['pindahan_jadwal_2'],
-                'jenis_peserta' => $data['jenis_peserta'],
-                'angkatan_peserta' => $data['angkatan_peserta']
+                'pengajar_jadwal' => $data['pengajar_jadwal'],
+                'level_jadwal' => $data['level_jadwal'],
+                'hari_jadwal' => $data['hari_jadwal'],
+                'waktu_jadwal' => $data['waktu_jadwal'],
+                'jenis_jadwal' => $data['jenis_jadwal'],
+                'angkatan_jadwal' => $data['angkatan_jadwal'],
             ])) {
 
                 return $jadwal;
@@ -128,16 +116,16 @@ class JadwalRepository extends BaseRepository
      */
     public function forceDelete(Jadwal $jadwal) : Jadwal
     {
-        if (is_null($jadwal->deleted_at)) {
-            throw new GeneralException(__('backend_jadwals.exceptions.delete_first'));
-        }
+        // if (is_null($jadwal->deleted_at)) {
+        //     throw new GeneralException(__('backend_jadwals.exceptions.delete_first'));
+        // }
 
         return DB::transaction(function () use ($jadwal) {
             if ($jadwal->forceDelete()) {
                 return $jadwal;
             }
 
-            throw new GeneralException(__('backend_jadwals.exceptions.delete_error'));
+            // throw new GeneralException(__('backend_jadwals.exceptions.delete_error'));
         });
     }
 

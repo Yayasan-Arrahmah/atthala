@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-<div class="card">
+{{-- <div class="card">
         @include('backend.jadwal.includes.cari')
-</div>
+</div> --}}
 
 <div class="card">
     {{-- <div class="card-header">
@@ -19,7 +19,8 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Jadwal Peserta <small class="text-muted">Tahsin Angkatan {{ session('angkatan_tahsin') }}</small>
+                    Jadwal Tahsin
+                     {{-- <small class="text-muted">Tahsin Angkatan {{ session('angkatan_tahsin') }}</small> --}}
                     {{-- {{ __('backend_jadwals.labels.management') }} <small class="text-muted">{{ __('backend_jadwals.labels.active') }}</small> --}}
                 </h4>
             </div><!--col-->
@@ -27,11 +28,11 @@
             <div class="col-sm-7">
 
                 @include('backend.jadwal.includes.header-buttons')
-                <a href=" {{ url()->current() }}/upload" >
+                {{-- <a href=" {{ url()->current() }}/upload" >
                     <button class="float-right btn btn-info">
                         <i class="fa fa-upload"></i> Upload Excel
                     </button>
-                </a>
+                </a> --}}
             </div><!--col-->
         </div><!--row-->
         {{-- {{ $duplicates }} --}}
@@ -39,6 +40,26 @@
             {{ $data->jadwal_tahsin }}, {{ $data->level_jadwal }}, {{ $data->nama_pengajar }} -
             {{ $data->jumlah }} <br>
         @endforeach --}}
+
+        <div class="row">
+            <form onmouseover="verifikasi()" class="form-horizontal col-md-12" action="{{ route('admin.jadwals.import') }}" method="POST" enctype="multipart/form-data" style="padding-top: 20px">
+                <div class="form-group row" style="margin-bottom:0px">
+                    {{ csrf_field() }}
+                    <label class="col-md-1 col-form-label" for="file-input">
+                        Pilih File  :
+                    </label>
+                    <div class="col-md-5">
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="upload" required>
+                            <label class="custom-file-label" for="upload">Pilih File Tambah Data Jadwal</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="btnupload" type="submit" class="btn btn-primary btn-block" >Upload File</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="row mt-4">
             <div class="col">
@@ -53,6 +74,7 @@
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Angkatan</th>
+                                <th class="text-center">Jumlah Peserta</th>
                                 <th width="100" class="text-center"></th>
                             </tr>
                         </thead>
@@ -70,24 +92,24 @@
                                     <td>
                                         <a href="/admin/jadwals/{{ $jadwal->id }}/edit" style="color: rgb(56, 56, 56);">
                                             <div style="text-transform: uppercase;">{{ $jadwal->pengajar_jadwal }}</div>
-                                            <div class="small text-muted">
+                                            {{-- <div class="small text-muted">
                                                 {{ $jadwal->pengajar_jadwal }}
-                                            </div>
+                                            </div> --}}
                                         </a>
                                     </td>
                                     <td class="text-center">
                                         @php
-                                            if ($jadwal->level_jadwal  == "ASAASI 1") {
+                                            if ($jadwal->level_jadwal  == "ASASI 1") {
                                                 $warna = "#20a8d8";
-                                            } elseif ($jadwal->level_jadwal  == "ASAASI 2") {
+                                            } elseif ($jadwal->level_jadwal  == "ASASI 2") {
                                                 $warna = "#20c997";
-                                            } elseif ($jadwal->level_jadwal  == "TILAWAH ASAASI") {
+                                            } elseif ($jadwal->level_jadwal  == "TILAWAH ASASI") {
                                                 $warna = "#17a2b8";
                                             } elseif ($jadwal->level_jadwal  == "TAMHIDI") {
                                                 $warna = "#f86c6b";
-                                            } elseif ($jadwal->level_jadwal  == "TAWATSUTHI") {
+                                            } elseif ($jadwal->level_jadwal  == "TAWASUTHI") {
                                                 $warna = "#6610f2";
-                                            } elseif ($jadwal->level_jadwal  == "TILAWAH TAWATSUTHI") {
+                                            } elseif ($jadwal->level_jadwal  == "TILAWAH TAWASUTHI") {
                                                 $warna = "#ffc107";
                                             } elseif ($jadwal->level_jadwal  == "IDADI") {
                                                 $warna = "#e83e8c";
@@ -137,13 +159,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div lass="text-center" style="color: #73818f!important;">
-                                            {{ $jadwal->keterangan_jadwal }}
+                                        <div class="text-center">
+                                            {{ $jadwal->angkatan_jadwal }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="text-center">
-                                            {{ $jadwal->angkatan_jadwal }}
+                                            {{ $jadwal->jumlah_peserta }}
                                         </div>
                                     </td>
                                     <td>

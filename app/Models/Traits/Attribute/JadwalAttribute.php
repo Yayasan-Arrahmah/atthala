@@ -44,7 +44,7 @@ trait JadwalAttribute
      */
     public function getDeletePermanentlyButtonAttribute()
     {
-        return '<a href="'.route('admin.jadwals.delete-permanently', $this).'" name="confirm_item" class="btn btn-danger"><i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.jadwals.delete_permanently').'"></i></a> ';
+        return '<a href="'.route('admin.jadwals.delete-permanently', $this).'" name="confirm_item" class="btn btn-sm btn-danger"><i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Anda Yakin Dihapus ?"></i></a> ';
     }
 
     /**
@@ -65,7 +65,7 @@ trait JadwalAttribute
     	<div class="btn-group" role="group" aria-label="'.__('labels.backend.jadwals.actions').'">
 
 		  '.$this->edit_button.'
-		  '.$this->delete_button.'
+		  '.$this->delete_permanently_button.'
         </div>';
     }
 
@@ -116,7 +116,7 @@ trait JadwalAttribute
      */
     public function getFrontendDeletePermanentlyButtonAttribute()
     {
-        return '<a href="'.route('frontend.jadwals.delete-permanently', $this).'" name="confirm_item" class="btn btn-danger"><i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.jadwals.delete_permanently').'"></i></a> ';
+        return '<a href="'.route('frontend.jadwals.delete-permanently', $this).'" name="confirm_item" class="btn btn-sm btn-danger"><i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Anda Yakin Dihapus ?"></i></a> ';
     }
 
     /**

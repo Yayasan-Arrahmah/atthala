@@ -55,6 +55,9 @@ class AppServiceProvider extends ServiceProvider
         $angkatantahsinaktif = DB::table('pengaturan')->where('pengaturan', 'angkatan_tahsin')->first();
         session(['angkatan_tahsin' => $angkatantahsinaktif->nilai_pengaturan]);
 
+        $daftarualangangkatantahsinaktif = DB::table('pengaturan')->where('pengaturan', 'daftar_ulang_angkatan_tahsin')->first();
+        session(['daftar_ulang_angkatan_tahsin' => $daftarualangangkatantahsinaktif->nilai_pengaturan]);
+
         /*
          * Set the session variable for whether or not the app is using RTL support
          * For use in the blade directive in BladeServiceProvider

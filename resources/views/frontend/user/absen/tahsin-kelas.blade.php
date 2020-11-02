@@ -214,5 +214,6 @@
         $('#username').editable();
     });
 </script>
+
 @stack('after-scripts')
 @endsection

@@ -22,6 +22,7 @@ use App\Http\Requests\Backend\Jadwal\UpdateJadwalRequest;
 use App\Events\Backend\Jadwal\JadwalCreated;
 use App\Events\Backend\Jadwal\JadwalUpdated;
 use App\Events\Backend\Jadwal\JadwalDeleted;
+use App\Imports\JadwalTambahData;
 
 class JadwalController extends Controller
 {
@@ -68,12 +69,6 @@ class JadwalController extends Controller
     public function import(Request $request)
     {
 
-        //buat session untuk ngakalin ngirim data
-        $jenispeserta     = request('jenispeserta');
-        $angkatanpeserta  = request('angkatanpeserta');
-        $request->session()->put('jenispeserta', $jenispeserta );
-        $request->session()->put('angkatanpeserta', $angkatanpeserta );
-
         if ($request->hasFile('file')) {
 
             // validasi
@@ -81,28 +76,17 @@ class JadwalController extends Controller
                 'file' => 'required|mimes:csv,xls,xlsx'
             ]);
 
-            // menangkap file excel
-            $file = $request->file('file');
+            $dataimport = new JadwalTambahData;
 
-            // membuat nama file unik
-            $mytime = Carbon::now();
-            $nama_file = $mytime->toDateTimeString().'-'.rand().'-'.$file->getClientOriginalName();
-
-            // upload ke folder file_import di dalam folder public
-            $file->move('file_import',$nama_file);
-
-            // import data
-            $dataimport = new JadwalsImport;
-
-            Excel::import($dataimport, public_path('/file_import/'.$nama_file));
+            Excel::import($dataimport, request()->file('file'));
 
             $banyakdata = $dataimport->getRowCount();
 
             // alihkan halaman kembali
-            return redirect()->route('admin.jadwals.upload')
-            ->withFlashSuccess('Upload File Excel Peserta Berhasil. Total '.$banyakdata.' Data');
+            return redirect()->back()
+            ->withFlashSuccess('Upload File Excel Jadwal Berhasil. Total '.$banyakdata.' Data');
         } else {
-            return redirect()->route('admin.jadwals.upload')->withFlashSuccess('Upload Gagal');
+            return redirect()->back()->withFlashSuccess('Upload Gagal');
         }
     }
 
@@ -131,26 +115,19 @@ class JadwalController extends Controller
     public function store(StoreJadwalRequest $request)
     {
         $this->jadwalRepository->create($request->only(
-            'no_jadwal',
-            'nama_peserta',
-            'nohp_peserta',
-            'level_peserta',
-            'nama_pengajar',
-            'jadwal_tahsin',
-            'sudah_daftar_jadwal',
-            'belum_daftar_jadwal',
-            'keterangan_jadwal',
-            'pindahan_jadwal',
-            'pindahan_jadwal_2',
-            'jenis_peserta',
-            'angkatan_peserta'
+            'pengajar_jadwal',
+            'level_jadwal',
+            'hari_jadwal',
+            'waktu_jadwal',
+            'jenis_jadwal',
+            'angkatan_jadwal',
         ));
 
         // Fire create event (JadwalCreated)
         event(new JadwalCreated($request));
 
         return redirect()->route('admin.jadwals.index')
-            ->withFlashSuccess(__('backend_jadwals.alerts.created'));
+            ->withFlashSuccess('Berhasil Ditambahkan');
     }
 
     /**
@@ -192,18 +169,12 @@ class JadwalController extends Controller
     public function update(UpdateJadwalRequest $request, Jadwal $jadwal)
     {
         $this->jadwalRepository->update($jadwal, $request->only(
-            'nama_peserta',
-            'nohp_peserta',
-            'level_peserta',
-            'nama_pengajar',
-            'jadwal_tahsin',
-            'sudah_daftar_jadwal',
-            'belum_daftar_jadwal',
-            'keterangan_jadwal',
-            'pindahan_jadwal',
-            'pindahan_jadwal_2',
-            'jenis_peserta',
-            'angkatan_peserta'
+            'pengajar_jadwal',
+            'level_jadwal',
+            'hari_jadwal',
+            'waktu_jadwal',
+            'jenis_jadwal',
+            'angkatan_jadwal',
         ));
 
         // Fire update event (JadwalUpdated)
@@ -224,13 +195,16 @@ class JadwalController extends Controller
      */
     public function destroy(ManageJadwalRequest $request, Jadwal $jadwal)
     {
-        $this->jadwalRepository->deleteById($jadwal->id);
+        // $this->jadwalRepository->deleteById($jadwal->id);
+
+        $data = Jadwal::find($jadwal->id);
+        $data->delete();
 
         // Fire delete event (JadwalDeleted)
-        event(new JadwalDeleted($request));
+        // event(new JadwalDeleted($request));
 
         return redirect()->route('admin.jadwals.index')
-            ->withFlashSuccess(__('backend_jadwals.alerts.deleted'));
+            ->withFlashSuccess('Data Jadwal Berhasil Dihapus');
     }
 
     /**
@@ -247,8 +221,8 @@ class JadwalController extends Controller
     {
         $this->jadwalRepository->forceDelete($deletedJadwal);
 
-        return redirect()->route('admin.jadwals.deleted')
-            ->withFlashSuccess(__('backend_jadwals.alerts.deleted_permanently'));
+        return redirect()->route('admin.jadwals.index')
+            ->withFlashSuccess('Data Jadwal Berhasil Dihapus');
     }
 
     /**

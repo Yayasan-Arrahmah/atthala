@@ -9,7 +9,7 @@
                 <center>
                     <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="arrahmah">
                     <div style="padding-top: 0px">
-                        <h4>Pencarian <br>Calon Peserta Ujian Tahsin</h4>
+                        <h4>Pencarian <br>Daftar Ulang Peserta Tahsin</h4>
                         <div class="text-muted">
                             Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}
                         </div>
@@ -41,32 +41,35 @@
                                             <div class="row kotak-atas">
                                                 <div class="col-2"></div>
                                                 <div class="col">Nama</div>
-                                                <div class="col">Pengajar</div>
+                                                <div class="col">Kenaikan Level</div>
                                             </div>
 
                                             @foreach($pencarian as $key=> $tahsin)
                                             <div class="row kotak">
-                                                <div class="col-2">
-                                                    @php
+                                                <div class="col-2 text-center">
+                                                    {{-- @php
                                                         $cekujian = DB::table('peserta_ujians')->where('no_tahsin', $tahsin->no_tahsin)->where('angkatan_ujian', session('angkatan_tahsin'))->first();
                                                     @endphp
-                                                    @if (isset($cekujian))
-                                                        <a href="/tahsin/peserta-daftar-ulang?id={{ $cekujian->uuid }}"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
-                                                    @else
-                                                        {{-- <a href="/tahsin/calon-peserta-ujian/daftar?id={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}"  style="color:white" class="btn btn-primary">PILIH</a> --}}
+                                                    @if (isset($cekujian)) --}}
+                                                        <a href="/tahsin/daftar-ulang-peserta/daftar?id={{ $tahsin->no_tahsin }}"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                    {{-- @else
+                                                        <div class="text-muted" style="font-weight: 800; font-size: 11px">
+                                                            BELUM DAFTAR UJIAN
+                                                        </div>
+                                                        <a style="font-weight: 800; font-size: 11px" href="/tahsin/calon-peserta-ujian/daftar?id={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}"  style="color:white" class="btn btn-danger">KLIK UNTUK DAFTAR UJIAN</a>
                                                         <a href="#"  style="color:white" class="btn btn-danger">BELUM DAFTAR UJIAN</a>
-                                                    @endif
+                                                    @endif --}}
                                                 </div>
                                                 <div class="col">
                                                     <div style="text-transform: uppercase;"><strong>{{ $tahsin->nama_peserta }}</strong></div>
                                                     <div class="small text-muted">
-                                                        {{ $tahsin->level_peserta }} | {{ $tahsin->jadwal_tahsin }}
+                                                        {{ $tahsin->no_tahsin }}
                                                     </div>
                                                 </div>
                                                 <div class="col" style="margin-left: 0px;">
-                                                    <div style="text-transform: uppercase;"><strong>{{ $tahsin->nama_pengajar }}</strong></div>
+                                                    <div style="text-transform: uppercase;"><strong>{{ $tahsin->kenaikan_level_peserta ?? $tahsin->level_peserta }}</strong></div>
                                                     <div class="small text-muted">
-                                                        {{ $tahsin->jenis_peserta }}<br>
+                                                        Dari Level : {{ $tahsin->level_peserta }}<br>
                                                     </div>
                                                 </div>
                                             </div>

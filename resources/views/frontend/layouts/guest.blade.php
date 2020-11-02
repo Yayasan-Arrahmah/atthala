@@ -22,9 +22,7 @@
 
     <style>
         body{
-            background-image: url('/img/back.jpeg');
-
-            /* font-family: 'Baloo Bhaina 2'; */
+            background-color: #f3f8fd;
         }
     </style>
 
@@ -143,7 +141,7 @@
 
             @yield('content')
         </div><!-- container -->
-        <center style="color: #fff; padding-bottom: 20px">Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
+        <center style="color: #697477; padding-bottom: 20px">LTTQ Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
 
     </div><!-- #app -->
 

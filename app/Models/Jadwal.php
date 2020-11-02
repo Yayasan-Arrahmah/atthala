@@ -26,26 +26,20 @@ class Jadwal extends Model
      * @var array
      */
     protected $fillable = [
-        'no_jadwal',
-        'nama_peserta',
-        'nohp_peserta',
-        'level_peserta',
-        'nama_pengajar',
-        'jadwal_tahsin',
-        'sudah_daftar_jadwal',
-        'belum_daftar_jadwal',
-        'keterangan_jadwal',
-        'pindahan_jadwal',
-        'pindahan_jadwal_2',
-        'jenis_peserta',
-        'angkatan_peserta'
+        'uuid_jadwal',
+        'pengajar_jadwal',
+        'level_jadwal',
+        'hari_jadwal',
+        'waktu_jadwal',
+        'jenis_jadwal',
+        'angkatan_jadwal',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->uuid_jadwal = (string) Uuid::generate(4);
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->uuid_jadwal = (string) Uuid::generate(4);
+    //     });
+    // }
 }
