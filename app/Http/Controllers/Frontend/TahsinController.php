@@ -451,10 +451,15 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
     {
         $angkatan = session('daftar_ulang_angkatan_tahsin');
 
-
         $this->validate($request, [
             'notelp'           => 'required',
         ]);
+
+        $cekterdaftarpeserta = Tahsin::where('no_tahsin', $request->input('notahsin'))->where('angkatan_peserta', $angkatan)->first();
+
+        if(isset($cekterdaftarpeserta)){
+            return redirect()->to('/tahsin/daftar-ulang-peserta/daftar?id='.$cekterdaftarpeserta->no_tahsin);
+        }
 
         $pesertadaftarulang = Tahsin::where('no_tahsin', $request->get('notahsin'))->latest('created_at')->first();
         $peserta            = new Tahsin;
