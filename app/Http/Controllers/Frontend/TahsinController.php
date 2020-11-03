@@ -529,7 +529,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Ujian Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+Panitia Daftar Ulang Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             $url = 'https://api.wanotif.id/v1/send';
