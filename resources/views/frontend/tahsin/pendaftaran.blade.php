@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('frontend.layouts.guest')
 
 @section('title', app_name() . ' | Pendaftaran')
 
@@ -21,22 +21,31 @@
                 </h1>
                 @csrf
                 <center>
-                    <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}" width="150" alt="Arrahmah" style="padding-top: 20px">
+                    <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="Arrahmah" style="padding-top: 20px">
                 </center>
                 <div class="text-center">
                     <h4> Pendaftaran Tahsin </h4>
-                    <div class="text-muted">Angkatan {{ session('angkatan_tahsin') }}</div>
+                    <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
                 </div>
 
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="nama_peserta" placeholder="Nama Peserta (Sesuai KTP)" maxlength="191" required="">
+                            <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="nama_peserta" value="{{ old('nama_peserta') }}" placeholder="Nama Peserta (Sesuai KTP)" maxlength="191" required="">
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required="">
+                            <div class="text-muted" style="font-size: 10px; font-weight: 700">Tidak Pakai Angka 0 . Contoh : 81234563789</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        +62
+                                    </span>
+                                </div>
+                                <input id="notelp" type="number" name="nohp_peserta" value="{{ old('nohp_peserta') }}" oninvalid="setCustomValidity('Masukkan No. HP Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Masukkan Nomor HP WhatsApp" required="">
+                            </div><!--form-group-->
+                            {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
@@ -366,6 +375,42 @@
 <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
 <script src="/filepond/app.js"></script>
 <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+<script type='text/javascript'>
+
+    $(document).ready(function(){
+
+        window.addEventListener("pageshow", () => {
+            $('form').get(0).reset(); //clear form data on page load
+        });
+
+      $('#datahari').change(function(){
+         var hari = $(this).val();
+         $('#waktu').find('option').not(':first').remove();
+         $.ajax({
+           url: '/tahsin/daftar-ulang-peserta/daftar/datawaktu?id=&hari='+hari,
+           type: 'get',
+           dataType: 'json',
+           success: function(response){
+
+             var len = 0;
+             if(response['data'] != null){
+               len = response['data'].length;
+             }
+
+             if(len > 0){
+               for(var i=0; i<len; i++){
+                 var waktu = response['data'][i].waktu_jadwal;
+                 var option = "<option value='"+waktu+"'>"+waktu+"</option>";
+                 $("#waktu").append(option);
+               }
+             }
+
+           }
+        });
+      });
+
+    });
+</script>
 <script>
     $(function(){
         $.fn.filepond.registerPlugin(

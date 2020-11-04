@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('frontend.layouts.guest')
 
 @section('title', app_name() . ' | Pendaftaran')
 

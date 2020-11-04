@@ -45,7 +45,7 @@ class TahsinController extends Controller
     public function uploadktp(Request $request)
     {
         $file_ktp      = $request->file('filepond');
-        $nama_file_ktp = session('angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_ktp->getClientOriginalExtension();
+        $nama_file_ktp = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_ktp->getClientOriginalExtension();
         Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('ktp')->put($nama_file_ktp, File::get($file_ktp));
     }
@@ -53,7 +53,7 @@ class TahsinController extends Controller
     public function uploadrekaman(Request $request)
     {
         $file_rekaman      = $request->file('filepond');
-        $nama_file_rekaman = session('angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
+        $nama_file_rekaman = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
         Session::put('filerekaman', $nama_file_rekaman); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('rekaman')->put($nama_file_rekaman, File::get($file_rekaman));
     }
@@ -93,7 +93,9 @@ class TahsinController extends Controller
         $tahsin     = new Tahsin;
         $pembayaran = new Pembayaran;
 
-        $banyakid   = Tahsin::where('angkatan_peserta', session('angkatan_tahsin'))->count();
+        $banyakid   = Tahsin::where('angkatan_peserta', session('angkatan_tahsin'))
+                    ->where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+                    ->count();
         $generateid = $banyakid + 1;
 
         try {
@@ -110,7 +112,7 @@ class TahsinController extends Controller
                 $jenisid                         = "TA";
             }
 
-            $no_tahsin = $jenisid . '-'.session('angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            $no_tahsin = $jenisid . '-'.session('daftar_ulang_angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
 
             $nominal_pembayaran  = 200000 + ($request->has('bayar_modul') === true ? 60000 : 0) + ($request->has('bayar_mushaf') === true ? 110000 : 0);
             $waktu_lahir_peserta = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
