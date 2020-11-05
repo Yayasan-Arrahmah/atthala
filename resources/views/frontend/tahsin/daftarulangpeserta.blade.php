@@ -513,7 +513,7 @@
                             <div class="form-group row">
                                 <div class="col-12">
                                     <p class="text-muted" style="font-weight: 700; text-align:justify">
-                                        Terima kasih atas perhatiannya. Semoga Allah Subhanahu Wa Ta'ala memberikan kelancaran dalam kegiatan ujian saudara.
+                                        Terima kasih atas perhatiannya. Semoga Allah Subhanahu Wa Ta'ala memberikan kelancaran dalam kegiatan belajar tahsin saudara.
                                     </p>
                                 </div>
                             </div>
