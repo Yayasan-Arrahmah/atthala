@@ -198,7 +198,7 @@
                                     <label class="form-control-label">Kenaikan Level Peserta</label>
                                 </div>
                                 <div class="col-7">
-                                    <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Nama Peserta (Sesuai KTP)" name="namapeserta" value="{{ strtoupper($calonpeserta->kenaikan_level_peserta) }}" maxlength="191" required="">
+                                    <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Kenaikan Level Tahsin" name="namapeserta" value="{{ $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta }}" maxlength="191" required="">
                                 </div><!--col-->
                             </div>
                             <div class="form-group row">
