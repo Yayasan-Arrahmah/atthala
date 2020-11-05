@@ -113,6 +113,9 @@
         .info-absen {
             font-weight: 700;
         }
+        .filepond--media-preview-wrapper {
+            position: relative;
+        }
 
     </style>
 

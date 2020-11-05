@@ -4,7 +4,16 @@
 
 @section('content')
 @stack('before-styles')
-<link rel="stylesheet" type="text/css" href="/filepond/app.css">
+{{-- <link rel="stylesheet" type="text/css" href="/filepond/app.css"> --}}
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+{{-- <link rel="stylesheet" type="text/css" href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css"> --}}
+<style>
+.filepond--media-preview {
+    padding-top: 30px;
+}
+
+</style>
+
 @stack('after-styles')
 {{-- {{ $sesidaftar }} --}}
 <form action="{{ route('frontend.tahsin.simpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
@@ -30,12 +39,14 @@
 
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-md-12">
-                            <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="nama_peserta" value="{{ old('nama_peserta') }}" placeholder="Nama Peserta (Sesuai KTP)" maxlength="191" required="">
+                        <label class="col-3 form-control-label" >Nama </label>
+                        <div class="col-9">
+                            <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="nama_peserta" value="{{ old('nama_peserta') }}" placeholder="Nama Lengkap Peserta (Sesuai KTP)" maxlength="191" required="">
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <label class="col-3 form-control-label" >No. HP </label>
+                        <div class="col-9">
                             <div class="text-muted" style="font-size: 10px; font-weight: 700">Tidak Pakai Angka 0 . Contoh : 81234563789</div>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -49,14 +60,15 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <label class="col-4 form-control-label" >Jenis Peserta </label>
+                        <div class="col-8">
                             <select name="jenis_peserta" class="gender form-control" required>
                                 <option value="IKHWAN">IKHWAN</option>
                                 <option value="AKHWAT">AKHWAT</option>
                             </select>
                         </div><!--col-->
                     </div>
-                    <div id="ikhwan">
+                    {{-- <div id="ikhwan">
                         <div class="form-group row">
                             <label class="col-6 form-control-label" >Pilih Jadwal Utama</label>
                             <div class="col-6">
@@ -203,21 +215,27 @@
                                 </select>
                             </div><!--col-->
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <label class="col-3 form-control-label" >Alamat </label>
+                        <div class="col-9">
                             <textarea onkeyup="this.value = this.value.toUpperCase();" class="form-control" name="alamat_peserta" placeholder="Alamat Tinggal"></textarea>
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <label class="col-3 form-control-label" >Pekerjaan </label>
+                        <div class="col-9">
                             <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="pekerjaan_peserta" placeholder="Pekerjaan" maxlength="191" required="">
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-4" style="padding-right: 2px;">
+                        <label class="col-4 form-control-label" >Kota Lahir </label>
+                        <div class="col-8">
                             <input style="font-size: 11px; height: calc(1.5em + .75rem + 7px)" onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="tempat_lahir_peserta" placeholder="Tempat Kelahiran" maxlength="191" required="">
-                        </div><!--col-->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 form-control-label" >Tanggal Lahir</label>
                         <div class="col-2" style="padding-right: 2px; padding-left: 2px">
                             <select name="tanggal_lahir" class="gender form-control" required>
                                 <option value="">-- Tanggal Lahir --</option>
@@ -253,8 +271,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-4 form-control-label" >Foto KTP</label>
-                        <div class="col-8">
+                        <label class="col-12 form-control-label" >Foto KTP</label>
+                        <div class="col-12">
                             <input type="file" class="upload-ktp"/>
                             {{-- <div class="custom-file">
                                 <input class="filestyle custom-file-input" type="file" name="fotoktp_peserta" id="upload-1" required="" data-buttonText="Your label here.">
@@ -263,8 +281,8 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <label class="col-4 form-control-label">Rekaman Tilawah</label>
-                        <div class="col-8">
+                        <label class="col-12 form-control-label">Rekaman Tilawah</label>
+                        <div class="col-12">
                             <input type="file" class="upload-rekaman"/>
                             {{-- <div class="custom-file">
                                 <input class="filestyle custom-file-input" type="file" name="rekaman_peserta" id="upload-2" required="" data-buttonText="Your label here.">
@@ -273,21 +291,29 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12 table-responsive">
+                        <div class="col-md-12 table-responsive" style="padding-top: 20px">
                             <table class="table table-sm table-striped nowarp" style="width: 100%;">
                                 <tbody>
                                     <tr>
-                                        <td>Biaya Pendaftaran & SPP Bulan Pertama <div class="text-muted">Rp. 200.000</div></td>
-                                        <td><input id="biaya-daftar" type="checkbox" value="" checked disabled/></td>
+                                        <td>Biaya Pendaftaran<div class="text-muted">Rp. 100.000</div></td>
+                                        <td class="text-center"><input id="biaya-daftar" type="checkbox" value="" checked disabled/></td>
                                     </tr>
                                     <tr>
+                                        <td>SPP Bulan Pertama <div class="text-muted">Rp. 100.000</div></td>
+                                        <td class="text-center"><input id="biaya-daftar" type="checkbox" value="" checked disabled/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"><strong>Total</strong> </td>
+                                        <td class="text-center"><div class="text-muted">Rp. 200.000</div></td>
+                                    </tr>
+                                    {{-- <tr>
                                         <td>Pembayaran modul dan buku prestasi <div class="text-muted">Rp. 60.000</div></td>
                                         <td><input id="biaya-modul" name="bayar_modul" type="checkbox" value="" /></td>
                                     </tr>
                                     <tr>
                                         <td>Mushaf Al-Quran Non Terjemah <div class="text-muted">Rp. 110.000</div></td>
                                         <td><input id="biaya-mushaf" name="bayar_mushaf" type="checkbox" value="" /></td>
-                                    </tr>
+                                    </tr> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -315,8 +341,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-4 form-control-label" >Bukti Transfer</label>
-                        <div class="col-8">
+                        <label class="col-12 form-control-label" >Bukti Transfer</label>
+                        <div class="col-12">
                             <input type="file" class="upload-buktitransfer"/>
 
                             {{-- <div class="custom-file">
@@ -373,6 +399,7 @@
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+<script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
 <script src="/filepond/app.js"></script>
 <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
 <script type='text/javascript'>
@@ -417,13 +444,14 @@
             FilePondPluginImagePreview,
             FilePondPluginFileValidateType,
             FilePondPluginFileValidateSize,
-            FilePondPluginImageResize
+            FilePondPluginImageResize,
+            FilePondPluginMediaPreview
         );
     });
 
     $(function(){
             $('.upload-ktp').filepond({
-                labelIdle: 'Pilih File/Foto KTP <span class="filepond--label-action">Browse</span>',
+                labelIdle: '<span class="filepond--label-action"> Pilih File/Foto KTP</span>',
                 allowMultiple: false,
                 acceptedFileTypes: ['image/*'],
                 allowFileSizeValidation: true,
@@ -442,8 +470,10 @@
                 }
             });
             $('.upload-rekaman').filepond({
-                labelIdle: 'Pilih File/Rekaman Tilawah <span class="filepond--label-action">Browse</span>',
+                labelIdle: '<span class="filepond--label-action"> Pilih File/Rekaman Tilawah</span>',
                 allowMultiple: false,
+                allowFileSizeValidation: true,
+                acceptedFileTypes: ['audio/*'],
                 allowFileSizeValidation: true,
                 maxFileSize: '15MB',
                 server: {
@@ -456,7 +486,7 @@
                 }
             });
             $('.upload-buktitransfer').filepond({
-                labelIdle: 'Pilih File/Foto Bukti Transfer <span class="filepond--label-action">Browse</span>',
+                labelIdle: '<span class="filepond--label-action">Pilih File/Foto Bukti Transfer</span>',
                 allowMultiple: false,
                 acceptedFileTypes: ['image/*'],
                 allowFileSizeValidation: true,

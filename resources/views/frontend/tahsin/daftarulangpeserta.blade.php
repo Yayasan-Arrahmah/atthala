@@ -465,7 +465,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-6 form-control-label" >Pelunasan SPP Tahsin</label>
+                                <label class="col-6 form-control-label" >Pelunasan SPP Tahsin Bulan Pertama</label>
                                 <div class="col-6">
                                     <select name="pelunasan_tahsin" class="buktitf form-control">
                                         <option value="SUDAH">SUDAH</option>
