@@ -16,7 +16,7 @@
 
 @stack('after-styles')
 {{-- {{ $sesidaftar }} --}}
-<form action="{{ route('frontend.tahsin.simpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
+<form action="#" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
             <div class="card">
@@ -239,7 +239,7 @@
                         <div class="col-2" style="padding-right: 2px; padding-left: 2px">
                             <select name="tanggal_lahir" class="gender form-control" required>
                                 <option value="">-- Tanggal Lahir --</option>
-                                @for ($i = 1; $i < 31; $i++)
+                                @for ($i = 1; $i < 32; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
@@ -281,7 +281,7 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <label class="col-12 form-control-label">Rekaman Tilawah Surah Fussilat Ayat 44-48</label>
+                        <label class="col-12 form-control-label">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</label>
                         <div class="col-12">
                             <input type="file" class="upload-rekaman"/>
                             {{-- <div class="custom-file">
