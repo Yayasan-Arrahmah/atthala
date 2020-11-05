@@ -281,7 +281,7 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <label class="col-12 form-control-label">Rekaman Tilawah</label>
+                        <label class="col-12 form-control-label">Rekaman Tilawah Surah Fussilat Ayat 44-48</label>
                         <div class="col-12">
                             <input type="file" class="upload-rekaman"/>
                             {{-- <div class="custom-file">
