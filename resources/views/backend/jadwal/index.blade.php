@@ -99,11 +99,11 @@
                                     </td>
                                     <td class="text-center">
                                         @php
-                                            if ($jadwal->level_jadwal  == "ASASI 1") {
+                                            if ($jadwal->level_jadwal  == "ASAASI 1") {
                                                 $warna = "#20a8d8";
-                                            } elseif ($jadwal->level_jadwal  == "ASASI 2") {
+                                            } elseif ($jadwal->level_jadwal  == "ASAASI 2") {
                                                 $warna = "#20c997";
-                                            } elseif ($jadwal->level_jadwal  == "TILAWAH ASASI") {
+                                            } elseif ($jadwal->level_jadwal  == "TILAWAH ASAASI") {
                                                 $warna = "#17a2b8";
                                             } elseif ($jadwal->level_jadwal  == "TAMHIDI") {
                                                 $warna = "#f86c6b";

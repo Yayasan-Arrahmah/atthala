@@ -35,9 +35,9 @@
                             <select class="form-control" name="level_jadwal">
                                 <option value="{{ $jadwal->level_jadwal }}">{{ $jadwal->level_jadwal }}</option>
                                 <option value="">-------</option>
-                                <option value="ASASI 1">ASASI 1</option>
-                                <option value="ASASI 2">ASASI 2</option>
-                                <option value="TILAWAH ASASI">TILAWAH ASASI</option>
+                                <option value="ASAASI 1">ASAASI 1</option>
+                                <option value="ASAASI 2">ASAASI 2</option>
+                                <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
                                 <option value="TAMHIDI">TAMHIDI</option>
                                 <option value="TAWASUTHI">TAWASUTHI</option>
                                 <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
