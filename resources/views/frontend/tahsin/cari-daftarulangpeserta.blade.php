@@ -51,7 +51,7 @@
                                                         $cekujian = DB::table('peserta_ujians')->where('no_tahsin', $tahsin->no_tahsin)->where('angkatan_ujian', session('angkatan_tahsin'))->first();
                                                     @endphp
                                                     @if (isset($cekujian)) --}}
-                                                    @if ($tahsin->level_peserta === 'TAHSINI')
+                                                    @if ($tahsin->kenaikan_level_peserta === 'TAJWIDI 1')
                                                         <a href="https://forms.gle/FGZXXGV1VZR7LHar5"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @else
                                                         <a href="/tahsin/daftar-ulang-peserta/daftar?id={{ $tahsin->no_tahsin }}"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
