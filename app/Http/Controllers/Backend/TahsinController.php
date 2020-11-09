@@ -56,6 +56,7 @@ class TahsinController extends Controller
         $this->kenaikanlevel = $request->get('kenaikanlevel') ?? null;
         $this->idtahsin      = $request->get('idtahsin') ?? null;
         $this->level         = $request->get('level') ?? null;
+        $this->jenis         = $request->get('jenis') ?? null;
         $this->angkatan      = $request->get('angkatan') ?? session('angkatan_tahsin');
     }
 
@@ -93,28 +94,35 @@ class TahsinController extends Controller
         //         ->paginate(10);
         // }
 
-        if( $this->level === 'SEMUA') {
-            $tahsins = \App\Models\Tahsin::
-                when($this->nama, function ($query) {
-                    return $query->search($this->nama);
-                })
-                ->when($this->angkatan, function ($query) {
-                    return $query->where('angkatan_peserta', '=', $this->angkatan);
-                })
-                ->paginate(10);
-        } else {
+        // if( $this->level === 'SEMUA') {
+        //     $tahsins = \App\Models\Tahsin::
+        //         when($this->nama, function ($query) {
+        //             return $query->search($this->nama);
+        //         })
+        //         ->when($this->angkatan, function ($query) {
+        //             return $query->where('angkatan_peserta', '=', $this->angkatan);
+        //         })
+        //         ->paginate(10);
+        // } else {
             $tahsins = \App\Models\Tahsin::
                 when($this->nama, function ($query) {
                     return $query->search($this->nama);
                 })
                 ->when($this->level, function ($query) {
-                    return $query->where('level_peserta', '=', $this->level);
+                    if( $this->level != 'SEMUA') {
+                        return $query->where('level_peserta', '=', $this->level);
+                    }
+                })
+                ->when($this->jenis, function ($query) {
+                    if( $this->jenis != 'SEMUA') {
+                        return $query->where('jenis_peserta', '=', $this->jenis);
+                    }
                 })
                 ->when($this->angkatan, function ($query) {
                     return $query->where('angkatan_peserta', '=', $this->angkatan);
                 })
                 ->paginate(10);
-        }
+        // }
 
         return view('backend.tahsin.index', compact('tahsins'));
     }

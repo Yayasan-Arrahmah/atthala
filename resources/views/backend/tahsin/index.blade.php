@@ -98,6 +98,20 @@
                     <option value="17">17</option>
                 </select>
             </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                Jenis
+                 </div>
+                <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->jenis)
+                        <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="SEMUA">SEMUA</option>
+                    <option value="IKHWAN">IKHWAN</option>
+                    <option value="AKHWAT">AKHWAT</option>
+                </select>
+            </div>
 
             <div class="col-md-3">
                 <div class="pull-right input-group mt-4">
