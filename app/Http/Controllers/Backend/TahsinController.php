@@ -38,14 +38,25 @@ class TahsinController extends Controller
      */
     protected $tahsinRepository;
 
+    protected $nama          ;
+    protected $kenaikanlevel ;
+    protected $idtahsin      ;
+    protected $level         ;
+    protected $angkatan      ;
     /**
      * TahsinController constructor.
      *
      * @param TahsinRepository $tahsinRepository
      */
-    public function __construct(TahsinRepository $tahsinRepository)
+    public function __construct(Request $request)
     {
-        $this->tahsinRepository = $tahsinRepository;
+        $this->tahsinRepository = $request;
+
+        $this->nama          = $request->get('nama') ?? null;
+        $this->kenaikanlevel = $request->get('kenaikanlevel') ?? null;
+        $this->idtahsin      = $request->get('idtahsin') ?? null;
+        $this->level         = $request->get('level') ?? null;
+        $this->angkatan      = $request->get('angkatan') ?? session('angkatan_tahsin');
     }
 
     /**
@@ -55,26 +66,55 @@ class TahsinController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
+
     public function index(ManageTahsinRequest $request)
     {
 
-        $nama          = $request->input('nama') ?? null;
-        $kenaikanlevel = $request->get('kenaikanlevel') ?? null;
-        $idtahsin      = $request->get('idtahsin') ?? null;
-
         if(isset($kenaikanlevel)){
             $updatelevel = DB::table('tahsins')
-              ->where('no_tahsin', $idtahsin)
-              ->update(['kenaikan_level_peserta' => $kenaikanlevel]);
+              ->where('no_tahsin', $this->idtahsin)
+              ->update(['kenaikan_level_peserta' => $this->kenaikanlevel]);
 
-            $tahsins = \App\Models\Tahsin::search($nama)
+            $tahsins = \App\Models\Tahsin::search($this->nama)
               ->paginate(10);
 
-            return view('backend.tahsin.index', compact('tahsins'))->withFlashSuccess($idtahsin.'Berhasil Diperbaruhi');
+            return view('backend.tahsin.index', compact('tahsins'))->withFlashSuccess($this->idtahsin.'Berhasil Diperbaruhi');
         }
 
-        $tahsins = \App\Models\Tahsin::search($nama)
-            ->paginate(10);
+        // if(isset($level)){
+        //     $tahsins = \App\Models\Tahsin::search($nama)
+        //         ->where('angkatan_peserta', $angkatan)
+        //         ->where('level_peserta', $level)
+        //         ->paginate(10);
+        // } else {
+        //     $tahsins = \App\Models\Tahsin::search($nama)
+        //         ->where('angkatan_peserta', $angkatan)
+        //         ->paginate(10);
+        // }
+
+        if( $this->level === 'SEMUA') {
+            $tahsins = \App\Models\Tahsin::
+                when($this->nama, function ($query) {
+                    return $query->search($this->nama);
+                })
+                ->when($this->angkatan, function ($query) {
+                    return $query->where('angkatan_peserta', '=', $this->angkatan);
+                })
+                ->paginate(10);
+        } else {
+            $tahsins = \App\Models\Tahsin::
+                when($this->nama, function ($query) {
+                    return $query->search($this->nama);
+                })
+                ->when($this->level, function ($query) {
+                    return $query->where('level_peserta', '=', $this->level);
+                })
+                ->when($this->angkatan, function ($query) {
+                    return $query->where('angkatan_peserta', '=', $this->angkatan);
+                })
+                ->paginate(10);
+        }
 
         return view('backend.tahsin.index', compact('tahsins'));
     }

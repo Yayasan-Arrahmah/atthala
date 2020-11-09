@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
+                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -51,10 +51,9 @@
                 </div>
             </form>
         </div>
-
-        <div class="row mt-4">
+        <form action="{{ Request::fullUrl() }}" class="row mt-4">
             <div class="col-md-1">
-                <select class="form-control" name="perPage">
+                <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
                     <option>10</option>
                     <option>25</option>
                     <option>50</option>
@@ -64,18 +63,51 @@
 
             <div class="col">
             </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                    Level
+                 </div>
+                <select class="form-control mt-4" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->level)
+                        <option value="{{ request()->level }}">{{ request()->level }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                        <option value="SEMUA">SEMUA</option>
+                        <option value="ASAASI 1">ASAASI 1</option>
+                        <option value="ASAASI 2">ASAASI 2</option>
+                        <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
+                        <option value="TAMHIDI">TAMHIDI</option>
+                        <option value="TAWASUTHI">TAWASUTHI</option>
+                        <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
+                        <option value="IDADI">IDADI</option>
+                        <option value="TAKMILI">TAKMILI</option>
+                        <option value="TAHSINI">TAHSINI</option>
+                        <option value="ITQON">ITQON</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                Angkatan
+                 </div>
+                <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->angkatan)
+                        <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                </select>
+            </div>
 
             <div class="col-md-3">
-                <div class="pull-right input-group">
+                <div class="pull-right input-group mt-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                     </div>
-                    <form action="">
-                        <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
-                    </form>
+                    <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
                 </div>
             </div>
-        </div>
+        </form>
         <div class="row mt-4">
             <div class="col">
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">

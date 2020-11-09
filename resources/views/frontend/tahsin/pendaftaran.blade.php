@@ -4,8 +4,8 @@
 
 @section('content')
 @stack('before-styles')
-{{-- <link rel="stylesheet" type="text/css" href="/filepond/app.css"> --}}
-<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/filepond/app.css">
+{{-- <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"> --}}
 {{-- <link rel="stylesheet" type="text/css" href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css"> --}}
 <style>
 .filepond--media-preview {
@@ -54,7 +54,7 @@
                                         +62
                                     </span>
                                 </div>
-                                <input id="notelp" type="number" name="nohp_peserta" value="{{ old('nohp_peserta') }}" oninvalid="setCustomValidity('Masukkan No. HP Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Masukkan Nomor HP WhatsApp" required="">
+                                <input id="notelp" type="number" name="nohp_peserta" value="{{ old('nohp_peserta') }}" oninvalid="setCustomValidity('Masukkan No. HP Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Nomor HP WhatsApp" required="">
                             </div><!--form-group-->
                             {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                         </div><!--col-->
