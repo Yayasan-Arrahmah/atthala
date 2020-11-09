@@ -506,7 +506,13 @@
                             <div id="non-bukti-tf" class="form-group row">
                                 <div class="col-12">
                                     <p class="text-muted" style="font-weight: 700; text-align:justify">
-                                        Apabila saudara belum sempat melunasi pembayaran infaq SPP, maka saudara bisa melakukan pembayaran setelah selesai daftar ulang ini.
+                                        Apabila saudara belum sempat melunasi pembayaran infaq SPP, maka saudara bisa melakukan pembayaran setelah selesai daftar ulang ini dan melakukan konfirmasi ke nomor WhatsApp kasir di 08115430077 dengan format:
+                                        <br>
+                                        <br> 1. Nama Lengkap Sesuai KTP
+                                        <br> 2. Level
+                                        <br> 3. Tanggal Lahir Lengkap
+                                        <br> 4. Periode SPP
+                                        <br> 5. Nominal Transfer .
                                     </p>
                                 </div>
                             </div>
