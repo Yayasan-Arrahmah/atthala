@@ -60,8 +60,21 @@ class TahsinRepository extends BaseRepository
     public function create(array $data) : Tahsin
     {
         return DB::transaction(function () use ($data) {
+
+            // Generate No. Tahsin
+            $banyakid   = Tahsin::where('angkatan_peserta', $data['angkatan_peserta'])
+                        ->where('no_tahsin', 'like', '%-'.$data['angkatan_peserta'].'-%')
+                        ->count();
+            $generateid = $banyakid + 1;
+            if ($data['jenis_peserta'] == "IKHWAN") {
+                $jenisid                         = "TI";
+            } elseif ($data['jenis_peserta'] == "AKHWAT") {
+                $jenisid                         = "TA";
+            }
+            $no_tahsin = $jenisid . '-'.$data['angkatan_peserta'].'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+
             $tahsin = parent::create([
-                'no_tahsin'  => $data['no_tahsin'],
+                'no_tahsin'  => $no_tahsin,
                 'nama_peserta'  => $data['nama_peserta'],
                 'nohp_peserta'  => $data['nohp_peserta'],
                 'level_peserta'  => $data['level_peserta'],

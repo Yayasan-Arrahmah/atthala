@@ -156,7 +156,7 @@
                                     <a href="/admin/tahsin/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
                                         <div style="text-transform: uppercase;">{{ $tahsin->nama_peserta }}</div>
                                         <div class="small text-muted">
-                                            {{ $tahsin->nohp_peserta }}
+                                            {{ $tahsin->no_tahsin }} | {{ $tahsin->nohp_peserta }}
                                         </div>
                                     </a>
                                 </td>

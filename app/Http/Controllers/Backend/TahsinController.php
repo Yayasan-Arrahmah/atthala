@@ -48,16 +48,16 @@ class TahsinController extends Controller
      *
      * @param TahsinRepository $tahsinRepository
      */
-    public function __construct(Request $request)
+    public function __construct(TahsinRepository $request)
     {
         $this->tahsinRepository = $request;
 
-        $this->nama          = $request->get('nama') ?? null;
-        $this->kenaikanlevel = $request->get('kenaikanlevel') ?? null;
-        $this->idtahsin      = $request->get('idtahsin') ?? null;
-        $this->level         = $request->get('level') ?? null;
-        $this->jenis         = $request->get('jenis') ?? null;
-        $this->angkatan      = $request->get('angkatan') ?? session('angkatan_tahsin');
+        $this->nama          = request()->nama ?? null;
+        $this->kenaikanlevel = request()->kenaikanlevel ?? null;
+        $this->idtahsin      = request()->idtahsin ?? null;
+        $this->level         = request()->level ?? null;
+        $this->jenis         = request()->jenis ?? null;
+        $this->angkatan      = request()->angkatan ?? session('angkatan_tahsin');
     }
 
     /**
@@ -106,7 +106,7 @@ class TahsinController extends Controller
         // } else {
             $tahsins = \App\Models\Tahsin::
                 when($this->nama, function ($query) {
-                    return $query->search($this->nama);
+                    return $query->where('nama_peserta', '=',$this->nama);
                 })
                 ->when($this->level, function ($query) {
                     if( $this->level != 'SEMUA') {
