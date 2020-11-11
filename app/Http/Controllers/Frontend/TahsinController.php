@@ -153,7 +153,7 @@ class TahsinController extends Controller
             $tahsin->rekaman_peserta                 = Session::get('filerekaman');
             $tahsin->save();
 
-            $pembayaran->id_peserta                = $no_tahsin;
+            $pembayaran->id_peserta                = $tahsin->id;
             $pembayaran->nominal_pembayaran        = $nominal_pembayaran;
             $pembayaran->jenis_pembayaran          = "TAHSIN";
             $pembayaran->admin_pembayaran          = "TRANSFER";
