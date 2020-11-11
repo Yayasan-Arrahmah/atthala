@@ -58,6 +58,7 @@ class TahsinController extends Controller
         $this->level         = request()->level ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->angkatan      = request()->angkatan ?? session('angkatan_tahsin');
+        $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
     }
 
     /**
@@ -106,7 +107,7 @@ class TahsinController extends Controller
         // } else {
             $tahsins = \App\Models\Tahsin::
                 when($this->nama, function ($query) {
-                    return $query->where('nama_peserta', '=',$this->nama);
+                    return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
                 })
                 ->when($this->level, function ($query) {
                     if( $this->level != 'SEMUA') {
@@ -125,6 +126,37 @@ class TahsinController extends Controller
         // }
 
         return view('backend.tahsin.index', compact('tahsins'));
+    }
+
+    public function daftarbaru(ManageTahsinRequest $request)
+    {
+
+        if(isset($kenaikanlevel)){
+            $updatelevel = DB::table('tahsins')
+              ->where('no_tahsin', $this->idtahsin)
+              ->update(['kenaikan_level_peserta' => $this->kenaikanlevel]);
+
+            $tahsins = \App\Models\Tahsin::search($this->nama)
+              ->paginate(10);
+
+            return view('backend.tahsin.index', compact('tahsins'))->withFlashSuccess($this->idtahsin.'Berhasil Diperbaruhi');
+        }
+            $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
+                ->when($this->nama, function ($query) {
+                    return $query->where('nama_peserta', '=',$this->nama);
+                })
+                ->when($this->jenis, function ($query) {
+                    if( $this->jenis != 'SEMUA') {
+                        return $query->where('jenis_peserta', '=', $this->jenis);
+                    }
+                })
+                ->when($this->angkatan, function ($query) {
+                    return $query->where('angkatan_peserta', '=', $this->angkatanbaru);
+                })
+                ->paginate(10);
+        // }
+
+        return view('backend.tahsin.daftar-baru', compact('tahsins'));
     }
 
     public function upload(ManageTahsinRequest $request)
