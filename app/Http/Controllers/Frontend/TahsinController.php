@@ -101,20 +101,21 @@ class TahsinController extends Controller
         try {
 
             if ($request->jenis_peserta == "IKHWAN") {
-                $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta;
-                $pilih_jadwal_cadangan_1_peserta = $request->pilih_jadwal_cadangan_1_peserta;
-                $pilih_jadwal_cadangan_2_peserta = $request->pilih_jadwal_cadangan_2_peserta;
+                // $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta;
+                // $pilih_jadwal_cadangan_1_peserta = $request->pilih_jadwal_cadangan_1_peserta;
+                // $pilih_jadwal_cadangan_2_peserta = $request->pilih_jadwal_cadangan_2_peserta;
                 $jenisid                         = "TI";
             } elseif ($request->jenis_peserta == "AKHWAT") {
-                $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta_hari . ' ' . $request->pilih_jadwal_peserta_jam;
-                $pilih_jadwal_cadangan_1_peserta = $request->pilih_jadwal_cadangan_1_peserta_hari . ' ' . $request->pilih_jadwal_cadangan_1_peserta_jam;
-                $pilih_jadwal_cadangan_2_peserta = $request->pilih_jadwal_cadangan_2_peserta_hari . ' ' . $request->pilih_jadwal_cadangan_2_peserta_jam;
+                // $pilih_jadwal_peserta            = $request->pilih_jadwal_peserta_hari . ' ' . $request->pilih_jadwal_peserta_jam;
+                // $pilih_jadwal_cadangan_1_peserta = $request->pilih_jadwal_cadangan_1_peserta_hari . ' ' . $request->pilih_jadwal_cadangan_1_peserta_jam;
+                // $pilih_jadwal_cadangan_2_peserta = $request->pilih_jadwal_cadangan_2_peserta_hari . ' ' . $request->pilih_jadwal_cadangan_2_peserta_jam;
                 $jenisid                         = "TA";
             }
 
             $no_tahsin = $jenisid . '-'.session('daftar_ulang_angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
 
-            $nominal_pembayaran  = 200000 + ($request->has('bayar_modul') === true ? 60000 : 0) + ($request->has('bayar_mushaf') === true ? 110000 : 0);
+            // $nominal_pembayaran  = 200000 + ($request->has('bayar_modul') === true ? 60000 : 0) + ($request->has('bayar_mushaf') === true ? 110000 : 0);
+            $nominal_pembayaran  = 200000;
             $waktu_lahir_peserta = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
 
             // FUNGSI UPLOAD VERSI LAMA
@@ -140,14 +141,14 @@ class TahsinController extends Controller
             $tahsin->nama_peserta                    = $request->nama_peserta;
             $tahsin->nohp_peserta                    = $request->nohp_peserta;
             $tahsin->jenis_peserta                   = $request->jenis_peserta;
-            $tahsin->angkatan_peserta                = session('angkatan_tahsin');
+            $tahsin->angkatan_peserta                = session('daftar_ulang_angkatan_tahsin');
             $tahsin->alamat_peserta                  = $request->alamat_peserta;
             $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
             $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
             $tahsin->waktu_lahir_peserta             = $waktu_lahir_peserta;
-            $tahsin->pilih_jadwal_peserta            = $pilih_jadwal_peserta;
-            $tahsin->pilih_jadwal_cadangan_1_peserta = $pilih_jadwal_cadangan_1_peserta;
-            $tahsin->pilih_jadwal_cadangan_2_peserta = $pilih_jadwal_cadangan_2_peserta;
+            // $tahsin->pilih_jadwal_peserta            = $pilih_jadwal_peserta;
+            // $tahsin->pilih_jadwal_cadangan_1_peserta = $pilih_jadwal_cadangan_1_peserta;
+            // $tahsin->pilih_jadwal_cadangan_2_peserta = $pilih_jadwal_cadangan_2_peserta;
             $tahsin->fotoktp_peserta                 = Session::get('filektp');
             $tahsin->rekaman_peserta                 = Session::get('filerekaman');
             $tahsin->save();
@@ -158,6 +159,53 @@ class TahsinController extends Controller
             $pembayaran->admin_pembayaran          = "TRANSFER";
             $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransfer');
             $pembayaran->save();
+
+            $nohp = $request->input('notelp');
+            if (substr($nohp, 0, 1) === '0') {
+                $nohp = substr($nohp, 1);
+            } elseif (substr($nohp, 0, 2) === '62') {
+                $nohp = substr($nohp, 2);
+            } elseif (substr($nohp, 0, 3) === '+62') {
+                $nohp = substr($nohp, 3);
+            } else {
+                $nohp = $nohp;
+            }
+
+            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone = '62' . $nohp;
+            $message =
+                "Assalamualaikum Warrohmarullah Wabarokatuh
+
+Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan ".session('daftar_ulang_angkatan_tahsin')."*.
+
+Anda akan kami hubungi kembali secara otomatis melalui pesan WhatsApp setelah hasil bacaan Al Qur'an dikoreksi oleh tim penguji kami.
+
+Adapun lama tunggu maksimal kami hubungi kembali adalah 3 hari setelah pendaftaran dilakukan.
+
+Jazaakumullah Khoiron Katsiron,
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Salam,
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
+*Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+
+            $url = 'https://api.wanotif.id/v1/send';
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+                'Apikey'    => $apikey,
+                'Phone'     => $phone,
+                'Message'   => $message,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
 
             $info = "berhasil";
         } catch (\Throwable $th) {
@@ -593,5 +641,163 @@ Panitia Daftar Ulang Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
         $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', $data)->setPaper('a5', 'landscape');
 
         return $pdf->stream($data->nama_peserta.' - Kartu Daftar Ulang Tahsin LTTQ Arrahmah Balikpapan.pdf');
+    }
+
+    public function daftarcalonpeserta(Request $request)
+    {
+        $sesidaftar = Str::random(10);
+        Session::put('sesidaftar', $sesidaftar);
+
+        $notahsin            = $request->get('id');
+        $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+
+        $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
+                            ->where('angkatan_peserta', $angkatandaftarulang)
+                            ->latest('created_at')
+                            ->first();
+
+        $cekterdaftar = Tahsin::where('no_tahsin', $notahsin)
+                            ->where('angkatan_peserta', $angkatandaftarulang)
+                            ->whereNotNull('jadwal_tahsin')
+                            ->latest('created_at')
+                            ->first();
+
+        $jadwalhari  = $request->get('hari') ?? null;
+
+        $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                    ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+                    ->where('jumlah_peserta', '<', 10)
+                    ->select('hari_jadwal')
+                    ->groupBy('hari_jadwal')
+                    ->get();
+
+        return view('frontend.tahsin.daftarcalonpeserta', compact('calonpeserta', 'cekterdaftar', 'hari'));
+    }
+
+    public function daftarcalonpesertawaktu(Request $request)
+    {
+        $notahsin            = $request->get('id');
+        $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $jadwalhari          = $request->get('hari');
+
+        $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
+                            ->where('angkatan_peserta', $angkatandaftarulang)
+                            ->latest('created_at')
+                            ->first();
+
+        $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                            ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                            ->where('level_jadwal', $calonpeserta->level_peserta)
+                            ->where('jumlah_peserta', '<', 10)
+                            ->where('hari_jadwal', $jadwalhari)
+                            ->get();
+
+        return response()->json($waktu);
+    }
+
+    public function simpandaftarcalonpeserta(Request $request)
+    {
+        $angkatan = session('daftar_ulang_angkatan_tahsin');
+
+        // $this->validate($request, [
+        //     'notelp'           => 'required',
+        // ]);
+
+        $cekterdaftarpeserta = Tahsin::where('no_tahsin', $request->input('id'))->whereNotNull('jadwal_tahsin')->where('angkatan_peserta', $angkatan)->first();
+
+        if(isset($cekterdaftarpeserta)){
+            return redirect()->to('/tahsin/pendaftaran/peserta?id='.$cekterdaftarpeserta->no_tahsin);
+        }
+
+        $pesertadaftar = Tahsin::where('no_tahsin', $request->input('id'))->where('angkatan_peserta', $angkatan)->first();
+
+        $datajadwal = Jadwal::where('angkatan_jadwal', $angkatan)
+                        ->where('jenis_jadwal', $pesertadaftar->jenis_peserta)
+                        ->where('hari_jadwal', $request->get('hari'))
+                        ->where('waktu_jadwal', $request->get('waktu'))
+                        ->where('level_jadwal', $pesertadaftar->level_peserta)
+                        ->where('jumlah_peserta', '<', 10)
+                        ->first();
+
+        // try {
+
+            $nohp = $pesertadaftar->nohp_peserta;
+            if (substr($nohp, 0, 1) === '0') {
+                $nohp = substr($nohp, 1);
+            } elseif (substr($nohp, 0, 2) === '62') {
+                $nohp = substr($nohp, 2);
+            } elseif (substr($nohp, 0, 3) === '+62') {
+                $nohp = substr($nohp, 3);
+            } else {
+                $nohp = $nohp;
+            }
+
+            $updatepeserta = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', $angkatan)
+                    ->update([
+                        'nama_pengajar'        => $datajadwal->pengajar_jadwal,
+                        'jadwal_tahsin'        => $request->get('hari').' '.$request->get('waktu'),
+            ]);
+
+            $tambahpeserta = Jadwal::where('id',  $datajadwal->id)
+                    ->update([
+                        'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
+                    ]);
+
+            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone = '62' . $nohp;
+            $message =
+                "Assalamualaikum Warrohmarullah Wabarokatuh
+
+Terima kasih *Bapak/Ibu Fulan/Fulanah*, Anda telah terverifikasi oleh *Sistem Atthala* sebagai Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan.
+
+Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
+
+Tetap waspada dan jaga kesehatan diri dan keluarga sesuai dengan sunnah Baginda Rasulullah shallallahu 'alaihi wasallam.
+
+Jazaakumullah Khoiron Katsiron,
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Salam,
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+*Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+
+            $url = 'https://api.wanotif.id/v1/send';
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+                'Apikey'    => $apikey,
+                'Phone'     => $phone,
+                'Message'   => $message,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $info = "berhasil";
+
+
+        // } catch (\Throwable $th) {
+        //     $info      = "gagal";
+        //     $no_tahsin = "null";
+        // }
+        return redirect()->to('/tahsin/pendaftaran/print?id='.$request->get('id'));
+
+        // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
+    }
+
+    public function printdaftarpeserta(Request $request)
+    {
+        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))->first();
+
+        $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', $data)->setPaper('a5', 'landscape');
+
+        return $pdf->stream($data->nama_peserta.' - Kartu Pendaftaran Tahsin LTTQ Arrahmah Balikpapan.pdf');
     }
 }

@@ -11,12 +11,23 @@
 .filepond--media-preview {
     padding-top: 30px;
 }
+.tes td:nth-child(1) {
+  width: 5%;
+}
+.tes td:nth-child(2) {
+  width: 95%;
+}
+
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 
 </style>
 
 @stack('after-styles')
 {{-- {{ $sesidaftar }} --}}
-<form action="#" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
+<form action="{{ route('frontend.tahsin.simpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center align-items-center">
         <div class="col col-sm-5 align-self-center">
             <div class="card">
@@ -281,6 +292,8 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
+                        {{-- <example-component></example-component> --}}
+
                         <label class="col-12 form-control-label">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</label>
                         <div class="col-12">
                             <input type="file" class="upload-rekaman"/>
@@ -352,13 +365,31 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12">
-                            <img class="img-fluid" src="https://lh5.googleusercontent.com/fa9h1brjURoz-uilFI0C881v4VXDR2HJxbOWc4hH7hGdItrftVaU6eWRncRHpcexyq5H6KDwoGAfBNYVLYh_jpSxdl-i4lhbnU1tigImh3SXQlmayuYAtJRk77-g=w675" alt="">
+                        <div class="col-md-12" style="font-size: 12px; font-weight: 600; text-align: justify; text-color: rgb(20, 20, 20)">
+                            <p>
+                                Dengan ini saya menyetujui aturan-aturan yang berlaku untuk mendaftarkan diri saya sebagai peserta tahsin Ar Rahmah
+                                <div class="row">
+                                    <div class="col-1">1</div>
+                                    <div class="col-11">Tahsin LTTQ Ar Rahmah Balikpapan menggunakan Metode Al Haqq.<hr></div>
+                                    <div class="col-1">2</div>
+                                    <div class="col-11">Jumlah pertemuan tahsin adalah sebanyak 16 kali pertemuan dalam 1 level (termasuk kuliah perdana).<hr></div>
+                                    <div class="col-1">3</div>
+                                    <div class="col-11">Jumlah pertemuan tahsin dalam sepekan diadakan sebanyak 1 kali dengan durasi 2 jam maksimal.<hr></div>
+                                    <div class="col-1">4</div>
+                                    <div class="col-11">SPP wajib dibayarkan sebanyak 400.000 dalam 1 level pembelajaran (diluar biaya pendaftaran, modul, buku prestasi dan mushaf).<hr></div>
+                                    <div class="col-1">5</div>
+                                    <div class="col-11">Peserta wajib membeli perlengkapan tahsin; Mushaf Rasm Utsmani, Modul dan Buku Prestasi.<hr></div>
+                                    <div class="col-1">6</div>
+                                    <div class="col-11">Peserta wajib mengikuti minimal 10 pertemuan agar bisa mengikuti ujian.<hr></div>
+                                    <div class="col-1">7</div>
+                                    <div class="col-11">Peserta wajib mengikuti aturan tambahan jika dikeluarkan sewaktu-waktu oleh pihak LTTQ Ar Rahmah Balikpapan.<hr></div>
+                                </div>
+                            </p>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-2 text-right">
-                            <input id="setuju" type="checkbox" value="" required/>
+                            <input id="setuju" type="checkbox" value="" oninvalid="setCustomValidity('Centang Untuk Menyetujui Peraturan.')" onchange="try{setCustomValidity('')}catch(e){}" required/>
                         </div>
                         <div class="col-10">
                             <label>Setuju</label>

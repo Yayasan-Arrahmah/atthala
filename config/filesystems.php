@@ -55,28 +55,28 @@ return [
 
         'ktp' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/ktp'),
+            'root' => public_path('../../../public_html/atthala/app/public/ktp'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         'rekaman' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/rekaman'),
+            'root' => public_path('../../../public_html/atthala/app/public/rekaman'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         'bukti-transfer' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/bukti-transfer'),
+            'root' => public_path('../../../public_html/atthala/app/public/bukti-transfer'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         'bukti-transfer-atthala' => [
             'driver' => 'local',
-            'root' => storage_path('../../public_html/atthala/bukti-transfer'),
+            'root' => public_path('../../../public_html/atthala/bukti-transfer'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

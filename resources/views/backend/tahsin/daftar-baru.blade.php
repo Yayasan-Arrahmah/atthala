@@ -16,23 +16,23 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
+                    Pendaftaran Baru Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('daftar_ulang_angkatan_tahsin') }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.tahsin.includes.header-buttons')
-                <a href=" {{ url()->current() }}/upload" >
+                {{-- @include('backend.tahsin.includes.header-buttons') --}}
+                {{-- <a href=" {{ url()->current() }}/upload" >
                     <button class="float-right btn btn-info">
                         <i class="fa fa-upload"></i> Upload Excel
                     </button>
-                </a>
-            </div><!--col-->
+                </a> --}}
+            </div>
         </div><!--row-->
 
-        <div class="row">
+        {{-- <div class="row">
             <form onmouseover="verifikasi()" class="form-horizontal col-md-12" action="{{ route('admin.tahsins.updatelevel') }}" method="POST" enctype="multipart/form-data" style="padding-top: 20px">
                 <div class="form-group row" style="margin-bottom:0px">
                     {{ csrf_field() }}
@@ -50,20 +50,20 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> --}}
         <form action="{{ Request::fullUrl() }}" class="row mt-4">
-            <div class="col-md-1">
+            {{-- <div class="col-md-1">
                 <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
                     <option>10</option>
                     <option>25</option>
                     <option>50</option>
                     <option>100</option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="col">
             </div>
-            <div class="col-md-2">
+            {{-- <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                     Level
                  </div>
@@ -84,8 +84,8 @@
                         <option value="TAHSINI">TAHSINI</option>
                         <option value="ITQON">ITQON</option>
                 </select>
-            </div>
-            <div class="col-md-2">
+            </div> --}}
+            {{-- <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                 Angkatan
                  </div>
@@ -97,8 +97,8 @@
                     <option value="16">16</option>
                     <option value="17">17</option>
                 </select>
-            </div>
-            <div class="col-md-2">
+            </div> --}}
+            {{-- <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                 Jenis
                  </div>
@@ -111,7 +111,7 @@
                     <option value="IKHWAN">IKHWAN</option>
                     <option value="AKHWAT">AKHWAT</option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="col-md-3">
                 <div class="pull-right input-group mt-4">
@@ -130,17 +130,15 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nama</th>
-                                <th class="text-center">Level</th>
-                                <th class="text-center">Kenaikan Level</th>
-                                <th class="text-center">Jadwal</th>
+                                <th class="text-center">Rekaman Tilawah</th>
+                                {{-- <th class="text-center">Level</th> --}}
+                                {{-- <th class="text-center">Jadwal</th> --}}
                                 {{-- <th class="text-center">Pengajar</th> --}}
                                 {{-- <th class="text-center">Jenis</th> --}}
                                 {{-- <th class="text-center">Keterangan</th>
                                 <th class="text-center">Daftar Ulang</th> --}}
                                 {{-- <th class="text-center">Angkatan</th> --}}
-                                <th class="text-center">Rekaman Tilawah</th>
-
-                                <th width="100" class="text-center"></th>
+                                {{-- <th width="100" class="text-center"></th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -162,43 +160,55 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="text-center">
-                                    @php
-                                        if ($tahsin->level_peserta  == "ASAASI 1") {
-                                            $warna = "#20a8d8";
-                                        } elseif ($tahsin->level_peserta  == "ASAASI 2") {
-                                            $warna = "#20c997";
-                                        } elseif ($tahsin->level_peserta  == "TILAWAH ASAASI") {
-                                            $warna = "#17a2b8";
-                                        } elseif ($tahsin->level_peserta  == "TAMHIDI") {
-                                            $warna = "#ffc107";
-                                        } elseif ($tahsin->level_peserta  == "TAWASUTHI") {
-                                            $warna = "#6610f2";
-                                        } elseif ($tahsin->level_peserta  == "TILAWAH TAWASUTHI") {
-                                            $warna = "#ffb700";
-                                        } elseif ($tahsin->level_peserta  == "IDADI") {
-                                            $warna = "#e83e8c";
-                                        } elseif ($tahsin->level_peserta  == "TAKMILI") {
-                                            $warna = "#4dbd74";
-                                        } elseif ($tahsin->level_peserta  == "TAHSINI") {
-                                            $warna = "#b81752";
-                                        } elseif ($tahsin->level_peserta  == "ITQON") {
-                                            $warna = "#1848f5";
-                                        } else {
-                                            $warna = "#2f353a";
-                                        }
-                                    @endphp
-
-                                    @if ($tahsin->level_peserta == null)
-                                    @else
-                                        <button class="btn btn-sm" style="color: #fff; background-color: {{ $warna }}; border-color: {{ $warna }};">
-                                            <i class="fa fa-time-circle-o"></i><strong>{{ $tahsin->level_peserta }}</strong>
-                                        </button>
-                                    @endif
-                                </td>
                                 <td>
+                                    @if (isset(request()->idtahsin))
+                                        <div class="text-center">
+                                            <audio controls style="width: 250px; height: 30px;">
+                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/ogg">
+                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
+                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/wav">
+                                                error
+                                            </audio>
+                                        </div>
+                                        <form>
+                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
+                                            @if(!empty(Request::get('nama')))
+                                                <input name="nama" value="{{ Request::get('nama') }}" hidden>
+                                            @endif
+                                            @if(!empty(Request::get('page')))
+                                                <input name="page" value="{{ Request::get('page') }}" hidden>
+                                            @endif
+                                            <input name="nohp" value="{{ $tahsin->nohp_peserta }}" hidden>
+                                            <select style="font-weight: 600;" class="form-control" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                <option value=""> Pilih Hasil Peserta </option>
+                                                <option value="">-----</option>
+                                                <option value="ASAASI 1">ASAASI 1</option>
+                                                <option value="ASAASI 2">ASAASI 2</option>
+                                                <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
+                                                <option value="TAMHIDI">TAMHIDI</option>
+                                                <option value="TAWASUTHI">TAWASUTHI</option>
+                                                <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
+                                                <option value="IDADI">IDADI</option>
+                                                <option value="TAKMILI">TAKMILI</option>
+                                                <option value="TAHSINI">TAHSINI</option>
+                                                <option value="ITQON">ITQON</option>
+                                            </select>
+                                        </form>
+                                    @else
+                                        @if ($tahsin->status_peserta != null)
+                                            <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                        @else
+                                            <form class="text-center">
+                                                <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                <button type="submit" class="btn btn-primary btn-block btn-pill btn-sm">Pilih</button>
+                                            </form>
+                                        @endif
+
+                                    @endif
+
+                                </td>
+                                {{-- <td>
                                     <form action="{{ Request::fullUrl() }}">
-                                        {{-- @csrf --}}
                                         <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
                                         @if(!empty(Request::get('nama')))
                                             <input name="nama" value="{{ Request::get('nama') }}" hidden>
@@ -221,18 +231,18 @@
                                             <option value="ITQON">ITQON</option>
                                         </select>
                                     </form>
-                                </td>
+                                </td> --}}
                                 {{-- <td>
                                     <div class="text-center">
                                         <strong>{{ $tahsin->jadwal_tahsin }}</strong>
                                     </div>
                                 </td> --}}
-                                <td>
+                                {{-- <td>
                                     <div style="text-transform: uppercase;">{{ $tahsin->nama_pengajar }}</div>
                                     <div class="small text-muted">
                                         {{ $tahsin->jadwal_tahsin }} | {{ $tahsin->jenis_peserta }}
                                     </div>
-                                </td>
+                                </td> --}}
                                 {{-- <td>
                                     @if ($tahsin->jenis_peserta == 'IKHWAN')
                                         <div class="text-center">
@@ -264,23 +274,14 @@
                                         {{ $tahsin->angkatan_peserta }}
                                     </div>
                                 </td> --}}
-                                <td>
-                                    <div class="text-center">
-                                        <audio controls>
-                                            <source src="{{ $tahsin->rekaman_peserta }}" type="audio/ogg">
-                                            <source src="{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
-                                            <source src="{{ $tahsin->rekaman_peserta }}" type="audio/wav">
-                                            error
-                                        </audio>
-                                    </div>
-                                </td>
-                                <td>
-                                    {{-- <button class="btn btn-danger  btn-sm"><i class="fa fa-trash"></i></button>
-                                    <button class="btn btn-success  btn-sm"><i class="fa fa-pen"></i></button> --}}
+
+                                {{-- <td>
+                                    <button class="btn btn-danger  btn-sm"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-success  btn-sm"><i class="fa fa-pen"></i></button>
                                     <div class="text-center">
                                         {!! $tahsin->action_buttons !!}
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                             @php
                             $first  = $tahsins->firstItem();

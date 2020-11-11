@@ -28,6 +28,11 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get('daftar-ulang-peserta/daftar/datawaktu',     [TahsinController::class, 'daftarulangpesertadatawaktu'])->name('tahsin.daftarulangpesertadatawaktu');
     Route::get('daftar-ulang-peserta/print',                [TahsinController::class, 'printdaftarulangpeserta'])->name('tahsin.printdaftarulangpeserta');
     Route::post('daftar-ulang-peserta/simpan',               [TahsinController::class, 'simpandaftarulangpeserta'])->name('tahsin.simpandaftarulangpeserta');
+    Route::get('pendaftaran/peserta',               [TahsinController::class, 'daftarcalonpeserta'])->name('tahsin.daftarcalonpeserta');
+    Route::get('pendaftaran/peserta/waktu',               [TahsinController::class, 'daftarcalonpesertawaktu'])->name('tahsin.daftarcalonpesertawaktu');
+    Route::post('pendaftaran/simpan',               [TahsinController::class, 'simpandaftarcalonpeserta'])->name('tahsin.simpandaftarcalonpeserta');
+    Route::get('pendaftaran/print',               [TahsinController::class, 'printdaftarpeserta'])->name('tahsin.printdaftarpeserta');
+
 
     // Route::post('store', 	[TahsinController::class, 'store']		)->name('tahsins.store');
     // Route::get(	'deleted', 	[TahsinController::class, 'deleted']	)->name('tahsins.deleted');

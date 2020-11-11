@@ -5,6 +5,11 @@ Breadcrumbs::for('admin.tahsins.index', function ($trail) {
     $trail->push(__('backend_tahsins.labels.management'), route('admin.tahsins.index'));
 });
 
+Breadcrumbs::for('admin.tahsins.daftarbaru', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Daftar Baru', route('admin.tahsins.daftarbaru'));
+});
+
 Breadcrumbs::for('admin.tahsins.create', function ($trail) {
     $trail->parent('admin.tahsins.index');
     $trail->push(__('backend_tahsins.labels.create'), route('admin.tahsins.create'));

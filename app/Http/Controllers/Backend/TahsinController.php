@@ -56,6 +56,7 @@ class TahsinController extends Controller
         $this->kenaikanlevel = request()->kenaikanlevel ?? null;
         $this->idtahsin      = request()->idtahsin ?? null;
         $this->level         = request()->level ?? null;
+        $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->angkatan      = request()->angkatan ?? session('angkatan_tahsin');
         $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
@@ -76,6 +77,7 @@ class TahsinController extends Controller
         if(isset($kenaikanlevel)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', $this->idtahsin)
+              ->where('angkatan_peserta', session('angkatan_tahsin'))
               ->update(['kenaikan_level_peserta' => $this->kenaikanlevel]);
 
             $tahsins = \App\Models\Tahsin::search($this->nama)
@@ -131,28 +133,70 @@ class TahsinController extends Controller
     public function daftarbaru(ManageTahsinRequest $request)
     {
 
-        if(isset($kenaikanlevel)){
+        if(isset($this->level)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', $this->idtahsin)
-              ->update(['kenaikan_level_peserta' => $this->kenaikanlevel]);
+              ->where('angkatan_peserta', $this->angkatanbaru)
+              ->update(['level_peserta' => $this->level]);
 
-            $tahsins = \App\Models\Tahsin::search($this->nama)
-              ->paginate(10);
+            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone = '62' . $this->nohp;
+            $message =
+                "Assalamualaikum Warrohmarullah Wabarokatuh
 
-            return view('backend.tahsin.index', compact('tahsins'))->withFlashSuccess($this->idtahsin.'Berhasil Diperbaruhi');
-        }
+Terima kasih *Bapak/Ibu Fulan/Fulanah*, Calon Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+
+Alhamdulillah, Level belajar anda adalah di level *".$this->level."*.
+Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".$this->idtahsin."
+
+Jazaakumullah Khoiron Katsiron,
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Salam,
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+*Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+
+            $url = 'https://api.wanotif.id/v1/send';
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+                'Apikey'    => $apikey,
+                'Phone'     => $phone,
+                'Message'   => $message,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $info = "berhasil";
+
             $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
-                ->when($this->nama, function ($query) {
-                    return $query->where('nama_peserta', '=',$this->nama);
-                })
-                ->when($this->jenis, function ($query) {
-                    if( $this->jenis != 'SEMUA') {
-                        return $query->where('jenis_peserta', '=', $this->jenis);
-                    }
-                })
-                ->when($this->angkatan, function ($query) {
-                    return $query->where('angkatan_peserta', '=', $this->angkatanbaru);
-                })
+                        ->where('angkatan_peserta', '=', $this->angkatanbaru)
+                        ->paginate(10);
+
+            return redirect()->to('/admin/tahsin/daftar-baru')->withFlashSuccess($this->idtahsin.' Berhasil Diperbaruhi dengan Level '.$this->level);
+        }
+            if(isset($this->idtahsin)){
+                $updatelevel = DB::table('tahsins')
+                ->where('no_tahsin', $this->idtahsin)
+                ->where('angkatan_peserta', $this->angkatanbaru)
+                ->update(['status_peserta' => auth()->user()->first_name]);
+            }
+
+            $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
+                    ->when($this->nama, function ($query) {
+                        return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
+                    })
+                    ->when($this->idtahsin, function ($query) {
+                            return $query->where('no_tahsin', '=', $this->idtahsin);
+                    })
+                    ->where('angkatan_peserta', '=', $this->angkatanbaru)
                 ->paginate(10);
         // }
 
