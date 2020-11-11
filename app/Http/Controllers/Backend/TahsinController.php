@@ -144,7 +144,7 @@ class TahsinController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih *Bapak/Ibu Fulan/Fulanah*, Calon Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
 
 Alhamdulillah, Level belajar anda adalah di level *".$this->level."*.
 Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".$this->idtahsin."

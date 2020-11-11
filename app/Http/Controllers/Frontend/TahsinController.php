@@ -93,7 +93,7 @@ class TahsinController extends Controller
         $tahsin     = new Tahsin;
         $pembayaran = new Pembayaran;
 
-        $banyakid   = Tahsin::where('angkatan_peserta', session('angkatan_tahsin'))
+        $banyakid   = Tahsin::where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
                     ->where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
                     ->count();
         $generateid = $banyakid + 1;
@@ -186,7 +186,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             $url = 'https://api.wanotif.id/v1/send';
@@ -749,7 +749,13 @@ Panitia Daftar Ulang Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih *Bapak/Ibu Fulan/Fulanah*, Anda telah terverifikasi oleh *Sistem Atthala* sebagai Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan.
+Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan.
+
+Silakan melengkapi keperluan pembelajaran antara lain :
+*1. Modul - Rp 35.000
+2. Buku Prestasi - Rp 25.000*
+
+Modul & Buku Prestasi bisa dibeli di Sekretariat LTTQ Ar Rahmah Balikpapan (Serambi Utara Masjid Ar Rahmah)
 
 Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
 
