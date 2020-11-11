@@ -756,6 +756,8 @@ Silakan melengkapi keperluan pembelajaran antara lain :
 2. Buku Prestasi - Rp 25.000*
 
 Modul & Buku Prestasi bisa dibeli di Sekretariat LTTQ Ar Rahmah Balikpapan (Serambi Utara Masjid Ar Rahmah)
+Senin - Jum'at : 09.00 - 17.00 WITA
+Sabtu          : 09.00 - 12.00 WITA
 
 Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
 
