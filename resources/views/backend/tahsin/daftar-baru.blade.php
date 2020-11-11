@@ -166,6 +166,7 @@
                                             <audio controls style="width: 250px; height: 30px;">
                                                 <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/ogg">
                                                 <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
+                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mp4">
                                                 <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/wav">
                                                 error
                                             </audio>

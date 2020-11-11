@@ -160,7 +160,7 @@ class TahsinController extends Controller
             $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransfer');
             $pembayaran->save();
 
-            $nohp = $request->input('notelp');
+            $nohp = $request->input('nohp_peserta');
             if (substr($nohp, 0, 1) === '0') {
                 $nohp = substr($nohp, 1);
             } elseif (substr($nohp, 0, 2) === '62') {
