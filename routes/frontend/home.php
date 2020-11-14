@@ -66,5 +66,8 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::post('absen/tahsin/kelas/gantiabsen', [DashboardController::class, 'absentahsinkelasgantiabsen'])->name('absentahsinkelas.gantiabsen');
         Route::post('absen/tahsin/input',            [DashboardController::class, 'absentahsininput'])->name('absentahsininput');
         Route::get('jadwal/tahsin',                  [DashboardController::class, 'jadwaltahsin'])->name('jadwaltahsin');
+
+        Route::get('peserta/tahsin-baru',                  [DashboardController::class, 'pesertatahsinbaru'])->name('pesertatahsinbaru');
+
     });
 });

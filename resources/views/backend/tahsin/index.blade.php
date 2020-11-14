@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
+                    Pembayaran Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -137,9 +137,7 @@
                                 {{-- <th class="text-center">Jenis</th> --}}
                                 {{-- <th class="text-center">Keterangan</th>
                                 <th class="text-center">Daftar Ulang</th> --}}
-                                {{-- <th class="text-center">Angkatan</th> --}}
-                                <th class="text-center">Rekaman Tilawah</th>
-
+                                <th class="text-center">Angkatan</th>
                                 <th width="100" class="text-center"></th>
                             </tr>
                         </thead>
@@ -259,21 +257,12 @@
                                         {{ $tahsin->belum_daftar_tahsin }}
                                     </div>
                                 </td> --}}
-                                {{-- <td>
+                                <td>
                                     <div class="text-center">
                                         {{ $tahsin->angkatan_peserta }}
                                     </div>
-                                </td> --}}
-                                <td>
-                                    <div class="text-center">
-                                        <audio controls>
-                                            <source src="{{ $tahsin->rekaman_peserta }}" type="audio/ogg">
-                                            <source src="{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
-                                            <source src="{{ $tahsin->rekaman_peserta }}" type="audio/wav">
-                                            error
-                                        </audio>
-                                    </div>
                                 </td>
+
                                 <td>
                                     {{-- <button class="btn btn-danger  btn-sm"><i class="fa fa-trash"></i></button>
                                     <button class="btn btn-success  btn-sm"><i class="fa fa-pen"></i></button> --}}

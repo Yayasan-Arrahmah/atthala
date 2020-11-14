@@ -460,7 +460,6 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
         $pembayaran->jenis_pembayaran   = $request->jenispembayaran;
         $pembayaran->admin_pembayaran   = Auth::user()->email;
         // dd($pembayaran);
-
         $pembayaran->save();
 
         $data = Tahsin::where('no_tahsin', $id)->first();
@@ -558,19 +557,13 @@ Salam,
         return view('backend.tahsin.ujian', compact('datajadwals'));
     }
 
-    public function daftarpesertaujian(ManageTahsinRequest $request)
+    public function pesertaujian(ManageTahsinRequest $request)
     {
         $paged         = $request->get('paged') ?? 10;
         $nama          = $request->get('nama') ?? null;
 
-        // $pesertaujians = PesertaUjian::with('data')
-        //             ->whereHas('products', function ($query) use ($nama){
-        //                 $query->where('nama_peserta', 'like', '%'.$nama.'%');
-        //             })
-        //             ->paginate($paged);
-
-        $pesertaujians = PesertaUjian::paginate($paged);
-        return view('backend.tahsin.ujian-daftarulang', compact('pesertaujians', 'paged'));
+        $pesertaujians = PesertaUjian::where('angkatan_ujian', session('angkatan_tahsin'))->paginate($paged);
+        return view('backend.tahsin.daftar-ujian', compact('pesertaujians', 'paged'));
     }
 
     /**

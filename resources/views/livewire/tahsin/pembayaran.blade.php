@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-md-2">
                             <center>
-                                <form onsubmit="return confirm('Apakah Nominal Pembayaran Sudah Benar ?');" action="/admin/tahsin/createbayar" method="POST">
+                                {{-- <form wire:submit.prevent="store" onsubmit="return confirm('Apakah Nominal Pembayaran Sudah Benar ?');" action="/admin/tahsin/createbayar" method="POST">
                                     {{ csrf_field() }}
                                     <input
                                         type="text" class="nominal form-control input-sm" style="margin: 10px 0 10px 0" value=""
@@ -128,7 +128,7 @@
                                         >
                                         Bayar
                                     </button>
-                                </form>
+                                </form> --}}
                             </center>
                         </div>
                         <div class="col-md-12">

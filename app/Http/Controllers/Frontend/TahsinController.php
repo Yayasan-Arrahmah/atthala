@@ -68,7 +68,7 @@ class TahsinController extends Controller
 
     public function uploadbuktitransferpesertaujian(Request $request)
     {
-        if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id/') {
+        if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id') {
             $file_bukti_transfer      = $request->file('filepond');
             $nama_file_bukti_transfer = Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
             Session::put('filebuktitransferujian', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar

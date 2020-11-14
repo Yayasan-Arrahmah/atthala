@@ -142,4 +142,76 @@ class DashboardController extends Controller
             return back()->withFlashSuccess('Tanggal Absen Gagal Diperbaruhi !');
         }
     }
+
+    public function pesertatahsinbaru(Request $request)
+    {
+        if(isset(request()->level)){
+            $updatelevel = DB::table('tahsins')
+              ->where('no_tahsin', request()->idtahsin)
+              ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+              ->update(['level_peserta' => request()->level]);
+
+            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone = '62' . request()->nohp;
+            $message =
+                "Assalamualaikum Warrohmarullah Wabarokatuh
+
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+
+Alhamdulillah, Level belajar anda adalah di level *".request()->level."*.
+Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".request()->idtahsin."
+
+Jazaakumullah Khoiron Katsiron,
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Salam,
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+*Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+
+            $url = 'https://api.wanotif.id/v1/send';
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+                'Apikey'    => $apikey,
+                'Phone'     => $phone,
+                'Message'   => $message,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $info = "berhasil";
+
+            $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
+                        ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+                        ->paginate(10);
+
+            return redirect()->to('/admin/tahsin/daftar-baru')->withFlashSuccess(request()->idtahsin.' Berhasil Diperbaruhi dengan Level '.request()->level);
+        }
+            if(isset(request()->idtahsin)){
+                $updatelevel = DB::table('tahsins')
+                ->where('no_tahsin', request()->idtahsin)
+                ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+                ->update(['status_peserta' => auth()->user()->first_name]);
+            }
+
+            $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
+                    ->when(request()->nama, function ($query) {
+                        return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
+                    })
+                    ->when(request()->idtahsin, function ($query) {
+                            return $query->where('no_tahsin', '=', request()->idtahsin);
+                    })
+                    ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+                ->paginate(10);
+        // }
+
+        return view('frontend.user.tahsin.peserta-baru', compact('tahsins'));
+    }
 }

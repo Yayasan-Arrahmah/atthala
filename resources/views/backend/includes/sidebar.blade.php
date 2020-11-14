@@ -51,12 +51,23 @@
                 Absen
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal')) }} "
-                href="{{ route('admin.tahsins.jadwal') }}
-                " > <i class="nav-icon fas fa-list-alt"></i>
-                Jadwal
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/jadwal*'), 'open') }}">
+                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }} {{ active_class(Active::checkUriPattern('admin/jadwal*')) }}" href="#">
+                    <i class="nav-icon fas fa-list-alt"></i>
+                    Jadwal
                 </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/jadwal')) }}" href="{{ route('admin.jadwals.index') }}">
+                            Data List
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }}" href="{{ route('admin.tahsins.jadwal') }}">
+                            Pengajar
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengajar')) }} "
@@ -72,8 +83,8 @@
                 Pembayaran
                 </a>
             </li>
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/ujian*'), 'open') }}">
-                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/ujian*')) }}" href="#">
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/ujian*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-ujian*'), 'open') }}">
+                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/ujian*')) }} {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-ujian*'), 'open') }}" href="#">
                     <i class="nav-icon fas fa-check"></i>
                     Ujian
                 </a>
@@ -84,8 +95,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/ujian/daftar-ulang*')) }}" href="{{ route('admin.tahsins.ujian.daftarulang') }}">
-                            Daftar Ulang
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-ujian*')) }}" href="{{ route('admin.tahsins.pesertaujian') }}">
+                        Daftar Ulang
                         </a>
                     </li>
                 </ul>

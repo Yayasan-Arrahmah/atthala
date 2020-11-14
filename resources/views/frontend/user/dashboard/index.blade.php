@@ -82,6 +82,22 @@
 <div class="row">
 
 @if (auth()->user()->last_name == 'PENGAJAR')
+    @if (auth()->user()->status == 'PENGUJI')
+        <div class="col-xs-12 col-md-6">
+            <div class="card" style="margin-bottom: .3rem">
+                <div class="card-body p-0 d-flex align-items-center">
+                    <i class="fa fa-edit p-3 px-2 font-1xl mr-3" style="border-radius: 5px 0px 0px 5px; background-color: #a220d8; color: #fff"></i>
+                    <div>
+                        <a href="{{ route('frontend.user.pesertatahsinbaru') }}">
+                            <div class="text-value-sm" style="color: #a220d8">Pendaftaran Baru</div>
+                            <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 17</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="col-xs-12 col-md-6">
         <div class="card" style="margin-bottom: .3rem">
             <div class="card-body p-0 d-flex align-items-center">

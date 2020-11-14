@@ -75,7 +75,12 @@ Breadcrumbs::for('admin.tahsins.ujian', function ($trail) {
     $trail->push('Data Ujian', route('admin.tahsins.ujian'));
 });
 
-Breadcrumbs::for('admin.tahsins.ujian.daftarulang', function ($trail) {
+Breadcrumbs::for('admin.tahsins.pesertaujian', function ($trail) {
     $trail->parent('admin.tahsins.ujian');
-    $trail->push('Daftar Ulang', route('admin.tahsins.ujian.daftarulang'));
+    $trail->push('Peserta Ujian', route('admin.tahsins.pesertaujian'));
+});
+
+Breadcrumbs::for('admin.tahsins.pesertadaftarulang', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Peserta Daftar Ulang', route('admin.tahsins.pesertadaftarulang'));
 });
