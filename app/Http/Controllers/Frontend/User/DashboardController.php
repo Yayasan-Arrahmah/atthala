@@ -188,7 +188,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
                         ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
                         ->paginate(10);
 
@@ -201,7 +201,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
                 ->update(['status_peserta' => auth()->user()->first_name]);
             }
 
-            $tahsins = \App\Models\Tahsin::where('level_peserta', '=', null)
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
                     ->when(request()->nama, function ($query) {
                         return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
                     })

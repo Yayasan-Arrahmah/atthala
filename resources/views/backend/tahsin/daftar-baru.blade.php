@@ -130,7 +130,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nama</th>
-                                <th class="text-center">Rekaman Tilawah</th>
+                                <th class="text-center">Rekaman / Hasil</th>
                                 {{-- <th class="text-center">Level</th> --}}
                                 {{-- <th class="text-center">Jadwal</th> --}}
                                 {{-- <th class="text-center">Pengajar</th> --}}
@@ -197,7 +197,18 @@
                                         </form>
                                     @else
                                         @if ($tahsin->status_peserta != null)
-                                            <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                            @if ($tahsin->level_peserta != null)
+                                                <div style="text-transform: uppercase;">{{ $tahsin->level_peserta }}</div>
+                                                <div class="small text-muted">
+                                                    @if ($tahsin->jadwal_tahsin != null)
+                                                        {{ $tahsin->nama_pengajar }} | {{ $tahsin->jadwal_tahsin }}
+                                                    @else
+                                                        Peserta Belum Pilih Jadwal
+                                                    @endif
+                                                </div>
+                                            @else
+                                                <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                            @endif
                                         @else
                                             <form class="text-center">
                                                 <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
