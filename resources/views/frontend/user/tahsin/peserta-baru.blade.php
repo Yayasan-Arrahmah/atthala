@@ -228,7 +228,7 @@
                                             @if ($tahsin->status_peserta != null)
                                                 <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
                                             @else
-                                                @if ($tahsin->jenis_peserta == auth()->user()->jenis_peserta)
+                                                @if ($tahsin->jenis_peserta == auth()->user()->jenis)
                                                     <form class="text-center">
                                                         <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
                                                         <button type="submit" class="btn btn-primary btn-block btn-pill btn-sm">Pilih</button>
