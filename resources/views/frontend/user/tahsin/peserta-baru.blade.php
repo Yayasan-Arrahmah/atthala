@@ -236,7 +236,10 @@
                                                         @endif
                                                     </div>
                                                 @else
-                                                    <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                                    <form class="text-center">
+                                                        <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                        <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                                    </form>
                                                 @endif
                                             @else
                                                 @if ($tahsin->jenis_peserta == auth()->user()->jenis)
