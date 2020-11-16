@@ -31,9 +31,16 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-ulang')) }} "
+                href="{{ route('admin.tahsins.daftarulang') }}
+                " > <i class="nav-icon fas fa-user-check"></i>
+                Daftar ulang
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-baru')) }} "
                 href="{{ route('admin.tahsins.daftarbaru') }}
-                " > <i class="nav-icon fas fa-users"></i>
+                " > <i class="nav-icon fas fa-user-plus"></i>
                 Daftar Baru
                 </a>
             </li>

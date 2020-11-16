@@ -80,7 +80,7 @@ Breadcrumbs::for('admin.tahsins.pesertaujian', function ($trail) {
     $trail->push('Peserta Ujian', route('admin.tahsins.pesertaujian'));
 });
 
-Breadcrumbs::for('admin.tahsins.pesertadaftarulang', function ($trail) {
+Breadcrumbs::for('admin.tahsins.daftarulang', function ($trail) {
     $trail->parent('admin.tahsins.index');
-    $trail->push('Peserta Daftar Ulang', route('admin.tahsins.pesertadaftarulang'));
+    $trail->push('Peserta Daftar Ulang', route('admin.tahsins.daftarulang'));
 });

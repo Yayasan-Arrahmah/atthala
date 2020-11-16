@@ -6,24 +6,24 @@
                 Keuangan Tahsin
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-ulang')) }} "
+                href="{{ route('admin.tahsins.daftarulang') }}
+                " > <i class="nav-icon fas fa-user-check"></i>
+                Daftar ulang
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-baru')) }} "
+                href="{{ route('admin.tahsins.daftarbaru') }}
+                " > <i class="nav-icon fas fa-user-plus"></i>
+                Daftar Baru
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin')) }} "
                 href="{{ route('admin.tahsins.index') }}
                 " > <i class="nav-icon fas fa-users"></i>
-                Peserta Tahsin
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-ujian')) }} "
-                href="{{ route('admin.tahsins.pesertaujian') }}
-                " > <i class="nav-icon fas fa-edit"></i>
-                Peserta Ujian
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-daftar-ulang')) }} "
-                {{-- href="{{ route('admin.tahsins.pesertadaftarulang') }} --}}
-                " > <i class="nav-icon fas fa-check"></i>
-                Peserta Daftar Ulang
+                Peserta
                 </a>
             </li>
             <li class="nav-item">

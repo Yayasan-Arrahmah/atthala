@@ -121,7 +121,7 @@
         @if (auth()->user()->last_name === 'Ekonomi')
             @include('backend.includes.sidebar-keuangan')
         @else
-            @include('backend.includes.sidebar')
+            @include('backend.includes.sidebar-keuangan')
         @endif
 
         <main class="main">

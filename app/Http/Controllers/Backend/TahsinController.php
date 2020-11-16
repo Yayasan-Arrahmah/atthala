@@ -130,6 +130,30 @@ class TahsinController extends Controller
         return view('backend.tahsin.index', compact('tahsins'));
     }
 
+    public function daftarulang(ManageTahsinRequest $request)
+    {
+        $tahsins = Tahsin::
+            when($this->nama, function ($query) {
+                return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
+            })
+            ->when($this->level, function ($query) {
+                if( $this->level != 'SEMUA') {
+                    return $query->where('level_peserta', '=', $this->level);
+                }
+            })
+            ->when($this->jenis, function ($query) {
+                if( $this->jenis != 'SEMUA') {
+                    return $query->where('jenis_peserta', '=', $this->jenis);
+                }
+            })
+            ->when($this->angkatan, function ($query) {
+                return $query->where('angkatan_peserta', '=', $this->angkatanbaru);
+            })
+            ->paginate(10);
+
+        return view('backend.tahsin.daftar-ulang', compact('tahsins'));
+    }
+
     public function daftarbaru(ManageTahsinRequest $request)
     {
 

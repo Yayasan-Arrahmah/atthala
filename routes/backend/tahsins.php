@@ -12,6 +12,7 @@ Route::bind('tahsin', function ($value) {
 
 Route::group(['prefix' => 'tahsin'], function () {
     Route::get('',                      [TahsinController::class, 'index'])->name('tahsins.index');
+    Route::get('daftar-ulang',          [TahsinController::class, 'daftarulang'])->name('tahsins.daftarulang');
     Route::get('create',                [TahsinController::class, 'create'])->name('tahsins.create');
     Route::post('store',                [TahsinController::class, 'store'])->name('tahsins.store');
     Route::get('deleted',               [TahsinController::class, 'deleted'])->name('tahsins.deleted');
