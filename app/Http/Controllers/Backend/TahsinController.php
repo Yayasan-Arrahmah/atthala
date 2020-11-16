@@ -124,7 +124,14 @@ class TahsinController extends Controller
                 ->when($this->angkatan, function ($query) {
                     return $query->where('angkatan_peserta', '=', $this->angkatan);
                 })
+                // ->withCount('no_tahsin')
+                // ->has('no_tahsin', '<', 2)
+                // ->havingRaw('COUNT(no_tahsin) = 2')
+                // ->groupBy('no_tahsin')
+                // ->having(DB::Raw('COUNT(no_tahsin) = 1'))
+                // ->having('no_tahsin', '<', 2)
                 ->paginate(10);
+                // dd($tahsins);
         // }
 
         return view('backend.tahsin.index', compact('tahsins'));

@@ -57,7 +57,7 @@ class JadwalController extends Controller
 
 
         return view('backend.jadwal.index', compact('jadwals'))
-            ->withjadwals($this->jadwalRepository->getActivePaginated(25, 'id', 'asc'));
+            ->withjadwals($this->jadwalRepository->getActivePaginated(25, 'jumlah_peserta', 'asc'));
     }
 
     public function upload(ManageJadwalRequest $request)

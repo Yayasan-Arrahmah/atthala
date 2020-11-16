@@ -752,8 +752,8 @@ Panitia Daftar Ulang Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
 Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan.
 
 Silakan melengkapi keperluan pembelajaran antara lain :
-*1. Modul - Rp 35.000
-2. Buku Prestasi - Rp 25.000*
+*1. Modul - Rp 35.000*
+*2. Buku Prestasi - Rp 25.000*
 
 Modul & Buku Prestasi bisa dibeli di Sekretariat LTTQ Ar Rahmah Balikpapan (Serambi Utara Masjid Ar Rahmah)
 Senin - Jum'at : 09.00 - 17.00 WITA

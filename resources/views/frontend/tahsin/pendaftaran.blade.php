@@ -331,6 +331,15 @@ hr {
                             </table>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col text-muted" style="text-align: justify;">
+                          Gunakan Kode Bulan Lahir dan Tanggal Lahir ketika melakukan transfer.
+                          <br>
+                          <strong>
+                              Contoh : (SPP + Daftar Ulang) Rp 200.000 + 0418 <br>(Bulan April Tanggal 18) = Rp 200.418
+                          </strong>
+                        </div>
+                    </div>
                     <div id="ikhwan-rek" class="form-group row">
                         <div class="col-md-12 table-responsive">
                             <div class="alert alert-success" role="alert" style="margin-bottom: 0rem">
