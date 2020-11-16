@@ -194,22 +194,81 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
 
             return redirect()->to('/admin/tahsin/daftar-baru')->withFlashSuccess(request()->idtahsin.' Berhasil Diperbaruhi dengan Level '.request()->level);
         }
-            if(isset(request()->idtahsin)){
-                $updatelevel = DB::table('tahsins')
-                ->where('no_tahsin', request()->idtahsin)
-                ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
-                ->update(['status_peserta' => auth()->user()->first_name]);
+        if(isset(request()->notifikasi)){
+            $updatestatus = DB::table('tahsins')
+              ->where('no_tahsin', request()->notifikasi)
+              ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+              ->update(['status_peserta' => 'NOTIF']);
+
+            $data = DB::table('tahsins')->where('no_tahsin', request()->notifikasi)
+              ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+              ->first();
+
+            if($data->jenis_peserta === 'IKHWAN'){
+                $penguji = "Ustadz Arief wa.me/6281350532338";
+            } elseif ($data->jenis_peserta === 'AKHWAT'){
+                $penguji = "Ustadzah Ninin wa.me/6282358271295";
             }
 
+            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone = '62' . $data->nohp_peserta;
+            $message =
+                "Assalamu'alaikum warahmatullahi bapak/ibu calon peserta, mohon maaf rekaman anda tidak terbaca di sistem kami dikarenakan ketidakcocokan teknis.
+
+Oleh karenanya mohon mengirimkan rekaman ulang ke penguji kami melalui fitur WhatsApp Voice Note.
+
+Penguji :
+".$penguji.
+"
+
+Silakan isi format berikut sebelum mengirimkan rekaman suara:
+
+Nama Lengkap :
+Tanggal Mengisi Formulir Online :";
+
+            $url = 'https://api.wanotif.id/v1/send';
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+                'Apikey'    => $apikey,
+                'Phone'     => $phone,
+                'Message'   => $message,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $info = "berhasil";
+
             $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
-                    ->when(request()->nama, function ($query) {
-                        return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
-                    })
-                    ->when(request()->idtahsin, function ($query) {
-                            return $query->where('no_tahsin', '=', request()->idtahsin);
-                    })
-                    ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
-                ->paginate(10);
+                        ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+                        ->paginate(10);
+
+            return redirect()->to('/admin/tahsin/daftar-baru');
+        }
+
+        if(isset(request()->idtahsin)){
+            $updatelevel = DB::table('tahsins')
+            ->where('no_tahsin', request()->idtahsin)
+            ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+            ->update(['status_peserta' => auth()->user()->first_name]);
+        }
+
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+                ->when(request()->nama, function ($query) {
+                    return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
+                })
+                ->when(request()->idtahsin, function ($query) {
+                        return $query->where('no_tahsin', '=', request()->idtahsin);
+                })
+                ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+            ->paginate(10);
         // }
 
         return view('frontend.user.tahsin.peserta-baru', compact('tahsins'));

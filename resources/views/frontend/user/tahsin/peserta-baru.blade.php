@@ -236,10 +236,21 @@
                                                         @endif
                                                     </div>
                                                 @else
-                                                    <form class="text-center">
-                                                        <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
-                                                        <button type="" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
-                                                    </form>
+                                                    @if ($tahsin->status_peserta === 'NOTIF')
+                                                        <div class="text-black text-center">
+                                                            <textarea class="form-control" rows="8" disabled style="background: #fff; border: #fff">Peserta telah dikirimi Notifikasi agar mengirim Voice Note Rekaman Tilawah Ke WhatsApp Penguji. Silahkan Penguji memeriksa pesan tersebut.
+                                                            </textarea>
+                                                        </div>
+                                                        <form class="text-center">
+                                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                            <button type="submit" class="btn btn-success btn-block btn-pill btn-sm">Beri Hasil</button>
+                                                        </form>
+                                                    @else
+                                                        <form class="text-center">
+                                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                            <button type="submit" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                                        </form>
+                                                    @endif
                                                 @endif
                                             @else
                                                 @if ($tahsin->jenis_peserta == auth()->user()->jenis)
@@ -252,82 +263,22 @@
                                         @endif
 
                                     </td>
-                                    {{-- <td>
-                                        <form action="{{ Request::fullUrl() }}">
-                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
-                                            @if(!empty(Request::get('nama')))
-                                                <input name="nama" value="{{ Request::get('nama') }}" hidden>
-                                            @endif
-                                            @if(!empty(Request::get('page')))
-                                                <input name="page" value="{{ Request::get('page') }}" hidden>
-                                            @endif
-                                            <select style="font-weight: 700;" class="form-control" name="kenaikanlevel" onchange='if(this.value != 0) { this.form.submit(); }'>
-                                                <option value="">{{ $tahsin->kenaikan_level_peserta }}</option>
-                                                <option value="">-----</option>
-                                                <option value="ASAASI 1">ASAASI 1</option>
-                                                <option value="ASAASI 2">ASAASI 2</option>
-                                                <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
-                                                <option value="TAMHIDI">TAMHIDI</option>
-                                                <option value="TAWASUTHI">TAWASUTHI</option>
-                                                <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
-                                                <option value="IDADI">IDADI</option>
-                                                <option value="TAKMILI">TAKMILI</option>
-                                                <option value="TAHSINI">TAHSINI</option>
-                                                <option value="ITQON">ITQON</option>
-                                            </select>
-                                        </form>
-                                    </td> --}}
-                                    {{-- <td>
-                                        <div class="text-center">
-                                            <strong>{{ $tahsin->jadwal_tahsin }}</strong>
-                                        </div>
-                                    </td> --}}
-                                    {{-- <td>
-                                        <div style="text-transform: uppercase;">{{ $tahsin->nama_pengajar }}</div>
-                                        <div class="small text-muted">
-                                            {{ $tahsin->jadwal_tahsin }} | {{ $tahsin->jenis_peserta }}
-                                        </div>
-                                    </td> --}}
-                                    {{-- <td>
-                                        @if ($tahsin->jenis_peserta == 'IKHWAN')
-                                            <div class="text-center">
-                                                <strong  style="color: #20a8d8!important">{{ $tahsin->jenis_peserta }}</strong>
-                                            </div>
-                                        @elseif ($tahsin->jenis_peserta == 'AKHWAT')
-                                            <div class="text-center">
-                                                <strong  style="color: #e83e8c!important">{{ $tahsin->jenis_peserta }}</strong>
-                                            </div>
-                                        @else
-                                            <div class="text-center">
-                                                -
-                                            </div>
-                                        @endif
-                                    </td> --}}
-                                    {{-- <td>
-                                        <div lass="text-center" style="color: #73818f!important;">
-                                            {{ $tahsin->keterangan_tahsin }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            {{ $tahsin->sudah_daftar_tahsin }}
-                                            {{ $tahsin->belum_daftar_tahsin }}
-                                        </div>
-                                    </td> --}}
-                                    {{-- <td>
-                                        <div class="text-center">
-                                            {{ $tahsin->angkatan_peserta }}
-                                        </div>
-                                    </td> --}}
-
-                                    {{-- <td>
-                                        <button class="btn btn-danger  btn-sm"><i class="fa fa-trash"></i></button>
-                                        <button class="btn btn-success  btn-sm"><i class="fa fa-pen"></i></button>
-                                        <div class="text-center">
-                                            {!! $tahsin->action_buttons !!}
-                                        </div>
-                                    </td> --}}
                                 </tr>
+                                @if (isset(request()->idtahsin))
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <textarea class="form-control" rows="5" disabled style="background: #fff; border: #fff">*Kirim notifikasi WA ke peserta Jika rekaman tidak ada.
+                                            </textarea>
+                                        </td>
+                                        <td>
+                                            <form class="text-center">
+                                                <input name="notifikasi" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                <button type="submit" class="btn btn-warning btn-block btn-sm"><i class=" fas fa-paper-plane"></i> Kirim</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
                                 @php
                                 $first  = $tahsins->firstItem();
                                 $end    = $key + $tahsins->firstItem();
