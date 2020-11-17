@@ -205,9 +205,9 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
               ->first();
 
             if($data->jenis_peserta === 'IKHWAN'){
-                $penguji = "Ustadz Arief wa.me/6281350532338";
+                $penguji = "Ustadz Arief wa.me/+6281350532338";
             } elseif ($data->jenis_peserta === 'AKHWAT'){
-                $penguji = "Ustadzah Ninin wa.me/6282358271295";
+                $penguji = "Ustadzah Ninin wa.me/+6282358271295";
             }
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';

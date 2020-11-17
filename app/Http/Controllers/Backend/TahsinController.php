@@ -126,7 +126,7 @@ class TahsinController extends Controller
                 })
                 // ->withCount('no_tahsin')
                 // ->has('no_tahsin', '<', 2)
-                // ->havingRaw('COUNT(no_tahsin) = 2')
+                // ->havingRaw('COUNT(no_tahsin) < 2')
                 // ->groupBy('no_tahsin')
                 // ->having(DB::Raw('COUNT(no_tahsin) = 1'))
                 // ->having('no_tahsin', '<', 2)
@@ -232,13 +232,13 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
               ->first();
 
             if($data->jenis_peserta === 'IKHWAN'){
-                $penguji = "Ustadz Arief wa.me/6281350532338";
+                $penguji = "Ustadz Arief wa.me/+6281350532338";
             } elseif ($data->jenis_peserta === 'AKHWAT'){
-                $penguji = "Ustadzah Ninin wa.me/6282358271295";
+                $penguji = "Ustadzah Ninin wa.me/+6282358271295";
             }
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '62' . $this->nohp;
+            $phone = '62' . $data->nohp_peserta;
             $message =
                 "Assalamu'alaikum warahmatullahi bapak/ibu calon peserta, mohon maaf rekaman anda tidak terbaca di sistem kami dikarenakan ketidakcocokan teknis.
 
