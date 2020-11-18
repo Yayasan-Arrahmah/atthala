@@ -231,6 +231,20 @@
 
                                     @endif
                                 </td>
+                                <td>
+                                    @php
+                                        $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first();
+                                    @endphp
+                                    <div class="text-center">
+                                        {{-- @isset($pesertaujian->bukti_transfer) --}}
+                                        <div style="">
+                                            <img class="zoom"
+                                                src="/app/public/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                            alt="" height="50">
+                                        </div>
+                                        {{-- @endisset --}}
+                                    </div>
+                                </td>
                             </tr>
                             @if (isset(request()->idtahsin))
                                 <tr>
