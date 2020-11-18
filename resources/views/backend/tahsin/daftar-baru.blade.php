@@ -130,6 +130,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nama</th>
+                                <th>Bukti Transfer</th>
                                 <th class="text-center">Rekaman / Hasil</th>
                                 {{-- <th class="text-center">Level</th> --}}
                                 {{-- <th class="text-center">Jadwal</th> --}}
@@ -159,6 +160,20 @@
                                             {{ $tahsin->no_tahsin }} | {{ $tahsin->nohp_peserta }}
                                         </div>
                                     </a>
+                                </td>
+                                <td>
+                                    @php
+                                        $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first();
+                                    @endphp
+                                    <div class="text-center">
+                                        {{-- @isset($pesertaujian->bukti_transfer) --}}
+                                        <div style="">
+                                            <img class="zoom"
+                                                src="/app/public/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                            alt="" height="50">
+                                        </div>
+                                        {{-- @endisset --}}
+                                    </div>
                                 </td>
                                 <td>
                                     @if (isset(request()->idtahsin))
@@ -230,20 +245,6 @@
                                         @endif
 
                                     @endif
-                                </td>
-                                <td>
-                                    @php
-                                        $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first();
-                                    @endphp
-                                    <div class="text-center">
-                                        {{-- @isset($pesertaujian->bukti_transfer) --}}
-                                        <div style="">
-                                            <img class="zoom"
-                                                src="/app/public/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
-                                            alt="" height="50">
-                                        </div>
-                                        {{-- @endisset --}}
-                                    </div>
                                 </td>
                             </tr>
                             @if (isset(request()->idtahsin))
