@@ -63,8 +63,8 @@
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table table-responsive-sm table-hover mb-0 table-sm">
-                    <table class="table">
+                <div class="table">
+                    <table class="table table-responsive-sm table-hover mb-0 table-sm" id="jadwal">
                         <thead class="thead-light">
                             <tr>
                                 <th class="text-center">No</th>
