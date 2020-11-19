@@ -42,6 +42,7 @@ class DashboardController extends Controller
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
             ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+
             ->paginate(500);
 
         return view('frontend.user.jadwal.tahsin', compact('datajadwals'));
@@ -54,6 +55,7 @@ class DashboardController extends Controller
             ->groupBy('jadwal_tahsin', 'level_peserta', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('nama_pengajar', auth()->user()->user_pengajar)
+            ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
             ->paginate(50);
 
         return view('frontend.user.absen.tahsin', compact('datajadwals'));
@@ -68,7 +70,7 @@ class DashboardController extends Controller
         $jenis        = $request->input('jenis') ?? '!!ERROR!!';
         $userpengajar = auth()->user()->user_pengajar;
         $pertemuanke  = $request->input('ke');
-        $angkatan     = session('angkatan_tahsin');
+        $angkatan     = session('daftar_ulang_angkatan_tahsin');
 
         $datapeserta = DB::table('tahsins')
             ->where('nama_pengajar', $userpengajar)
@@ -109,7 +111,7 @@ class DashboardController extends Controller
                 'user_create_absen'      => auth()->user()->id,
                 'pertemuan_ke_absen'     => $request->input('pertemuan'),
                 'jenis_absen'            => 'TAHSIN',
-                'angkatan_absen'         => session('angkatan_tahsin'),
+                'angkatan_absen'         => session('daftar_ulang_angkatan_tahsin'),
                 'level_kelas_absen'      => $request->input('level'),
                 'waktu_kelas_absen'      => $request->input('waktu'),
                 'jenis_kelas_absen'      => $request->input('jenis'),
