@@ -165,7 +165,16 @@
                                     </td>
                                     <td>
                                         <div class="text-center">
-                                            {{ $jadwal->jumlah_peserta }}
+                                            @php
+                                                $data = DB::table('tahsins')
+                                                        ->where('nama_pengajar', $jadwal->pengajar_jadwal)
+                                                        ->where('level_peserta', $jadwal->level_jadwal)
+                                                        ->where('jadwal_tahsin', $jadwal->hari_jadwal.' '.$jadwal->waktu_jadwal)
+                                                        ->where('jenis_peserta', $jadwal->jenis_jadwal)
+                                                        ->where('angkatan_peserta', $jadwal->angkatan_jadwal)
+                                                        ->count();
+                                            @endphp
+                                            {{ $data }}
                                         </div>
                                     </td>
                                     <td>

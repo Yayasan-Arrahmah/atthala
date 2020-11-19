@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Jadwal Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
+                    Jadwal Tahsin<small class="text-muted"> - Angkatan {{ $angkatanbaru }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -24,11 +24,13 @@
 
         <div class="row mt-4">
             <div class="col">
+                {{-- Total: <span id="jadwaltotal"></span> --}}
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">
                     <table class="table display compact nowarp" id="jadwaltahsin" style="width:100%">
                         <thead>
                             <tr>
                                 {{-- <th class="text-center">No</th> --}}
+                                <th class="text-center">Status Jadwal</th>
                                 <th class="text-center">Jadwal</th>
                                 <th class="text-center">Level</th>
                                 <th class="text-center">Pengajar</th>
@@ -47,6 +49,15 @@
                                 {{-- <td class="text-center" >
                                     {{ $key + $datajadwals->firstItem() }}
                                 </td> --}}
+                                <td class="text-center" style="font-weight: bold;">
+                                    @if ( is_null($tahsin->level_peserta) && is_null($tahsin->nama_pengajar))
+                                        Belum Diperiksa
+                                    @elseif ( is_null($tahsin->nama_pengajar) )
+                                        Belum Pilih Jadwal
+                                    @else
+                                        Terverifikasi
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="text-center">
                                         <strong>{{ $tahsin->jadwal_tahsin }}</strong>

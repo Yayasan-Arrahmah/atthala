@@ -160,6 +160,9 @@
     {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
     {!! script('https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js') !!}
     {!! script('https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js') !!}
+    {!! script('https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js') !!}
+
+
 
     <script>
     $(".custom-file-input").on("change", function() {
@@ -335,10 +338,12 @@
                 } );
             } );
             var table = $('#jadwaltahsin').DataTable({
-                "pageLength": 15,
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Semua"]],
                 "scrollX": true,
                 "orderCellsTop": true,
                 "fixedHeader": true,
+
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api(), data;
 
@@ -352,7 +357,7 @@
 
                     // Total over all pages
                     total = api
-                        .column( 3 )
+                        .column( 4 )
                         .data()
                         .reduce( function (a, b) {
                             return intVal(a) + intVal(b);
@@ -360,14 +365,14 @@
 
                     // Total over this page
                     pageTotal = api
-                        .column( 3, { page: 'current'} )
+                        .column( 4, { page: 'current'} )
                         .data()
                         .reduce( function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0 );
 
                     // Update footer
-                    $( api.column( 3 ).footer() ).html(
+                    $( api.column( 4 ).footer() ).html(
                         pageTotal +' ( Total : '+ total +' ) Peserta'
                     );
                 }

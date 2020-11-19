@@ -58,6 +58,13 @@
                 Absen
                 </a>
             </li>
+            {{-- <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }} "
+                href="{{ route('admin.tahsins.jadwal') }}
+                " > <i class="nav-icon fas fa-list-alt"></i>
+                Jadwal
+                </a>
+            </li> --}}
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/jadwal*'), 'open') }}">
                 <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }} {{ active_class(Active::checkUriPattern('admin/jadwal*')) }}" href="#">
                     <i class="nav-icon fas fa-list-alt"></i>
@@ -66,12 +73,12 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{ active_class(Active::checkUriPattern('admin/jadwal')) }}" href="{{ route('admin.jadwals.index') }}">
-                            Data List
+                            Data Jadwal
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }}" href="{{ route('admin.tahsins.jadwal') }}">
-                            Pengajar
+                            Data Peserta
                         </a>
                     </li>
                 </ul>

@@ -302,13 +302,16 @@ Tanggal Mengisi Formulir Online :";
 
     public function jadwal(ManageTahsinRequest $request)
     {
+        $angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
+
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
             ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
-            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->where('angkatan_peserta', $angkatanbaru)
             ->paginate(5000);
 
-        return view('backend.tahsin.jadwal', compact('datajadwals'));
+        return view('backend.tahsin.jadwal', compact('datajadwals', 'angkatanbaru'));
     }
 
     public function pengajar(ManageTahsinRequest $request)
