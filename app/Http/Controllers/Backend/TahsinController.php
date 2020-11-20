@@ -74,7 +74,7 @@ class TahsinController extends Controller
     public function index(ManageTahsinRequest $request)
     {
 
-        if(isset($kenaikanlevel)){
+        if(isset($this->kenaikanlevel)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', $this->idtahsin)
               ->where('angkatan_peserta', session('angkatan_tahsin'))
