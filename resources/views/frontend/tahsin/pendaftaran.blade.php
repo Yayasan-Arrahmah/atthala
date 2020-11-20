@@ -365,7 +365,7 @@ hr {
                     <div class="form-group row">
                         <label class="col-12 form-control-label" >Bukti Transfer</label>
                         <div class="col-12">
-                            <input type="file" class="upload-buktitransfer"/>
+                            <input type="file" class="upload-buktitransfer" required/>
 
                             {{-- <div class="custom-file">
                                 <input class="filestyle custom-file-input" type="file" name="bukti_transfer_peserta" id="upload-3" required="" data-buttonText="Your label here.">

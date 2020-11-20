@@ -476,7 +476,7 @@
                             <div id="bukti-tf" class="form-group row">
                                 <label class="col-4 form-control-label" >Bukti Transfer</label>
                                 <div class="col-8">
-                                    <input type="file" class="upload-buktitransfer" accept="image/png, image/jpeg"/>
+                                    <input type="file" class="upload-buktitransfer" accept="image/png, image/jpeg" required/>
 
                                     {{-- <div class="custom-file">
                                         <input class="filestyle custom-file-input" type="file" name="bukti_transfer_peserta" id="upload-3" required="" data-buttonText="Your label here.">
