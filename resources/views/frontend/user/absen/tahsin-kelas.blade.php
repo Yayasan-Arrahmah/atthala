@@ -137,10 +137,12 @@
                             @foreach ( $datapeserta as $peserta )
                             <tr>
                                 <td class="text-left">
-                                    <div style="text-transform: uppercase;">{{ $peserta->nama_peserta }}</div>
-                                    <div class="small text-muted">
-                                        {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }}
-                                    </div>
+                                    <a href="wa.me/{{ $peserta->nohp_peserta }}" target="_blank">
+                                        <div style="text-transform: uppercase;">{{ $peserta->nama_peserta }}</div>
+                                        <div class="small text-muted">
+                                            {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }}
+                                        </div>
+                                    </a>
                                 </td>
                                 @if($pertemuanke == 'semua' || !isset($pertemuanke))
                                 @for ($i = 1; $i <= 15; $i++)
