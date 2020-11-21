@@ -105,7 +105,7 @@
                 <div>
                     <a href="{{ route('frontend.user.absentahsin') }}">
                         <div class="text-value-sm text-primary">Absensi</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 16</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 17</div>
                     </a>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                 <div>
                     <a href="{{ route('frontend.user.jadwaltahsin') }}">
                         <div class="text-value-sm text-danger">Jadwal</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 16</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 17</div>
                     </a>
                 </div>
             </div>
