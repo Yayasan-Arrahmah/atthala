@@ -42,21 +42,37 @@
                             @php
                             $first  = 0;
                             $end    = 0;
+                            $n      = 1;
                             $number = 1;
                             @endphp
                             @foreach($datajadwals as $key=> $tahsin)
+                            @php
+                            $kelas = DB::table('tahsins')
+                                    ->where('nama_pengajar', $tahsin->nama_pengajar)
+                                    ->where('level_peserta', $tahsin->level_peserta)
+                                    ->where('jadwal_tahsin', $tahsin->jadwal_tahsin)
+                                    ->where('jenis_peserta', $tahsin->jenis_peserta)
+                                    ->get();
+                            @endphp
                             <tr>
                                 {{-- <td class="text-center" >
                                     {{ $key + $datajadwals->firstItem() }}
                                 </td> --}}
                                 <td class="text-center" style="font-weight: bold;">
-                                    @if ( is_null($tahsin->level_peserta) && is_null($tahsin->nama_pengajar))
-                                        Belum Diperiksa
-                                    @elseif ( is_null($tahsin->nama_pengajar) )
-                                        Belum Pilih Jadwal
-                                    @else
-                                        Terverifikasi
-                                    @endif
+                                    <a data-toggle="collapse" href="#detail{{ $number }}" aria-expanded="false" style="padding-left: 15px">
+                                        @if ( is_null($tahsin->level_peserta) && is_null($tahsin->nama_pengajar))
+                                            Belum Diperiksa
+                                        @elseif ( is_null($tahsin->nama_pengajar) )
+                                            Belum Pilih Jadwal
+                                        @else
+                                            Terverifikasi
+                                        @endif
+                                    </a>
+                                    <div class="collapse" id="detail{{ $number }}" style="padding: 0px 0px; font-size: 10px">
+                                        @foreach($kelas as $peserta)
+                                        {{ $n++ }}.  {{ $peserta->nama_peserta }} - {{ $peserta->nohp_peserta }}<br>
+                                        @endforeach
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="text-center">
@@ -122,6 +138,8 @@
                                 </td>
                             </tr>
                             @php
+                            $number++;
+                            $n = 1;
                             $first  = $datajadwals->firstItem();
                             $end    = $key + $datajadwals->firstItem();
                             @endphp
