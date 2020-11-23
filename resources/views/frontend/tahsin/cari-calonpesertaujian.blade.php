@@ -3,7 +3,22 @@
 @section('title', app_name() . ' | ' . __('labels.frontend.auth.login_box_title'))
 
 @section('content')
-	<div class="row justify-content-center align-items-center">
+<div class="row justify-content-center align-items-center">
+    <div class="col col-sm-12 align-self-center">
+        <div class="card">
+            <center>
+                <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="arrahmah">
+                <div style="padding-top: 0px">
+                    <h4>Pendaftaran Calon Peserta Ujian Tahsin <br> Telah Ditutup</h4>
+                    <div class="text-muted">
+                        Angkatan {{ session('angkatan_tahsin') }}
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+</div>
+	{{-- <div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
                 <center>
@@ -82,5 +97,5 @@
             </div><!--card-->
 
 		</div><!-- col-md-8 -->
-	</div><!-- row -->
+	</div><!-- row --> --}}
 @endsection
