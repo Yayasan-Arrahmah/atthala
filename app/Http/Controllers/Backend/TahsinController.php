@@ -153,9 +153,8 @@ class TahsinController extends Controller
                     return $query->where('jenis_peserta', '=', $this->jenis);
                 }
             })
-            ->when($this->angkatan, function ($query) {
-                return $query->where('angkatan_peserta', '=', $this->angkatanbaru);
-            })
+            ->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')
+            ->where('angkatan_peserta', '=', $this->angkatanbaru)
             ->paginate(10);
 
         if( auth()->user()->last_name === 'Ekonomi') {
