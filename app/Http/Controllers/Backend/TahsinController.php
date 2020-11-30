@@ -158,7 +158,11 @@ class TahsinController extends Controller
             })
             ->paginate(10);
 
-        return view('backend.tahsin.daftar-ulang', compact('tahsins'));
+        if( auth()->user()->last_name === 'Ekonomi') {
+            return view('backend.tahsin.ekonomi-daftar-ulang', compact('tahsins'));
+        } else {
+            return view('backend.tahsin.daftar-ulang', compact('tahsins'));
+        }
     }
 
     public function daftarbaru(ManageTahsinRequest $request)
