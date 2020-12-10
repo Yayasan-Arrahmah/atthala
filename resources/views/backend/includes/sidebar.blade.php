@@ -21,6 +21,24 @@
             </li>
 
             <li class="nav-title">
+                RTQ
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/rtq')) }} "
+                href="{{ route('admin.rtqs.index') }}
+                " > <i class="nav-icon fas fa-users"></i>
+                Santri
+                </a>
+            </li>
+            {{-- <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/rtq/rapor/')) }} "
+                href="{{ route('admin.rtqs.rapor') }}
+                " > <i class="nav-icon fas fa-users"></i>
+                Rapor
+                </a>
+            </li> --}}
+
+            <li class="nav-title">
                 Tahsin
             </li>
             <li class="nav-item">
@@ -57,6 +75,24 @@
                 " > <i class="nav-icon fas fa-edit"></i>
                 Absen
                 </a>
+            </li>
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/absen*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/absen*'), 'open') }}">
+                <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }} {{ active_class(Active::checkUriPattern('admin/absen*')) }}" href="#">
+                    <i class="nav-icon fas fa-edit"></i>
+                    Absen
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/absen')) }}" href="{{ route('admin.tahsins.absen') }}">
+                            Pengajar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }}" href="{{ route('admin.tahsins.absen') }}">
+                            Kelas
+                        </a>
+                    </li>
+                </ul>
             </li>
             {{-- <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }} "

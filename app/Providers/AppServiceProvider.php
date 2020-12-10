@@ -49,7 +49,8 @@ class AppServiceProvider extends ServiceProvider
         setlocale(LC_TIME, config('app.locale_php'));
 
         // setLocale to use Carbon source locales. Enables diffForHumans() localized
-        Carbon::setLocale(config('app.locale'));
+        // Carbon::setLocale(config('app.locale'));
+        Carbon::setLocale('id');
 
         // Mengambil Angkatan Tahsin Yang Sedang Aktif
         $angkatantahsinaktif = DB::table('pengaturan')->where('pengaturan', 'angkatan_tahsin')->first();

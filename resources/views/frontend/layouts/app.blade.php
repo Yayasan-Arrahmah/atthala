@@ -29,7 +29,7 @@
     {{-- {{ style('css/bootstrap-editable.css') }} --}}
 
     {{-- {{ style('https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap') }} --}}
-
+    <link rel="stylesheet" href="/css/bootstrap-editable.css"/>
     <style>
         body{
             background-image: url('/img/back.jpeg');
@@ -143,9 +143,36 @@
     {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
     {!! script('https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js') !!}
     {!! script('https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js') !!}
+
+    {{-- {!! script('https://vitalets.github.io/x-editable/assets/jquery/jquery-1.9.1.min.js') !!}
+    {!! script('https://vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js') !!} --}}
+    {{-- {!! script('https://vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js') !!} --}}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="/js/bootstrap-editable.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.min.js" integrity="sha512-u2P0FelsRQD/z5EkW5vRp8RRm9oe23rKSqvHBFAXnnES8tPRVIl6oBexyBE1WaOA4rPhXf035iKWU/DCbzRftw==" crossorigin="anonymous"></script> --}}
+    {{-- {!! script('https://code.jquery.com/jquery-2.0.3.min.js') !!} --}}
+    {{-- {!! script('https://vitalets.github.io/x-editable/assets/x-editable/bootstrap3-editable/css/bootstrap-editable.css') !!} --}}
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#jadwal').DataTable();
+            $('#absen').DataTable({
+                "searching": false,
+                "paging":   false,
+                "ordering": false,
+                "info":     false,
+                "drawCallback": function( settings ) {
+                    var api = this.api();
+
+                    $('.username', api.table().body()).editable({
+                        url: "/",
+                        mode: "inline"
+                    });
+                }
+            });
             $('#amalan').DataTable({
                 "pageLength": 15,
                 "scrollX": true,

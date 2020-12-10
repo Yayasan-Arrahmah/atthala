@@ -1,9 +1,9 @@
 @extends('frontend.user.layout')
 
 @section('user')
-{{-- @stack('before-styles')
-
-@stack('after-styles') --}}
+@stack('before-styles')
+    <link href="https://vitalets.github.io/x-editable/assets/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+@stack('after-styles')
 
 <div class="row" >
     <div class="col-md-12">
@@ -79,7 +79,27 @@
                     <table id="absen" class="table table-striped table-sm">
                         <thead >
                             <tr>
-                                <th style="vertical-align: middle;">Peserta</th>
+                                <th style="vertical-align: middle;">
+                                    Peserta
+                                    @if(isset($pertemuanke) && $pertemuanke != 'semua')
+                                        <div class="text-center" style="padding: 4px 25px 4px 25px;">Pertemuan Ke-{{ $pertemuanke }}
+                                            @php
+                                            $cektanggal = $absen->where('user_create_absen', auth()->user()->id)
+                                            ->where('pertemuan_ke_absen', $pertemuanke)
+                                            ->where('angkatan_absen', $angkatan)
+                                            ->where('waktu_kelas_absen', $waktu)
+                                            ->where('level_kelas_absen', $level)
+                                            ->where('jenis_kelas_absen', $jenis)
+                                            ->first()
+                                            @endphp
+                                            @isset($cektanggal)
+                                            <div class="text-muted" style="font-size: 10px">
+                                                {{ $cektanggal->created_at->format('d-m-Y') }}
+                                            </div>
+                                            @endisset
+                                        </div>
+                                    @endif
+                                </th>
                                 @if($pertemuanke == 'semua' || !isset($pertemuanke))
                                 @for ($i = 1; $i <= 15; $i++)
                                 {{-- <th class="text-center" style="padding: 4px 25px 4px 25px;">{{ $i }} --}}
@@ -112,28 +132,82 @@
                                     @endisset
                                 </th>
                                 @endfor
-                                @elseif(isset($pertemuanke))
-                                <th class="text-center" style="padding: 4px 25px 4px 25px;">{{ $pertemuanke }}
-                                    @php
-                                    $cektanggal = $absen->where('user_create_absen', auth()->user()->id)
-                                    ->where('pertemuan_ke_absen', $pertemuanke)
-                                    ->where('angkatan_absen', $angkatan)
-                                    ->where('waktu_kelas_absen', $waktu)
-                                    ->where('level_kelas_absen', $level)
-                                    ->where('jenis_kelas_absen', $jenis)
-                                    ->first()
-                                    @endphp
-                                    @isset($cektanggal)
-                                    <div class="text-muted" style="font-size: 10px">
-                                        {{ $cektanggal->created_at->format('d-m-Y') }}
-                                    </div>
-                                    @endisset
-                                </th>
                                 @endif
-
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td class="text-left">
+                                    Tilawah Quran
+                                    <div class="small text-muted">
+                                        Contoh: QS. 1 Ayat 10 - QS. 1 Ayat 20
+                                    </div>
+                                    @if(isset($pertemuanke) && $pertemuanke != 'semua')
+                                        <form action="{{ route('frontend.user.absentahsininput') }}" method="post">
+                                            @csrf
+                                            <input name="pertemuan" value="{{ $i }}" hidden>
+                                            <input name="waktu" value="{{ $waktu }}" hidden>
+                                            <input name="jenis" value="{{ $jenis }}" hidden>
+                                            <input name="level" value="{{ $level }}" hidden>
+                                            <input type="text" class="form-control">
+                                        </form>
+                                    @endif
+                                </td>
+                                @if($pertemuanke == 'semua' || !isset($pertemuanke))
+                                    @for ($i = 1; $i <= 15; $i++)
+                                    <td class="text-center">
+                                        <form action="{{ route('frontend.user.absentahsininput') }}" method="post">
+                                            @csrf
+                                            <input name="pertemuan" value="{{ $i }}" hidden>
+                                            <input name="waktu" value="{{ $waktu }}" hidden>
+                                            <input name="jenis" value="{{ $jenis }}" hidden>
+                                            <input name="level" value="{{ $level }}" hidden>
+                                            {{-- <div class="input-group">
+                                                <input class="form-control" type="text" name="tilawah" autocomplete="username">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-check"></i>
+                                                    </span>
+                                                </div>
+                                            </div> --}}
+                                            <a href="#" class="small username" data-type="text" data-pk="{{ $i }}" data-url="/post" data-title="Enter username">QS. 1 Ayat 10 - QS. 1 Ayat 20</a>
+                                        </form>
+                                    </td>
+                                    @endfor
+                                @endif
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Pembahasan Modul
+                                    <div class="small text-muted">
+                                        Halaman Terakhir
+                                    </div>
+                                    @if(isset($pertemuanke) && $pertemuanke != 'semua')
+                                        <form action="{{ route('frontend.user.absentahsininput') }}" method="post">
+                                            @csrf
+                                            <input name="pertemuan" value="{{ $i }}" hidden>
+                                            <input name="waktu" value="{{ $waktu }}" hidden>
+                                            <input name="jenis" value="{{ $jenis }}" hidden>
+                                            <input name="level" value="{{ $level }}" hidden>
+                                            <input type="text" class="form-control">
+                                        </form>
+                                    @endif
+                                </td>
+                                @if($pertemuanke == 'semua' || !isset($pertemuanke))
+                                    @for ($i = 1; $i <= 15; $i++)
+                                    <td class="text-center">
+                                        <form action="{{ route('frontend.user.absentahsininput') }}" method="post">
+                                            @csrf
+                                            <input name="pertemuan" value="{{ $i }}" hidden>
+                                            <input name="waktu" value="{{ $waktu }}" hidden>
+                                            <input name="jenis" value="{{ $jenis }}" hidden>
+                                            <input name="level" value="{{ $level }}" hidden>
+                                            <input type="text" class="form-control">
+                                        </form>
+                                    </td>
+                                    @endfor
+                                @endif
+                            </tr>
                             @foreach ( $datapeserta as $peserta )
                             <tr>
                                 <td class="text-left">
@@ -143,6 +217,30 @@
                                             {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }}
                                         </div>
                                     </a>
+                                    @if(isset($pertemuanke) && $pertemuanke != 'semua')
+                                        <form action="{{ route('frontend.user.absentahsininput') }}" method="post">
+                                            @csrf
+                                            <input name="peserta" value="{{ $peserta->id  }}" hidden>
+                                            <input name="pertemuan" value="{{ $pertemuanke }}" hidden>
+                                            <input name="waktu" value="{{ $waktu }}" hidden>
+                                            <input name="jenis" value="{{ $jenis }}" hidden>
+                                            <input name="level" value="{{ $level }}" hidden>
+                                            <select style="font-weight: 700;" class="form-control" id="{{ $peserta->id  }}-{{ $pertemuanke }}" name="keteranganabsen" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                @php
+                                                $cek = $absen->where('id_peserta', $peserta->id )->where('pertemuan_ke_absen', $pertemuanke)->where('angkatan_absen', $angkatan)->first()
+                                                @endphp
+                                                @isset($cek)
+                                                <option value="{{ $cek->keterangan_absen }}">{{ $cek->keterangan_absen }}</option>
+                                                @endisset
+                                                <option value="-">-</option>
+                                                <option value="HADIR">HADIR</option>
+                                                <option value="TIDAK HADIR">TIDAK HADIR</option>
+                                                <option value="IZIN">IZIN</option>
+                                                <option value="SAKIT">SAKIT</option>
+                                            </select>
+                                            <input name="idabsen" value="{{ $cek->id ?? '' }}" hidden>
+                                        </form>
+                                    @endif
                                 </td>
                                 @if($pertemuanke == 'semua' || !isset($pertemuanke))
                                 @for ($i = 1; $i <= 15; $i++)
@@ -154,7 +252,7 @@
                                         <input name="waktu" value="{{ $waktu }}" hidden>
                                         <input name="jenis" value="{{ $jenis }}" hidden>
                                         <input name="level" value="{{ $level }}" hidden>
-                                        <select style="font-size: .65rem; font-weight: 600; width: auto;" class="form-control" id="{{ $peserta->id  }}-{{ $i }}" name="keteranganabsen" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                        <select style="" class="form-control" id="{{ $peserta->id  }}-{{ $i }}" name="keteranganabsen" onchange='if(this.value != 0) { this.form.submit(); }'>
                                             @php
                                             $cek = $absen->where('id_peserta', $peserta->id )->where('pertemuan_ke_absen', $i)->where('angkatan_absen', $angkatan)->first()
                                             @endphp
@@ -171,31 +269,6 @@
                                     </form>
                                 </td>
                                 @endfor
-                                @elseif(isset($pertemuanke))
-                                <td class="text-center">
-                                    <form action="{{ route('frontend.user.absentahsininput') }}" method="post">
-                                        @csrf
-                                        <input name="peserta" value="{{ $peserta->id  }}" hidden>
-                                        <input name="pertemuan" value="{{ $pertemuanke }}" hidden>
-                                        <input name="waktu" value="{{ $waktu }}" hidden>
-                                        <input name="jenis" value="{{ $jenis }}" hidden>
-                                        <input name="level" value="{{ $level }}" hidden>
-                                        <select style="font-weight: 700;" class="form-control" id="{{ $peserta->id  }}-{{ $pertemuanke }}" name="keteranganabsen" onchange='if(this.value != 0) { this.form.submit(); }'>
-                                            @php
-                                            $cek = $absen->where('id_peserta', $peserta->id )->where('pertemuan_ke_absen', $pertemuanke)->where('angkatan_absen', $angkatan)->first()
-                                            @endphp
-                                            @isset($cek)
-                                            <option value="{{ $cek->keterangan_absen }}">{{ $cek->keterangan_absen }}</option>
-                                            @endisset
-                                            <option value="-">-</option>
-                                            <option value="HADIR">HADIR</option>
-                                            <option value="TIDAK HADIR">TIDAK HADIR</option>
-                                            <option value="IZIN">IZIN</option>
-                                            <option value="SAKIT">SAKIT</option>
-                                        </select>
-                                        <input name="idabsen" value="{{ $cek->id ?? '' }}" hidden>
-                                    </form>
-                                </td>
                                 @endif
                             </tr>
                             @endforeach
@@ -209,13 +282,16 @@
 {{-- @livewire('absen-tahsin') --}}
 @stack('before-scripts')
 
-{{-- {!! script('https://code.jquery.com/jquery-2.0.3.min.js') !!} --}}
-{!! script('https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.min.js') !!}
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $( document ).ready(function() {
-        $('#username').editable();
+        $('#username').editable({
+            type: 'text',
+            pk: 1,
+            url: '/post',
+            title: 'Enter username'
+        });
     });
-</script>
+</script> --}}
 
 @stack('after-scripts')
 @endsection

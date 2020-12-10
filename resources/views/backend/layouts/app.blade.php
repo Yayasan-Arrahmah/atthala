@@ -22,6 +22,7 @@
     {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
+    {{ style('css/bootstrap-editable.css') }}
 
 
     <style>
@@ -111,6 +112,9 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+    {!! script('https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js') !!}
+    {!! script('js/bootstrap-editable.min.js') !!}
+
     @stack('after-scripts')
 
 </head>
@@ -150,7 +154,7 @@
 
     <!-- Scripts -->
     @stack('before-scripts')
-    {-- {!! script('https://coreui.io/demo/2.0/vendors/chart.js/js/Chart.min.js') !!}
+    {{-- {!! script('https://coreui.io/demo/2.0/vendors/chart.js/js/Chart.min.js') !!} --}}
 
     {!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!}
     {!! script('https://coreui.io/demo/2.0/js/charts.js') !!} --}}

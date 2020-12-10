@@ -13,3 +13,4 @@ require __DIR__.'/pembayaran.php';
 require __DIR__.'/amalan.php';
 require __DIR__.'/absen.php';
 require __DIR__.'/pengajar.php';
+require __DIR__.'/rtq.php';
