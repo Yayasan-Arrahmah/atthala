@@ -214,7 +214,15 @@
                 <div class="float-right">
                     {{-- {!! $rtqs->links() !!} --}}
                     {{-- {!! $rtqs->appends(request()->query())->links() !!} --}}
-                    <a href="{{ route('admin.rtqs.raporcetak') }}?uuid={{ request()->uuid }}" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Cetak Rapor</a>
+                    @if ($rapor->verifikasi_rapor == null)
+                        @if (auth()->user()->last_name == 'MUDIR')
+                            <a href="#" class="btn btn-success"><i class="fas fa-check"></i> Verifikasi</a>
+                        @else
+                            <a href="#" class="btn btn-warning"><i class="fas fa-eye"></i> Menunggu Verifikasi</a>
+                        @endif
+                    @else
+                        <a href="{{ route('admin.rtqs.raporcetak') }}?uuid={{ request()->uuid }}" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Cetak Rapor</a>
+                    @endif
                 </div>
             </div>
         </div>

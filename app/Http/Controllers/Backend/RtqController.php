@@ -45,8 +45,11 @@ class RtqController extends Controller
     {
         $perioderapor    = RtqPeriodeRapor::get();
         $setperioderapor = RtqPeriodeRapor::latest('created_at')->first();
+        $halaqoh  = Rtq::select('pengajar_santri')
+                        ->groupBy('pengajar_santri')
+                        ->paginate(100);
 
-        return view('backend.rtq.index', compact('perioderapor', 'setperioderapor'))
+        return view('backend.rtq.index', compact('perioderapor', 'setperioderapor', 'halaqoh'))
             ->withrtqs($this->rtqRepository->getActivePaginated(25, 'id', 'asc'));
     }
 

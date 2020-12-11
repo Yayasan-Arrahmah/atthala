@@ -246,8 +246,8 @@ background-repeat: no-repeat;
                 <thead>
                     <tr>
                         <th style="width: 10%; border: 1px solid #000; border-right: 0px; text-align: center">NO</th>
-                        <th style="width: 55%; border: 1px solid #000; border-right: 0px; text-align: center">MATA PELAJARAN</th>
-                        <th style="width: 35%; border: 1px solid #000; text-align: center">NILAI</th>  <!-- NILAI-->
+                        <th style="width: 40%; border: 1px solid #000; border-right: 0px; text-align: center">MATA PELAJARAN</th>
+                        <th style="width: 50%; border: 1px solid #000; text-align: center">NILAI</th>  <!-- NILAI-->
                     </tr>
                 </thead>
                 <tbody>

@@ -60,7 +60,10 @@
                  </div>
                 <select class="form-control mt-4" name="periode" onchange='if(this.value != 0) { this.form.submit(); }'>
                     @isset(request()->periode)
-                        <option value="{{ request()->periode }}">{{ request()->periode }}</option>
+                        @php
+                            $periode_ = DB::table('rtq_periode_rapors')->where('id', request()->periode)->first();
+                        @endphp
+                        <option value="{{ request()->periode }}">{{ $periode_->nama_periode }} - {{ $periode_->tahun_ajaran }}</option>
                         <option value="">-------</option>
                     @endisset
                         @foreach ($perioderapor as $periode)
@@ -68,7 +71,7 @@
                         @endforeach
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="text-muted text-center" style="position: absolute">
                     Status
                  </div>
@@ -84,6 +87,51 @@
                         <option value="SUBSIDI">SUBSIDI</option>
                 </select>
             </div>
+            @if (auth()->user()->last_name === 'Admin')
+            <div class="col-md-1">
+                <div class="text-muted text-center" style="position: absolute">
+                Angkatan
+                 </div>
+                <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->angkatan)
+                        <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="SEMUA">SEMUA</option>
+                    @for ($i = 1; $i < 8; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </div>
+            <div class="col-md-1">
+                <div class="text-muted text-center" style="position: absolute">
+                Jenis
+                 </div>
+                <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->jenis)
+                        <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="SEMUA">SEMUA</option>
+                    <option value="IKHWAN">IKHWAN</option>
+                    <option value="AKHWAT">AKHWAT</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                    Halaqoh
+                 </div>
+                <select class="form-control mt-4" name="halaqoh" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->halaqoh)
+                        <option value="{{ request()->halaqoh }}">{{ request()->halaqoh }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    @foreach ($halaqoh as $hq)
+                        <option value="{{ $hq->pengajar_santri }}">{{ $hq->pengajar_santri }}</option>
+                    @endforeach
+                </select>
+            </div>
+            @else
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                 Angkatan
@@ -101,25 +149,26 @@
             </div>
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
-                Jenis
+                    Halaqoh
                  </div>
-                <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    @isset(request()->jenis)
-                        <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
+                <select class="form-control mt-4" name="halaqoh" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->halaqoh)
+                        <option value="{{ request()->halaqoh }}">{{ request()->halaqoh }}</option>
                         <option value="">-------</option>
                     @endisset
                     <option value="SEMUA">SEMUA</option>
-                    <option value="IKHWAN">IKHWAN</option>
-                    <option value="AKHWAT">AKHWAT</option>
+                    @foreach ($halaqoh as $hq)
+                        <option value="{{ $hq->pengajar_santri }}">{{ $hq->pengajar_santri }}</option>
+                    @endforeach
                 </select>
             </div>
-
+            @endif
             <div class="col-md-3">
                 <div class="pull-right input-group mt-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                     </div>
-                    <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
+                    <input name="nama" value="{{ request()->nama ?? '' }}" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
                 </div>
             </div>
         </form>
@@ -131,8 +180,12 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
+                                <th class="text-center">Verifikasi Mudir</th>
                                 <th class="text-center">Status</th>
-                                <th class="text-center">Jenis</th>
+                                @if (auth()->user()->last_name == 'Admin')
+                                    <th class="text-center">Jenis</th>
+                                @endif
+                                <th class="text-center">Halaqoh</th>
                                 <th class="text-center">Angkatan</th>
                                 <th width="100" class="text-center"></th>
                             </tr>
@@ -156,23 +209,48 @@
                                             </div>
                                         </a>
                                     </td>
+                                    <td class="text-center" style="font-weight: 800">
+                                        @php
+                                            $verifikasi = DB::table('rtq_rapors')
+                                                        ->where('id_periode_rapor', request()->periode ?? '1')
+                                                        ->where('id_santri', $rtq->id)
+                                                        ->first();
+                                        @endphp
+
+                                        @if ($verifikasi == null)
+                                            <div style="color: #e70f0f!important">BELUM DINILAI</div>
+                                        @else
+                                            @if ( $verifikasi->verifikasi_rapor == null)
+                                                <div style="color: #e79b0f!important">BELUM DIVERIFIKASI</div>
+                                            @else
+                                                <div style="color: #4dbd74!important">{{ $verifikasi->verifikasi_rapor }}</div>
+                                            @endif
+                                        @endif
+                                    </td>
                                     <td class="text-center">
                                         {{ $rtq->status_santri }}
                                     </td>
-                                    <td class="text-center">
-                                        @if ($rtq->jenis_santri == 'IKHWAN')
-                                            <div class="text-center">
-                                                <strong  style="color: #20a8d8!important">{{ $rtq->jenis_santri }}</strong>
-                                            </div>
-                                        @elseif ($rtq->jenis_santri == 'AKHWAT')
-                                            <div class="text-center">
-                                                <strong  style="color: #e83e8c!important">{{ $rtq->jenis_santri }}</strong>
-                                            </div>
-                                        @else
-                                            <div class="text-center">
-                                                -
-                                            </div>
-                                        @endif
+                                    @if (auth()->user()->last_name == 'Admin')
+                                        <td class="text-center">
+                                            @if ($rtq->jenis_santri == 'IKHWAN')
+                                                <div class="text-center">
+                                                    <strong  style="color: #20a8d8!important">{{ $rtq->jenis_santri }}</strong>
+                                                </div>
+                                            @elseif ($rtq->jenis_santri == 'AKHWAT')
+                                                <div class="text-center">
+                                                    <strong  style="color: #e83e8c!important">{{ $rtq->jenis_santri }}</strong>
+                                                </div>
+                                            @else
+                                                <div class="text-center">
+                                                    -
+                                                </div>
+                                            @endif
+                                        </td>
+                                    @endif
+                                    <td>
+                                        <div class="text-center">
+                                            {{ $rtq->pengajar_santri }}
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="text-center">

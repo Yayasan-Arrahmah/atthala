@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Request;
 
 /**
  * Class RtqRepository.
@@ -30,7 +31,31 @@ class RtqRepository extends BaseRepository
      */
     public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
     {
+        $cek = 'CEK ADMIN';
         return $this->model
+            ->when($cek, function ($query) {
+                if( auth()->user()->last_name != 'Admin') {
+                    return $query->where('jenis_santri', '=', auth()->user()->jenis);
+                }
+            })
+            ->when(request()->nama, function ($query) {
+                return $query->where('nama_santri', 'LIKE', '%'.request()->nama.'%');
+            })
+            ->when(request()->status, function ($query) {
+                if( request()->status != 'SEMUA') {
+                    return $query->where('status_santri', '=', request()->status);
+                }
+            })
+            ->when(request()->halaqoh, function ($query) {
+                if( request()->halaqoh != 'SEMUA') {
+                    return $query->where('pengajar_santri', '=', request()->halaqoh);
+                }
+            })
+            ->when(request()->angkatan, function ($query) {
+                if( request()->angkatan != 'SEMUA') {
+                    return $query->where('angkatan_santri', '=', request()->angkatan);
+                }
+            })
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }

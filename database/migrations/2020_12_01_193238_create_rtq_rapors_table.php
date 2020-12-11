@@ -24,6 +24,7 @@ class CreateRtqRaporsTable extends Migration
             $table->text('jumlah_hari_izin', 10)->nullable();
             $table->text('jumlah_hari_tanpa_ket', 10)->nullable();
             $table->text('catatan_pembimbing_santri')->nullable();
+            $table->text('verifikasi_rapor', 100)->nullable();
             $table->timestamps();
         });
     }
