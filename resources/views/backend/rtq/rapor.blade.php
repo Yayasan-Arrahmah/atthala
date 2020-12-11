@@ -215,13 +215,13 @@
                     {{-- {!! $rtqs->links() !!} --}}
                     {{-- {!! $rtqs->appends(request()->query())->links() !!} --}}
                     @if ($rapor->verifikasi_rapor == null)
-                        @if (auth()->user()->last_name == 'MUDIR')
-                            <a href="#" class="btn btn-success"><i class="fas fa-check"></i> Verifikasi</a>
+                        @if (auth()->user()->last_name == 'MUDIR' || auth()->user()->last_name == 'Admin')
+                            <a data-turbolinks="false" href="{{ route('admin.rtqs.rapor') }}?uuid={{ request()->uuid }}&verifikasi=ya" class="btn btn-success"><i class="fas fa-check"></i> Verifikasi</a>
                         @else
                             <a href="#" class="btn btn-warning"><i class="fas fa-eye"></i> Menunggu Verifikasi</a>
                         @endif
                     @else
-                        <a href="{{ route('admin.rtqs.raporcetak') }}?uuid={{ request()->uuid }}" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Cetak Rapor</a>
+                        <a href="#" class="btn btn-light mr-2">SUDAH DIVERIFIKASI <i class="fas fa-check"></i></a> <a href="{{ route('admin.rtqs.raporcetak') }}?uuid={{ request()->uuid }}" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Cetak Rapor</a>
                     @endif
                 </div>
             </div>

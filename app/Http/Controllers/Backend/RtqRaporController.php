@@ -55,7 +55,13 @@ class RtqRaporController extends Controller
         $kategoris  = RtqKategoriPenilaian::get();
         $rapor      = RtqRapor::where('uuid', $request->get('uuid'))->first();
         $santri     = Rtq::where('id', $rapor->id_santri)->first();
-        return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris'));
+        if( request()->verifikasi == 'ya' ){
+            $rapor->verifikasi_rapor = 'TERVERIFIKASI';
+            $rapor->save();
+            return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris'))->withFlashSuccess('Berhasil Diverifikasi !');
+        } else {
+            return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris'));
+        }
     }
 
     public function raporupdate(Request $request)
