@@ -168,6 +168,7 @@ class RtqController extends Controller
             'pengalaman_pesantren',
             'riwayat_pendidikan',
             'spp_disanggupi',
+            'pengajar_santri',
             'angkatan_santri',
             'domisili',
             'kriteria',
