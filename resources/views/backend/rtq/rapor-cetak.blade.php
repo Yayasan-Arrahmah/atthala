@@ -355,7 +355,7 @@ background-repeat: no-repeat;
             <tbody>
                 <tr>
                     <td style="border: 1px solid #000;">
-                        Semangat menghapal
+                        {{ $data->catatan_pembimbing_santri }}
                         <br>
                         <br>
                     </td>

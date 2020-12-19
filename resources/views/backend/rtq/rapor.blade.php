@@ -40,7 +40,7 @@
                     <div class="col-8 info-absen" style="font-weight: 800">: {{ $santri->nama_santri }}</div>
                 </div>
                 <div class="row">
-                    <div class="col-4">Binti</div>
+                    <div class="col-4">Bin</div>
                     <div class="col-8 info-absen" style="font-weight: 800">: {{ $santri->nama_ayah }}</div>
                 </div>
                 <div class="row">
