@@ -154,9 +154,9 @@
                                     </td>
                                     <td>
                                         <a href="/admin/tahsin/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
-                                            <div style="text-transform: uppercase;">{{ $tahsin->nama_peserta }}</div>
+                                            <div style="text-transform: uppercase;">{{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }}</div>
                                             <div class="small text-muted">
-                                                {{ $tahsin->no_tahsin }} | {{ $tahsin->nohp_peserta }}
+                                                {{ $tahsin->waktu_lahir_peserta }} | {{ $tahsin->nohp_peserta }}
                                             </div>
                                         </a>
                                     </td>
