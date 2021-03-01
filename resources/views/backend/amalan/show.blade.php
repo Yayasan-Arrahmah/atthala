@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', ' Yayasan Arrahmah Balikpapan - Amal Yaumiah 2020')
+@section('title', ' Yayasan Arrahmah Balikpapan - Amal Yaumiah 2021')
 
 @section('breadcrumb-links')
 @include('backend.amalan.includes.breadcrumb-links')

@@ -221,7 +221,7 @@
                                         <option value="12">Desember</option> --}}
                                     </select>
                                     <select class="col-4 form-control">
-                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
                                         {{-- <option value="{{ !empty(request('tahun')) ? request('tahun') : $tanggalan->year }}">{{ !empty(request('tahun')) ? request('tahun') : $tanggalan->year }}</option>
                                         <option value="">-----</option>
                                         @for ($j = $tanggalan->year ; $j >= 2020; $j--)
@@ -254,7 +254,7 @@
                                     ->where('id_amalan_list', '=', $amalan_list->id)
                                     ->where('user_amalan_list', '=', $logged_in_user->id)
                                     ->where('tanggal_amalan_list', '=', $amalan_tanggal)
-                                    ->where('waktu_amalan_list', '=', $bulan_[$tanggalan_->month].'-2020')
+                                    ->where('waktu_amalan_list', '=', $bulan_[$tanggalan_->month].'-2021')
                                     ->first();
                                     @endphp
 
@@ -313,7 +313,7 @@
                                     ->where('id_amalan_list', '=', $amalan_list->id)
                                     ->where('user_amalan_list', '=', $logged_in_user->id)
                                     ->where('tanggal_amalan_list', '=', $i)
-                                    ->where('waktu_amalan_list', '=', $bulan_[$tanggalan_->month].'-2020')
+                                    ->where('waktu_amalan_list', '=', $bulan_[$tanggalan_->month].'-2021')
                                     ->first();
 
                                     if (isset($amalan_list_absen->tanggal_amalan_list)) {

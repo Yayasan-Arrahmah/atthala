@@ -252,7 +252,7 @@
                 "scrollX": true,
                 "dom": 'Blfrtip',
                 "buttons": [
-                    { extend: 'excel', text: 'Download excel', messageTop: 'List Data Peserta Amal Yaumiah 2020' }
+                    { extend: 'excel', text: 'Download excel', messageTop: 'List Data Peserta Amal Yaumiah 2021' }
                 ]
             });
 
