@@ -112,7 +112,7 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
-    {!! script('https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js') !!}
+    {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js') !!} --}}
     {!! script('js/bootstrap-editable.min.js') !!}
 
     @stack('after-scripts')
@@ -235,7 +235,10 @@
 
             $('#jadwal').DataTable({
                 "pageLength": 15,
-                "scrollX": true,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'List Data Pengajar Tahsin Angkatan 17' }
+                ]
             });
 
             $('#jadwaltahsinabsen').DataTable({
@@ -343,6 +346,10 @@
             } );
             var table = $('#jadwaltahsin').DataTable({
                 "pageLength": 10,
+                "dom": 'Blfrtip',
+                "buttons": [
+                    { extend: 'excel', text: 'Download excel', messageTop: 'List Data Pengajar Tahsin Angkatan 17' }
+                ],
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Semua"]],
                 "scrollX": true,
                 "orderCellsTop": true,
