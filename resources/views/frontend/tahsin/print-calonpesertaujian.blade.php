@@ -71,7 +71,7 @@ background-repeat: no-repeat;
     </table>
     <div style="font: 10px;">
         <center>
-            BALIKPAPAN, {{ \Carbon\Carbon::create($created_at)->format('d-m-Y') }}
+            BALIKPAPAN, {{ \Carbon\Carbon::create($updated_at)->format('d-m-Y') }}
             <br>
             Peserta Ujian
             <br>
