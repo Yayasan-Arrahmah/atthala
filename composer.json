@@ -22,12 +22,12 @@
         "fideloper/proxy": "^4.0",
         "geniusts/hijri-dates": "^1.1",
         "hieu-le/active": "^3.5",
+        "intervention/image": "^2.5",
         "laravel/framework": "5.8.*",
         "laravel/socialite": "^4.1",
         "laravel/tinker": "^1.0",
         "livewire/livewire": "^1.0",
         "maatwebsite/excel": "^3.1",
-        "niklasravnsborg/laravel-pdf": "^4.0",
         "owen-it/laravel-auditing": "^9.0",
         "phpoffice/phpspreadsheet": "^1.11",
         "pqrs/l5b-crud": "^1.4",
@@ -38,8 +38,7 @@
         "torann/geoip": "^1.0",
         "twilio/sdk": "^6.1",
         "webpatser/laravel-uuid": "^3.0",
-        "yajra/laravel-datatables-oracle": "^9.9",
-        "yugo/moota": "^1.2"
+        "yajra/laravel-datatables-oracle": "^9.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

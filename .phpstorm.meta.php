@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2020-12-10 11:25:36.
+    * Generated on 2021-03-09 17:40:08.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -161,6 +161,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -340,6 +342,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -519,6 +523,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -698,6 +704,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -877,6 +885,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -1056,6 +1066,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -1235,6 +1247,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,
@@ -1414,6 +1428,8 @@ namespace PHPSTORM_META {
         'gravatar' => \Creativeorange\Gravatar\Gravatar::class,
         'hash' => \Illuminate\Hashing\HashManager::class,
         'hash.driver' => \Illuminate\Hashing\BcryptHasher::class,
+        'hijri' => \Alkoumi\LaravelHijriDate\Hijri::class,
+        'image' => \Intervention\Image\ImageManager::class,
         'livewire' => \Livewire\LivewireManager::class,
         'log' => \Illuminate\Log\LogManager::class,
         'mailer' => \Illuminate\Mail\Mailer::class,

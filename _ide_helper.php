@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.37 on 2020-12-10 11:25:35.
+ * Generated for Laravel 5.8.37 on 2021-03-09 17:40:07.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -15149,6 +15149,75 @@ namespace Barryvdh\DomPDF {
  
 }
 
+namespace Intervention\Image\Facades { 
+
+    /**
+     * 
+     *
+     */ 
+    class Image {
+        
+        /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @return self 
+         * @static 
+         */ 
+        public static function configure($config = [])
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->configure($config);
+        }
+        
+        /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function make($data)
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->make($data);
+        }
+        
+        /**
+         * Creates an empty image canvas
+         *
+         * @param int $width
+         * @param int $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function canvas($width, $height, $background = null)
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->canvas($width, $height, $background);
+        }
+        
+        /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param int $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */ 
+        public static function cache($callback, $lifetime = null, $returnObj = false)
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->cache($callback, $lifetime, $returnObj);
+        }
+         
+    }
+ 
+}
+
 namespace Barryvdh\Debugbar { 
 
     /**
@@ -18265,6 +18334,18 @@ namespace Arcanedev\LogViewer\Facades {
  
 }
 
+namespace Alkoumi\LaravelHijriDate { 
+
+    /**
+     * 
+     *
+     */ 
+    class Hijri {
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -21065,6 +21146,8 @@ namespace  {
 
     class PDF extends \Barryvdh\DomPDF\Facade {}
 
+    class Image extends \Intervention\Image\Facades\Image {}
+
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
 
     class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}
@@ -21088,6 +21171,8 @@ namespace  {
     class DataTables extends \Yajra\DataTables\Facades\DataTables {}
 
     class LogViewer extends \Arcanedev\LogViewer\Facades\LogViewer {}
+
+    class hijri extends \Alkoumi\LaravelHijriDate\Hijri {}
  
 }
 

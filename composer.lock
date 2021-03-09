@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b845f4d897c9e03aa6cb4f438de67cf7",
+    "content-hash": "f896284737b5f7409c497bbd40571103",
     "packages": [
         {
             "name": "albertcht/invisible-recaptcha",
@@ -64,6 +64,70 @@
                 "recaptcha"
             ],
             "time": "2019-09-05T17:22:43+00:00"
+        },
+        {
+            "name": "alkoumi/laravel-hijri-date",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alkoumi/laravel-hijri-date.git",
+                "reference": "ee726cf66349e8ab15f6f0b4041b9c96b7919742"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alkoumi/laravel-hijri-date/zipball/ee726cf66349e8ab15f6f0b4041b9c96b7919742",
+                "reference": "ee726cf66349e8ab15f6f0b4041b9c96b7919742",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Alkoumi\\LaravelHijriDate\\LaravelHijriDateServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Alkoumi\\LaravelHijriDate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohammed Alkoumi",
+                    "email": "komy66@gmail.com"
+                }
+            ],
+            "description": "Laravel package to Convert laravel date to our Amazing 💝 Hjri date {ummul qura and vice versa} . to look like [ الخميس ، ٢٢ ربيع الآخر ، ١٤٤١ - ٠٧:٤٩ مساءً]",
+            "homepage": "https://be.net/komy",
+            "keywords": [
+                "date",
+                "hijri-calendar",
+                "hijri-date",
+                "hjri",
+                "laravel-hijri-date",
+                "ummul-qura",
+                "ummul-qura-calendar"
+            ],
+            "support": {
+                "issues": "https://github.com/alkoumi/laravel-hijri-date/issues",
+                "source": "https://github.com/alkoumi/laravel-hijri-date/tree/v1.0.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/mohammadelkoumi",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-11-27T09:41:21+00:00"
         },
         {
             "name": "arcanedev/log-viewer",
@@ -305,6 +369,46 @@
                 "laravel-self-diagnosis"
             ],
             "time": "2019-09-03T15:01:16+00:00"
+        },
+        {
+            "name": "code-orange/turbolinks-location",
+            "version": "v1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/code-orange/turbolinks-location.git",
+                "reference": "27630f940e9a6930aa3aaba30c0a4d49153cddc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/code-orange/turbolinks-location/zipball/27630f940e9a6930aa3aaba30c0a4d49153cddc2",
+                "reference": "27630f940e9a6930aa3aaba30c0a4d49153cddc2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CodeOrange\\TurbolinksLocation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tim van Dalen",
+                    "email": "tim@code-orange.nl"
+                }
+            ],
+            "description": "Laravel middleware to insert Turbolinks-Location header into every response",
+            "support": {
+                "issues": "https://github.com/code-orange/turbolinks-location/issues",
+                "source": "https://github.com/code-orange/turbolinks-location/tree/v1.3"
+            },
+            "time": "2020-04-06T08:01:55+00:00"
         },
         {
             "name": "composer/semver",
@@ -1524,6 +1628,80 @@
                 "routing"
             ],
             "time": "2017-09-07T02:36:51+00:00"
+        },
+        {
+            "name": "intervention/image",
+            "version": "2.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
+                "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "guzzlehttp/psr7": "~1.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Image\\ImageServiceProvider"
+                    ],
+                    "aliases": {
+                        "Image": "Intervention\\Image\\Facades\\Image"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.com",
+                    "homepage": "http://olivervogel.com/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "support": {
+                "issues": "https://github.com/Intervention/image/issues",
+                "source": "https://github.com/Intervention/image/tree/master"
+            },
+            "time": "2019-11-02T09:15:47+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2952,6 +3130,11 @@
                 "pseudorandom",
                 "random"
             ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/random_compat/issues",
+                "source": "https://github.com/paragonie/random_compat"
+            },
             "time": "2018-07-02T15:55:56+00:00"
         },
         {
@@ -3715,16 +3898,16 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
+                "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
-                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
+                "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
                 "shasum": ""
             },
             "require": {
@@ -3758,7 +3941,10 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2019-11-01T11:05:21+00:00"
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/1.1.3"
+            },
+            "time": "2020-03-23T09:12:05+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -7565,20 +7751,20 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.9.5",
+            "version": "1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "b2c28789e80a97badd14145fda39b545d83ca3ef"
+                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/b2c28789e80a97badd14145fda39b545d83ca3ef",
-                "reference": "b2c28789e80a97badd14145fda39b545d83ca3ef",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/776f831124e9c62e1a2c601ecc52e776d8bb7220",
+                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": "^7.1 || ^8.0"
             },
             "replace": {
                 "myclabs/deep-copy": "self.version"
@@ -7609,7 +7795,17 @@
                 "object",
                 "object graph"
             ],
-            "time": "2020-01-17T21:11:47+00:00"
+            "support": {
+                "issues": "https://github.com/myclabs/DeepCopy/issues",
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.10.2"
+            },
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-11-13T09:40:50+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -9717,5 +9913,5 @@
         "php": "^7.1.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
