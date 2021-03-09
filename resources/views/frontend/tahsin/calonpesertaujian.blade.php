@@ -36,7 +36,7 @@
                 </center>
                 <div class="text-center">
                     <h4> Peserta Telah Terdaftar </h4>
-                    <div class="text-muted">Ujian Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('angkatan_tahsin') }}</div>
+                    <div class="text-muted">Ujian Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_tahsin') }}</div>
                 </div>
                 <hr>
                 <div class="card-body">
@@ -81,7 +81,7 @@
                         </center>
                         <div class="text-center">
                             <h4> Formulir <br>Calon Peserta Ujian Tahsin </h4>
-                            <div class="text-muted">Angkatan {{ session('angkatan_tahsin') }}</div>
+                            <div class="text-muted">Angkatan {{ session('daftar_tahsin') }}</div>
                         </div>
 
                         <div class="card-body">
@@ -128,10 +128,10 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-12" style="padding-bottom: 7px;">
-                                    <input style="font-size: 11px; height: calc(1.5em + .75rem + 7px)" onkeyup="this.value = this.value.toUpperCase();" oninvalid="setCustomValidity('Isi Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" type="text" name="tempat_lahir_peserta" placeholder="Tempat Kelahiran" maxlength="191" required="">
+                                    <input style="font-size: 11px; height: calc(1.5em + .75rem + 7px)" onkeyup="this.value = this.value.toUpperCase();" value="{{ $calonpeserta->tempat_lahir_peserta }}" oninvalid="setCustomValidity('Isi Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" type="text" name="tempat_lahir_peserta" placeholder="Tempat Kelahiran" maxlength="191" required="">
                                 </div><!--col-->
                                 <div class="col-4" style="padding-right: 2px;">
-                                    <select oninvalid="setCustomValidity('Pilih Tanggal Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="tanggal_lahir_peserta" class="gender form-control" required>
+                                    <select id="tgl" oninvalid="setCustomValidity('Pilih Tanggal Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="tanggal_lahir_peserta" class="gender form-control" required>
                                         <option value="">-- Tanggal Lahir --</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -167,7 +167,7 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="padding-right: 2px; padding-left: 2px">
-                                    <select oninvalid="setCustomValidity('Pilih Bulan Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="bulan_lahir_peserta" class="gender form-control" required>
+                                    <select id="bln" oninvalid="setCustomValidity('Pilih Bulan Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="bulan_lahir_peserta" class="gender form-control" required>
                                         <option value="">-- Bulan Lahir --</option>
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
@@ -184,7 +184,7 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="padding-left: 2px">
-                                    <select oninvalid="setCustomValidity('Pilih Tahun Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="tahun_lahir_peserta" class="gender form-control" required>
+                                    <select id="thn" oninvalid="setCustomValidity('Pilih Tahun Lahir')" onchange="try{setCustomValidity('')}catch(e){}" name="tahun_lahir_peserta" class="gender form-control" required>
                                         <option value="">-- Tahun Lahir --</option>
                                         @for ($i = 2017; $i > 1930; $i--)
                                         <option value="{{ $i }}">{{ $i }}</option>
@@ -611,6 +611,16 @@
                 }).change();
             });
         </script>
+        @php
+        $waktulahir = \Carbon\Carbon::createFromFormat('d-m-Y', $calonpeserta->waktu_lahir_peserta);
+        @endphp
+        <script type="text/javascript">
+            $(document).ready(function(){
+                  $("#tgl").val("{!! $waktulahir->format('d') !!}");
+                  $("#bln").val("{!! $waktulahir->format('m') !!}");
+                  $("#thn").val("{!! $waktulahir->format('Y') !!}");
+            });
+          </script>
     @endif
 
 @endif

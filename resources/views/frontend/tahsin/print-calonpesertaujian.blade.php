@@ -19,7 +19,7 @@ background-repeat: no-repeat;
             Tahsin LTTQ Arrahmah Balikpapan
         </h3>
         <h5 style="margin-top: -10px; color: rgb(41, 41, 41); margin-bottom: 30px">
-            ANGKATAN {{ session('angkatan_tahsin') }}
+            ANGKATAN {{ session('daftar_ujian') }}
         </h5>
     </center>
     <table style="font: 12px">
@@ -27,7 +27,7 @@ background-repeat: no-repeat;
             <td>No. Peserta Tahsin</td>
             <td>:</td>
             <td><strong>{{ $no_tahsin }}</strong></td>
-            <td style="color: #fff">-----------------------</td>
+            <td style="color: #fff">--------------------</td>
             <td>Jenis Peserta</td>
             <td>:</td>
             <td><strong>{{ $jenis_peserta }}</strong></td>
@@ -55,7 +55,7 @@ background-repeat: no-repeat;
             <td>:</td>
             <td><strong>{{ strtoupper($tempat_lahir_peserta) }}, {{ $waktu_lahir_peserta }}</strong></td>
             <td></td>
-            <td>Nama Pengajar</td>
+            <td>Pengajar</td>
             <td>:</td>
             <td><strong>{{ $nama_pengajar }}</strong></td>
         </tr>
@@ -77,11 +77,12 @@ background-repeat: no-repeat;
             <br>
             <br>
             <br>
+            <br>
             <strong>{{ strtoupper($nama_peserta) }}</strong>
         </center>
     </div>
 
-    <div style="font: 10px; margin-top: 20px; border: solid 1px #000; padding: 10px">
+    <div style="font: 10px; margin-top: 20px; border: solid 1px #000; padding: 10px; position: absolute;">
         <strong>Kontak Ikhwan:</strong> 0857-5131-8937<br>
         <strong>Kontak Akhwat:</strong> 0813 5012 8157
         <br>
@@ -91,7 +92,8 @@ background-repeat: no-repeat;
         <br>
         <br>
         <br>
-        <center> https://arrahmahbalikpapan.or.id &copy; {{ date('Y') }} </center>
+        <br>
+        <center> https://arrahmahbalikpapan.or.id &copy; 2021 </center>
     </div>
 
 </body>

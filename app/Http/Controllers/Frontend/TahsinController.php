@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Jadwal;
 use DB;
 use PDF;
+use Image;
 
 class TahsinController extends Controller
 {
@@ -77,7 +78,14 @@ class TahsinController extends Controller
             $file_bukti_transfer      = $request->file('filepond');
             $nama_file_bukti_transfer = Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
             Session::put('filebuktitransferujian', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
-            Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+            // Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+
+            $buktitf         = Image::make($file_bukti_transfer);
+            $lokasibuktitf   = public_path('bukti-transfer-daftar-ujian/');
+            $buktitf->resize(400, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.Session::get('filebuktitransferujian'));
         }
 
     }
@@ -291,6 +299,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
+                ->where('angkatan_peserta', '=', session('daftar_ujian'))
                 ->paginate(15);
         } else {
             $pencarian = null;
@@ -299,12 +308,14 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
         return view('frontend.tahsin.cari-calonpesertaujian', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -315,7 +326,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
     {
         $notahsin = $request->get('id');
         $notelp   = $request->get('notelp');
-        $angkatan = session('angkatan_tahsin');
+        $angkatan = session('daftar_ujian');
 
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
                             ->where('nohp_peserta', $notelp)
@@ -329,7 +340,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
 
     public function simpancalonpesertaujian(Request $request)
     {
-        $angkatan = session('angkatan_tahsin');
+        $angkatan = session('daftar_ujian');
 
         $this->validate($request, [
             'notelp'           => 'required',
@@ -345,7 +356,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
             return redirect()->to('/tahsin/calon-peserta-ujian/daftar?id='.$cekterdaftarujian->no_tahsin.'&notelp='.$datacekpeserta->nohp_peserta);
         } else {
 
-        try {
+        // try {
 
             $updatepeserta = Tahsin::where('no_tahsin',  $request->input('notahsin'))
                     ->update([
@@ -358,7 +369,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
             $pesertaujian->uuid             = $uuid;
             $pesertaujian->no_tahsin        = $request->get('notahsin');
             $pesertaujian->status_pelunasan = $request->get('pelunasan_tahsin');
-            $pesertaujian->angkatan_ujian   = session('angkatan_tahsin');
+            $pesertaujian->angkatan_ujian   = session('daftar_ujian');
             $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
             $pesertaujian->save();
 
@@ -373,12 +384,11 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
                 $nohp = $nohp;
             }
 
-            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
             $phone = '62' . $nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih telah mendaftarkan diri sebagai *Peserta Ujian Tahsin di angkatan ".session('angkatan_tahsin')."*.
+Terima kasih telah mendaftarkan diri sebagai *Peserta Ujian Tahsin di angkatan ".session('daftar_ujian')."*.
 
 Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
 
@@ -388,32 +398,63 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
+Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            $url = 'https://api.wanotif.id/v1/send';
+            // wanotif.id
+            // $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+            // $url = 'https://api.wanotif.id/v1/send';
 
-            $info = "berhasil";
-        } catch (\Throwable $th) {
-            $info      = "gagal";
-            $no_tahsin = "null";
-        }
+            // $curl = curl_init();
+            // curl_setopt($curl, CURLOPT_URL, $url);
+            // curl_setopt($curl, CURLOPT_HEADER, 0);
+            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            // curl_setopt($curl, CURLOPT_POST, 1);
+            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            //     'Apikey'    => $apikey,
+            //     'Phone'     => $phone,
+            //     'Message'   => $message,
+            // ));
+            // $response = curl_exec($curl);
+            // curl_close($curl);
+
+            // woo-wa.com
+            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
+
+        //     $info = "berhasil";
+        // } catch (\Throwable $th) {
+        //     $info      = "gagal";
+        //     $no_tahsin = "null";
+        // }
         // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
         return redirect()->to('/tahsin/calon-peserta-ujian/print?id='.$uuid);
 
@@ -426,10 +467,9 @@ Panitia Ujian Tahsin Angkatan ".session('angkatan_tahsin')."
         $pesertaujian = PesertaUjian::where('uuid', $request->get('id'))->first();
         $notahsin     = $pesertaujian->no_tahsin;
 
-        $data = Tahsin::where('no_tahsin', $notahsin)->first();
+        $data = Tahsin::where('no_tahsin', $notahsin)->where('angkatan_peserta', session('daftar_ujian'))->first();
 
         // dd($data);
-        // $data = ['created_at' => 'Welcome to belajarphp.net'];
 
         $pdf = PDF::loadView('frontend.tahsin.print-calonpesertaujian', $data)->setPaper('a5', 'landscape');
         // return $pdf->download('medium.pdf');
