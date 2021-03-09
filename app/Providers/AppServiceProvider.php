@@ -59,8 +59,8 @@ class AppServiceProvider extends ServiceProvider
         $daftarualangangkatantahsinaktif = DB::table('pengaturan')->where('pengaturan', 'daftar_ulang_angkatan_tahsin')->first();
         session(['daftar_ulang_angkatan_tahsin' => $daftarualangangkatantahsinaktif->nilai_pengaturan]);
 
-        $daftarualangangkatantahsinaktif = DB::table('pengaturan')->where('pengaturan', 'daftar_ujian')->first();
-        session(['daftar_ujian' => $daftarualangangkatantahsinaktif->nilai_pengaturan]);
+        $daftarujian = DB::table('pengaturan')->where('pengaturan', 'daftar_ujian')->first();
+        session(['daftar_ujian' => $daftarujian->nilai_pengaturan]);
 
         /*
          * Set the session variable for whether or not the app is using RTL support
