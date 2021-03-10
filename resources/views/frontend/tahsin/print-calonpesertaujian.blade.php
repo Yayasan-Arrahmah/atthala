@@ -57,7 +57,7 @@ background-repeat: no-repeat;
             <td></td>
             <td>Pengajar</td>
             <td>:</td>
-            <td><strong>{{ $nama_pengajar }}</strong></td>
+            <td><span><strong>{{ $nama_pengajar }}</strong></span></td>
         </tr>
         <tr>
             <td style="padding-top: 50px"></td>
@@ -73,12 +73,12 @@ background-repeat: no-repeat;
         <center>
             BALIKPAPAN, {{ \Carbon\Carbon::create($updated_at)->format('d-m-Y') }}
             <br>
-            Peserta Ujian
+            Panitia Ujian Tahsin
             <br>
             <br>
             <br>
             <br>
-            <strong>{{ strtoupper($nama_peserta) }}</strong>
+            <strong>Rahmat Wijaya</strong>
         </center>
     </div>
 
