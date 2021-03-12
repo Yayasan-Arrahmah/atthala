@@ -611,16 +611,19 @@
                 }).change();
             });
         </script>
-        @php
-        $waktulahir = \Carbon\Carbon::createFromFormat('d-m-Y', $calonpeserta->waktu_lahir_peserta);
-        @endphp
-        <script type="text/javascript">
-            $(document).ready(function(){
-                  $("#tgl").val("{!! $waktulahir->format('d') !!}");
-                  $("#bln").val("{!! $waktulahir->format('m') !!}");
-                  $("#thn").val("{!! $waktulahir->format('Y') !!}");
-            });
-          </script>
+        @if ( !null == $calonpeserta->waktu_lahir_peserta)
+            @php
+            $waktulahir = \Carbon\Carbon::createFromFormat('d-m-Y', $calonpeserta->waktu_lahir_peserta);
+            @endphp
+            <script type="text/javascript">
+                $(document).ready(function(){
+                        $("#tgl").val("{!! $waktulahir->format('d') !!}");
+                        $("#bln").val("{!! $waktulahir->format('m') !!}");
+                        $("#thn").val("{!! $waktulahir->format('Y') !!}");
+                });
+            </script>
+        @endif
+
     @endif
 
 @endif
