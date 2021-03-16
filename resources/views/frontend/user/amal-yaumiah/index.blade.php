@@ -275,12 +275,11 @@
                                             <input hidden="hidden" name="waktu_amalan_list" value="{{ !empty(request('bulan')) ? $bulan_[request('bulan')] : $bulan_[$tanggalan_->month] }}-{{ !empty(request('tahun')) ? request('tahun') : $tanggalan_->year }}">
                                             <input hidden="hidden" name="tanggal_amalan_list" value="{{ !empty(request('tanggal')) ? request('tanggal') : $tanggalan_->day }}">
                                             <input hidden="hidden" name="bulan_amalan_list" value="{{ !empty(request('bulan')) ? request('bulan') : $tanggalan_->month }}">
-                                            <button class="btn btn-light btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                            <button class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
                                         </td>
                                     @else
-                                    <td></td>
-                                    <td>
-                                        <button disabled class="btn btn-primary btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
+                                    <td colspan="2">
+                                        <button disabled class="btn btn-success btn-sm" style="font-size:14px; padding: 0px 15px 0px 15px; margin: 5px 20px 5px 20px;"><i class="fas fa-check"></i></button>
                                     </td>
                                     @endif
                                 </tr>
