@@ -131,7 +131,9 @@ class TahsinController extends Controller
                     return $query->where('angkatan_peserta', '=', $this->angkatan);
                 })
                 ->when($this->pengajar, function ($query) {
-                    return $query->where('nama_pengajar', '=', $this->pengajar);
+                    if( $this->jenis != 'SEMUA') {
+                        return $query->where('nama_pengajar', '=', $this->pengajar);
+                    }
                 })
                 // ->withCount('no_tahsin')
                 // ->has('no_tahsin', '<', 2)
