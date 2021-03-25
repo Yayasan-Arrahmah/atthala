@@ -62,6 +62,19 @@
             </div>
 
             <div class="col">
+                <div class="text-muted text-center" style="position: absolute">
+                    Pengajar
+                 </div>
+                <select class="form-control mt-4" name="pengajar" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->pengajar)
+                        <option value="{{ request()->pengajar }}">{{ request()->pengajar }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                        <option value="SEMUA">SEMUA</option>
+                    @foreach($datapengajars as $pengajar)
+                        <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">

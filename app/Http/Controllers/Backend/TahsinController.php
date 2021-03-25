@@ -58,6 +58,7 @@ class TahsinController extends Controller
         $this->level         = request()->level ?? null;
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
+        $this->pengajar      = request()->pengajar ?? null;
         $this->angkatan      = request()->angkatan ?? session('angkatan_tahsin');
         $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
     }
@@ -73,6 +74,11 @@ class TahsinController extends Controller
 
     public function index(ManageTahsinRequest $request)
     {
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->get();
 
         if(isset($this->kenaikanlevel)){
             $updatelevel = DB::table('tahsins')
@@ -83,7 +89,7 @@ class TahsinController extends Controller
             $tahsins = \App\Models\Tahsin::search($this->nama)
               ->paginate(10);
 
-            return view('backend.tahsin.index', compact('tahsins'))->withFlashSuccess($this->idtahsin.'Berhasil Diperbaruhi');
+            return view('backend.tahsin.index', compact('tahsins', 'datapengajars'))->withFlashSuccess($this->idtahsin.'Berhasil Diperbaruhi');
         }
 
         // if(isset($level)){
@@ -124,6 +130,9 @@ class TahsinController extends Controller
                 ->when($this->angkatan, function ($query) {
                     return $query->where('angkatan_peserta', '=', $this->angkatan);
                 })
+                ->when($this->pengajar, function ($query) {
+                    return $query->where('nama_pengajar', '=', $this->pengajar);
+                })
                 // ->withCount('no_tahsin')
                 // ->has('no_tahsin', '<', 2)
                 // ->havingRaw('COUNT(no_tahsin) < 2')
@@ -134,7 +143,7 @@ class TahsinController extends Controller
                 // dd($tahsins);
         // }
 
-        return view('backend.tahsin.index', compact('tahsins'));
+        return view('backend.tahsin.index', compact('tahsins', 'datapengajars'));
     }
 
     public function daftarulang(ManageTahsinRequest $request)
