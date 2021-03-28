@@ -59,7 +59,7 @@ class TahsinController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? session('angkatan_tahsin');
+        $this->angkatan      = request()->angkatan ?? session('daftar_ujian');
         $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
     }
 
@@ -130,11 +130,11 @@ class TahsinController extends Controller
                 ->when($this->angkatan, function ($query) {
                     return $query->where('angkatan_peserta', '=', $this->angkatan);
                 })
-                ->when($this->pengajar, function ($query) {
-                    if( $this->jenis != 'SEMUA') {
-                        return $query->where('nama_pengajar', '=', $this->pengajar);
-                    }
-                })
+                // ->when($this->pengajar, function ($query) {
+                //     if( $this->jenis != 'SEMUA') {
+                //         return $query->where('nama_pengajar', '=', $this->pengajar);
+                //     }
+                // })
                 // ->withCount('no_tahsin')
                 // ->has('no_tahsin', '<', 2)
                 // ->havingRaw('COUNT(no_tahsin) < 2')
@@ -520,15 +520,27 @@ Tanggal Mengisi Formulir Online :";
             foreach ($data[0] as $key => $value) {
                 // echo json_encode($value[0]);
                 // echo json_encode($value[6]);
-                $updatelevel[] = array('notahsin' => $value[0], 'level' => $value[6]);
+                $updatelevel[] = array( 'notahsin'     => $value[1],
+                                        'levelpeserta' => $value[4],
+                                        'namapengajar' => $value[5],
+                                        'jadwaltahsin' => $value[6],
+                                        'jenispeserta' => $value[7],
+                                        'levelbaru'    => $value[11]
+                                    );
                 // DB::table('tahsins')->where('no_tahsin', json_encode($value[0]))->update(['kenaikan_level_peserta' => json_encode($value[6])]);
             }
+            // dd($updatelevel);
             // return $updatelevel;
             foreach ($updatelevel as $data) {
                 // echo Arr::get($data, 'notahsin');
                 DB::table('tahsins')
                     ->where('no_tahsin', Arr::get($data, 'notahsin'))
-                    ->update(['kenaikan_level_peserta' => Arr::get($data, 'level')]);
+                    ->where('level_peserta', Arr::get($data, 'levelpeserta'))
+                    ->where('nama_pengajar', Arr::get($data, 'namapengajar'))
+                    ->where('jadwal_tahsin', Arr::get($data, 'jadwaltahsin'))
+                    ->where('jenis_peserta', Arr::get($data, 'jenispeserta'))
+                    ->where('angkatan_peserta', session('daftar_ujian'))
+                    ->update(['kenaikan_level_peserta' => Arr::get($data, 'levelbaru')]);
             }
             // $banyakdata = $dataupdate->getRowCount();
 

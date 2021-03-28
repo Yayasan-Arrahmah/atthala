@@ -21,14 +21,18 @@ class TahsinUpdateLevel implements ToModel, WithStartRow
     {
         ++$this->rows;
         return new Tahsin([
-            'no_tahsin' => @$row[0],
-            'kenaikan_level_peserta' => @$row[6],
+            'notahsin'     => @$row[1],
+            'levelpeserta' => @$row[4],
+            'namapengajar' => @$row[5],
+            'jadwaltahsin' => @$row[6],
+            'jenispeserta' => @$row[7],
+            'levelbaru'    => @$row[11]
         ]);
     }
 
     public function startRow(): int
     {
-        return 5;
+        return 3;
     }
 
     // public function limit(): int
