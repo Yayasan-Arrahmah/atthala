@@ -108,7 +108,7 @@ class TahsinController extends Controller
         $tahsin     = new Tahsin;
         $pembayaran = new Pembayaran;
 
-        $banyakid   = Tahsin::where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+        $banyakid   = $tahsin->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
                     ->where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
                     ->count();
         $generateid = $banyakid + 1;
@@ -151,6 +151,16 @@ class TahsinController extends Controller
             // $nama_file_buktitf = $no_tahsin . ' ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s') . '-BUKTI-RANSFER';
             // $extension_buktitf = $file_buktitf->getClientOriginalExtension();
             // Storage::disk('bukti-transfer')->put($nama_file_buktitf . '.' . $extension_buktitf, File::get($file_buktitf));
+
+            // test script , ada bug no tahsin ganda. validasi uniqe (harus beda)
+            $tahsin->validate([
+                'no_tahsin'    => 'unique',
+            ]);
+            // jika terdapat no tahsin sama, maka akan ditambhkan 1
+            if ($tahsin->fails()) {
+                $generateid = $generateid + 1;
+                $no_tahsin = $jenisid . '-'.session('daftar_ulang_angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            }
 
             $tahsin->no_tahsin                       = $no_tahsin;
             $tahsin->nama_peserta                    = $request->nama_peserta;
@@ -492,6 +502,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
+                ->where('angkatan_peserta', '=', session('daftar_ujian'))
                 ->paginate(15);
 
         } else {
