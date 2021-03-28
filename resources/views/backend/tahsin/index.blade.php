@@ -34,6 +34,7 @@
 
         <div class="row">
             <form onmouseover="verifikasi()" class="form-horizontal col-md-12" action="{{ route('admin.tahsins.updatelevel') }}" method="POST" enctype="multipart/form-data" style="padding-top: 20px">
+
                 <div class="form-group row" style="margin-bottom:0px">
                     {{ csrf_field() }}
                     <label class="col-md-1 col-form-label" for="file-input">
@@ -52,6 +53,11 @@
             </form>
         </div>
         <form action="{{ Request::fullUrl() }}" class="row mt-4">
+            @if ( !isset(request()->page))
+                <input type="hidden" name="page" value="1">
+            @else
+                <input type="hidden" name="page" value="{{ request()->page }}">
+            @endif
             <div class="col-md-1">
                 <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
                     <option>10</option>
@@ -62,7 +68,7 @@
             </div>
 
             <div class="col">
-                <div class="text-muted text-center" style="position: absolute">
+                {{-- <div class="text-muted text-center" style="position: absolute">
                     Pengajar
                  </div>
                 <select class="form-control mt-4" name="pengajar" onchange='if(this.value != 0) { this.form.submit(); }'>
@@ -74,7 +80,7 @@
                     @foreach($datapengajars as $pengajar)
                         <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>
                     @endforeach
-                </select>
+                </select> --}}
             </div>
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
@@ -107,8 +113,8 @@
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
                         <option value="">-------</option>
                     @endisset
-                    <option value="16">16</option>
                     <option value="17">17</option>
+                    <option value="16">16</option>
                 </select>
             </div>
             <div class="col-md-2">
