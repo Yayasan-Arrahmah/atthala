@@ -36,7 +36,7 @@
                                     <select class="form-control" name="last_name" aria-placeholder="Status" required>
                                         <option value="WARGA">Warga Sepinggan Pratama</option>
                                         <option value="UMUM">Umum</option>
-                                        <option value="PENGAJAR">Pengajar</option>
+                                        {{-- <option value="PENGAJAR">Pengajar</option> --}}
                                         <option value="KARYAWAN">Karyawan</option>
                                         <option value="SANTRI">Santri</option>
                                     </select>
@@ -118,13 +118,13 @@
                         </div>
                     {{ html()->form()->close() }}
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col">
                             <div class="text-center">
                                 {!! $socialiteLinks !!}
                             </div>
                         </div><!--/ .col -->
-                    </div><!-- / .row -->
+                    </div><!-- / .row --> --}}
 
                 </div><!-- card-body -->
             </div><!-- card -->
@@ -132,8 +132,8 @@
     </div><!-- row -->
 @endsection
 
-@push('after-scripts')
+{{-- @push('after-scripts')
     @if(config('access.captcha.registration'))
         @captchaScripts
     @endif
-@endpush
+@endpush --}}
