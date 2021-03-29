@@ -34,9 +34,10 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <select class="form-control" name="last_name" aria-placeholder="Status" required>
-                                        {{-- <option value="PENGAJAR">Pengajar</option>
-                                        <option value="KARYAWAN">Karyawan</option> --}}
+                                        <option value="PENGAJAR">Pengajar</option>
+                                        <option value="KARYAWAN">Karyawan</option>
                                         <option value="SANTRI">Santri</option>
+                                        <option value="WARGA">Warga</option>
                                     </select>
                                 </div><!--form-group-->
                             </div><!--col-->
