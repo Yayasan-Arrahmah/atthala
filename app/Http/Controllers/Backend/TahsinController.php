@@ -83,7 +83,7 @@ class TahsinController extends Controller
         if(isset($this->kenaikanlevel)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', $this->idtahsin)
-              ->where('angkatan_peserta', session('angkatan_tahsin'))
+              ->where('angkatan_peserta', request()->angkatan)
               ->update(['kenaikan_level_peserta' => $this->kenaikanlevel]);
 
             $tahsins = \App\Models\Tahsin::search($this->nama)

@@ -217,6 +217,7 @@
                                         <form action="{{ Request::fullUrl() }}">
                                             {{-- @csrf --}}
                                             <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
+                                            <input name="angkatan" value="{{ $tahsin->angkatan_peserta  }}" hidden>
                                             @if(!empty(Request::get('nama')))
                                                 <input name="nama" value="{{ Request::get('nama') }}" hidden>
                                             @endif
