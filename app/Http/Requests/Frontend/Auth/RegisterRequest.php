@@ -32,7 +32,7 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
             'password' => ['required', 'string', 'min:4', 'confirmed'],
-            'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
+            // 'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
         ];
     }
 
@@ -42,7 +42,7 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
+            // 'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
         ];
     }
 }

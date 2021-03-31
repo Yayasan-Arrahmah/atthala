@@ -51,13 +51,28 @@ class JadwalController extends Controller
     public function index(ManageJadwalRequest $request)
     {
         // $duplicates = collect(DB::table('jadwals')->select('nohp_peserta')->get());
-        $jadwals = DB::table('jadwals')
-                            ->where('angkatan_jadwal', session('angkatan_tahsin'))
-                            ->get();
+        // $jadwals = DB::table('jadwals')
+        //             ->when(request()->nama, function ($query) {
+        //                 return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
+        //             })
+        //             ->when(request()->level, function ($query) {
+        //                 if( request()->level != 'SEMUA') {
+        //                     return $query->where('level_peserta', '=', request()->level);
+        //                 }
+        //             })
+        //             ->when(request()->jenis, function ($query) {
+        //                 if( request()->jenis != 'SEMUA') {
+        //                     return $query->where('jenis_peserta', '=', request()->jenis);
+        //                 }
+        //             })
+        //             ->when(request()->angkatan, function ($query) {
+        //                 return $query->where('angkatan_peserta', '=', request()->angkatan ?? session('daftar_ujian'));
+        //             })
+        //             ->paginate(10);
 
 
-        return view('backend.jadwal.index', compact('jadwals'))
-            ->withjadwals($this->jadwalRepository->getActivePaginated(200, 'jumlah_peserta', 'asc'));
+        return view('backend.jadwal.index')
+            ->withjadwals($this->jadwalRepository->getActivePaginated(10, 'jumlah_peserta', 'asc'));
     }
 
     public function upload(ManageJadwalRequest $request)
@@ -175,13 +190,13 @@ class JadwalController extends Controller
             'waktu_jadwal',
             'jenis_jadwal',
             'angkatan_jadwal',
+            'jumlah_peserta',
         ));
 
         // Fire update event (JadwalUpdated)
         event(new JadwalUpdated($request));
 
-        return redirect()->route('admin.jadwals.index')
-            ->withFlashSuccess(__('backend_jadwals.alerts.updated'));
+        return redirect()->back()->withFlashSuccess(__('backend_jadwals.alerts.updated'));
     }
 
     /**

@@ -512,12 +512,14 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
         return view('frontend.tahsin.cari-daftarulangpeserta', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -529,10 +531,16 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         Session::put('sesidaftar', $sesidaftar);
 
         $notahsin            = $request->get('id');
-        $angkatan            = session('angkatan_tahsin');
-        $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $id                  = $request->get('idt');
+        $nama                = $request->get('nama');
+        // $angkatan            = session('angkatan_tahsin');
+        // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+
+        $angkatan            = 17;
+        $angkatandaftarulang = 18;
 
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
+                            ->where('id', $id)
                             ->where('angkatan_peserta', $angkatan)
                             ->latest('created_at')
                             ->first();
@@ -547,7 +555,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-                    ->where('jumlah_peserta', '<', 10)
+                    // ->where('jumlah_peserta', '<', 10)
                     ->select('hari_jadwal')
                     ->groupBy('hari_jadwal')
                     ->get();
@@ -736,12 +744,11 @@ Panitia Daftar Ulang Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
     public function daftarcalonpesertawaktu(Request $request)
     {
         $notahsin            = $request->get('id');
-        $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $angkatandaftarulang = 18;
         $jadwalhari          = $request->get('hari');
 
-        $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
-                            ->where('angkatan_peserta', $angkatandaftarulang)
-                            ->latest('created_at')
+        $calonpeserta = Tahsin::where('id', $request->get('idt'))
                             ->first();
 
         $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)

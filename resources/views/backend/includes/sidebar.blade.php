@@ -115,7 +115,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/jadwal*')) }}" href="{{ route('admin.tahsins.jadwal') }}">
-                                Data Peserta
+                                Status Jadwal
                             </a>
                         </li>
                     </ul>

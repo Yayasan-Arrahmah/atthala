@@ -99,6 +99,12 @@
                             </select>
                         </div><!--col-->
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 form-control-label" >Jumlah Peserta Perkelas</label>
+                        <div class="col-md-2">
+                            <input value="{{ $jadwal->jumlah_peserta }}" class="form-control" type="number" name="jumlah_peserta" placeholder="Batasan Peserta Perkelas" maxlength="191" required="">
+                        </div><!--col-->
+                    </div>
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-body-->

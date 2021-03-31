@@ -31,6 +31,20 @@ class JadwalRepository extends BaseRepository
     public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
     {
         return $this->model
+            ->when(request()->nama, function ($query) {
+                return $query->where('pengajar_jadwal', 'like', '%'.request()->nama.'%');
+            })
+            ->when(request()->level, function ($query) {
+                if( request()->level != 'SEMUA') {
+                    return $query->where('level_jadwal', '=', request()->level);
+                }
+            })
+            ->when(request()->jenis, function ($query) {
+                if( request()->jenis != 'SEMUA') {
+                    return $query->where('jenis_jadwal', '=', request()->jenis);
+                }
+            })
+            ->where('angkatan_jadwal', '=', request()->angkatan ?? '18')
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
@@ -61,12 +75,12 @@ class JadwalRepository extends BaseRepository
     {
         return DB::transaction(function () use ($data) {
             $jadwal = parent::create([
-                'uuid_jadwal' => Str::uuid(),
+                'uuid_jadwal'     => Str::uuid(),
                 'pengajar_jadwal' => $data['pengajar_jadwal'],
-                'level_jadwal' => $data['level_jadwal'],
-                'hari_jadwal' => $data['hari_jadwal'],
-                'waktu_jadwal' => $data['waktu_jadwal'],
-                'jenis_jadwal' => $data['jenis_jadwal'],
+                'level_jadwal'    => $data['level_jadwal'],
+                'hari_jadwal'     => $data['hari_jadwal'],
+                'waktu_jadwal'    => $data['waktu_jadwal'],
+                'jenis_jadwal'    => $data['jenis_jadwal'],
                 'angkatan_jadwal' => $data['angkatan_jadwal'],
             ]);
 
@@ -92,11 +106,12 @@ class JadwalRepository extends BaseRepository
         return DB::transaction(function () use ($jadwal, $data) {
             if ($jadwal->update([
                 'pengajar_jadwal' => $data['pengajar_jadwal'],
-                'level_jadwal' => $data['level_jadwal'],
-                'hari_jadwal' => $data['hari_jadwal'],
-                'waktu_jadwal' => $data['waktu_jadwal'],
-                'jenis_jadwal' => $data['jenis_jadwal'],
+                'level_jadwal'    => $data['level_jadwal'],
+                'hari_jadwal'     => $data['hari_jadwal'],
+                'waktu_jadwal'    => $data['waktu_jadwal'],
+                'jenis_jadwal'    => $data['jenis_jadwal'],
                 'angkatan_jadwal' => $data['angkatan_jadwal'],
+                'jumlah_peserta'  => $data['jumlah_peserta'],
             ])) {
 
                 return $jadwal;

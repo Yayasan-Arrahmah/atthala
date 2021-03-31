@@ -33,6 +33,7 @@ class Jadwal extends Model
         'waktu_jadwal',
         'jenis_jadwal',
         'angkatan_jadwal',
+        'jumlah_peserta',
     ];
 
     // public static function boot()

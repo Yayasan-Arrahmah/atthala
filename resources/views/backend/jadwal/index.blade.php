@@ -60,11 +60,99 @@
                 </div>
             </form>
         </div>
+        <form action="{{ Request::fullUrl() }}" class="row mt-4">
+            @if ( !isset(request()->page))
+                <input type="hidden" name="page" value="1">
+            @else
+                <input type="hidden" name="page" value="{{ request()->page }}">
+            @endif
+            <div class="col-md-1">
+                <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+            </div>
 
+            <div class="col">
+                {{-- <div class="text-muted text-center" style="position: absolute">
+                    Pengajar
+                 </div>
+                <select class="form-control mt-4" name="pengajar" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->pengajar)
+                        <option value="{{ request()->pengajar }}">{{ request()->pengajar }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                        <option value="SEMUA">SEMUA</option>
+                    @foreach($datapengajars as $pengajar)
+                        <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>
+                    @endforeach
+                </select> --}}
+            </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                    Level
+                 </div>
+                <select class="form-control mt-4" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->level)
+                        <option value="{{ request()->level }}">{{ request()->level }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                        <option value="SEMUA">SEMUA</option>
+                        <option value="ASAASI 1">ASAASI 1</option>
+                        <option value="ASAASI 2">ASAASI 2</option>
+                        <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
+                        <option value="TAMHIDI">TAMHIDI</option>
+                        <option value="TAWASUTHI">TAWASUTHI</option>
+                        <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
+                        <option value="IDADI">IDADI</option>
+                        <option value="TAKMILI">TAKMILI</option>
+                        <option value="TAHSINI">TAHSINI</option>
+                        <option value="ITQON">ITQON</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                Angkatan
+                 </div>
+                <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->angkatan)
+                        <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="18">18</option>
+                    <option value="17">17</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                Jenis
+                 </div>
+                <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->jenis)
+                        <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="SEMUA">SEMUA</option>
+                    <option value="IKHWAN">IKHWAN</option>
+                    <option value="AKHWAT">AKHWAT</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <div class="pull-right input-group mt-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-search"></i> </span>
+                    </div>
+                    <input name="pengajar" class="form-control" type="text" placeholder="Cari Pengajar" autocomplete="password" width="100">
+                </div>
+            </div>
+        </form>
         <div class="row mt-4">
             <div class="col">
                 <div class="table">
-                    <table class="table table-responsive-sm table-hover mb-0 table-sm" id="jadwal">
+                    <table class="table table-responsive-sm table-hover mb-0 table-sm" id="jadwal-">
                         <thead class="thead-light">
                             <tr>
                                 <th class="text-center">No</th>
@@ -165,7 +253,7 @@
                                     </td>
                                     <td>
                                         <div class="text-center">
-                                            @php
+                                            {{-- @php
                                                 $data = DB::table('tahsins')
                                                         ->where('nama_pengajar', $jadwal->pengajar_jadwal)
                                                         ->where('level_peserta', $jadwal->level_jadwal)
@@ -173,8 +261,8 @@
                                                         ->where('jenis_peserta', $jadwal->jenis_jadwal)
                                                         ->where('angkatan_peserta', $jadwal->angkatan_jadwal)
                                                         ->count();
-                                            @endphp
-                                            {{ $data }}
+                                            @endphp --}}
+                                            {{ $jadwal->jumlah_peserta }}
                                         </div>
                                     </td>
                                     <td>
