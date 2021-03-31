@@ -539,26 +539,47 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         $angkatan            = 17;
         $angkatandaftarulang = 18;
 
+        // ngambil data profile
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
                             ->where('id', $id)
                             ->where('angkatan_peserta', $angkatan)
                             ->latest('created_at')
                             ->first();
 
+        //verifikasi kalu sudah terdata
         $cekterdaftarujian = Tahsin::where('no_tahsin', $notahsin)
                             ->where('angkatan_peserta', $angkatandaftarulang)
                             ->latest('created_at')
                             ->first();
 
+        //cek banyak data kelas sesuai level
+        $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                            ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                            ->where('level_jadwal', $calonpeserta->level_peserta)
+                            ->get();
+
+        $hari_[] = ['hari_jadwal' => 'Pilih Hari...', 'data' => ''];
+        // dd($ceklevel);
+        foreach ($ceklevel as $level) {
+            $cekbanyakpeserta = null;
+            $cekbanyakpeserta = Tahsin::where('level_peserta', $level->level_jadwal)
+                                ->where('jadwal_tahsin', $level->hari_jadwal.' '.$level->waktu_jadwal)
+                                ->where('angkatan_peserta', $level->angkatan_jadwal)
+                                ->where('jenis_peserta', $level->jenis_jadwal)
+                                ->get();
+            if ($cekbanyakpeserta->count() < $level->jumlah_peserta) {
+                $hari_[] = ['hari_jadwal' => $level->hari_jadwal, 'data' => $level->hari_jadwal];
+            }
+        }
+        $hari = collect($hari_)->groupBy('hari_jadwal');
         $jadwalhari  = $request->get('hari') ?? null;
 
-        $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
-                    ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-                    // ->where('jumlah_peserta', '<', 10)
-                    ->select('hari_jadwal')
-                    ->groupBy('hari_jadwal')
-                    ->get();
+        // $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+        //             ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+        //             ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+        //             ->select('hari_jadwal')
+        //             ->groupBy('hari_jadwal')
+        //             ->get();
 
         return view('frontend.tahsin.daftarulangpeserta', compact('calonpeserta', 'cekterdaftarujian', 'hari'));
     }
@@ -680,20 +701,19 @@ Panitia Daftar Ulang Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
 
     public function daftarulangpesertadatawaktu(Request $request)
     {
-        $notahsin            = $request->get('id');
-        $angkatan            = session('angkatan_tahsin');
-        $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $id           = $request->get('id');
+        // $angkatan            = session('angkatan_tahsin');
+        // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $angkatan            = '17';
+        $angkatandaftarulang = '18';
         $jadwalhari          = $request->get('hari');
 
-        $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
-                            ->where('angkatan_peserta', $angkatan)
-                            ->latest('created_at')
+        $calonpeserta = Tahsin::where('id', $id)
                             ->first();
 
         $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                             ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
                             ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-                            ->where('jumlah_peserta', '<', 10)
                             ->where('hari_jadwal', $jadwalhari)
                             ->get();
 

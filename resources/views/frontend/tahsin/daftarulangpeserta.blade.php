@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                                <a href="/tahsin/cek/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}&idt={{ $calonpeserta->id }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
+                                <a href="/tahsin/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}&idt={{ $calonpeserta->id }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
                         </div>
                         <div class="col">
                             <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_peserta }}</strong></div>
@@ -205,9 +205,8 @@
                                 <label class="col-4 form-control-label" >Pilih Jadwal Tahsin</label>
                                 <div class="col-4" style="padding-right: 2px; padding-left: 2px">
                                     <select id="datahari" name="hari" class="form-control" required>
-                                        <option value="">Pilih Hari...</option>
-                                        @foreach ($hari as $h)
-                                            <option value="{{ $h->hari_jadwal }}">{{ $h->hari_jadwal }}</option>
+                                        @foreach ($hari as $h => $key)
+                                            <option value="{{ $h }}">{{ $h }}</option>
                                         @endforeach
                                         {{-- <option value="SABTU">SABTU</option>
                                         <option value="AHAD">AHAD</option>
@@ -605,7 +604,7 @@
                  var hari = $(this).val();
                  $('#waktu').find('option').not(':first').remove();
                  $.ajax({
-                   url: '/tahsin/cek/daftar-ulang-peserta/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
+                   url: '/tahsin/daftar-ulang-peserta/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
                    type: 'get',
                    dataType: 'json',
                    success: function(response){
