@@ -36,13 +36,14 @@
                 </center>
                 <div class="text-center">
                     <h4> Peserta Telah Daftar Ulang </h4>
-                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
+                    {{-- <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
+                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan 18</div>
                 </div>
                 <hr>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                                <a href="/tahsin/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}&idt={{ $calonpeserta->id }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
+                                <a href="/tahsin/cek/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}&idt={{ $calonpeserta->id }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
                         </div>
                         <div class="col">
                             <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_peserta }}</strong></div>
@@ -82,7 +83,8 @@
                         </center>
                         <div class="text-center">
                             <h4> Formulir <br>Daftar Ulang Peserta Tahsin </h4>
-                            <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
+                            {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
+                            <div class="text-muted">Angkatan 18</div>
                         </div>
 
                         <div class="card-body">
