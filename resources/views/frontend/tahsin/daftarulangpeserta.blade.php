@@ -606,7 +606,7 @@
                  var hari = $(this).val();
                  $('#waktu').find('option').not(':first').remove();
                  $.ajax({
-                   url: '/tahsin/daftar-ulang-peserta/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
+                   url: '/tahsin/cek/daftar-ulang-peserta/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
                    type: 'get',
                    dataType: 'json',
                    success: function(response){
