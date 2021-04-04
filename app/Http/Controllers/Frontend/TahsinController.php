@@ -587,15 +587,20 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
     public function simpandaftarulangpeserta(Request $request)
     {
         $angkatan = session('daftar_ulang_angkatan_tahsin');
+        $angkatan = '18';
 
         $this->validate($request, [
             'notelp'           => 'required',
         ]);
 
-        $cekterdaftarpeserta = Tahsin::where('no_tahsin', $request->input('notahsin'))->where('angkatan_peserta', $angkatan)->first();
+        $cekterdaftarpeserta = Tahsin::where('no_tahsin', $request->input('notahsin'))
+                                ->where('angkatan_peserta', $angkatan)
+                                ->where('nama_peserta', $request->input('nama'))
+                                ->first();
+
 
         if(isset($cekterdaftarpeserta)){
-            return redirect()->to('/tahsin/daftar-ulang-peserta/daftar?id='.$cekterdaftarpeserta->no_tahsin);
+            return redirect()->to('/tahsin/daftar-ulang-peserta-2021/daftar?id='.$cekterdaftarpeserta->no_tahsin.'&idt='.$cekterdaftarpeserta->id.'&nama='.$cekterdaftarpeserta->nama);
         }
 
         $pesertadaftarulang = Tahsin::where('no_tahsin', $request->get('notahsin'))->latest('created_at')->first();
@@ -723,7 +728,7 @@ Panitia Daftar Ulang Tahsin Angkatan 18
         //     $info      = "gagal";
         //     $no_tahsin = "null";
         // }
-        return redirect()->to('/tahsin/daftar-ulang-peserta/print?id='.$request->get('notahsin'));
+        return redirect()->to('/tahsin/daftar-ulang-peserta-2021/print?id='.$pesertadaftarulang->no_tahsin.'&nama='.$pesertadaftarulang->nama_peserta);
 
         // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
     }
@@ -751,7 +756,11 @@ Panitia Daftar Ulang Tahsin Angkatan 18
 
     public function printdaftarulangpeserta(Request $request)
     {
-        $data = Tahsin::where('no_tahsin', $request->get('id'))->latest('created_at')->first();
+        $data = Tahsin::where('no_tahsin', $request->get('id'))
+                        ->where('nama_peserta', $request->get('nama'))
+                        // ->where('id', $request->get('idt'))
+                        ->where('angkatan_peserta', '18')
+                        ->first();
 
         $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', $data)->setPaper('a5', 'landscape');
 

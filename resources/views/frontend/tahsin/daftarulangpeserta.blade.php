@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                                <a href="/tahsin/cek/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}&idt={{ $calonpeserta->id }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
+                                <a href="/tahsin/daftar-ulang-peserta-2021/print?id={{ $calonpeserta->no_tahsin }}&nama={{ $calonpeserta->nama_peserta }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
                         </div>
                         <div class="col">
                             <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_peserta }}</strong></div>
@@ -433,11 +433,68 @@
                                 </div>
                             </div> --}}
                             <div class="form-group row">
+                                <div class="col-md-12 table-responsive">
+                                    <div class="alert alert-primary" role="alert" style="margin-bottom: 0rem">
+                                        <h4 class="alert-heading">Rincian Biaya</h4>
+                                        <table class="table table-sm table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Daftar Ulang</strong>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        Rp. 50.000
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <strong>SPP 1 Periode</strong>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        Rp. 100.000 x 4 Bulan
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        ___________
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Total Biaya</strong>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        <strong>Rp. 450.000</strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p>
+                                            *Minimal Transfer Biaya daftar ulang Rp. 50.000
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col text-muted" style="text-align: justify;">
                                   Gunakan Kode Bulan Lahir dan Tanggal Lahir ketika melakukan transfer.
                                   <br>
                                   <strong>
-                                      Contoh : SPP Rp 100.000 + 0418 <br>(Bulan April Tanggal 18) = Rp 100.418
+                                      Contoh : Rp 150.000 + 0418 <br>(Bulan April Tanggal 18) = Rp 150.418
                                   </strong>
                                 </div>
                             </div>
@@ -446,7 +503,7 @@
                                     <div class="alert alert-success" role="alert" style="margin-bottom: 0rem">
                                         <h4 class="alert-heading">Rekening Pembayaran (IKHWAN)</h4>
                                         <p>
-                                            <div><strong>Nominal Transfer : Rp 100,000</strong></div>
+                                            {{-- <div><strong>Nominal Transfer : Rp 100,000</strong></div> --}}
                                             <div><strong>BNI Syariah</strong> : 4550 0000 15</div>
                                             <div><strong>A.N</strong> : Yayasan Arrahmah</div>
                                         </p>
@@ -458,22 +515,22 @@
                                     <div class="alert alert-warning" role="alert" style="margin-bottom: 0rem">
                                         <h4 class="alert-heading">Rekening Pembayaran (AKHWAT)</h4>
                                         <p>
-                                            <div><strong>Nominal Transfer : Rp 100,000</strong></div>
+                                            {{-- <div><strong>Nominal Transfer : Rp 100,000</strong></div> --}}
                                             <div><strong>BNI Syariah</strong> : 7009 9997 05</div>
                                             <div><strong>A.N</strong> : Yayasan Arrahmah</div>
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-6 form-control-label" >Pelunasan SPP Tahsin Bulan Pertama</label>
+                            {{-- <div class="form-group row">
+                                <label class="col-6 form-control-label" >Biaya daftar ulang</label>
                                 <div class="col-6">
                                     <select name="pelunasan_tahsin" class="buktitf form-control">
                                         <option value="SUDAH">SUDAH</option>
                                         <option value="BELUM">BELUM</option>
                                     </select>
                                 </div><!--col-->
-                            </div>
+                            </div> --}}
                             <div id="bukti-tf" class="form-group row">
                                 <label class="col-4 form-control-label" >Bukti Transfer</label>
                                 <div class="col-8">
@@ -500,11 +557,11 @@
                                 </div>
                                 <div class="col-12">
                                     <p class="text-muted" style="font-weight: 700; text-align:justify">
-                                        Apabila sudah membayar / melunasi infaq SPP namun tidak memiliki bukti pembayaran, maka kami akan memverifikasi sendiri ke bagian keuangan.
+                                        {{-- Apabila sudah membayar / melunasi infaq SPP namun tidak memiliki bukti pembayaran, maka kami akan memverifikasi sendiri ke bagian keuangan. --}}
                                     </p>
                                 </div>
                             </div>
-                            <div id="non-bukti-tf" class="form-group row">
+                            {{-- <div id="non-bukti-tf" class="form-group row">
                                 <div class="col-12">
                                     <p class="text-muted" style="font-weight: 700; text-align:justify">
                                         Apabila saudara belum sempat melunasi pembayaran infaq SPP, maka saudara bisa melakukan pembayaran setelah selesai daftar ulang ini dan melakukan konfirmasi ke nomor WhatsApp kasir di 08115430077 dengan format:
@@ -516,7 +573,7 @@
                                         <br> 5. Nominal Transfer .
                                     </p>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group row">
                                 <div class="col-12">
                                     <p class="text-muted" style="font-weight: 700; text-align:justify">
@@ -606,7 +663,7 @@
                  var hari = $(this).val();
                  $('#waktu').find('option').not(':first').remove();
                  $.ajax({
-                   url: '/tahsin/cek/daftar-ulang-peserta/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
+                   url: '/tahsin/daftar-ulang-peserta-2021/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
                    type: 'get',
                    dataType: 'json',
                    success: function(response){
