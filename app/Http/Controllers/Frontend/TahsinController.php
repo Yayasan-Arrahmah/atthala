@@ -555,7 +555,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         //cek banyak data kelas sesuai level
         $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                             ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                            ->where('level_jadwal', $calonpeserta->level_peserta)
+                            ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
                             ->get();
 
         $hari_[] = ['hari_jadwal' => 'Pilih Hari...', 'data' => ''];
@@ -599,8 +599,9 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         //cek banyak data jam sesuai level
         $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                    ->where('level_jadwal', $calonpeserta->level_peserta)
+                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
                     ->where('hari_jadwal', $request->get('hari'))
+                    ->orderBy('waktu_jadwal', 'ASC')
                     ->get();
 
         // $waktu_[] = ['waktu_jadwal' => '-----', 'id' => ''];
@@ -611,8 +612,8 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                                 ->where('jadwal_tahsin', $level->hari_jadwal.' '.$level->waktu_jadwal)
                                 ->where('angkatan_peserta', $angkatandaftarulang)
                                 ->where('jenis_peserta', $level->jenis_jadwal)
-                                ->get();
-            if ($cekbanyakpeserta->count() < $level->jumlah_peserta) {
+                                ->count();
+            if ($cekbanyakpeserta < $level->jumlah_peserta) {
                 $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id];
             }
         }
