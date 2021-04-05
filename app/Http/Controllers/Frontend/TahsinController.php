@@ -609,7 +609,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             $cekbanyakpeserta = null;
             $cekbanyakpeserta = Tahsin::where('level_peserta', $level->level_jadwal)
                                 ->where('jadwal_tahsin', $level->hari_jadwal.' '.$level->waktu_jadwal)
-                                ->where('angkatan_peserta', $level->angkatan_jadwal)
+                                ->where('angkatan_peserta', $angkatandaftarulang)
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->get();
             if ($cekbanyakpeserta->count() < $level->jumlah_peserta) {
