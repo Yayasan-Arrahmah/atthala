@@ -584,6 +584,50 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         return view('frontend.tahsin.daftarulangpeserta', compact('calonpeserta', 'cekterdaftarujian', 'hari'));
     }
 
+    public function daftarulangpesertadatawaktu(Request $request)
+    {
+        $id           = $request->get('id');
+        // $angkatan            = session('angkatan_tahsin');
+        // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $angkatan            = '17';
+        $angkatandaftarulang = '18';
+        $jadwalhari          = $request->get('hari');
+
+        $calonpeserta = Tahsin::where('id', $id)
+                            ->first();
+
+        //cek banyak data jam sesuai level
+        $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                    ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                    ->where('level_jadwal', $calonpeserta->level_peserta)
+                    ->where('hari_jadwal', $request->get('hari'))
+                    ->get();
+
+        // $waktu_[] = ['waktu_jadwal' => '-----', 'id' => ''];
+        // dd($ceklevel);
+        foreach ($ceklevel as $level) {
+            $cekbanyakpeserta = null;
+            $cekbanyakpeserta = Tahsin::where('level_peserta', $level->level_jadwal)
+                                ->where('jadwal_tahsin', $level->hari_jadwal.' '.$level->waktu_jadwal)
+                                ->where('angkatan_peserta', $level->angkatan_jadwal)
+                                ->where('jenis_peserta', $level->jenis_jadwal)
+                                ->get();
+            if ($cekbanyakpeserta->count() < $level->jumlah_peserta) {
+                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id];
+            }
+        }
+        // $waktu = collect($waktu_)->get();
+        $waktu = collect($waktu_)->values();
+
+        // $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+        //                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+        //                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+        //                     ->where('hari_jadwal', $jadwalhari)
+        //                     ->get();
+
+        return response()->json($waktu);
+    }
+
     public function simpandaftarulangpeserta(Request $request)
     {
         $angkatan = session('daftar_ulang_angkatan_tahsin');
@@ -603,18 +647,12 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             return redirect()->to('/tahsin/daftar-ulang-peserta-2021/daftar?id='.$cekterdaftarpeserta->no_tahsin.'&idt='.$cekterdaftarpeserta->id.'&nama='.$cekterdaftarpeserta->nama);
         }
 
-        $pesertadaftarulang = Tahsin::where('no_tahsin', $request->get('notahsin'))->latest('created_at')->first();
+        $pesertadaftarulang = Tahsin::find($request->input('idt'));
         $peserta            = new Tahsin;
 
-        $datajadwal = Jadwal::where('angkatan_jadwal', $angkatan)
-                        ->where('jenis_jadwal', $pesertadaftarulang->jenis_peserta)
-                        ->where('hari_jadwal', $request->get('hari'))
-                        ->where('waktu_jadwal', $request->get('waktu'))
-                        ->where('level_jadwal', $pesertadaftarulang->kenaikan_level_peserta ?? $pesertadaftarulang->level_peserta)
-                        ->where('jumlah_peserta', '<', 10)
-                        ->first();
+        $datajadwal = Jadwal::where('id', $request->get('waktu'))->first();
 
-        // try {
+        try {
 
             $nohp = $request->input('notelp');
             if (substr($nohp, 0, 1) === '0') {
@@ -634,17 +672,17 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             $peserta->nohp_peserta         = $nohp;
             $peserta->level_peserta        = $pesertadaftarulang->kenaikan_level_peserta ?? $pesertadaftarulang->level_peserta;
             $peserta->nama_pengajar        = $datajadwal->pengajar_jadwal;
-            $peserta->jadwal_tahsin        = $request->get('hari').' '.$request->get('waktu');
+            $peserta->jadwal_tahsin        = $datajadwal->hari_jadwal.' '.$datajadwal->waktu_jadwal;
             $peserta->tempat_lahir_peserta = $request->input('tempat_lahir_peserta');
             $peserta->waktu_lahir_peserta  = $request->input('tanggal_lahir_peserta').'-'.$request->input('bulan_lahir_peserta').'-'.$request->input('tahun_lahir_peserta');
             $peserta->angkatan_peserta     = $angkatan;
             $peserta->status_pembayaran    = $request->get('pelunasan_tahsin');
             $peserta->save();
 
-            $tambahpeserta = Jadwal::where('id',  $datajadwal->id)
-                    ->update([
-                        'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
-                    ]);
+            // $tambahpeserta = Jadwal::where('id',  $datajadwal->id)
+            //         ->update([
+            //             'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
+            //         ]);
 
             if ($request->get('pelunasan_tahsin') === 'SUDAH'){
                 $pembayaran = new Pembayaran;
@@ -724,34 +762,13 @@ Panitia Daftar Ulang Tahsin Angkatan 18
                 curl_close($ch);
 
 
-        // } catch (\Throwable $th) {
-        //     $info      = "gagal";
-        //     $no_tahsin = "null";
-        // }
+        } catch (\Throwable $th) {
+            $info      = "gagal";
+            $no_tahsin = "null";
+        }
         return redirect()->to('/tahsin/daftar-ulang-peserta-2021/print?id='.$pesertadaftarulang->no_tahsin.'&nama='.$pesertadaftarulang->nama_peserta);
 
         // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
-    }
-
-    public function daftarulangpesertadatawaktu(Request $request)
-    {
-        $id           = $request->get('id');
-        // $angkatan            = session('angkatan_tahsin');
-        // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
-        $angkatan            = '17';
-        $angkatandaftarulang = '18';
-        $jadwalhari          = $request->get('hari');
-
-        $calonpeserta = Tahsin::where('id', $id)
-                            ->first();
-
-        $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
-                            ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                            ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-                            ->where('hari_jadwal', $jadwalhari)
-                            ->get();
-
-        return response()->json($waktu);
     }
 
     public function printdaftarulangpeserta(Request $request)

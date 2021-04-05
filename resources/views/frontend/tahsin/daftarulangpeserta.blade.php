@@ -93,6 +93,7 @@
                                     <label class="form-control-label">Nomor / ID Tahsin</label>
                                 </div>
                                 <div class="col-6">
+                                    <input hidden name="idt" type="text" value="{{ $calonpeserta->id }}">
                                     <input hidden name="notahsin" type="text" value="{{ $calonpeserta->no_tahsin }}">
                                     <input disabled class="form-control" type="text" placeholder="No Tahsin" value="{{ $calonpeserta->no_tahsin }}" maxlength="191" required="">
                                 </div><!--col-->
@@ -669,14 +670,15 @@
                    success: function(response){
 
                      var len = 0;
-                     if(response['data'] != null){
-                       len = response['data'].length;
+                     if(response != null){
+                       len = response.length;
                      }
 
                      if(len > 0){
                        for(var i=0; i<len; i++){
-                         var waktu = response['data'][i].waktu_jadwal;
-                         var option = "<option value='"+waktu+"'>"+waktu+"</option>";
+                         var waktu  = response[i].waktu_jadwal;
+                         var id     = response[i].id;
+                         var option = "<option value='"+id+"'>"+waktu+"</option>";
                          $("#waktu").append(option);
                        }
                      }
