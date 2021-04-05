@@ -24,8 +24,8 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::post('calon-peserta-ujian/uploadbuktitransfer',  [TahsinController::class, 'uploadbuktitransferpesertaujian'])->name('tahsin.uploadbuktitransferpesertaujian');
     Route::get('calon-peserta-ujian/print',                 [TahsinController::class, 'printcalonpesertaujian'])->name('tahsin.printcalonpesertaujian');
     Route::get('daftar-ulang-peserta-2021/cari',                 [TahsinController::class, 'caridaftarulangpeserta'])->name('tahsin.caridaftarulangpeserta');
-    // Route::get('daftar-ulang-peserta-2021/daftar',               [TahsinController::class, 'daftarulangpeserta'])->name('tahsin.daftarulangpeserta');
-    // Route::get('daftar-ulang-peserta-2021/daftar/datawaktu',     [TahsinController::class, 'daftarulangpesertadatawaktu'])->name('tahsin.daftarulangpesertadatawaktu');
+    Route::get('daftar-ulang-peserta-2021/daftar',               [TahsinController::class, 'daftarulangpeserta'])->name('tahsin.daftarulangpeserta');
+    Route::get('daftar-ulang-peserta-2021/daftar/datawaktu',     [TahsinController::class, 'daftarulangpesertadatawaktu'])->name('tahsin.daftarulangpesertadatawaktu');
     // Route::get('daftar-ulang-peserta-2021/print',                [TahsinController::class, 'printdaftarulangpeserta'])->name('tahsin.printdaftarulangpeserta');
     // Route::post('daftar-ulang-peserta-2021/simpan',               [TahsinController::class, 'simpandaftarulangpeserta'])->name('tahsin.simpandaftarulangpeserta');
     Route::get('pendaftaran/peserta',               [TahsinController::class, 'daftarcalonpeserta'])->name('tahsin.daftarcalonpeserta');
