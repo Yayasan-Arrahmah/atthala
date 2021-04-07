@@ -237,6 +237,7 @@
                                                 <option value="TAKMILI">TAKMILI</option>
                                                 <option value="TAHSINI">TAHSINI</option>
                                                 <option value="ITQON">ITQON</option>
+                                                <option value="TAJWIDI 1">TAJWIDI 1</option>
                                             </select>
                                         </form>
                                     </td>

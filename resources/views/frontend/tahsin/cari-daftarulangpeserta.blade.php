@@ -64,7 +64,11 @@
                                             <div class="row kotak">
                                                 <div class="col-2 text-center">
                                                     @if (strpos($tahsin->kenaikan_level_peserta, 'TAJWIDI') !== false )
-                                                        <a href="https://forms.gle/FGZXXGV1VZR7LHar5"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                        @if ($tahsin->jenis_peserta == 'IKHWAN')
+                                                            <a href="https://s.id/registrasi_ikhwan"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                        @else
+                                                            <a href="https://s.id/registrasi_akhwat"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                        @endif
                                                     @else
                                                         {{-- <a href="/tahsin/daftar-ulang-peserta/daftar?id={{ $tahsin->no_tahsin }}"  --}}
                                                             <a href="/tahsin/daftar-ulang-peserta-2021/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
