@@ -72,7 +72,7 @@ background-repeat: no-repeat;
             <hr style="border-color: #000">
         </div>
         <h5 style="text-decoration: underline; margin-bottom: 20px">
-            LAPORAN HASIL BELAJAR TAHUN AJARAN 2020 / 2021
+            LAPORAN HASIL BELAJAR TAHUN AJARAN {{ $perioderapor->tahun_ajaran }}
         </h5>
     </center>
     <table  style="font: 12px; width: 100%">
@@ -95,7 +95,7 @@ background-repeat: no-repeat;
                 <td style="padding: 0px"></td>
                 <td style="padding: 0px">Periode</td>
                 <td style="padding: 0px">:</td>
-                <td style="padding: 0px; font-family: serif;"><strong>TRIWULAN II</strong></td>
+                <td style="padding: 0px; font-family: serif;"><strong>{{ $perioderapor->nama_periode }}</strong></td>
             </tr>
             <tr>
                 <td style="padding: 0px">Nama Santri</td>
@@ -104,7 +104,7 @@ background-repeat: no-repeat;
                 <td style="padding: 0px"></td>
                 <td style="padding: 0px">Tahun Ajaran</td>
                 <td style="padding: 0px">:</td>
-                <td style="padding: 0px"><strong>2020 / 2021</strong></td>
+                <td style="padding: 0px"><strong>{{ $perioderapor->tahun_ajaran }}</strong></td>
             </tr>
             <tr>
                 <td style="padding: 0px">

@@ -52,15 +52,16 @@ class RtqRaporController extends Controller
 
     public function rapor(Request $request)
     {
-        $kategoris  = RtqKategoriPenilaian::get();
-        $rapor      = RtqRapor::where('uuid', $request->get('uuid'))->first();
-        $santri     = Rtq::where('id', $rapor->id_santri)->first();
+        $kategoris    = RtqKategoriPenilaian::get();
+        $rapor        = RtqRapor::where('uuid', $request->get('uuid'))->first();
+        $perioderapor = RtqPeriodeRapor::where('id', $rapor->id_periode_rapor)->first();
+        $santri       = Rtq::where('id', $rapor->id_santri)->first();
         if( request()->verifikasi == 'ya' ){
             $rapor->verifikasi_rapor = 'TERVERIFIKASI';
             $rapor->save();
-            return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris'))->withFlashSuccess('Berhasil Diverifikasi !');
+            return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris', 'perioderapor'))->withFlashSuccess('Berhasil Diverifikasi !');
         } else {
-            return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris'));
+            return view('backend.rtq.rapor', compact('santri', 'rapor', 'kategoris', 'perioderapor'));
         }
     }
 
@@ -92,10 +93,11 @@ class RtqRaporController extends Controller
 
     public function raporcetak(Request $request)
     {
-        $data = RtqRapor::where('uuid', $request->get('uuid'))->first();
-        $tanggal = Carbon::parse($data->created_at)->locale('id');
+        $data         = RtqRapor::where('uuid', $request->get('uuid'))->first();
+        $perioderapor = RtqPeriodeRapor::where('id', $data->id_periode_rapor)->first();
+        $tanggal      = Carbon::parse($data->created_at)->locale('id');
 
-        $pdf = PDF::loadView('backend.rtq.rapor-cetak', compact('data', 'tanggal'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadView('backend.rtq.rapor-cetak', compact('data', 'tanggal', 'perioderapor'))->setPaper('a4', 'potrait');
         $santri = Rtq::where('id', $data->id_santri)->first();
         return $pdf->stream($santri->nis.' - '.$santri->nama_santri.' - RTQ Arrahmah Balikpapan.pdf');
     }

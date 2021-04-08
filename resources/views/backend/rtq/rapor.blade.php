@@ -45,7 +45,7 @@
                 </div>
                 <div class="row">
                     <div class="col-4">Periode</div>
-                    <div class="col-8 info-absen" style="font-weight: 800">: November 2020 - Februari 2021</div>
+                    <div class="col-8 info-absen" style="font-weight: 800">: {{ $perioderapor->waktu_periode }}</div>
                 </div>
             </div>
             <div class="col-md-6">
