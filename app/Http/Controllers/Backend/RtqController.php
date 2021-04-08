@@ -43,7 +43,7 @@ class RtqController extends Controller
      */
     public function index(ManageRtqRequest $request)
     {
-        $perioderapor    = RtqPeriodeRapor::get();
+        $perioderapor    = RtqPeriodeRapor::all()->sortByDesc('id');
         $setperioderapor = RtqPeriodeRapor::latest('created_at')->first();
         $halaqoh  = Rtq::select('pengajar_santri')
                         ->groupBy('pengajar_santri')

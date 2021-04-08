@@ -66,9 +66,9 @@
                         <option value="{{ request()->periode }}">{{ $periode_->nama_periode }} - {{ $periode_->tahun_ajaran }}</option>
                         <option value="">-------</option>
                     @endisset
-                        @foreach ($perioderapor as $periode)
-                            <option value="{{ $periode->id }}">{{ $periode->nama_periode }} - {{ $periode->tahun_ajaran }}</option>
-                        @endforeach
+                    @foreach ($perioderapor as $periode)
+                        <option value="{{ $periode->id }}">{{ $periode->nama_periode }} - {{ $periode->tahun_ajaran }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-1">
