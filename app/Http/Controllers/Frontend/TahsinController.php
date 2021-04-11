@@ -40,31 +40,83 @@ class TahsinController extends Controller
     {
         $sesidaftar = Str::random(10);
         Session::put('sesidaftar', $sesidaftar);
-        return view('frontend.tahsin.pendaftaran-ditutup', compact('sesidaftar'));
+        return view('frontend.tahsin.pendaftaran', compact('sesidaftar'));
     }
 
     public function uploadktp(Request $request)
     {
-        $file_ktp      = $request->file('filepond');
-        $nama_file_ktp = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_ktp->getClientOriginalExtension();
-        Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
-        Storage::disk('ktp')->put($nama_file_ktp, File::get($file_ktp));
+        if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id') {
+            $file_ktp      = $request->file('filepond');
+            $nama_file_ktp = '18-'.Str::random(5).'-'.Carbon::now().'.'.$file_ktp->getClientOriginalExtension();
+            Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+            // Storage::disk('bukti-transfer-atthala')->put($nama_file_ktp, File::get($file_ktp));
+
+            $buktitf         = Image::make($file_ktp);
+            $lokasibuktitf   = public_path('../../../public_html/atthala/app/public/ktp/');
+            $buktitf->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.Session::get('filektp'));
+        } else {
+            $file_ktp      = $request->file('filepond');
+            $nama_file_ktp = '18-'.Str::random(5).'-'.Carbon::now().'.'.$file_ktp->getClientOriginalExtension();
+            Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+            // Storage::disk('bukti-transfer')->put($nama_file_ktp, File::get($file_ktp));
+
+            $buktitf         = Image::make($file_ktp);
+            $lokasibuktitf   = public_path('app/public/ktp/');
+            $buktitf->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.Session::get('filektp'));
+        }
+
+        // $file_ktp      = $request->file('filepond');
+        // $nama_file_ktp = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_ktp->getClientOriginalExtension();
+        // Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+        // Storage::disk('ktp')->put($nama_file_ktp, File::get($file_ktp));
     }
 
     public function uploadrekaman(Request $request)
     {
         $file_rekaman      = $request->file('filepond');
-        $nama_file_rekaman = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
+        $nama_file_rekaman = '18-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
         Session::put('filerekaman', $nama_file_rekaman); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('rekaman')->put($nama_file_rekaman, File::get($file_rekaman));
     }
 
     public function uploadbuktitransfer(Request $request)
     {
-        $file_bukti_transfer      = $request->file('filepond');
-        $nama_file_bukti_transfer = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_bukti_transfer->getClientOriginalExtension();
-        Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
-        Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+        if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id') {
+            $file_bukti_transfer      = $request->file('filepond');
+            $nama_file_bukti_transfer = '18-'.Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
+            Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+            // Storage::disk('bukti-transfer-atthala')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+
+            $buktitf         = Image::make($file_bukti_transfer);
+            $lokasibuktitf   = public_path('../../../public_html/atthala/app/public/bukti-transfer/');
+            $buktitf->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.Session::get('filebuktitransfer'));
+        } else {
+            $file_bukti_transfer      = $request->file('filepond');
+            $nama_file_bukti_transfer = '18-'.Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
+            Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+            // Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+
+            $buktitf         = Image::make($file_bukti_transfer);
+            $lokasibuktitf   = public_path('app/public/ktp/');
+            $buktitf->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.Session::get('filebuktitransfer'));
+        }
+
+        // $file_bukti_transfer      = $request->file('filepond');
+        // $nama_file_bukti_transfer = session('daftar_ulang_angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_bukti_transfer->getClientOriginalExtension();
+        // Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+        // Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
     }
 
     public function uploadbuktitransferpesertaujian(Request $request)
@@ -108,8 +160,8 @@ class TahsinController extends Controller
         $tahsin     = new Tahsin;
         $pembayaran = new Pembayaran;
 
-        $banyakid   = $tahsin->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
-                    ->where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+        $banyakid   = $tahsin->where('angkatan_peserta', '18')
+                    ->where('no_tahsin', 'like', '%-'.'18'.'-%')
                     ->count();
         $generateid = $banyakid + 1;
 
@@ -127,7 +179,7 @@ class TahsinController extends Controller
                 $jenisid                         = "TA";
             }
 
-            $no_tahsin = $jenisid . '-'.session('daftar_ulang_angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            $no_tahsin = $jenisid . '-'.'18'.'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
 
             // $nominal_pembayaran  = 200000 + ($request->has('bayar_modul') === true ? 60000 : 0) + ($request->has('bayar_mushaf') === true ? 110000 : 0);
             $nominal_pembayaran  = 200000;
@@ -153,20 +205,23 @@ class TahsinController extends Controller
             // Storage::disk('bukti-transfer')->put($nama_file_buktitf . '.' . $extension_buktitf, File::get($file_buktitf));
 
             // test script , ada bug no tahsin ganda. validasi uniqe (harus beda)
-            $tahsin->validate([
-                'no_tahsin'    => 'unique',
-            ]);
+            // $tahsin->validate([
+            //     'no_tahsin'    => 'unique',
+            // ]);
+            // gagal dari
+
+
             // jika terdapat no tahsin sama, maka akan ditambhkan 1
-            if ($tahsin->fails()) {
-                $generateid = $generateid + 1;
-                $no_tahsin = $jenisid . '-'.session('daftar_ulang_angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
-            }
+            // if ($tahsin->fails()) {
+            //     $generateid = $generateid + 1;
+            //     $no_tahsin = $jenisid . '-'.'18'.'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            // }
 
             $tahsin->no_tahsin                       = $no_tahsin;
             $tahsin->nama_peserta                    = $request->nama_peserta;
             $tahsin->nohp_peserta                    = $request->nohp_peserta;
             $tahsin->jenis_peserta                   = $request->jenis_peserta;
-            $tahsin->angkatan_peserta                = session('daftar_ulang_angkatan_tahsin');
+            $tahsin->angkatan_peserta                = '18';
             $tahsin->alamat_peserta                  = $request->alamat_peserta;
             $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
             $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
@@ -201,7 +256,7 @@ class TahsinController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan ".session('daftar_ulang_angkatan_tahsin')."*.
+Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan ".'18'."*.
 
 Anda akan kami hubungi kembali secara otomatis melalui pesan WhatsApp setelah hasil bacaan Al Qur'an dikoreksi oleh tim penguji kami.
 
@@ -211,26 +266,54 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            $url = 'https://api.wanotif.id/v1/send';
+            // $url = 'https://api.wanotif.id/v1/send';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+            // $curl = curl_init();
+            // curl_setopt($curl, CURLOPT_URL, $url);
+            // curl_setopt($curl, CURLOPT_HEADER, 0);
+            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            // curl_setopt($curl, CURLOPT_POST, 1);
+            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            //     'Apikey'    => $apikey,
+            //     'Phone'     => $phone,
+            //     'Message'   => $message,
+            // ));
+            // $response = curl_exec($curl);
+            // curl_close($curl);
+
+            // woo-wa.com
+            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
 
             $info = "berhasil";
         } catch (\Throwable $th) {

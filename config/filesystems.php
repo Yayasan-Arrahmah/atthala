@@ -62,7 +62,7 @@ return [
 
         'rekaman' => [
             'driver' => 'local',
-            'root' => public_path('../../../public_html/atthala/app/public/rekaman'),
+            'root' => public_path('app/public/rekaman'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

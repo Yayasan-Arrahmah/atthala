@@ -45,7 +45,8 @@ hr {
                 </center>
                 <div class="text-center">
                     <h4> Pendaftaran Tahsin </h4>
-                    <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
+                    {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
+                    <div class="text-muted">Angkatan 18</div>
                 </div>
 
                 <div class="card-body">
