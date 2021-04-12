@@ -31,7 +31,10 @@ class DashboardController extends Controller
 
     public function amalyaumiahpeserta()
     {
-        $pesertayaumiah = DB::table('users')->where('last_name', 'SANTRI')->get();
+        $pesertayaumiah = DB::table('users')->where('last_name', 'SANTRI')
+                                        // ->whereMonth('created_at', '3')
+                                        // ->whereYear('created_at', '2021')
+                                        ->get();
 
         return view('frontend.user.amal-yaumiah.peserta', compact('pesertayaumiah'));
     }
@@ -150,7 +153,7 @@ class DashboardController extends Controller
         if(isset(request()->level)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', request()->idtahsin)
-              ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+              ->where('angkatan_peserta', '18')
               ->update(['level_peserta' => request()->level]);
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
@@ -158,7 +161,7 @@ class DashboardController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih Kepada Calon Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".'18'." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
 
 Alhamdulillah, Level belajar anda adalah di level *".request()->level."*.
 Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".request()->idtahsin."
@@ -167,31 +170,59 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            $url = 'https://api.wanotif.id/v1/send';
+            // $url = 'https://api.wanotif.id/v1/send';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+            // $curl = curl_init();
+            // curl_setopt($curl, CURLOPT_URL, $url);
+            // curl_setopt($curl, CURLOPT_HEADER, 0);
+            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            // curl_setopt($curl, CURLOPT_POST, 1);
+            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            //     'Apikey'    => $apikey,
+            //     'Phone'     => $phone,
+            //     'Message'   => $message,
+            // ));
+            // $response = curl_exec($curl);
+            // curl_close($curl);
+
+            // woo-wa.com
+            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
-                        ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
+                        ->where('angkatan_peserta', '=', '18')
                         ->paginate(10);
 
             return redirect()->to('/admin/tahsin/daftar-baru')->withFlashSuccess(request()->idtahsin.' Berhasil Diperbaruhi dengan Level '.request()->level);
@@ -199,11 +230,11 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
         if(isset(request()->notifikasi)){
             $updatestatus = DB::table('tahsins')
               ->where('no_tahsin', request()->notifikasi)
-              ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+              ->where('angkatan_peserta', '18')
               ->update(['status_peserta' => 'NOTIF']);
 
             $data = DB::table('tahsins')->where('no_tahsin', request()->notifikasi)
-              ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+              ->where('angkatan_peserta', '18')
               ->first();
 
             if($data->jenis_peserta === 'IKHWAN'){
@@ -228,28 +259,56 @@ Silakan isi format berikut sebelum mengirimkan rekaman suara:
 Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
 
-            $url = 'https://api.wanotif.id/v1/send';
+            // $url = 'https://api.wanotif.id/v1/send';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+            // $curl = curl_init();
+            // curl_setopt($curl, CURLOPT_URL, $url);
+            // curl_setopt($curl, CURLOPT_HEADER, 0);
+            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            // curl_setopt($curl, CURLOPT_POST, 1);
+            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            //     'Apikey'    => $apikey,
+            //     'Phone'     => $phone,
+            //     'Message'   => $message,
+            // ));
+            // $response = curl_exec($curl);
+            // curl_close($curl);
+
+            // woo-wa.com
+            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
-                        ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
+                        ->where('angkatan_peserta', '=', '18')
                         ->paginate(10);
 
             return redirect()->to('/admin/tahsin/daftar-baru');
@@ -258,18 +317,18 @@ Tanggal Mengisi Formulir Online :";
         if(isset(request()->idtahsin)){
             $updatelevel = DB::table('tahsins')
             ->where('no_tahsin', request()->idtahsin)
-            ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+            ->where('angkatan_peserta', '18')
             ->update(['status_peserta' => auth()->user()->first_name]);
         }
 
-        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
                 ->when(request()->nama, function ($query) {
                     return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
                 })
                 ->when(request()->idtahsin, function ($query) {
                         return $query->where('no_tahsin', '=', request()->idtahsin);
                 })
-                ->where('angkatan_peserta', '=', session('daftar_ulang_angkatan_tahsin'))
+                ->where('angkatan_peserta', '=', '18')
             ->paginate(10);
         // }
 

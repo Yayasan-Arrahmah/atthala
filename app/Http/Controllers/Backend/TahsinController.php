@@ -60,7 +60,8 @@ class TahsinController extends Controller
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
         $this->angkatan      = request()->angkatan ?? session('daftar_ujian');
-        $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
+        // $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
+        $this->angkatanbaru  = request()->angkatan ?? 18;
     }
 
     /**
@@ -201,23 +202,51 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            $url = 'https://api.wanotif.id/v1/send';
+            // $url = 'https://api.wanotif.id/v1/send';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+            // $curl = curl_init();
+            // curl_setopt($curl, CURLOPT_URL, $url);
+            // curl_setopt($curl, CURLOPT_HEADER, 0);
+            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            // curl_setopt($curl, CURLOPT_POST, 1);
+            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            //     'Apikey'    => $apikey,
+            //     'Phone'     => $phone,
+            //     'Message'   => $message,
+            // ));
+            // $response = curl_exec($curl);
+            // curl_close($curl);
+
+            // woo-wa.com
+            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
 
             $info = "berhasil";
 
@@ -267,23 +296,51 @@ Silakan isi format berikut sebelum mengirimkan rekaman suara:
 Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
 
-            $url = 'https://api.wanotif.id/v1/send';
+            // $url = 'https://api.wanotif.id/v1/send';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+            // $curl = curl_init();
+            // curl_setopt($curl, CURLOPT_URL, $url);
+            // curl_setopt($curl, CURLOPT_HEADER, 0);
+            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+            // curl_setopt($curl, CURLOPT_POST, 1);
+            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+            //     'Apikey'    => $apikey,
+            //     'Phone'     => $phone,
+            //     'Message'   => $message,
+            // ));
+            // $response = curl_exec($curl);
+            // curl_close($curl);
+
+            // woo-wa.com
+            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
 
             $info = "berhasil";
 
@@ -643,23 +700,51 @@ Salam,
 *LTTQ Ar Rahmah Balikpapan*';
         }
 
-        $url = 'https://api.wanotif.id/v1/send';
+        // $url = 'https://api.wanotif.id/v1/send';
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            'Apikey'    => $apikey,
-            'Phone'     => $phone,
-            'Message'   => $message,
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
+        // $curl = curl_init();
+        // curl_setopt($curl, CURLOPT_URL, $url);
+        // curl_setopt($curl, CURLOPT_HEADER, 0);
+        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+        // curl_setopt($curl, CURLOPT_POST, 1);
+        // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+        //     'Apikey'    => $apikey,
+        //     'Phone'     => $phone,
+        //     'Message'   => $message,
+        // ));
+        // $response = curl_exec($curl);
+        // curl_close($curl);
+
+        // woo-wa.com
+        $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+
+        $url='http://116.203.191.58/api/send_message';
+            $data = array(
+                "phone_no"  => $phone,
+                "key"		=> $apikey,
+                "message"	=> $message,
+                "skip_link"	=> True // This optional for skip snapshot of link in message
+            );
+            $data_string = json_encode($data);
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_VERBOSE, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            echo $res=curl_exec($ch);
+            curl_close($ch);
 
         return redirect()->route('admin.tahsins.pembayaran')
             ->withFlashSuccess('Pembayaran Atas Nama : <br>' . $request->namapembayaran . '<br>Dengan Nominal ' . $request->nominalpembayaran . '<br><strong>Berhasil</strong>');
