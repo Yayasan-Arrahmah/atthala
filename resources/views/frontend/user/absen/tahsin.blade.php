@@ -74,7 +74,8 @@
                                     </button>
                                 @endif
                                 <div class="small text-muted">
-                                    ANGKATAN {{ session('daftar_ulang_angkatan_tahsin') }}
+                                    {{-- ANGKATAN {{ session('daftar_ulang_angkatan_tahsin') }} --}}
+                                    ANGKATAN 18
                                 </div>
                             </div>
                             <div class="col-4">

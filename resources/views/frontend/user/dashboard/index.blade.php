@@ -90,7 +90,7 @@
                     <div>
                         <a href="{{ route('frontend.user.pesertatahsinbaru') }}">
                             <div class="text-value-sm" style="color: #a220d8">Pendaftaran Baru</div>
-                            <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 17</div>
+                            <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 18</div>
                         </a>
                     </div>
                 </div>
