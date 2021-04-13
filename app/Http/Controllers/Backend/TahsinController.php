@@ -181,7 +181,7 @@ class TahsinController extends Controller
 
         if(isset($this->level)){
             $updatelevel = DB::table('tahsins')
-              ->where('no_tahsin', $this->idtahsin)
+              ->where('no_tahsin', 'like', '%-18-%')
               ->where('angkatan_peserta', $this->angkatanbaru)
               ->update(['level_peserta' => $this->level]);
 

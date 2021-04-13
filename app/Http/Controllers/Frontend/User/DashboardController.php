@@ -58,7 +58,8 @@ class DashboardController extends Controller
             ->groupBy('jadwal_tahsin', 'level_peserta', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('nama_pengajar', auth()->user()->user_pengajar)
-            ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+            // ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
+            ->where('angkatan_peserta', 18)
             ->paginate(50);
 
         return view('frontend.user.absen.tahsin', compact('datajadwals'));
@@ -73,7 +74,8 @@ class DashboardController extends Controller
         $jenis        = $request->input('jenis') ?? '!!ERROR!!';
         $userpengajar = auth()->user()->user_pengajar;
         $pertemuanke  = $request->input('ke');
-        $angkatan     = session('daftar_ulang_angkatan_tahsin');
+        // $angkatan     = session('daftar_ulang_angkatan_tahsin');
+        $angkatan     = 18;
 
         $datapeserta = DB::table('tahsins')
             ->where('nama_pengajar', $userpengajar)
