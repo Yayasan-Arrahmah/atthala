@@ -60,7 +60,7 @@ class TahsinController extends Controller
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
         $this->angkatan      = request()->angkatan ?? session('daftar_ujian');
-        // $this->angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
+        // $this->angkatanbaru  = request()->angkatan ?? '18';
         $this->angkatanbaru  = request()->angkatan ?? 18;
     }
 
@@ -181,7 +181,7 @@ class TahsinController extends Controller
 
         if(isset($this->level)){
             $updatelevel = DB::table('tahsins')
-              ->where('no_tahsin', 'like', '%-18-%')
+              ->where('no_tahsin', $this->idtahsin)
               ->where('angkatan_peserta', $this->angkatanbaru)
               ->update(['level_peserta' => $this->level]);
 
@@ -190,7 +190,7 @@ class TahsinController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih Kepada Calon Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".'18'." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
 
 Alhamdulillah, Level belajar anda adalah di level *".$this->level."*.
 Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".$this->idtahsin."
@@ -199,7 +199,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             // $url = 'https://api.wanotif.id/v1/send';
@@ -250,7 +250,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
                         ->where('angkatan_peserta', '=', $this->angkatanbaru)
                         ->paginate(10);
 
@@ -344,7 +344,7 @@ Tanggal Mengisi Formulir Online :";
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
                         ->where('angkatan_peserta', '=', $this->angkatanbaru)
                         ->paginate(10);
 
@@ -352,7 +352,7 @@ Tanggal Mengisi Formulir Online :";
         }
 
 
-        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('daftar_ulang_angkatan_tahsin').'-%')
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
                 ->when($this->nama, function ($query) {
                     return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
                 })
@@ -373,7 +373,7 @@ Tanggal Mengisi Formulir Online :";
 
     public function jadwal(ManageTahsinRequest $request)
     {
-        $angkatanbaru  = request()->angkatan ?? session('daftar_ulang_angkatan_tahsin');
+        $angkatanbaru  = request()->angkatan ?? '18';
 
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
