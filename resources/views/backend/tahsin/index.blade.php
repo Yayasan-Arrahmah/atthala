@@ -172,7 +172,7 @@
                                         {{ $key + $tahsins->firstItem() }}
                                     </td>
                                     <td>
-                                        <a href="/admin/tahsin/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
+                                        <a href="/admin/tahsins/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
                                             <div style="text-transform: uppercase;">{{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }}</div>
                                             <div class="small text-muted">
                                                 {{ $tahsin->waktu_lahir_peserta }} | {{ $tahsin->nohp_peserta }}
