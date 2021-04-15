@@ -46,6 +46,7 @@ class Rtq extends Model
         'riwayat_pendidikan',
         'spp_disanggupi',
         'angkatan_santri',
+        'pengajar_santri',
         'domisili',
         'kriteria',
         'keterangan',
