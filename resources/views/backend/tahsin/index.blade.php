@@ -113,6 +113,7 @@
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
                         <option value="">-------</option>
                     @endisset
+                    <option value="18">18</option>
                     <option value="17">17</option>
                     <option value="16">16</option>
                 </select>

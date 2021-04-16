@@ -59,7 +59,7 @@ class TahsinController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? session('daftar_ujian');
+        $this->angkatan      = request()->angkatan ?? 18;
         // $this->angkatanbaru  = request()->angkatan ?? '18';
         $this->angkatanbaru  = request()->angkatan ?? 18;
     }
