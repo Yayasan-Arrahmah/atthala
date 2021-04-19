@@ -171,7 +171,7 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2 form-control-label">Angkatan Santri</label>
+                        <label class="col-md-2 form-control-label">Pengajar Santri</label>
                         <div class="col-md-10">
                             <input class="form-control" type="text" value="{{ $rtq->pengajar_santri }}" name="pengajar_santri"
                             placeholder="Nama Musyrif">

@@ -251,8 +251,8 @@ class TahsinController extends Controller
                 $nohp = $nohp;
             }
 
-            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '62' . $nohp;
+            // $apikey  = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $phone   = '+62' . $nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
@@ -288,32 +288,32 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+            $apikey = '5146800362aa1d48fa93553f2074f2709bd976659afcaa73';
 
             $url='http://116.203.191.58/api/send_message';
-                $data = array(
-                    "phone_no"  => $phone,
-                    "key"		=> $apikey,
-                    "message"	=> $message,
-                    "skip_link"	=> True // This optional for skip snapshot of link in message
-                );
-                $data_string = json_encode($data);
+            $data = array(
+                "phone_no"  => $phone,
+                "key"		=> $apikey,
+                "message"	=> $message,
+                "skip_link"	=> True // This optional for skip snapshot of link in message
+            );
+            $data_string = json_encode($data);
 
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_VERBOSE, 0);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen($data_string))
-                );
-                echo $res=curl_exec($ch);
-                curl_close($ch);
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_VERBOSE, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            echo $res=curl_exec($ch);
+            curl_close($ch);
 
             $info = "berhasil";
         } catch (\Throwable $th) {
@@ -484,7 +484,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
                 $nohp = $nohp;
             }
 
-            $phone = '62' . $nohp;
+            $phone = '+62'. $nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
@@ -523,7 +523,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+            $apikey = '5146800362aa1d48fa93553f2074f2709bd976659afcaa73';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -778,7 +778,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                 $pembayaran->save();
             }
 
-            $phone = '62' . $nohp;
+            $phone = '+62'. $nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
@@ -818,7 +818,7 @@ Panitia Daftar Ulang Tahsin Angkatan 18
             // $info = "berhasil";
 
             // woo-wa.com
-            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+            $apikey = '5146800362aa1d48fa93553f2074f2709bd976659afcaa73';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -969,11 +969,11 @@ Panitia Daftar Ulang Tahsin Angkatan 18
                     ]);
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '62' . $nohp;
+            $phone = '+62'. $nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan.
+Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan ".'18'." LTTQ Ar Rahmah Balikpapan.
 
 Silakan melengkapi keperluan pembelajaran antara lain :
 *1. Modul - Rp 35.000*
@@ -991,28 +991,35 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin')."
+Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            $url = 'https://api.wanotif.id/v1/send';
+        $apikey = '5146800362aa1d48fa93553f2074f2709bd976659afcaa73';
 
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-                'Apikey'    => $apikey,
-                'Phone'     => $phone,
-                'Message'   => $message,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
+        $url='http://116.203.191.58/api/send_message';
+            $data = array(
+                "phone_no"  => $phone,
+                "key"		=> $apikey,
+                "message"	=> $message,
+                "skip_link"	=> True // This optional for skip snapshot of link in message
+            );
+            $data_string = json_encode($data);
 
-            $info = "berhasil";
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_VERBOSE, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            echo $res=curl_exec($ch);
+            curl_close($ch);
 
 
         // } catch (\Throwable $th) {
@@ -1026,7 +1033,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('daftar_ulang_angkatan_tahsin
 
     public function printdaftarpeserta(Request $request)
     {
-        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))->first();
+        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', '18')->first();
 
         $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', $data)->setPaper('a5', 'landscape');
 

@@ -79,7 +79,7 @@ class HomeController extends Controller
             $sembako->save();
 
             //             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            //             $phone = '62' . $request->input('notelp');
+            //             $phone = '+62'. $request->input('notelp');
             //             $message =
             //                 'Assalamualaikum Warrohmarullah Wabarokatuh
 

@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-4">Periode</div>
-            <div class="col-8 info-absen">: November 2020 - Februari 2021</div>
+            <div class="col-8 info-absen">: -</div>
         </div>
     </div>
     <div class="col-md-6">

@@ -159,7 +159,7 @@ class DashboardController extends Controller
               ->update(['level_peserta' => request()->level]);
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '62' . request()->nohp;
+            $phone = '+62'. request()->nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
@@ -194,7 +194,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+            $apikey = '5146800362aa1d48fa93553f2074f2709bd976659afcaa73';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -246,7 +246,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
             }
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '62' . $data->nohp_peserta;
+            $phone = '+62'. $data->nohp_peserta;
             $message =
                 "Assalamu'alaikum warahmatullahi bapak/ibu calon peserta, mohon maaf rekaman anda tidak terbaca di sistem kami dikarenakan ketidakcocokan teknis.
 
@@ -280,7 +280,7 @@ Tanggal Mengisi Formulir Online :";
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '58989a0bcc8159e91be43fa1e42682fb61ff12fdd9db5d7f';
+            $apikey = '5146800362aa1d48fa93553f2074f2709bd976659afcaa73';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
