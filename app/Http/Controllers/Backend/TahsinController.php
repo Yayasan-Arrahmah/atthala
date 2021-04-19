@@ -373,7 +373,7 @@ Tanggal Mengisi Formulir Online :";
 
     public function jadwal(ManageTahsinRequest $request)
     {
-        $angkatanbaru  = request()->angkatan ?? '18';
+        $angkatanbaru  = '18';
 
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))

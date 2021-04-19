@@ -52,6 +52,7 @@
                                     ->where('level_peserta', $tahsin->level_peserta)
                                     ->where('jadwal_tahsin', $tahsin->jadwal_tahsin)
                                     ->where('jenis_peserta', $tahsin->jenis_peserta)
+                                    ->where('angkatan_peserta', '18')
                                     ->get();
                             @endphp
                             <tr>
