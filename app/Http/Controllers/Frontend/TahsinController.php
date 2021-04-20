@@ -874,7 +874,7 @@ Panitia Daftar Ulang Tahsin Angkatan 18
         Session::put('sesidaftar', $sesidaftar);
 
         $notahsin            = $request->get('id');
-        $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        $angkatandaftarulang = 18;
 
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
                             ->where('angkatan_peserta', $angkatandaftarulang)
