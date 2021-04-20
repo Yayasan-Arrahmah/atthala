@@ -36,7 +36,7 @@
                 </center>
                 <div class="text-center">
                     <h4> Peserta Telah Terdaftar </h4>
-                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div>
+                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan 18</div>
                 </div>
                 <hr>
                 <div class="card-body">
@@ -605,14 +605,14 @@
                  var hari = $(this).val();
                  $('#waktu').find('option').not(':first').remove();
                  $.ajax({
-                   url: '/tahsin/pendaftaran/peserta/waktu?id={!! $calonpeserta->no_tahsin !!}&hari='+hari,
+                   url: '/tahsin/pendaftaran/peserta/waktu?id={!! $calonpeserta->id !!}&hari='+hari,
                    type: 'get',
                    dataType: 'json',
                    success: function(response){
 
                      var len = 0;
-                     if(response['data'] != null){
-                       len = response['data'].length;
+                     if(response != null){
+                       len = response.length;
                      }
 
                      if(len > 0){
