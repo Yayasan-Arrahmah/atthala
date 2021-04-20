@@ -617,8 +617,9 @@
 
                      if(len > 0){
                        for(var i=0; i<len; i++){
-                         var waktu = response['data'][i].waktu_jadwal;
-                         var option = "<option value='"+waktu+"'>"+waktu+"</option>";
+                         var waktu  = response[i].waktu_jadwal;
+                         var id     = response[i].id;
+                         var option = "<option value='"+id+"'>"+waktu+"</option>";
                          $("#waktu").append(option);
                        }
                      }

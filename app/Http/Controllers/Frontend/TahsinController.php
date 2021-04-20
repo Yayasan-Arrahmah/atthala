@@ -902,27 +902,67 @@ Panitia Daftar Ulang Tahsin Angkatan 18
 
     public function daftarcalonpesertawaktu(Request $request)
     {
-        $notahsin            = $request->get('id');
+        // $notahsin            = $request->get('id');
+        // // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
+        // $angkatandaftarulang = 18;
+        // $jadwalhari          = $request->get('hari');
+
+        // $calonpeserta = Tahsin::where('id', $request->get('idt'))
+        //                     ->first();
+
+        // $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+        //                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+        //                     ->where('level_jadwal', $calonpeserta->level_peserta)
+        //                     ->where('jumlah_peserta', '<', 10)
+        //                     ->where('hari_jadwal', $jadwalhari)
+        //                     ->get();
+
+        $id           = $request->get('id');
+        // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
-        $angkatandaftarulang = 18;
+        $angkatan            = '17';
+        $angkatandaftarulang = '18';
         $jadwalhari          = $request->get('hari');
 
-        $calonpeserta = Tahsin::where('id', $request->get('idt'))
+        $calonpeserta = Tahsin::where('id', $id)
                             ->first();
 
-        $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
-                            ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                            ->where('level_jadwal', $calonpeserta->level_peserta)
-                            ->where('jumlah_peserta', '<', 10)
-                            ->where('hari_jadwal', $jadwalhari)
-                            ->get();
+        //cek banyak data jam sesuai level
+        $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                    ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+                    ->where('hari_jadwal', $request->get('hari'))
+                    ->orderBy('waktu_jadwal', 'ASC')
+                    ->get();
+
+        // $waktu_[] = ['waktu_jadwal' => '-----', 'id' => ''];
+        // dd($ceklevel);
+        foreach ($ceklevel as $level) {
+            $cekbanyakpeserta = null;
+            $cekbanyakpeserta = Tahsin::where('level_peserta', $level->level_jadwal)
+                                ->where('jadwal_tahsin', $level->hari_jadwal.' '.$level->waktu_jadwal)
+                                ->where('angkatan_peserta', $angkatandaftarulang)
+                                ->where('jenis_peserta', $level->jenis_jadwal)
+                                ->count();
+            if ($cekbanyakpeserta < $level->jumlah_peserta) {
+                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id];
+            }
+        }
+        // $waktu = collect($waktu_)->get();
+        $waktu = collect($waktu_)->values();
+
+        // $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+        //                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+        //                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+        //                     ->where('hari_jadwal', $jadwalhari)
+        //                     ->get();
 
         return response()->json($waktu);
     }
 
     public function simpandaftarcalonpeserta(Request $request)
     {
-        $angkatan = session('daftar_ulang_angkatan_tahsin');
+        $angkatan = 18;
 
         // $this->validate($request, [
         //     'notelp'           => 'required',
@@ -936,13 +976,16 @@ Panitia Daftar Ulang Tahsin Angkatan 18
 
         $pesertadaftar = Tahsin::where('no_tahsin', $request->input('id'))->where('angkatan_peserta', $angkatan)->first();
 
-        $datajadwal = Jadwal::where('angkatan_jadwal', $angkatan)
-                        ->where('jenis_jadwal', $pesertadaftar->jenis_peserta)
-                        ->where('hari_jadwal', $request->get('hari'))
-                        ->where('waktu_jadwal', $request->get('waktu'))
-                        ->where('level_jadwal', $pesertadaftar->level_peserta)
-                        ->where('jumlah_peserta', '<', 10)
-                        ->first();
+        // $datajadwal = Jadwal::where('angkatan_jadwal', $angkatan)
+        //                 ->where('jenis_jadwal', $pesertadaftar->jenis_peserta)
+        //                 ->where('hari_jadwal', $request->get('hari'))
+        //                 ->where('waktu_jadwal', $request->get('waktu'))
+        //                 ->where('level_jadwal', $pesertadaftar->level_peserta)
+        //                 ->where('jumlah_peserta', '<', 10)
+        //                 ->first();
+
+        $datajadwal = Jadwal::where('id', $request->get('waktu'))->first();
+
 
         // try {
 
@@ -960,15 +1003,14 @@ Panitia Daftar Ulang Tahsin Angkatan 18
             $updatepeserta = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', $angkatan)
                     ->update([
                         'nama_pengajar'        => $datajadwal->pengajar_jadwal,
-                        'jadwal_tahsin'        => $request->get('hari').' '.$request->get('waktu'),
+                        'jadwal_tahsin'        => $datajadwal->hari_jadwal.' '.$datajadwal->waktu_jadwal,
             ]);
 
-            $tambahpeserta = Jadwal::where('id',  $datajadwal->id)
-                    ->update([
-                        'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
-                    ]);
+            // $tambahpeserta = Jadwal::where('id',  $datajadwal->id)
+            //         ->update([
+            //             'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
+            //         ]);
 
-            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
             $phone = '+62'. $nohp;
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
