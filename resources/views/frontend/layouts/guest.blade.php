@@ -144,6 +144,20 @@
             {{-- @include('includes.partials.notif') --}}
 
             @yield('content')
+            <div class="row justify-content-center align-items-center">
+                <div class="col col-sm-3 align-self-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="text-justify">
+                                Dukung dakwah Al Qur'an dengan Subscribe Channel kami.
+                            </p>
+                            <script src="https://apis.google.com/js/platform.js"></script>
+                            <div class="g-ytsubscribe" data-channelid="UCelv_sHe1XX0M62VaaG_GCA" data-layout="full" data-count="hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- container -->
         <center style="color: #697477; padding-bottom: 20px">LTTQ Ar-Rahmah Balikpapan &copy; {{ date('Y') }}</center>
 
