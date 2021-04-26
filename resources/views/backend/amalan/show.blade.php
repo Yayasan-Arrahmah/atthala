@@ -81,15 +81,15 @@
                             </thead>
                             <tbody>
                                 @php
-                                $amalan_lists = DB::table('amalans_lists')->where('id_amalan', '=', $amalan->id)->paginate(100);
+                                $amalan_lists = DB::table('amalans_lists')->get();
 
                                 $first  = 0;
                                 $end    = 0;
                                 $number = 1;
                                 @endphp
-                                @foreach($amalan_lists as $key=> $amalan_list)
+                                @foreach($amalan_lists as $key => $amalan_list)
                                 <tr>
-                                    <td style="text-align: center">{{  $key+ $amalan_lists->firstItem() }}</a></td>
+                                    <td style="text-align: center">{{ $number++ }}</a></td>
                                     <td>{{ $amalan_list->nama_amalan_list }}</td>
                                     <td style="text-align: center">
                                         @php
@@ -98,10 +98,6 @@
                                         {{ $amalan_list_absens }}
                                     </td>
                                 </tr>
-                                @php
-                                $first  = $amalan_lists->firstItem();
-                                $end    = $key + $amalan_lists->firstItem();
-                                @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -111,19 +107,55 @@
         </div>
 
         <hr />
+        <form action="{{ Request::fullUrl() }}" class="row mt-4">
+            <div class="col">
+            </div>
+            {{-- <div class="col-md-4">
+                <div class="text-muted text-center" style="position: absolute">
+                Tanggal
+                 </div>
+                 <div class="input-daterange input-group" id="datepicker">
+                    <input type="text" class="input-sm form-control" name="start" />
+                    <span class="input-group-addon">to</span>
+                    <input type="text" class="input-sm form-control" name="end" />
+                </div>
+            </div> --}}
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                Jenis
+                 </div>
+                <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->jenis)
+                        <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
+                        <option value="">-------</option>
+                    @endisset
+                    <option value="SEMUA">SEMUA</option>
+                    <option value="IKHWAN">IKHWAN</option>
+                    <option value="AKHWAT">AKHWAT</option>
+                </select>
+            </div>
 
+            <div class="col-md-3">
+                <div class="pull-right input-group mt-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-search"></i> </span>
+                    </div>
+                    <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
+                </div>
+            </div>
+        </form>
         <div class="row mt-4 mb-4">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-sm-12">
                         <h6 class="card-title mb-0 text-center">
-                            Total Peserta & Jumlah Amalan
+                            Total Peserta & Jumlah Amalan SANTRI RTQ
                         </h6>
                     </div><!--col-->
                 </div>
                 <br />
                 <div class="table-responsive " style="font-size: 13px">
-                    <table id="amalan" class="table table-hover table-sm nowarp" style="width: 100%">
+                    <table class="table table-hover table-sm nowarp" style="width: 100%">
                         <thead>
                             <tr>
                                 <th width="50" style="text-align: center">No.</th>
@@ -139,12 +171,11 @@
                                 <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Dzikir Sore">7</th>
                                 <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Tarawih">8</th>
                                 <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Qiyamul Lail">9</th>
+                                <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Pusa Sunnah">10</th>
+                                <th style="text-align: center" data-toggle="tooltip" data-placement="top" title="Olahraga">11</th>
                                 <th style="text-align: center">Jumlah</th>
                             </tr>
                         </thead>
-                        @php
-                        $pesertas = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->paginate(200);
-                        @endphp
                         <tbody>
                             @foreach($pesertas as $key=> $peserta)
                             <tr>
@@ -152,62 +183,13 @@
                                 <td>{{ $peserta->first_name }}</td>
                                 <td>{{ $peserta->last_name }}</td>
                                 <td>{{ $peserta->jenis }}</td>
+                                @for ($i = 1; $i <= 11; $i++)
+                                    <td style="text-align: center">
+                                        {{ $data = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', $i)->count() }}
+                                    </td>
+                                @endfor
                                 <td style="text-align: center">
-                                    @php
-                                    $a = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '1')->count();
-                                    @endphp
-                                    {{ $a }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $b = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '2')->count();
-                                    @endphp
-                                    {{ $b }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $c = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '3')->count();
-                                    @endphp
-                                    {{ $c }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $d = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '4')->count();
-                                    @endphp
-                                    {{ $d }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $e = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '5')->count();
-                                    @endphp
-                                    {{ $e }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $f = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '6')->count();
-                                    @endphp
-                                    {{ $f }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $g = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '7')->count();
-                                    @endphp
-                                    {{ $g }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $h = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '8')->count();
-                                    @endphp
-                                    {{ $h }}
-                                </td>
-                                <td style="text-align: center">
-                                    @php
-                                    $i = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', '9')->count();
-                                    @endphp
-                                    {{ $i }}
-                                </td>
-                                <td style="text-align: center">
-                                    {{ $a + $b + $c + $d + $e + $f + $g + $h + $i }}
+                                    {{ $data = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->count()}}
                                 </td>
                             </tr>
                             @endforeach
@@ -216,9 +198,22 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-7">
+                <div class="float-left">
+                    {!! $first !!} - {!! $end !!} From {!! $pesertas->total() !!} Data
+                </div>
+            </div><!--col-->
+
+            <div class="col-5">
+                <div class="float-right">
+                    {!! $pesertas->appends(request()->query())->links() !!}
+                </div>
+            </div><!--col-->
+        </div><!--row-->
     </div><!--card-body-->
 
-    <div class="card-footer">
+    {{-- <div class="card-footer">
         <div class="row">
             <div class="col">
                 <small class="float-right text-muted">
@@ -230,7 +225,7 @@
                 </small>
             </div><!--col-->
         </div><!--row-->
-    </div><!--card-footer-->
+    </div><!--card-footer--> --}}
 </div><!--card-->
 @php
 $karyawan = DB::table('users')->where('last_name', '=', 'KARYAWAN')->count();
@@ -243,6 +238,8 @@ $akhwat   = DB::table('users')->where('jenis', '=', 'AKHWAT')->count();
 @stack('before-scripts')
 {!! script('https://cdn.jsdelivr.net/npm/chart.js@2.8.0') !!}
 <script type="text/javascript">
+    $('.input-daterange').datepicker({
+    });
     $( document ).ready(function() {
         $("#open").focus();
     });

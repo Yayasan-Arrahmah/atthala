@@ -11,6 +11,7 @@ use App\Repositories\Backend\AmalanRepository;
 use App\Http\Requests\Backend\Amalan\ManageAmalanRequest;
 use App\Http\Requests\Backend\Amalan\StoreAmalanRequest;
 use App\Http\Requests\Backend\Amalan\UpdateAmalanRequest;
+use Illuminate\Support\Facades\DB;
 
 use App\Events\Backend\Amalan\AmalanCreated;
 use App\Events\Backend\Amalan\AmalanUpdated;
@@ -92,7 +93,20 @@ class AmalanController extends Controller
      */
     public function show(ManageAmalanRequest $request, Amalan $amalan)
     {
-        return view('backend.amalan.show')->withAmalan($amalan);
+            $pesertas = DB::table('users')
+                        ->when(request()->nama, function ($query) {
+                            return $query->whereRaw('LOWER(first_name) LIKE ? ', '%' . strtolower(request()->get('nama')) . '%');
+                        })
+                        ->when(request()->jenis, function ($query) {
+                            if( request()->jenis != 'SEMUA') {
+                                return $query->where('jenis', '=', request()->jenis);
+                            }
+                        })
+                        ->where('last_name', '=', 'SANTRI')
+                        ->paginate(5);
+
+
+        return view('backend.amalan.show', compact('pesertas'))->withAmalan($amalan);
     }
 
     /**
