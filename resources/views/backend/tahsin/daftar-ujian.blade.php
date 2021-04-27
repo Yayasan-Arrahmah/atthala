@@ -94,7 +94,7 @@
                                 <a href="#" style="color: rgb(56, 56, 56);">
                                     <div style="text-transform: uppercase; font-weight: 700">{{ $pesertaujian->no_tahsin }} - {{ $pesertaujian->data->nama_peserta ?? '' }}</div>
                                     <div class="small text-muted">
-                                        {{ $pesertaujian->data->nohp_peserta ?? '' }} |  {{ $pesertaujian->data->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $pesertaujian->data->waktu_lahir_peserta)->age ?? '' }} Tahun
+                                        {{ $pesertaujian->data->nohp_peserta ?? '' }} |  {{ $pesertaujian->data->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $pesertaujian->data->waktu_lahir_peserta ?? '')->age ?? '' }} Tahun
                                     </div>
                                 </a>
                             </td>
