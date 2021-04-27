@@ -166,7 +166,7 @@ class TahsinController extends Controller
                 }
             })
             // ->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')
-            ->where('angkatan_peserta', '=', $this->angkatanbaru)
+            ->where('angkatan_peserta', '=', 18)
             ->paginate(10);
 
         // if( auth()->user()->last_name === 'Ekonomi') {

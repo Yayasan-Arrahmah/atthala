@@ -768,7 +768,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             //             'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
             //         ]);
 
-            if ($request->get('pelunasan_tahsin') === 'SUDAH'){
+            // if ($request->get('pelunasan_tahsin') === 'SUDAH'){
                 $pembayaran = new Pembayaran;
                 $pembayaran->id_peserta                = $peserta->id;
                 $pembayaran->nominal_pembayaran        = $request->input('nominaltf') ?? '0';
@@ -776,7 +776,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                 $pembayaran->admin_pembayaran          = "TRANSFER";
                 $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransfer');
                 $pembayaran->save();
-            }
+            // }
 
             $phone = '+62'. $nohp;
             $message =
