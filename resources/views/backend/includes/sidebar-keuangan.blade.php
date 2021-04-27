@@ -6,6 +6,13 @@
                 Keuangan Tahsin
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-ujian')) }} "
+                href="{{ route('admin.tahsins.pesertaujian') }}
+                " > <i class="nav-icon fas fa-user-check"></i>
+                Daftar Ujian
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-ulang')) }} "
                 href="{{ route('admin.tahsins.daftarulang') }}
                 " > <i class="nav-icon fas fa-user-check"></i>

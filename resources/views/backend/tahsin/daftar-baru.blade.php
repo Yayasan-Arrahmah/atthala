@@ -177,75 +177,87 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if (isset(request()->idtahsin))
-                                        <div class="text-center">
-                                            <audio controls style="width: 250px; height: 30px;">
-                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/ogg">
-                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
-                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mp4">
-                                                <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/wav">
-                                                error
-                                            </audio>
-                                        </div>
-                                        <form>
-                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
-                                            @if(!empty(Request::get('nama')))
-                                                <input name="nama" value="{{ Request::get('nama') }}" hidden>
-                                            @endif
-                                            @if(!empty(Request::get('page')))
-                                                <input name="page" value="{{ Request::get('page') }}" hidden>
-                                            @endif
-                                            <input name="nohp" value="{{ $tahsin->nohp_peserta }}" hidden>
-                                            <select style="font-weight: 600;" class="form-control" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
-                                                <option value=""> Pilih Hasil Peserta </option>
-                                                <option value="">-----</option>
-                                                <option value="ASAASI 1">ASAASI 1</option>
-                                                <option value="ASAASI 2">ASAASI 2</option>
-                                                <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
-                                                <option value="TAMHIDI">TAMHIDI</option>
-                                                <option value="TAWASUTHI">TAWASUTHI</option>
-                                                <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
-                                                <option value="IDADI">IDADI</option>
-                                                <option value="TAKMILI">TAKMILI</option>
-                                                <option value="TAHSINI">TAHSINI</option>
-                                                <option value="ITQON">ITQON</option>
-                                            </select>
-                                        </form>
-                                    @else
-                                        @if ($tahsin->status_peserta != null)
-                                            @if ($tahsin->level_peserta != null)
-                                                <div style="text-transform: uppercase;">{{ $tahsin->level_peserta }}</div>
-                                                <div class="small text-muted">
-                                                    @if ($tahsin->jadwal_tahsin != null)
-                                                        {{ $tahsin->nama_pengajar }} | {{ $tahsin->jadwal_tahsin }}
-                                                    @else
-                                                        Peserta Belum Pilih Jadwal
-                                                    @endif
-                                                </div>
+                                    @if (auth()->user()->last_name === 'Ekonomi')
+                                        <div style="text-transform: uppercase;">{{ $tahsin->level_peserta ?? 'Belum Diseleksi' }}</div>
+                                        <div class="small text-muted">
+                                            @if ($tahsin->jadwal_tahsin != null)
+                                                {{ $tahsin->nama_pengajar }} | {{ $tahsin->jadwal_tahsin }}
                                             @else
-                                                @if ($tahsin->status_peserta === 'NOTIF')
-                                                    <div class="card-bodyquote text-black text-center">
-                                                        Peserta telah dikirimi Notifikasi agar mengirim Voice Note Rekaman Tilawah Ke WhatsApp Penguji. Silahkan Penguji memeriksa pesan tersebut.
-                                                    </div>
-                                                    <form class="text-center">
-                                                        <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
-                                                        <button type="submit" class="btn btn-success btn-block btn-pill btn-sm">Beri Hasil</button>
-                                                    </form>
-                                                @else
-                                                    <form class="text-center">
-                                                        <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
-                                                        <button type="submit" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
-                                                    </form>
-                                                @endif
+                                                Peserta Belum Pilih Jadwal
                                             @endif
-                                        @else
-                                            <form class="text-center">
-                                                <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
-                                                <button type="submit" class="btn btn-primary btn-block btn-pill btn-sm">Pilih</button>
+                                        </div>
+                                    @else
+                                        @if (isset(request()->idtahsin))
+                                            <div class="text-center">
+                                                <audio controls style="width: 250px; height: 30px;">
+                                                    <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/ogg">
+                                                    <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
+                                                    <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mp4">
+                                                    <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/wav">
+                                                    error
+                                                </audio>
+                                            </div>
+                                            <form>
+                                                <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
+                                                @if(!empty(Request::get('nama')))
+                                                    <input name="nama" value="{{ Request::get('nama') }}" hidden>
+                                                @endif
+                                                @if(!empty(Request::get('page')))
+                                                    <input name="page" value="{{ Request::get('page') }}" hidden>
+                                                @endif
+                                                <input name="nohp" value="{{ $tahsin->nohp_peserta }}" hidden>
+                                                <select style="font-weight: 600;" class="form-control" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                    <option value=""> Pilih Hasil Peserta </option>
+                                                    <option value="">-----</option>
+                                                    <option value="ASAASI 1">ASAASI 1</option>
+                                                    <option value="ASAASI 2">ASAASI 2</option>
+                                                    <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
+                                                    <option value="TAMHIDI">TAMHIDI</option>
+                                                    <option value="TAWASUTHI">TAWASUTHI</option>
+                                                    <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
+                                                    <option value="IDADI">IDADI</option>
+                                                    <option value="TAKMILI">TAKMILI</option>
+                                                    <option value="TAHSINI">TAHSINI</option>
+                                                    <option value="ITQON">ITQON</option>
+                                                </select>
                                             </form>
-                                        @endif
+                                        @else
+                                            @if ($tahsin->status_peserta != null)
+                                                @if ($tahsin->level_peserta != null)
+                                                    <div style="text-transform: uppercase;">{{ $tahsin->level_peserta }}</div>
+                                                    <div class="small text-muted">
+                                                        @if ($tahsin->jadwal_tahsin != null)
+                                                            {{ $tahsin->nama_pengajar }} | {{ $tahsin->jadwal_tahsin }}
+                                                        @else
+                                                            Peserta Belum Pilih Jadwal
+                                                        @endif
+                                                    </div>
+                                                @else
+                                                    @if ($tahsin->status_peserta === 'NOTIF')
+                                                        <div class="card-bodyquote text-black text-center">
+                                                            Peserta telah dikirimi Notifikasi agar mengirim Voice Note Rekaman Tilawah Ke WhatsApp Penguji. Silahkan Penguji memeriksa pesan tersebut.
+                                                        </div>
+                                                        <form class="text-center">
+                                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                            <button type="submit" class="btn btn-success btn-block btn-pill btn-sm">Beri Hasil</button>
+                                                        </form>
+                                                    @else
+                                                        <form class="text-center">
+                                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                            <button type="submit" class="btn btn-danger btn-block btn-pill btn-sm">DIPERIKSA Oleh <strong>{{ $tahsin->status_peserta }}</strong></button>
+                                                        </form>
+                                                    @endif
+                                                @endif
+                                            @else
+                                                <form class="text-center">
+                                                    <input name="idtahsin" value="{{ $tahsin->no_tahsin }}" hidden>
+                                                    <button type="submit" class="btn btn-primary btn-block btn-pill btn-sm">Pilih</button>
+                                                </form>
+                                            @endif
 
+                                        @endif
                                     @endif
+
                                 </td>
                             </tr>
                             @if (isset(request()->idtahsin))
