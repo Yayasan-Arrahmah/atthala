@@ -165,15 +165,15 @@ class TahsinController extends Controller
                     return $query->where('jenis_peserta', '=', $this->jenis);
                 }
             })
-            ->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')
+            // ->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')
             ->where('angkatan_peserta', '=', $this->angkatanbaru)
             ->paginate(10);
 
-        if( auth()->user()->last_name === 'Ekonomi') {
+        // if( auth()->user()->last_name === 'Ekonomi') {
             return view('backend.tahsin.ekonomi-daftar-ulang', compact('tahsins'));
-        } else {
-            return view('backend.tahsin.daftar-ulang', compact('tahsins'));
-        }
+        // } else {
+        //     return view('backend.tahsin.daftar-ulang', compact('tahsins'));
+        // }
     }
 
     public function daftarbaru(ManageTahsinRequest $request)
@@ -767,7 +767,7 @@ Salam,
         $paged         = $request->get('paged') ?? 10;
         $nama          = $request->get('nama') ?? null;
 
-        $pesertaujians = PesertaUjian::where('angkatan_ujian', session('angkatan_tahsin'))->paginate($paged);
+        $pesertaujians = PesertaUjian::where('angkatan_ujian', 17)->paginate($paged);
         return view('backend.tahsin.daftar-ujian', compact('pesertaujians', 'paged'));
     }
 

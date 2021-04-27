@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Daftar Ulang Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('daftar_ulang_angkatan_tahsin') }}</small>
+                    Daftar Ulang Tahsin<small class="text-muted"> - Angkatan 18</small>
                 </h4>
             </div><!--col-->
 
