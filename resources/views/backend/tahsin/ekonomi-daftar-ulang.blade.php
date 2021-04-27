@@ -167,7 +167,7 @@
                                         {{-- @isset($pesertaujian->bukti_transfer) --}}
                                         <div style="">
                                             <img class="zoom"
-                                                src="/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                                src="/app/public/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
                                             alt="" height="50">
                                         </div>
                                         {{-- @endisset --}}
