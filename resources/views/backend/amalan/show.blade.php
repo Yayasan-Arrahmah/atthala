@@ -149,7 +149,10 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h6 class="card-title mb-0 text-center">
-                            Total Peserta & Jumlah Amalan SANTRI RTQ
+                            Total Peserta & Jumlah Amal Yaumiah
+                        </h6>
+                        <h6 class="card-title mb-0 text-center">
+                            Ramadahan 1442 H / 12 April - 14 Mei 2021
                         </h6>
                     </div><!--col-->
                 </div>
