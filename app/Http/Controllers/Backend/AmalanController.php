@@ -104,9 +104,9 @@ class AmalanController extends Controller
                         })
                         ->where('last_name', '=', 'KARYAWAN')
                         ->orWhere('last_name', '=', 'PENGAJAR')
-                        ->where('created_at', '>', '2021-04-12 00:00:01')
-                        ->where('created_at', '<', '2021-05-15 00:00:01')
-                        ->paginate(10);
+                        // ->where('created_at', '>', '2021-04-12 00:00:01')
+                        // ->where('created_at', '<', '2021-05-15 00:00:01')
+                        ->paginate(50);
 
 
         return view('backend.amalan.show', compact('pesertas'))->withAmalan($amalan);

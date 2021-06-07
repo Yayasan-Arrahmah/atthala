@@ -266,7 +266,7 @@
             });
 
             $('#amalan').DataTable({
-                "pageLength": 15,
+                "pageLength": 50,
                 "scrollX": true,
                 "dom": 'Blfrtip',
                 "buttons": [

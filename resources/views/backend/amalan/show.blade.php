@@ -154,8 +154,8 @@
                     </div><!--col-->
                 </div>
                 <br />
-                <div class="table-responsive " style="font-size: 13px">
-                    <table class="table table-hover table-sm nowarp" style="width: 100%">
+                <div class="table-responsive amalan" style="font-size: 13px">
+                    <table id="amalan" class="table table-hover table-sm nowarp" style="width: 100%">
                         <thead>
                             <tr>
                                 <th width="50" style="text-align: center">No.</th>
@@ -185,11 +185,22 @@
                                 <td>{{ $peserta->jenis }}</td>
                                 @for ($i = 1; $i <= 11; $i++)
                                     <td style="text-align: center">
-                                        {{ $data = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->where('id_amalan_list', '=', $i)->count() }}
+                                        {{
+                                            $data = DB::table('amalans_lists_absens')
+                                                    ->where('user_amalan_list', '=', $peserta->id)
+                                                    ->where('id_amalan_list', '=', $i)
+                                                    ->whereBetween('created_at', ['2021-04-12 00:00:0', '2021-05-15 00:00:01'])
+                                                    ->count()
+                                        }}
                                     </td>
                                 @endfor
                                 <td style="text-align: center">
-                                    {{ $data = DB::table('amalans_lists_absens')->where('user_amalan_list', '=', $peserta->id)->count()}}
+                                    {{
+                                        $data = DB::table('amalans_lists_absens')
+                                        ->where('user_amalan_list', '=', $peserta->id)
+                                        ->whereBetween('created_at', ['2021-04-12 00:00:0', '2021-05-15 00:00:01'])
+                                        ->count()
+                                    }}
                                 </td>
                             </tr>
                             @endforeach
