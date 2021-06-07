@@ -102,8 +102,8 @@ class AmalanController extends Controller
                                 return $query->where('jenis', '=', request()->jenis);
                             }
                         })
-                        ->where('last_name', '=', 'SANTRI')
-                        ->paginate(5);
+                        ->where('last_name', '=', 'KARYAWAN')
+                        ->paginate(100);
 
 
         return view('backend.amalan.show', compact('pesertas'))->withAmalan($amalan);

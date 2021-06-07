@@ -133,7 +133,7 @@
                                     </tr>
                                 </thead>
                                 @php
-                                $pesertas = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->paginate(200);
+                                $pesertas = DB::table('users')->where('last_name', '=', 'KARYAWAN')->orWhere('last_name', '=', 'PENGAJAR')->orWhere('last_name', '=', 'SANTRI')->paginate(5);
                                 @endphp
                                 <tbody>
                                     @foreach($pesertas as $key=> $peserta)
