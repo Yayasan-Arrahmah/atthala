@@ -116,7 +116,7 @@ class DashboardController extends Controller
                 'user_create_absen'      => auth()->user()->id,
                 'pertemuan_ke_absen'     => $request->input('pertemuan'),
                 'jenis_absen'            => 'TAHSIN',
-                'angkatan_absen'         => session('daftar_ulang_angkatan_tahsin'),
+                'angkatan_absen'         => 18,
                 'level_kelas_absen'      => $request->input('level'),
                 'waktu_kelas_absen'      => $request->input('waktu'),
                 'jenis_kelas_absen'      => $request->input('jenis'),
