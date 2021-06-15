@@ -127,7 +127,8 @@
                         <thead class="thead-light">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Nama</th>
+                                <th>Nama</th>
+                                <th>Kode BBTT</th>
                                 <th>Bukti Transfer</th>
                                 <th class="text-center">Info</th>
                                 {{-- <th class="text-center">Level</th> --}}
@@ -158,6 +159,9 @@
                                             {{ $tahsin->no_tahsin }} | {{ $tahsin->nohp_peserta }}
                                         </div>
                                     </a>
+                                </td>
+                                <td>
+                                    {{ \Carbon\Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md') }}
                                 </td>
                                 <td>
                                     @php
