@@ -154,9 +154,9 @@
                                 </td>
                                 <td>
                                     <a href="/admin/tahsins/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
-                                        <div style="text-transform: uppercase;">{{ $tahsin->nama_peserta }}</div>
+                                        <div style="text-transform: uppercase; font-weight: 700">{{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta ?? '' }}</div>
                                         <div class="small text-muted">
-                                            {{ $tahsin->no_tahsin }} | {{ $tahsin->nohp_peserta }}
+                                            {{ $tahsin->nohp_peserta ?? '' }} |  {{ $tahsin->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
                                         </div>
                                     </a>
                                 </td>

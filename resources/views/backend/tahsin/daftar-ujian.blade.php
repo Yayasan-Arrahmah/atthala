@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Daftar Ulang Peserta Ujian <small class="text-muted">Angkatan 17</small>
+                    Daftar Ulang Peserta Ujian <small class="text-muted">Angkatan 18</small>
                 </h4>
             </div><!--col-->
 
