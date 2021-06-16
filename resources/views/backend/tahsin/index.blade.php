@@ -93,8 +93,8 @@
                 <select class="form-control mt-4" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
                     @isset(request()->level)
                         <option value="{{ request()->level }}">{{ request()->level }}</option>
-                        <option value="">-------</option>
                     @endisset
+                        <option value="">----</option>
                         <option value="SEMUA">SEMUA</option>
                         <option value="ASAASI 1">ASAASI 1</option>
                         <option value="ASAASI 2">ASAASI 2</option>
@@ -115,7 +115,7 @@
                 <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
                     @isset(request()->angkatan)
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
-                        <option value="">-------</option>
+                        <option value="">----</option>
                     @endisset
                     <option value="18">18</option>
                     <option value="17">17</option>
@@ -129,8 +129,8 @@
                 <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
                     @isset(request()->jenis)
                         <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
-                        <option value="">-------</option>
                     @endisset
+                    <option value="">----</option>
                     <option value="SEMUA">SEMUA</option>
                     <option value="IKHWAN">IKHWAN</option>
                     <option value="AKHWAT">AKHWAT</option>
