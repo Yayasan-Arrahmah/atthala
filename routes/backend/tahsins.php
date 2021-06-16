@@ -28,9 +28,11 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get('absen/kelas',           [TahsinController::class, 'absenkelas'])->name('tahsins.absenkelas');
     Route::get('pengaturan',            [TahsinController::class, 'pengaturan'])->name('tahsins.pengaturan');
     Route::get('ujian',                 [TahsinController::class, 'ujian'])->name('tahsins.ujian');
-    Route::get('peserta-ujian',    [TahsinController::class, 'pesertaujian'])->name('tahsins.pesertaujian');
+    Route::get('peserta-ujian',         [TahsinController::class, 'pesertaujian'])->name('tahsins.pesertaujian');
     // Route::get('peserta-daftar-ulang',    [TahsinController::class, 'pesertadaftarulang'])->name('tahsins.ujian.pesertadaftarulang');
-    Route::get('daftar-baru',                      [TahsinController::class, 'daftarbaru'])->name('tahsins.daftarbaru');
+    Route::get('daftar-baru',           [TahsinController::class, 'daftarbaru'])->name('tahsins.daftarbaru');
+    Route::get('export-excel-tahsin',   [TahsinController::class, 'exportexceltahsin'])->name('tahsins.exportexceltahsin');
+    Route::get('export-excel-tahsin-peserta-baru',   [TahsinController::class, 'exportexceltahsinpesertabaru'])->name('tahsins.exportexceltahsinpesertabaru');
 
 });
 
