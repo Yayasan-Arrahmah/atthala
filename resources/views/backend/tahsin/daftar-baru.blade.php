@@ -123,6 +123,16 @@
                 </div>
             </div>
         </form>
+        <form action="{{ route('admin.tahsins.exportexceltahsinpesertabaru') }}" target="_blank" class="row">
+            {{ csrf_field() }}
+            <div class="col-2">
+                <button class="form-control mt-4 btn btn-success btn-sm">
+                    Download Excel <i class="fa fa-file-excel fa-lg"></i>
+                </button>
+            </div>
+            <div class="col-10">
+            </div>
+        </form>
         <div class="row mt-4">
             <div class="col">
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">

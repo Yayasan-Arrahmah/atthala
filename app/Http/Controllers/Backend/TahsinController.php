@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 // use Maatwebsite\Excel\Excel;
+use App\Exports\TahsinPeserta;
 use App\Models\Auth\User;
 use App\Models\Absen;
 use App\Models\Tahsin;
@@ -27,6 +28,7 @@ use App\Http\Requests\Backend\Tahsin\UpdateTahsinRequest;
 use App\Events\Backend\Tahsin\TahsinCreated;
 use App\Events\Backend\Tahsin\TahsinUpdated;
 use App\Events\Backend\Tahsin\TahsinDeleted;
+use App\Exports\TahsinPesertaBaru;
 use App\Models\PengaturanTahsin;
 use Illuminate\Support\Arr;
 
@@ -948,5 +950,24 @@ Salam,
     {
         return view('backend.tahsin.deleted')
             ->withtahsins($this->tahsinRepository->getDeletedPaginated(25, 'id', 'asc'));
+    }
+
+    public function exportexceltahsin(Request $request)
+    {
+        $angkatan = request()->angkatan;
+        $level    = request()->level;
+        $jenis    = request()->jenis;
+
+        return (new TahsinPeserta)
+                ->angkatan($angkatan)
+                ->level($level)
+                ->jenis($jenis)
+                ->download('Data Tahsin.xlsx');
+
+    }
+
+    public function exportexceltahsinpesertabaru(Request $request)
+    {
+        return (new TahsinPesertaBaru)->download('Data Tahsin Peserta Baru.xlsx');
     }
 }

@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
+                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '18' }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -52,6 +52,7 @@
                 </div>
             </form>
         </div>
+
         <form action="{{ Request::fullUrl() }}" class="row mt-4">
             @if ( !isset(request()->page))
                 <input type="hidden" name="page" value="1">
@@ -66,6 +67,8 @@
                     <option>100</option>
                 </select>
             </div>
+
+
 
             <div class="col">
                 {{-- <div class="text-muted text-center" style="position: absolute">
@@ -82,6 +85,7 @@
                     @endforeach
                 </select> --}}
             </div>
+
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                     Level
@@ -140,6 +144,20 @@
                     </div>
                     <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
                 </div>
+            </div>
+        </form>
+        <form action="{{ route('admin.tahsins.exportexceltahsin') }}" target="_blank" class="row">
+            {{ csrf_field() }}
+            <input value="{{ request()->angkatan ?? 'SEMUA' }}" name="angkatan" hidden>
+            <input value="{{ request()->level ?? '18' }}" name="level" hidden>
+            <input value="{{ request()->jenis ?? 'SEMUA' }}" name="jenis" hidden>
+            <div class="col-10">
+            </div>
+            <div class="col-2">
+                <button class="form-control mt-4 btn btn-success btn-sm">
+                    Download Excel <i class="fa fa-file-excel fa-lg"></i>
+                </button>
+                <small class="text-muted">*Pilih filter sebelum download</small>
             </div>
         </form>
         <div class="row mt-4">
