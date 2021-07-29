@@ -621,7 +621,7 @@ Tanggal Mengisi Formulir Online :";
     public function pembayaran(ManageTahsinRequest $request)
     {
 
-        $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-%')->paginate(10);
+        $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
 
         if (request()->metode == 'update') {
 
