@@ -228,7 +228,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+            $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -322,7 +322,7 @@ Tanggal Mengisi Formulir Online :";
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+            $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -620,16 +620,69 @@ Tanggal Mengisi Formulir Online :";
 
     public function pembayaran(ManageTahsinRequest $request)
     {
-        $nominal0 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '0')->count();
-        $nominal1 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '100000')->count();
-        $nominal2 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '200000')->count();
-        $nominal3 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '300000')->count();
-        $nominal4 = DB::table('pembayarans')->where('nominal_pembayaran', '=', '400000')->count();
 
-        $belumlunas = DB::table('tahsins')->where('status_pembayaran', '=', '1')->count();
-        $lunas      = DB::table('tahsins')->where('status_pembayaran', '=', '2')->count();
+        $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-%')->paginate(10);
 
-        return view('backend.tahsin.pembayaran', compact('nominal0', 'nominal1', 'nominal2', 'nominal3', 'nominal4', 'belumlunas', 'lunas'));
+        if (request()->metode == 'update') {
+
+            $data = Pembayaran::find(request()->id);
+            $data->admin_pembayaran = 'BERHASIL';
+            $data->save();
+
+            $phone = '+62'. $data->tahsin->nohp_peserta;
+            // woo-wa.com
+            $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
+            $message =
+                'Assalamualaikum Warohmatullahi Wabarokaatuh,
+*Ini adalah pesan otomatis.*
+
+Telah dikirimkan pembayaran SPP dengan detail sebagai berikut :
+
+Nama Peserta : '.$data->tahsin->nama_peserta.'
+NIS : '.$data->tahsin->no_tahsin.'
+Level/Kelas : '.$data->tahsin->level_peserta.' / '.$data->tahsin->jadwal_tahsin.'
+Pengajar : '.$data->tahsin->nama_pengajar.'
+Nominal SPP : '.$data->nominal_pembayaran.'
+Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
+
+Kontak : wa.me/6285790962447
+Klik link berikut untuk menandai jika SPP telah diverifikasi oleh Kasir
+
+https://web.arrahmahbalikpapan.or.id/
+';
+
+            $url='http://116.203.191.58/api/send_message';
+                $data = array(
+                    "phone_no"  => $phone,
+                    "key"		=> $apikey,
+                    "message"	=> $message,
+                    "skip_link"	=> True // This optional for skip snapshot of link in message
+                );
+                $data_string = json_encode($data);
+
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, 0);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+                );
+                echo $res=curl_exec($ch);
+                curl_close($ch);
+
+            return redirect()->back()
+                ->withFlashSuccess(request()->notahsin.' Konfirmasi Pembayaran Berhasil');
+
+        }
+
+        return view('backend.tahsin.pembayaran', compact('pembayaran'));
+
     }
 
     public function createbayar(Request $request)
@@ -726,7 +779,7 @@ Salam,
         // curl_close($curl);
 
         // woo-wa.com
-        $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+        $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
         $url='http://116.203.191.58/api/send_message';
             $data = array(

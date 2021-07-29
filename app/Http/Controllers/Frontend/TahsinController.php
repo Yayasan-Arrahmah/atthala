@@ -288,7 +288,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+            $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
             $url='http://116.203.191.58/api/send_message';
             $data = array(
@@ -523,7 +523,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+            $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -818,7 +818,7 @@ Panitia Daftar Ulang Tahsin Angkatan 18
             // $info = "berhasil";
 
             // woo-wa.com
-            $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+            $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -1036,7 +1036,7 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-        $apikey = '3f7857341a5e760bc411825e908ff082633047a40666ea39';
+        $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
 
         $url='http://116.203.191.58/api/send_message';
             $data = array(
@@ -1080,5 +1080,154 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
         $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', $data)->setPaper('a5', 'landscape');
 
         return $pdf->stream($data->nama_peserta.' - Kartu Pendaftaran Tahsin LTTQ Arrahmah Balikpapan.pdf');
+    }
+
+    public function pembayarancari(Request $request)
+    {
+        if (!empty(request('namapeserta'))) {
+            $pencarian = DB::table('tahsins')
+                ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
+                ->where('level_peserta', '=', request('level'))
+                ->where('nama_pengajar', '=', request('pengajar'))
+                ->where('angkatan_peserta', '=', 18)
+                ->paginate(15);
+        } else {
+            $pencarian = null;
+        }
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar')
+            ->groupBy('nama_pengajar')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->where('angkatan_peserta', '=', 18)
+            ->get();
+
+        $datalevel = DB::table('tahsins')
+            ->select('level_peserta')
+            ->groupBy('level_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+            ->where('angkatan_peserta', '=', 18)
+            ->get();
+
+        return view('frontend.tahsin.cari-pembayaran', compact('datapengajars', 'datalevel', 'pencarian'));
+    }
+
+    public function pembayaran(Request $request)
+    {
+        $sesibayar = '18-'.request()->idt.'-'.request()->id;
+        Session::put('sesibayar', $sesibayar);
+
+        // ngambil data profile
+        $peserta = Tahsin::find(request()->id);
+        return view('frontend.tahsin.pembayaran', compact('sesibayar', 'peserta'));
+    }
+
+    public function pembayaransimpan()
+    {
+        $pesertadaftar = Tahsin::find(request()->id);
+
+        $nohp = $pesertadaftar->nohp_peserta;
+        if (substr($nohp, 0, 1) === '0') {
+            $nohp = substr($nohp, 1);
+        } elseif (substr($nohp, 0, 2) === '62') {
+            $nohp = substr($nohp, 2);
+        } elseif (substr($nohp, 0, 3) === '+62') {
+            $nohp = substr($nohp, 3);
+        } else {
+            $nohp = $nohp;
+        }
+
+        $pembayaran                            = new Pembayaran;
+        $pembayaran->id_peserta                = request()->id;
+        $pembayaran->nominal_pembayaran        = request()->nominaltf;
+        $pembayaran->jenis_pembayaran          = 'SPP TAHSIN';
+        $pembayaran->admin_pembayaran          = 'MENUNGGU KONFIRMASI';
+        $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransferspp');
+        $pembayaran->keterangan_pembayaran     = collect(request()->pembayaran)->implode('-');
+        $pembayaran->save();
+
+        // dd($pembayaran);
+
+        $phone = '+62'. $nohp;
+        $message =
+                "Assalamualaikum Warrohmarullah Wabarokatuh
+
+*Ini adalah balasan otomatis.*
+Terima kasih telah melakukan pembayaran Tahsin. Kasir kami akan memverifikasi pembayaran Bapak/Ibu/Saudara/i sekalian.
+
+Berita terkini :
+LTTQ Ar Rahmah Balikpapan sedang melakukan penggalangan dana untuk pembelian Gedung Belajar Al Qur’an Bersama. Donasi terkumpul saat ini adalah Rp 143.440.017 dari total kebutuhan 4 Milyar Rupiah. Gabung bersama kami untuk tetap mendapatkan amal jariyah dari ratusan santri-santri yang menghafalkan Kitabullah disini.
+
+Transfer ke rekening BNI Syariah 455-00000-60 a.n. Yayasan Ar Rahmah Balikpapan. Konfirmasi donasi ke wa.me/6281549225157.
+Jazaakumullahu Khoiron
+
+“Perumpamaan (nafkah yang dikeluarkan oleh) orang-orang yang menafkahkan hartanya di jalan Allah adalah serupa dengan sebutir benih yang menumbuhkan tujuh bulir, pada tiap-tiap bulir seratus biji. Allah melipat gandakan (ganjaran) bagi siapa yang Dia kehendaki. Dan Allah Maha Luas (karunia-Nya) lagi Maha Mengetahui.”
+"
+;
+
+        $apikey = '506fff76aa62e62101966cda25610f530517ce5dd118d3de';
+
+        $url='http://116.203.191.58/api/send_message';
+        $data = array(
+            "phone_no"  => $phone,
+            "key"		=> $apikey,
+            "message"	=> $message,
+            "skip_link"	=> True // This optional for skip snapshot of link in message
+        );
+        $data_string = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        echo $res=curl_exec($ch);
+        curl_close($ch);
+
+        return redirect()->route('frontend.tahsin.pembayaranselesai');
+
+    }
+    public function uploadbuktitransferspp(Request $request)
+    {
+        if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id') {
+            $file_bukti_transfer      = $request->file('filepond');
+            $nama_file_bukti_transfer = Session::get('sesibayar').'.'.$file_bukti_transfer->getClientOriginalExtension();
+            Session::put('filebuktitransferspp', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+            // Storage::disk('bukti-transfer-atthala')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+
+            $buktitf         = Image::make($file_bukti_transfer);
+            $lokasibuktitf   = public_path('../../../public_html/atthala/bukti-transfer-spp/');
+            $buktitf->resize(400, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.$nama_file_bukti_transfer);
+        } else {
+            $file_bukti_transfer      = $request->file('filepond');
+            $nama_file_bukti_transfer = Session::get('sesibayar').'.'.$file_bukti_transfer->getClientOriginalExtension();
+            Session::put('filebuktitransferspp', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
+            // Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
+
+            $buktitf         = Image::make($file_bukti_transfer);
+            $lokasibuktitf   = public_path('bukti-transfer-spp/');
+            $buktitf->resize(400, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $buktitf->save($lokasibuktitf.$nama_file_bukti_transfer);
+        }
+
+    }
+
+    public function pembayaranselesai()
+    {
+        $info = request()->info ?? 'berhasil';
+
+        return view('frontend.tahsin.pembayaran-selesai', compact('info'));
     }
 }

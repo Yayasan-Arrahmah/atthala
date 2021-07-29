@@ -11,7 +11,7 @@
                 <div style="padding-top: 0px">
                     <h4>Pendaftaran Peserta Tahsin <br> Telah Ditutup</h4>
                     <div class="text-muted">
-                        Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}
+                        Angkatan 18
                     </div>
                 </div>
             </center>

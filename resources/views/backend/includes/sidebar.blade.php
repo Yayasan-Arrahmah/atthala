@@ -42,6 +42,78 @@
                 <li class="nav-title">
                     Tahsin
                 </li>
+                {{-- <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/absen*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/absen*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }} {{ active_class(Active::checkUriPattern('admin/absen*')) }}" href="#">
+                        <i class="nav-icon fas fa-edit"></i>
+                        Peserta
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/absen')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Pengajar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Kelas
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/absen*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/absen*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }} {{ active_class(Active::checkUriPattern('admin/absen*')) }}" href="#">
+                        <i class="nav-icon fas fa-edit"></i>
+                        Pengajar
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/absen')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Pengajar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Kelas
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/absen*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/absen*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }} {{ active_class(Active::checkUriPattern('admin/absen*')) }}" href="#">
+                        <i class="nav-icon fas fa-edit"></i>
+                        Pembayaran
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/absen')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Pengajar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Kelas
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/tahsin/absen*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/absen*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }} {{ active_class(Active::checkUriPattern('admin/absen*')) }}" href="#">
+                        <i class="nav-icon fas fa-edit"></i>
+                        Absen
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/absen')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Pengajar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/absen*')) }}" href="{{ route('admin.tahsins.absen') }}">
+                                Kelas
+                            </a>
+                        </li>
+                    </ul>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/upload')) }} "
                     href="{{ route('admin.tahsins.upload') }}

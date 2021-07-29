@@ -32,6 +32,11 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get('pendaftaran/peserta/waktu',                      [TahsinController::class, 'daftarcalonpesertawaktu'])->name('tahsin.daftarcalonpesertawaktu');
     Route::post('pendaftaran/simpan',                            [TahsinController::class, 'simpandaftarcalonpeserta'])->name('tahsin.simpandaftarcalonpeserta');
     Route::get('pendaftaran/print',                              [TahsinController::class, 'printdaftarpeserta'])->name('tahsin.printdaftarpeserta');
+    Route::get('pembayaran/cari',                                [TahsinController::class, 'pembayarancari'])->name('tahsin.pembayarancari');
+    Route::get('pembayaran',                                     [TahsinController::class, 'pembayaran'])->name('tahsin.pembayaran');
+    Route::post('pembayaran/simpan',                             [TahsinController::class, 'pembayaransimpan'])->name('tahsin.pembayaransimpan');
+    Route::post('pembayaran/uploadbuktitransferspp',             [TahsinController::class, 'uploadbuktitransferspp'])->name('tahsin.uploadbuktitransferspp');
+    Route::get('pembayaran/selesai',                             [TahsinController::class, 'pembayaranselesai'])->name('tahsin.pembayaranselesai');
 
 
     // Route::post('store', 	[TahsinController::class, 'store']		)->name('tahsins.store');

@@ -34,6 +34,6 @@ class Pembayaran extends Model
 
     public function tahsin()
     {
-        return $this->belongsTo(Tahsin::class, 'id_peserta', 'no_tahsin');
+        return $this->belongsTo(Tahsin::class, 'id_peserta', 'id');
     }
 }
