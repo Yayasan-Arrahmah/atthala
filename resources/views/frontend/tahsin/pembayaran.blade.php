@@ -56,6 +56,7 @@
                                 <div class="col-8">
                                     <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Nama Peserta (Sesuai KTP)" name="nohppeserta" value="{{ strtoupper($peserta->nohp_peserta) }}" maxlength="191" required="">
                                 </div><!--col-->
+                                <div class="col text-muted">Silakan menghubungi admin jika no WA telah diganti</div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-5">
