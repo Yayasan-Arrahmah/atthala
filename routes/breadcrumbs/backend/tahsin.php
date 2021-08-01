@@ -47,7 +47,7 @@ Breadcrumbs::for('admin.tahsins.pengajar', function ($trail) {
 
 Breadcrumbs::for('admin.tahsins.pembayaran', function ($trail) {
     $trail->parent('admin.tahsins.index');
-    $trail->push('Pembayaran', route('admin.tahsins.pembayaran'));
+    $trail->push('Pembayaran SPP', route('admin.tahsins.pembayaran'));
 });
 
 Breadcrumbs::for('admin.tahsins.createbayar', function ($trail) {
@@ -83,4 +83,9 @@ Breadcrumbs::for('admin.tahsins.pesertaujian', function ($trail) {
 Breadcrumbs::for('admin.tahsins.daftarulang', function ($trail) {
     $trail->parent('admin.tahsins.index');
     $trail->push('Peserta Daftar Ulang', route('admin.tahsins.daftarulang'));
+});
+
+Breadcrumbs::for('admin.tahsins.pembayaranrekap', function ($trail) {
+    $trail->parent('admin.tahsins.pembayaran');
+    $trail->push('Rekapitulasi', route('admin.tahsins.pembayaranrekap'));
 });

@@ -1,4 +1,4 @@
-@extends('backend.layouts.app-livewire')
+@extends('backend.layouts.app')
 
 @section('title', app_name() . ' | Peserta ' . __('backend_tahsins.labels.management'))
 

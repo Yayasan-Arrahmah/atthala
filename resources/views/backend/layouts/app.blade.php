@@ -123,11 +123,7 @@
     @include('backend.includes.header')
 
     <div class="app-body">
-        @if (auth()->user()->last_name === 'Ekonomi')
-            @include('backend.includes.sidebar-keuangan')
-        @else
-            @include('backend.includes.sidebar')
-        @endif
+        @include('backend.includes.sidebar')
 
         <main class="main">
             @include('includes.partials.demo')

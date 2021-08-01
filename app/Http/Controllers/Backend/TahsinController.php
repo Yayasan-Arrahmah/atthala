@@ -681,7 +681,14 @@ https://web.arrahmahbalikpapan.or.id/
 
         }
 
-        return view('backend.tahsin.pembayaran', compact('pembayaran'));
+        return view('backend.tahsin.pembayaran-rekap', compact('pembayaran'));
+
+    }
+
+    public function pembayaranrekap()
+    {
+        $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
+        return view('backend.tahsin.pembayaran-rekap', compact('pembayaran'));
 
     }
 
