@@ -46,18 +46,18 @@
             </form>
         </div> --}}
         <form action="{{ Request::fullUrl() }}" class="row mt-4">
-            {{-- <div class="col-md-1">
+            <div class="col-md-1">
                 <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
                     <option>10</option>
                     <option>25</option>
                     <option>50</option>
                     <option>100</option>
                 </select>
-            </div> --}}
+            </div>
 
             <div class="col">
             </div>
-            {{-- <div class="col-md-2">
+            <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                     Level
                  </div>
@@ -78,8 +78,8 @@
                         <option value="TAHSINI">TAHSINI</option>
                         <option value="ITQON">ITQON</option>
                 </select>
-            </div> --}}
-            {{-- <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                 Angkatan
                  </div>
@@ -88,11 +88,12 @@
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
                         <option value="">-------</option>
                     @endisset
+                    <option value="18">18</option>
                     <option value="16">16</option>
                     <option value="17">17</option>
                 </select>
-            </div> --}}
-            {{-- <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
                 Jenis
                  </div>
@@ -105,7 +106,7 @@
                     <option value="IKHWAN">IKHWAN</option>
                     <option value="AKHWAT">AKHWAT</option>
                 </select>
-            </div> --}}
+            </div>
 
             <div class="col-md-3">
                 <div class="pull-right input-group mt-4">
@@ -130,24 +131,24 @@
                         $end    = 0;
                         $number = 1;
                         @endphp
-                        @foreach($pembayaran as $key=> $data)
+                        @foreach($tahsins as $key=> $data)
                         <div class="row kotak">
                             <div class="col-4">
-                                <div style="text-transform: uppercase; font-weight: 700">{{ $data->tahsin->no_tahsin ?? '' }} - {{ $data->tahsin->nama_peserta ?? '' }}</div>
+                                <div style="text-transform: uppercase; font-weight: 700">{{ $data->no_tahsin ?? '' }} - {{ $data->nama_peserta ?? '' }}</div>
                                 <div class="small text-muted">
-                                    {{ $data->tahsin->nohp_peserta ?? '' }} |  {{ $data->tahsin->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $data->tahsin->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
+                                    {{ $data->nohp_peserta ?? '' }} |  {{ $data->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $data->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div style="text-transform: uppercase;"><strong>{{ $data->tahsin->nama_pengajar }}</strong></div>
+                                <div style="text-transform: uppercase;"><strong>{{ $data->nama_pengajar }}</strong></div>
                                 <div class="small text-muted">
-                                    {{ $data->tahsin->jenis_peserta }} | {{ $data->tahsin->level_peserta }} - {{ $data->tahsin->jadwal_tahsin }}
+                                    {{ $data->jenis_peserta }} | {{ $data->level_peserta }} - {{ $data->jadwal_tahsin }}
                                 </div>
                             </div>
                             @php
                                 $noriwayat = 1;
                                 $totalpembayaran = DB::table('pembayarans')
-                                        ->where('id_peserta', $data->tahsin->id)
+                                        ->where('id_peserta', $data->id)
                                         ->where('admin_pembayaran', 'BERHASIL')
                                         ->where('bukti_transfer_pembayaran', 'like', '18-SPP-%')
                                         ->sum('nominal_pembayaran');
@@ -169,11 +170,11 @@
                                 </table>
                             </div>
                             <div class="col-12 mt-4">
-                                <a data-toggle="collapse" lass="text-muted mb-0" href="#detail{{ $key + $pembayaran->firstItem() }}" aria-expanded="false" style="padding-left: 15px">Riwayat Pembayaran</a>
+                                <a data-toggle="collapse" lass="text-muted mb-0" href="#detail{{ $key + $tahsins->firstItem() }}" aria-expanded="false" style="padding-left: 15px">Riwayat Pembayaran</a>
                             </div>
 
                             <div class="col-12">
-                                <div class="collapse" id="detail{{ $key + $pembayaran->firstItem() }}" >
+                                <div class="collapse" id="detail{{ $key + $tahsins->firstItem() }}" >
                                     <hr class="mt-1 mb-1">
 
                                     {{-- <label class="text-muted mb-0">Riwayat Pembayaran</label> --}}
@@ -187,8 +188,8 @@
                                     @php
                                         $noriwayat = 1;
                                         $riwayatpembayaran = DB::table('pembayarans')
-                                                ->select('nominal_pembayaran', 'admin_pembayaran', 'created_at', 'admin_pembayaran' )
-                                                ->where('id_peserta', $data->tahsin->id)
+                                                ->select('nominal_pembayaran', 'admin_pembayaran', 'created_at', 'admin_pembayaran', 'bukti_transfer_pembayaran' )
+                                                ->where('id_peserta', $data->id)
                                                 ->where('bukti_transfer_pembayaran', 'like', '18-SPP-%')
                                                 ->get();
                                     @endphp
@@ -199,7 +200,7 @@
                                             <div class="col-3" style="font-size: 10px"> {{ $riwayat->created_at }}</div>
                                             <div class="col-3">
                                                 <img class="zoom"
-                                                    src="/bukti-transfer-spp/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                                    src="/bukti-transfer-spp/{{ $riwayat->bukti_transfer_pembayaran ?? '404.jpg' }}"
                                                 alt="" height="50">
                                             </div>
                                             <div class="col-2" style="font-size: 10px">
@@ -215,8 +216,8 @@
                             </div>
                         </div>
                         @php
-                            $first  = $pembayaran->firstItem();
-                            $end    = $key + $pembayaran->firstItem();
+                            $first  = $tahsins->firstItem();
+                            $end    = $key + $tahsins->firstItem();
                         @endphp
                         @endforeach
                     </section>
@@ -226,16 +227,16 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {{-- {!! $pembayaran->count() !!} {{ trans_choice('backend_tahsins.table.total', $pembayaran->count()) }} --}}
+                    {{-- {!! $tahsins->count() !!} {{ trans_choice('backend_tahsins.table.total', $tahsins->count()) }} --}}
 
-                    {!! $first !!} - {!! $end !!} Dari {!! $pembayaran->total() !!} Data
+                    {!! $first !!} - {!! $end !!} Dari {!! $tahsins->total() !!} Data
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right">
-                    {{-- {!! $pembayaran->links() !!} --}}
-                    {!! $pembayaran->appends(request()->query())->links() !!}
+                    {{-- {!! $tahsins->links() !!} --}}
+                    {!! $tahsins->appends(request()->query())->links() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->

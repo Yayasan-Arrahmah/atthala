@@ -97,10 +97,11 @@
             position: relative;
         }
     .zoom:hover {
+        position: absolute;
         -ms-transform: scale(13); /* IE 9 */
         -webkit-transform: scale(13); /* Safari 3-8 */
         transform: scale(13);
-        z-index: 999;
+        z-index: 9999;
     }
 
     </style>

@@ -697,8 +697,24 @@ https://web.arrahmahbalikpapan.or.id/
 
     public function pembayaranrekap()
     {
-        $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
-        return view('backend.tahsin.pembayaran-rekap', compact('pembayaran'));
+        $tahsins = Tahsin::when($this->nama, function ($query) {
+                    return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
+                })
+                ->when($this->level, function ($query) {
+                    if( $this->level != 'SEMUA') {
+                        return $query->where('level_peserta', '=', $this->level);
+                    }
+                })
+                ->when($this->jenis, function ($query) {
+                    if( $this->jenis != 'SEMUA') {
+                        return $query->where('jenis_peserta', '=', $this->jenis);
+                    }
+                })
+                ->when($this->angkatan, function ($query) {
+                    return $query->where('angkatan_peserta', '=', $this->angkatan);
+                })
+                ->paginate(10);
+        return view('backend.tahsin.pembayaran-rekap', compact('tahsins'));
     }
 
     public function createbayar(Request $request)
