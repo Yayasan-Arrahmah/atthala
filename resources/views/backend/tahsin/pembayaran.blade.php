@@ -45,6 +45,67 @@
                 </div>
             </form>
         </div> --}}
+        @if (request()->metode == 'rubah')
+        <div class="row mt-4">
+            <div class="col-md-5">
+                <div class="nav-tabs-boxed">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#edit" role="tab" aria-controls="edit">Edit Nominal SPP</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="edit" role="tabpanel">
+                            <form class="form-horizontal" action="">
+                                <input type="hidden" name="metode" value="rubahdata">
+                                <input type="hidden" name="id" value="{{ request()->id }}">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Nama</label>
+                                    <div class="col-md-9">
+                                        <div style="text-transform: uppercase; font-weight: 700">{{ $dataedit->tahsin->no_tahsin ?? '' }} - {{ $dataedit->tahsin->nama_peserta ?? '' }}</div>
+                                        <div class="small text-muted">
+                                            {{ $dataedit->tahsin->nohp_peserta ?? '' }} |  {{ $dataedit->tahsin->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $dataedit->tahsin->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">SPP</label>
+                                    <div class="col-md-9">
+                                        <strong>Bulan Ke {{ $dataedit->keterangan_pembayaran ?? '' }}</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Nominal</label>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" name="nominal" value="{{ $dataedit->nominal_pembayaran ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Bukti TF</label>
+                                    <div class="col-md-6">
+                                        <img class="zoom"
+                                            src="/bukti-transfer-spp/{{ $dataedit->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                        alt="" height="50">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                            <a href="{{ Request::url() }}?nama={{ request()->nama ?? '' }}&page={{ request()->page ?? '' }}" class="btn btn-info">
+                                                Tutup
+                                            </a>
+                                        <div class="float-right">
+                                            <button class="btn btn-warning">
+                                                <i class="fas fa-edit"></i> Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <form action="{{ Request::fullUrl() }}" class="row mt-4">
             {{-- <div class="col-md-1">
                 <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
@@ -170,23 +231,30 @@
                                     Bulan Ke {{ $data->keterangan_pembayaran }}
                                 </td>
                                 <td>
-                                    @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI')
-                                        <form action="">
-                                            <input type="hidden" name="id" value="{{ $data->id }}">
-                                            <input type="hidden" name="idp" value="{{ $data->id_peserta }}">
-                                            <input type="hidden" name="notahsin" value="{{ $data->tahsin->no_tahsin }}">
-                                            <input type="hidden" name="metode" value="update">
-                                            <button class="btn btn-warning btn-pill" style="font-weight: 700">Menunggu Konfirmasi</button>
-                                        </form>
-                                    @elseif ($data->admin_pembayaran == 'BERHASIL')
-                                        <form action="">
-                                            <input type="hidden" name="id" value="{{ $data->id }}">
-                                            <input type="hidden" name="idp" value="{{ $data->id_peserta }}">
-                                            <input type="hidden" name="notahsin" value="{{ $data->tahsin->no_tahsin }}">
-                                            <input type="hidden" name="metode" value="update">
-                                            <button class="btn btn-info" style="font-weight: 700">Berhasil</button>
-                                        </form>
-                                    @endif
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <form action="{{ Request::fullUrl() }}">
+                                                <input type="hidden" name="id" value="{{ $data->id }}">
+                                                <input type="hidden" name="idp" value="{{ $data->id_peserta }}">
+                                                <input type="hidden" name="notahsin" value="{{ $data->tahsin->no_tahsin }}">
+                                                <input type="hidden" name="metode" value="update">
+                                                @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI')
+                                                    <button class="btn btn-warning btn-pill" style="font-weight: 700">Menunggu Konfirmasi</button>
+                                                @elseif ($data->admin_pembayaran == 'BERHASIL')
+                                                    <button class="btn btn-info" style="font-weight: 700">Berhasil</button>
+                                                @endif
+                                            </form>
+                                        </div>
+                                        <div class="col-6">
+                                            <form action="{{ Request::fullUrl() }}">
+                                                <input type="hidden" name="id" value="{{ $data->id }}">
+                                                <input type="hidden" name="metode" value="rubah">
+                                                <input type="hidden" name="nama" value="{{ request()->nama ?? '' }}">
+                                                <input type="hidden" name="page" value="{{ request()->page ?? ''}}">
+                                                <button class="btn btn-success" style="font-weight: 700"><i class="fas fa-edit"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </td>
 
                             </tr>
