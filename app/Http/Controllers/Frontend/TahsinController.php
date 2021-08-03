@@ -1191,7 +1191,7 @@ Jazaakumullahu Khoiron
         echo $res=curl_exec($ch);
         curl_close($ch);
 
-        $data = Pembayaran::find(request()->id);
+        $data = Pembayaran::find($pembayaran->id);
         $phone = '+6282155171933';
 
         // woo-wa.com kasir
