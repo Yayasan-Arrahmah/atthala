@@ -209,23 +209,6 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            // $url = 'https://api.wanotif.id/v1/send';
-
-            // $curl = curl_init();
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_HEADER, 0);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            // curl_setopt($curl, CURLOPT_POST, 1);
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            //     'Apikey'    => $apikey,
-            //     'Phone'     => $phone,
-            //     'Message'   => $message,
-            // ));
-            // $response = curl_exec($curl);
-            // curl_close($curl);
 
             // woo-wa.com
             $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
@@ -302,24 +285,6 @@ Silakan isi format berikut sebelum mengirimkan rekaman suara:
 
 Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
-
-            // $url = 'https://api.wanotif.id/v1/send';
-
-            // $curl = curl_init();
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_HEADER, 0);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            // curl_setopt($curl, CURLOPT_POST, 1);
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            //     'Apikey'    => $apikey,
-            //     'Phone'     => $phone,
-            //     'Message'   => $message,
-            // ));
-            // $response = curl_exec($curl);
-            // curl_close($curl);
 
             // woo-wa.com
             $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
@@ -621,7 +586,11 @@ Tanggal Mengisi Formulir Online :";
     public function pembayaran(ManageTahsinRequest $request)
     {
 
-        $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
+        if (isset(request()->id)) {
+            $pembayaran = Pembayaran::find(request()->id);
+        } else {
+            $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
+        }
 
         if (request()->metode == 'update') {
 
@@ -630,7 +599,7 @@ Tanggal Mengisi Formulir Online :";
             $data->save();
 
             $phone = '+62'. $data->tahsin->nohp_peserta;
-            // woo-wa.com
+            // woo-wa.com peserta
             $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
             $message =
                 'Assalamualaikum Warohmatullahi Wabarokaatuh,
@@ -645,36 +614,86 @@ Pengajar : '.$data->tahsin->nama_pengajar.'
 Nominal SPP : '.$data->nominal_pembayaran.'
 Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
 
-Kontak : wa.me/6285790962447
-Klik link berikut untuk menandai jika SPP telah diverifikasi oleh Kasir
+Klik link berikut untuk memeriksa riwayat pembayaran
 
-https://web.arrahmahbalikpapan.or.id/
+https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.$data->tahsin->nama_peserta.'&level='.$data->tahsin->level_peserta.'&pengajar='.$data->tahsin->nama_pengajar.'
 ';
 
             $url='http://116.203.191.58/api/send_message';
-                $data = array(
-                    "phone_no"  => $phone,
-                    "key"		=> $apikey,
-                    "message"	=> $message,
-                    "skip_link"	=> True // This optional for skip snapshot of link in message
-                );
-                $data_string = json_encode($data);
+            $data = array(
+                "phone_no"  => $phone,
+                "key"		=> $apikey,
+                "message"	=> $message,
+                "skip_link"	=> True // This optional for skip snapshot of link in message
+            );
+            $data_string = json_encode($data);
 
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_VERBOSE, 0);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen($data_string))
-                );
-                echo $res=curl_exec($ch);
-                curl_close($ch);
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_VERBOSE, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            echo $res=curl_exec($ch);
+            curl_close($ch);
+
+            //////////////////////////////
+
+
+            $data = Pembayaran::find(request()->id);
+            $phone = '+6282155171933';
+
+            // woo-wa.com kasir
+            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $message =
+                'Assalamualaikum Warohmatullahi Wabarokaatuh,
+*Ini adalah pesan otomatis.*
+
+Telah dikirimkan pembayaran SPP dengan detail sebagai berikut :
+
+Nama Peserta : '.$data->tahsin->nama_peserta.'
+NIS : '.$data->tahsin->no_tahsin.'
+Level/Kelas : '.$data->tahsin->level_peserta.' / '.$data->tahsin->jadwal_tahsin.'
+Pengajar : '.$data->tahsin->nama_pengajar.'
+Nominal SPP : '.$data->nominal_pembayaran.'
+Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
+Kontak : wa.me/62'.$data->tahsin->nohp_peserta.'
+
+Klik link berikut untuk memeriksa riwayat pembayaran
+https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/pembayaran?id='.$data->id.'
+';
+
+            $url='http://116.203.191.58/api/send_message';
+            $data = array(
+                "phone_no"  => $phone,
+                "key"		=> $apikey,
+                "message"	=> $message,
+                "skip_link"	=> True // This optional for skip snapshot of link in message
+            );
+            $data_string = json_encode($data);
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_VERBOSE, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string))
+            );
+            echo $res=curl_exec($ch);
+            curl_close($ch);
 
             return redirect()->back()
                 ->withFlashSuccess(request()->notahsin.' Konfirmasi Pembayaran Berhasil');

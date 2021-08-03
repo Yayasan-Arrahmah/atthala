@@ -168,14 +168,14 @@
                 </select>
             </div> --}}
 
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <div class="pull-right input-group mt-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                     </div>
                     <input name="nama" class="form-control" type="text" placeholder="Cari Nama" autocomplete="password" width="100">
                 </div>
-            </div>
+            </div> --}}
         </form>
         <div class="row mt-4">
             <div class="col">
