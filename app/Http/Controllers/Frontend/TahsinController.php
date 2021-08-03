@@ -1144,7 +1144,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
         $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransferspp');
         $pembayaran->keterangan_pembayaran     = collect(request()->pembayaran)->implode('-');
         $pembayaran->save();
-
+        Session::put('id', $pembayaran->id);
         // dd($pembayaran);
 
         $phone = '+62'. $nohp;
@@ -1191,7 +1191,7 @@ Jazaakumullahu Khoiron
         echo $res=curl_exec($ch);
         curl_close($ch);
 
-        $data = Pembayaran::find($pembayaran->id);
+        $data = Pembayaran::find(Session::get('id'));
         $phone = '+6282155171933';
 
         // woo-wa.com kasir
