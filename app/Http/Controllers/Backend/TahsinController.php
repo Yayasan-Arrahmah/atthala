@@ -616,58 +616,7 @@ Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
 
 Klik link berikut untuk memeriksa riwayat pembayaran
 
-https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.$data->tahsin->nama_peserta.'&level='.$data->tahsin->level_peserta.'&pengajar='.$data->tahsin->nama_pengajar.'
-';
-
-            $url='http://116.203.191.58/api/send_message';
-            $data = array(
-                "phone_no"  => $phone,
-                "key"		=> $apikey,
-                "message"	=> $message,
-                "skip_link"	=> True // This optional for skip snapshot of link in message
-            );
-            $data_string = json_encode($data);
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, 0);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data_string))
-            );
-            echo $res=curl_exec($ch);
-            curl_close($ch);
-
-            //////////////////////////////
-
-
-            $data = Pembayaran::find(request()->id);
-            $phone = '+6282155171933';
-
-            // woo-wa.com kasir
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
-            $message =
-                'Assalamualaikum Warohmatullahi Wabarokaatuh,
-*Ini adalah pesan otomatis.*
-
-Telah dikirimkan pembayaran SPP dengan detail sebagai berikut :
-
-Nama Peserta : '.$data->tahsin->nama_peserta.'
-NIS : '.$data->tahsin->no_tahsin.'
-Level/Kelas : '.$data->tahsin->level_peserta.' / '.$data->tahsin->jadwal_tahsin.'
-Pengajar : '.$data->tahsin->nama_pengajar.'
-Nominal SPP : '.$data->nominal_pembayaran.'
-Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
-Kontak : wa.me/62'.$data->tahsin->nohp_peserta.'
-
-Klik link berikut untuk memeriksa riwayat pembayaran
-https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/pembayaran?id='.$data->id.'
+https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.str_replace(" ","+",$data->tahsin->nama_peserta).'&level='.str_replace(" ","+",$data->tahsin->level_peserta).'&pengajar='.str_replace(" ","+",$data->tahsin->nama_pengajar).'
 ';
 
             $url='http://116.203.191.58/api/send_message';
