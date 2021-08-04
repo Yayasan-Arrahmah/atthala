@@ -1113,7 +1113,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 
     public function pembayaran(Request $request)
     {
-        $sesibayar = '18-SPP-'.request()->idt.'-'.request()->id;
+        $sesibayar = '18-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
         Session::put('sesibayar', $sesibayar);
 
         // ngambil data profile

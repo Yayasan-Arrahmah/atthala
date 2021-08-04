@@ -61,6 +61,7 @@ class TahsinPeserta extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imp
             $tahsin->jadwal_tahsin,
             $tahsin->jenis_peserta,
             $tahsin->angkatan_peserta,
+            Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md'),
         ] ;
     }
 
@@ -74,6 +75,7 @@ class TahsinPeserta extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imp
            'Jadwal',
            'Gender',
            'Angkatan',
+           'BBTT',
         ] ;
     }
 }
