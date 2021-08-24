@@ -178,7 +178,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    Rp. {{ strrev(implode('.',str_split(strrev(strval( $data->nominal_pembayaran)),3))) ?? '-'}}
+                                    Rp. {{ strrev(implode('.',str_split(strrev(strval( $data->nominal_pembayaran ?? '-')),3))) }}
                                 </td>
                                 <td>
                                     {{ \Carbon\Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md') }}
