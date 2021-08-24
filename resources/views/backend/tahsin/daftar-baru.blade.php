@@ -141,6 +141,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
+                                <th>Nominal Pembayaran</th>
                                 <th>Kode BBTT</th>
                                 <th>Bukti Transfer</th>
                                 <th class="text-center">Rekaman / Hasil</th>
@@ -161,6 +162,9 @@
                             $number = 1;
                             @endphp
                             @foreach($tahsins as $key=> $tahsin)
+                            @php
+                                $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first();
+                            @endphp
                             <tr>
                                 <td class="text-center" >
                                     {{ $key + $tahsins->firstItem() }}
@@ -174,12 +178,12 @@
                                     </a>
                                 </td>
                                 <td>
+                                    {{ strrev(implode('.',str_split(strrev(strval( $data->nominal_pembayaran)),3))) }}
+                                </td>
+                                <td>
                                     {{ \Carbon\Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md') }}
                                 </td>
                                 <td>
-                                    @php
-                                        $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first();
-                                    @endphp
                                     <div class="text-center">
                                         {{-- @isset($pesertaujian->bukti_transfer) --}}
                                         <div style="">
