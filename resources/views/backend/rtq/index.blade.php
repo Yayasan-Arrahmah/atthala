@@ -212,7 +212,7 @@
                                     <td class="text-center" style="font-weight: 800">
                                         @php
                                             $verifikasi = DB::table('rtq_rapors')
-                                                        ->where('id_periode_rapor', request()->periode ?? '2')
+                                                        ->where('id_periode_rapor', request()->periode ?? $setperioderapor->id)
                                                         ->where('id_santri', $rtq->id)
                                                         ->first();
                                         @endphp

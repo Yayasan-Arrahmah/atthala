@@ -45,6 +45,47 @@
 
             </ul>
         </nav>
+    @elseif (auth()->user()->last_name === 'PENGAJAR' || auth()->user()->last_name === 'MUDIR')
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-title">
+                    @lang('menus.backend.sidebar.general')
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{
+                        active_class(Active::checkUriPattern('admin/dashboard'))
+                    }}" href="{{ route('admin.dashboard') }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        @lang('menus.backend.sidebar.dashboard')
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ active_class(Active::checkUriPattern('admin/amalans/*')) }} "
+                    href="{{ route('admin.amalans.index') }}
+                    " > <i class="nav-icon fas fa-edit"></i>
+                    Amalan
+                    </a>
+                </li>
+
+                <li class="nav-title">
+                    RTQ
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ active_class(Active::checkUriPattern('admin/rtq')) }} "
+                    href="{{ route('admin.rtqs.index') }}
+                    " > <i class="nav-icon fas fa-users"></i>
+                    Santri
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link "
+                    href="#
+                    " > <i class="nav-icon fas fa-edit"></i>
+                    Nilai Pelajaran
+                    </a>
+                </li>
+            </ul>
+        </nav>
     @elseif (auth()->user()->last_name === 'Admin')
         <nav class="sidebar-nav">
             <ul class="nav">
@@ -75,6 +116,13 @@
                     href="{{ route('admin.rtqs.index') }}
                     " > <i class="nav-icon fas fa-users"></i>
                     Santri
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ active_class(Active::checkUriPattern('admin/rtq')) }} "
+                    href="{{ route('admin.rtqs.index') }}
+                    " > <i class="nav-icon fas fa-edit"></i>
+                    Nilai Pelajaran
                     </a>
                 </li>
                 {{-- <li class="nav-item">
