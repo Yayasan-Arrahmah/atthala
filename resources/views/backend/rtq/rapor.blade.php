@@ -193,7 +193,7 @@
                     <label class="col-md-3 form-control-label text-center">Catatan Pembimbing</label>
                     <div class="col-md-9">
                         <div class="input-group">
-                            <textarea class="form-control" rows="10" name="catatan_pembimbing_santri">{{ $rapor->catatan_pembimbing_santri }}</textarea>
+                            <textarea class="form-control" maxlength="250" rows="10" name="catatan_pembimbing_santri">{{ $rapor->catatan_pembimbing_santri }}</textarea>
                         </div>
                     </div>
                 </div>
