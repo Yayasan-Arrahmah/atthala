@@ -180,6 +180,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
+                                <th>Umur</th>
                                 <th class="text-center">Verifikasi Mudir</th>
                                 <th class="text-center">Status</th>
                                 @if (auth()->user()->last_name == 'Admin')
@@ -208,6 +209,13 @@
                                                 {{ $rtq->nis_santri }} | {{ $rtq->notelp_santri }}
                                             </div>
                                         </a>
+                                    </td>
+                                    <td class="text-center" >
+                                        @php
+                                        $birth = !empty($rtq->tanggal_lahir) ? $rtq->tanggal_lahir : \Carbon\Carbon::now()->format('Y-m-d');
+                                        $umur = !empty(\Carbon\Carbon::parse($birth)->age) ? \Carbon\Carbon::parse($birth)->age : '0';
+                                        @endphp
+                                        {{ $umur }} Tahun
                                     </td>
                                     <td class="text-center" style="font-weight: 800">
                                         @php
