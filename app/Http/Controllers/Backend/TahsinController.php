@@ -751,7 +751,7 @@ Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
 Terima kasih telah melakukan pembayaran SPP kepada bagian keuangan kami sebesar *Rp. ' . number_format($nominal, 0, ',', '.') . '*-.
 Alhamdulillah pembayaran bapak/ibu telah tercatat lunas pada sistem kami. Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
 
-Saat ini kami membuka kesempatan untuk bapak/ibu dalam program pengembangan dakwah Rumah Tahfizh QUran Ar Rahmah dengan berinfak sebesar Rp 20.000,- melalui transfer ke rekening 2182182226 (BNI Syariah) a.n. Rumah Tahfidz Quran Putra Ar Rahmah. Tambahkan angka 26 untuk kode transaksi pengembangan dakwah. contoh Transfer : Rp 20.026,-
+Saat ini kami membuka kesempatan untuk bapak/ibu dalam program pengembangan dakwah Rumah Tahfizh QUran Ar Rahmah dengan berinfak sebesar Rp 20.000,- melalui transfer ke rekening 2182182226 (Bank Syariah Indonesia) a.n. Rumah Tahfidz Quran Putra Ar Rahmah. Tambahkan angka 26 untuk kode transaksi pengembangan dakwah. contoh Transfer : Rp 20.026,-
 
 Tetap jaga kesehatan dan ikuti protokol kesehatan selama masa pembatasan sosial skala besar.
 Semoga Allah Subhanahu Wa Taala senantiasa melindungi kita semua. Aamiin Yaa Robbal Aalamiin

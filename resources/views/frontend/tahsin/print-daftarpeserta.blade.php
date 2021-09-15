@@ -86,8 +86,8 @@ background-repeat: no-repeat;
         <strong>Kontak Akhwat:</strong> 0813 5012 8157
         <br>
         <br>
-        <strong>Rekening Ikhwan:</strong> BNI Syariah - 4550 0000 15 - Yayasan Arrahmah<br>
-        <strong>Rekening Akhwat:</strong> BNI Syariah - 7009 9997 05 - Yayasan Arrahmah
+        <strong>Rekening Ikhwan:</strong> Bank Syariah Indonesia - 4550 0000 15 - Yayasan Arrahmah<br>
+        <strong>Rekening Akhwat:</strong> Bank Syariah Indonesia - 7009 9997 05 - Yayasan Arrahmah
         <br>
         <br>
         <br>

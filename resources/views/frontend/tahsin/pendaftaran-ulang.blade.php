@@ -288,7 +288,7 @@
                             <div class="alert alert-success" role="alert" style="margin-bottom: 0rem">
                                 <h4 class="alert-heading">Rekening Pembayaran (IKHWAN)</h4>
                                 <p>
-                                    <div><strong>BNI Syariah</strong> : 4550 0000 15</div>
+                                    <div><strong>Bank Syariah Indonesia</strong> : 4550 0000 15</div>
                                     <div><strong>A.N</strong> : Yayasan Arrahmah</div>
                                 </p>
                             </div>
@@ -299,7 +299,7 @@
                             <div class="alert alert-warning" role="alert" style="margin-bottom: 0rem">
                                 <h4 class="alert-heading">Rekening Pembayaran (AKHWAT)</h4>
                                 <p>
-                                    <div><strong>BNI Syariah</strong> : 7009 9997 05</div>
+                                    <div><strong>Bank Syariah Indonesia</strong> : 7009 9997 05</div>
                                     <div><strong>A.N</strong> : Yayasan Arrahmah</div>
                                 </p>
                             </div>

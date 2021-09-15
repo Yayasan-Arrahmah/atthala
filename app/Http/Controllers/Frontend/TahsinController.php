@@ -1157,7 +1157,7 @@ Terima kasih telah melakukan pembayaran Tahsin. Kasir kami akan memverifikasi pe
 Berita terkini :
 LTTQ Ar Rahmah Balikpapan sedang melakukan penggalangan dana untuk pembelian Gedung Belajar Al Qur’an Bersama. Donasi terkumpul saat ini adalah Rp 143.440.017 dari total kebutuhan 4 Milyar Rupiah. Gabung bersama kami untuk tetap mendapatkan amal jariyah dari ratusan santri-santri yang menghafalkan Kitabullah disini.
 
-Transfer ke rekening BNI Syariah 455-00000-60 a.n. Yayasan Ar Rahmah Balikpapan. Konfirmasi donasi ke wa.me/6281549225157.
+Transfer ke rekening Bank Syariah Indonesia 455-00000-60 a.n. Yayasan Ar Rahmah Balikpapan. Konfirmasi donasi ke wa.me/6281549225157.
 Jazaakumullahu Khoiron
 
 “Perumpamaan (nafkah yang dikeluarkan oleh) orang-orang yang menafkahkan hartanya di jalan Allah adalah serupa dengan sebutir benih yang menumbuhkan tujuh bulir, pada tiap-tiap bulir seratus biji. Allah melipat gandakan (ganjaran) bagi siapa yang Dia kehendaki. Dan Allah Maha Luas (karunia-Nya) lagi Maha Mengetahui.”

@@ -88,8 +88,8 @@ window.print();
                     <div>
                         <br>
                         <br>
-                        <strong>Rekening Ikhwan:</strong> BNI Syariah - 4550 0000 15 - Yayasan Arrahmah<br>
-                        <strong>Rekening Akhwat:</strong> BNI Syariah - 7009 9997 05 - Yayasan Arrahmah
+                        <strong>Rekening Ikhwan:</strong> Bank Syariah Indonesia - 4550 0000 15 - Yayasan Arrahmah<br>
+                        <strong>Rekening Akhwat:</strong> Bank Syariah Indonesia - 7009 9997 05 - Yayasan Arrahmah
                         <br>
                         <br>
                         <strong>Kontak Ikhwan:</strong> 0857-5131-8937<br>
