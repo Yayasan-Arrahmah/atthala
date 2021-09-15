@@ -288,7 +288,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $apikey = env('WA_KEY');
 
             $url='http://116.203.191.58/api/send_message';
             $data = array(
@@ -523,7 +523,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             // curl_close($curl);
 
             // woo-wa.com
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $apikey = env('WA_KEY');
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -818,7 +818,7 @@ Panitia Daftar Ulang Tahsin Angkatan 18
             // $info = "berhasil";
 
             // woo-wa.com
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $apikey = env('WA_KEY');
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -1036,7 +1036,7 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-        $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+        $apikey = env('WA_KEY');
 
         $url='http://116.203.191.58/api/send_message';
             $data = array(
@@ -1164,7 +1164,7 @@ Jazaakumullahu Khoiron
 "
 ;
 
-        $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+        $apikey = env('WA_KEY');
 
         $url='http://116.203.191.58/api/send_message';
         $data = array(
@@ -1195,7 +1195,7 @@ Jazaakumullahu Khoiron
         $phone = '+6282155171933';
 
         // woo-wa.com kasir
-        $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+        $apikey = env('WA_KEY');
         $message =
             'Assalamualaikum Warohmatullahi Wabarokaatuh,
 *Ini adalah pesan otomatis.*

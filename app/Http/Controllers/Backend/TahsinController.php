@@ -133,11 +133,11 @@ class TahsinController extends Controller
                 ->when($this->angkatan, function ($query) {
                     return $query->where('angkatan_peserta', '=', $this->angkatan);
                 })
-                // ->when($this->pengajar, function ($query) {
-                //     if( $this->jenis != 'SEMUA') {
-                //         return $query->where('nama_pengajar', '=', $this->pengajar);
-                //     }
-                // })
+                ->when($this->pengajar, function ($query) {
+                    if( $this->jenis != 'SEMUA') {
+                        return $query->where('nama_pengajar', '=', $this->pengajar);
+                    }
+                })
                 // ->withCount('no_tahsin')
                 // ->has('no_tahsin', '<', 2)
                 // ->havingRaw('COUNT(no_tahsin) < 2')
@@ -211,7 +211,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 
 
             // woo-wa.com
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $apikey = env('WA_KEY');
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -287,7 +287,7 @@ Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
 
             // woo-wa.com
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $apikey = env('WA_KEY');
 
             $url='http://116.203.191.58/api/send_message';
                 $data = array(
@@ -600,7 +600,7 @@ Tanggal Mengisi Formulir Online :";
 
             $phone = '+62'. $data->tahsin->nohp_peserta;
             // woo-wa.com peserta
-            $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+            $apikey = env('WA_KEY');
             $message =
                 'Assalamualaikum Warohmatullahi Wabarokaatuh,
 *Ini adalah pesan otomatis.*
@@ -779,7 +779,7 @@ Salam,
         // curl_close($curl);
 
         // woo-wa.com
-        $apikey = '188afb292f3633fcdae7e738adafc8c633f5e3dfc421720c';
+        $apikey = env('WA_KEY');
 
         $url='http://116.203.191.58/api/send_message';
             $data = array(
