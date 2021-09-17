@@ -22,9 +22,9 @@
     </div><!-- row -->
 </div>
 
-@stack('before-scripts')
+{{-- @stack('before-scripts')
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     $( document ).ready(function() {
     });
 </script>

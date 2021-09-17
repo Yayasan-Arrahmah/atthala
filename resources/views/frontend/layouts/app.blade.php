@@ -19,8 +19,8 @@
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
-    {{ style('css/bootstrap-datepicker.css') }}
-    {{ style('https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css')  }}
+    {{-- {{ style('css/bootstrap-datepicker.css') }} --}}
+    {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css')  }} --}}
 
     {{-- {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }} --}}
 
@@ -29,7 +29,7 @@
     {{-- {{ style('css/bootstrap-editable.css') }} --}}
 
     {{-- {{ style('https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap') }} --}}
-    <link rel="stylesheet" href="/css/bootstrap-editable.css"/>
+    {{-- <link rel="stylesheet" href="/css/bootstrap-editable.css"/> --}}
     <style>
         body{
             background-image: url('/img/back.jpeg');
@@ -128,7 +128,7 @@
 
     </style>
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
-    {{ style('https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css') }}
+    {{-- {{ style('https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css') }} --}}
 
     @stack('after-styles')
 
@@ -138,19 +138,19 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
-    {!! script('js/bootstrap-datepicker.js') !!}
-    {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
-    {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
+    {{-- {!! script('js/bootstrap-datepicker.js') !!} --}}
+    {{-- {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!} --}}
+    {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}
     {!! script('https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js') !!}
-    {!! script('https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js') !!}
+    {!! script('https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js') !!} --}}
 
     {{-- {!! script('https://vitalets.github.io/x-editable/assets/jquery/jquery-1.9.1.min.js') !!}
     {!! script('https://vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js') !!} --}}
     {{-- {!! script('https://vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js') !!} --}}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 
-    <script src="/js/bootstrap-editable.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
+    {{-- <script src="/js/bootstrap-editable.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script> --}}
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.min.js" integrity="sha512-u2P0FelsRQD/z5EkW5vRp8RRm9oe23rKSqvHBFAXnnES8tPRVIl6oBexyBE1WaOA4rPhXf035iKWU/DCbzRftw==" crossorigin="anonymous"></script> --}}
     {{-- {!! script('https://code.jquery.com/jquery-2.0.3.min.js') !!} --}}

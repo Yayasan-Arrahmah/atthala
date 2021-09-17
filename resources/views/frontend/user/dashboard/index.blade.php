@@ -90,7 +90,7 @@
                     <div>
                         <a href="{{ route('frontend.user.pesertatahsinbaru') }}">
                             <div class="text-value-sm" style="color: #a220d8">Pendaftaran Baru</div>
-                            <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 18</div>
+                            <div class="text-muted text-uppercase font-weight-bold small">Tahsin </div>
                         </a>
                     </div>
                 </div>
@@ -105,7 +105,20 @@
                 <div>
                     <a href="{{ route('frontend.user.absentahsin') }}">
                         <div class="text-value-sm text-primary">Absensi</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 17</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="card" style="margin-bottom: .3rem">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="fa fa-users bg-secondary p-3 px-2 font-1xl mr-3" style="border-radius: 5px 0px 0px 5px"></i>
+                <div>
+                    <a href="{{ route('frontend.user.tahsinpeserta') }}">
+                        <div class="text-value-sm text-dark">Data Peserta</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin</div>
                     </a>
                 </div>
             </div>
@@ -118,7 +131,7 @@
                 <div>
                     <a href="{{ route('frontend.user.jadwaltahsin') }}">
                         <div class="text-value-sm text-danger">Jadwal</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin - 17</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Tahsin </div>
                     </a>
                 </div>
             </div>
