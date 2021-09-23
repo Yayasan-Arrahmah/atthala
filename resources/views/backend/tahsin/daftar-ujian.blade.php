@@ -112,7 +112,7 @@
                                     {{-- @isset($pesertaujian->bukti_transfer) --}}
                                     <div style="">
                                         <img class="zoom"
-                                            src="/bukti-transfer/{{ $pesertaujian->bukti_transfer ?? '404.jpg' }}"
+                                            src="/bukti-transfer-daftar-ujian/{{ $pesertaujian->bukti_transfer ?? '404.jpg' }}"
                                         alt="" height="50">
                                     </div>
                                     {{-- @endisset --}}
