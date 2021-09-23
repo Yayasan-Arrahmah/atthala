@@ -37,7 +37,7 @@
 
             <div class="col-md-4 text-center">
             </div>
-            <div class="col-md-2 text-center">
+            {{-- <div class="col-md-2 text-center">
                 <select class="form-control" name="jenis" onchange='this.form.submit()'>
                     <option value="{{ request()->input('jenis') ?? '' }}">{{ request()->input('jenis') ?? 'Pilih Jenis' }}</option>
                     <option>---</option>
@@ -45,13 +45,13 @@
                     <option value="IKHWAN">IKHWAN</option>
                     <option value="AKHWAT">AKHWAT</option>
                 </select>
-            </div>
+            </div> --}}
             <div class="col-md-4 pull-right">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input class="form-control" type="text" name="cari" placeholder="Cari Nama" autocomplete="password" width="100" value="{{ request()->input('cari') ?? '' }}">
+                    <input class="form-control" type="text" name="idtahsin" placeholder="Cari ID Tahsin" autocomplete="password" width="100" value="{{ request()->input('idtahsin') ?? '' }}">
                 </div>
             </div>
             <div class="col-md-1 text-center" style="padding-left: 0px">

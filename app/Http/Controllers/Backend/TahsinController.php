@@ -828,13 +828,8 @@ Salam,
         $nama          = $request->get('nama') ?? null;
 
         $pesertaujians = PesertaUjian::where('angkatan_ujian', 18)
-                        ->when($this->nama, function ($query) {
-                            return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
-                        })
-                        ->when($this->jenis, function ($query) {
-                            if( $this->jenis != 'SEMUA') {
-                                return $query->where('jenis_peserta', '=', $this->jenis);
-                            }
+                        ->when($this->idtahsin, function ($query) {
+                            return $query->where('no_tahsin', 'like', $this->idtahsin);
                         })->paginate($paged);
         return view('backend.tahsin.daftar-ujian', compact('pesertaujians', 'paged'));
     }
