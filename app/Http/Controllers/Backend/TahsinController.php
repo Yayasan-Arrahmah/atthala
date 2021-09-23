@@ -827,7 +827,15 @@ Salam,
         $paged         = $request->get('paged') ?? 10;
         $nama          = $request->get('nama') ?? null;
 
-        $pesertaujians = PesertaUjian::where('angkatan_ujian', 17)->paginate($paged);
+        $pesertaujians = PesertaUjian::where('angkatan_ujian', 18)
+                        ->when($this->nama, function ($query) {
+                            return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
+                        })
+                        ->when($this->jenis, function ($query) {
+                            if( $this->jenis != 'SEMUA') {
+                                return $query->where('jenis_peserta', '=', $this->jenis);
+                            }
+                        })->paginate($paged);
         return view('backend.tahsin.daftar-ujian', compact('pesertaujians', 'paged'));
     }
 
