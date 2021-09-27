@@ -253,6 +253,7 @@
                                                         <option value="TAKMILI">TAKMILI</option>
                                                         <option value="TAHSINI">TAHSINI</option>
                                                         <option value="ITQON">ITQON</option>
+                                                        <option value="TAJWIDI 1">TAJWIDI 1</option>
                                                     @else
                                                         @php
                                                             $cek = $absen->where('id_peserta', $peserta->id )->where('pertemuan_ke_absen', $pertemuanke)->where('angkatan_absen', $angkatan)->first()
