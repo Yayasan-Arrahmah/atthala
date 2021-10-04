@@ -86,26 +86,29 @@
                             $end    = 0;
                         @endphp
                         @foreach($pesertaujians as $key => $pesertaujian)
+                        @php
+                            $data = DB::table('tahsins')->where('no_tahsin', $pesertaujian->no_tahsin)->where('angkatan_peserta', 18)->first();
+                        @endphp
                         <tr>
                             <td class="text-center" >
                                 {{ $key + $pesertaujians->firstItem() }}
                             </td>
                             <td>
                                 <a href="#" style="color: rgb(56, 56, 56);">
-                                    <div style="text-transform: uppercase; font-weight: 700">{{ $pesertaujian->no_tahsin }} - {{ $pesertaujian->data->nama_peserta ?? '' }}</div>
+                                    <div style="text-transform: uppercase; font-weight: 700">{{ $pesertaujian->no_tahsin }} - {{ $data->nama_peserta ?? '' }}</div>
                                     <div class="small text-muted">
-                                        {{ $pesertaujian->data->nohp_peserta ?? '' }} |  {{ $pesertaujian->data->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $pesertaujian->data->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
+                                        {{ $data->nohp_peserta ?? '' }} |  {{ $data->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $data->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
                                     </div>
                                 </a>
                             </td>
                             <td>
-                                <div style="text-transform: uppercase; font-weight: 700">{{ $pesertaujian->data->nama_pengajar ?? '' }}</div>
+                                <div style="text-transform: uppercase; font-weight: 700">{{ $data->nama_pengajar ?? '' }}</div>
                                 <div class="small text-muted">
-                                   {{ $pesertaujian->data->level_peserta ?? '' }} | {{ $pesertaujian->data->jadwal_tahsin ?? '' }} | {{ $pesertaujian->data->jenis_peserta ?? ''  }}
+                                   {{ $data->level_peserta ?? '' }} | {{ $data->jadwal_tahsin ?? '' }} | {{ $data->jenis_peserta ?? ''  }}
                                 </div>
                             </td>
                             <td>
-                                {{ \Carbon\Carbon::createFromFormat('d-m-Y', $pesertaujian->data->waktu_lahir_peserta ?? '01-01-1901')->format('md') }}
+                                {{ \Carbon\Carbon::createFromFormat('d-m-Y', $data->waktu_lahir_peserta ?? '01-01-1901')->format('md') }}
                             </td>
                             <td>
                                 <div class="text-center">

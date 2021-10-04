@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '18' }}</small>
+                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '19' }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -71,7 +71,7 @@
 
 
             <div class="col">
-                {{-- <div class="text-muted text-center" style="position: absolute">
+                <div class="text-muted text-center" style="position: absolute">
                     Pengajar
                  </div>
                 <select class="form-control mt-4" name="pengajar" onchange='if(this.value != 0) { this.form.submit(); }'>
@@ -83,7 +83,7 @@
                     @foreach($datapengajars as $pengajar)
                         <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>
                     @endforeach
-                </select> --}}
+                </select>
             </div>
 
             <div class="col-md-2">
@@ -117,6 +117,7 @@
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
                         <option value="">----</option>
                     @endisset
+                    <option value="19">19</option>
                     <option value="18">18</option>
                     <option value="17">17</option>
                     <option value="16">16</option>

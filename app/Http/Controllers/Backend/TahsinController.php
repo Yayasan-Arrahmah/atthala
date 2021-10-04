@@ -61,9 +61,9 @@ class TahsinController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? 18;
+        $this->angkatan      = request()->angkatan ?? 19;
         // $this->angkatanbaru  = request()->angkatan ?? '18';
-        $this->angkatanbaru  = request()->angkatan ?? 18;
+        $this->angkatanbaru  = request()->angkatan ?? 19;
     }
 
     /**
@@ -173,7 +173,7 @@ class TahsinController extends Controller
                 }
             })
             // ->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')
-            ->where('angkatan_peserta', '=', 18)
+            ->where('angkatan_peserta', '=', 19)
             ->paginate(10);
 
         // if( auth()->user()->last_name === 'Ekonomi') {
@@ -197,7 +197,7 @@ class TahsinController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih Kepada Calon Peserta Tahsin Angkatan ".'18'." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".'19'." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
 
 Alhamdulillah, Level belajar anda adalah di level *".$this->level."*.
 Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".$this->idtahsin."
@@ -206,7 +206,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
+Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
 
@@ -240,7 +240,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'18'."
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'19'.'-%')
                         ->where('angkatan_peserta', '=', $this->angkatanbaru)
                         ->paginate(10);
 
@@ -316,7 +316,7 @@ Tanggal Mengisi Formulir Online :";
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'19'.'-%')
                         ->where('angkatan_peserta', '=', $this->angkatanbaru)
                         ->paginate(10);
 
@@ -324,7 +324,7 @@ Tanggal Mengisi Formulir Online :";
         }
 
 
-        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'18'.'-%')
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'19'.'-%')
                 ->when($this->nama, function ($query) {
                     return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
                 })
@@ -345,7 +345,7 @@ Tanggal Mengisi Formulir Online :";
 
     public function jadwal(ManageTahsinRequest $request)
     {
-        $angkatanbaru  = '18';
+        $angkatanbaru  = '19';
 
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
@@ -589,7 +589,7 @@ Tanggal Mengisi Formulir Online :";
         if (isset(request()->id)) {
             $pembayaran = Pembayaran::where('id', request()->id)->paginate(10);
         } else {
-            $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
+            $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '19-SPP-%')->paginate(10);
         }
 
         if (request()->metode == 'update') {
