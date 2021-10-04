@@ -150,7 +150,7 @@
         <form action="{{ route('admin.tahsins.exportexceltahsin') }}" target="_blank" class="row">
             {{ csrf_field() }}
             <input value="{{ request()->angkatan ?? 'SEMUA' }}" name="angkatan" hidden>
-            <input value="{{ request()->level ?? '18' }}" name="level" hidden>
+            <input value="{{ request()->level ?? '19' }}" name="level" hidden>
             <input value="{{ request()->jenis ?? 'SEMUA' }}" name="jenis" hidden>
             <div class="col-10">
             </div>

@@ -19,7 +19,7 @@ class TahsinPesertaBaru extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
 
     public function query()
     {
-        return Tahsin::query()->where('no_tahsin', 'like', '%-'.'18'.'-%');
+        return Tahsin::query()->where('no_tahsin', 'like', '%-'.'19'.'-%');
     }
 
     public function map($tahsin) : array {
