@@ -40,7 +40,7 @@ class TahsinController extends Controller
     {
         $sesidaftar = Str::random(10);
         Session::put('sesidaftar', $sesidaftar);
-        return view('frontend.tahsin.pendaftaran-ditutup', compact('sesidaftar'));
+        return view('frontend.tahsin.pendaftaran', compact('sesidaftar'));
     }
 
     public function uploadktp(Request $request)
@@ -226,7 +226,7 @@ class TahsinController extends Controller
             $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
             $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
             $tahsin->waktu_lahir_peserta             = $waktu_lahir_peserta;
-            // $tahsin->pilih_jadwal_peserta            = $pilih_jadwal_peserta;
+            $tahsin->pilih_jadwal_peserta            = $request->status_ ?? null;
             // $tahsin->pilih_jadwal_cadangan_1_peserta = $pilih_jadwal_cadangan_1_peserta;
             // $tahsin->pilih_jadwal_cadangan_2_peserta = $pilih_jadwal_cadangan_2_peserta;
             $tahsin->fotoktp_peserta                 = Session::get('filektp');

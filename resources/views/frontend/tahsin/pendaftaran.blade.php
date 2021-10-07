@@ -45,8 +45,12 @@ hr {
                 </center>
                 <div class="text-center">
                     <h4> Pendaftaran Tahsin </h4>
+                    @if (request()->status == 'sepinggan-pratama')
+                    <h6> Warga Sepinggan Pratama </h6>
+                    <input type="hidden" name="status_" value="sepinggan-pratama">
+                    @endif
                     {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
-                    <div class="text-muted">Angkatan 18</div>
+                    <div class="text-muted">Angkatan 19</div>
                 </div>
 
                 <div class="card-body">
@@ -304,6 +308,8 @@ hr {
                             </div> --}}
                         </div><!--col-->
                     </div>
+                    @if (request()->status != 'sepinggan-pratama')
+
                     <div class="form-group row">
                         <div class="col-md-12 table-responsive" style="padding-top: 20px">
                             <table class="table table-sm table-striped nowarp" style="width: 100%;">
@@ -374,6 +380,8 @@ hr {
                             </div> --}}
                         </div><!--col-->
                     </div>
+                    @endif
+
                     <div class="form-group row">
                         <div class="col-md-12" style="font-size: 12px; font-weight: 600; text-align: justify; text-color: rgb(20, 20, 20)">
                             <p>
@@ -385,8 +393,13 @@ hr {
                                     <div class="col-11">Jumlah pertemuan tahsin adalah sebanyak 16 kali pertemuan dalam 1 level (termasuk kuliah perdana).<hr></div>
                                     <div class="col-1">3</div>
                                     <div class="col-11">Jumlah pertemuan tahsin dalam sepekan diadakan sebanyak 1 kali dengan durasi 2 jam maksimal.<hr></div>
-                                    <div class="col-1">4</div>
-                                    <div class="col-11">SPP wajib dibayarkan sebanyak 400.000 dalam 1 level pembelajaran (diluar biaya pendaftaran, modul, buku prestasi dan mushaf).<hr></div>
+                                    @if (request()->status != 'sepinggan-pratama')
+                                        <div class="col-1">4</div>
+                                        <div class="col-11">SPP wajib dibayarkan sebanyak 400.000 dalam 1 level pembelajaran (diluar biaya pendaftaran, modul, buku prestasi dan mushaf).<hr></div>
+                                    @else
+                                        <div class="col-1">4</div>
+                                        <div class="col-11">SPP dalam program ini tidak perlu dibayarkan, namun apabila bapak/ibu/saudara/saudari ingin melakukan infaq dipersilakan menghubungi bagian admin kami.<hr></div>
+                                    @endif
                                     <div class="col-1">5</div>
                                     <div class="col-11">Peserta wajib membeli perlengkapan tahsin; Mushaf Rasm Utsmani, Modul dan Buku Prestasi.<hr></div>
                                     <div class="col-1">6</div>

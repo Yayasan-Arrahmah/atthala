@@ -32,7 +32,7 @@
                     <div style="padding-top: 0px">
                         <h4>Pencarian <br>Daftar Ulang Peserta Tahsin</h4>
                         <div class="text-muted">
-                            Angkatan 18
+                            Angkatan 19
                         </div>
                     </div>
                 </center>

@@ -74,19 +74,20 @@ class TahsinRepository extends BaseRepository
             $no_tahsin = $jenisid . '-'.$data['angkatan_peserta'].'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
 
             $tahsin = parent::create([
-                'no_tahsin'  => $no_tahsin,
-                'nama_peserta'  => $data['nama_peserta'],
-                'nohp_peserta'  => $data['nohp_peserta'],
-                'level_peserta'  => $data['level_peserta'],
-                'nama_pengajar'  => $data['nama_pengajar'],
-                'jadwal_tahsin'  => $data['jadwal_tahsin'],
+                'no_tahsin'            => $no_tahsin,
+                'nama_peserta'         => $data['nama_peserta'],
+                'nohp_peserta'         => $data['nohp_peserta'],
+                'level_peserta'        => $data['level_peserta'],
+                'nama_pengajar'        => $data['nama_pengajar'],
+                'jadwal_tahsin'        => $data['jadwal_tahsin'],
                 'sudah_daftar_tahsin'  => $data['sudah_daftar_tahsin'],
                 'belum_daftar_tahsin'  => $data['belum_daftar_tahsin'],
-                'keterangan_tahsin'  => $data['keterangan_tahsin'],
-                'pindahan_tahsin'  => $data['pindahan_tahsin'],
-                'pindahan_tahsin_2'  => $data['pindahan_tahsin_2'],
-                'jenis_peserta' => $data['jenis_peserta'],
-                'angkatan_peserta' => $data['angkatan_peserta']
+                'keterangan_tahsin'    => $data['keterangan_tahsin'],
+                'pilih_jadwal_peserta' => $data['pilih_jadwal_peserta'],
+                'pindahan_tahsin'      => $data['pindahan_tahsin'],
+                'pindahan_tahsin_2'    => $data['pindahan_tahsin_2'],
+                'jenis_peserta'        => $data['jenis_peserta'],
+                'angkatan_peserta'     => $data['angkatan_peserta']
             ]);
 
             if ($tahsin) {
@@ -110,18 +111,18 @@ class TahsinRepository extends BaseRepository
     {
         return DB::transaction(function () use ($tahsin, $data) {
             if ($tahsin->update([
-                'nama_peserta'  => $data['nama_peserta'],
-                'nohp_peserta'  => $data['nohp_peserta'],
-                'level_peserta'  => $data['level_peserta'],
-                'nama_pengajar'  => $data['nama_pengajar'],
-                'jadwal_tahsin'  => $data['jadwal_tahsin'],
-                'sudah_daftar_tahsin'  => $data['sudah_daftar_tahsin'],
-                'belum_daftar_tahsin'  => $data['belum_daftar_tahsin'],
-                'keterangan_tahsin'  => $data['keterangan_tahsin'],
-                'pindahan_tahsin'  => $data['pindahan_tahsin'],
-                'pindahan_tahsin_2'  => $data['pindahan_tahsin_2'],
-                'jenis_peserta' => $data['jenis_peserta'],
-                'angkatan_peserta' => $data['angkatan_peserta']
+                'nama_peserta'        => $data['nama_peserta'],
+                'nohp_peserta'        => $data['nohp_peserta'],
+                'level_peserta'       => $data['level_peserta'],
+                'nama_pengajar'       => $data['nama_pengajar'],
+                'jadwal_tahsin'       => $data['jadwal_tahsin'],
+                'sudah_daftar_tahsin' => $data['sudah_daftar_tahsin'],
+                'belum_daftar_tahsin' => $data['belum_daftar_tahsin'],
+                'keterangan_tahsin'   => $data['keterangan_tahsin'],
+                'pindahan_tahsin'     => $data['pindahan_tahsin'],
+                'pindahan_tahsin_2'   => $data['pindahan_tahsin_2'],
+                'jenis_peserta'       => $data['jenis_peserta'],
+                'angkatan_peserta'    => $data['angkatan_peserta']
             ])) {
 
                 return $tahsin;
