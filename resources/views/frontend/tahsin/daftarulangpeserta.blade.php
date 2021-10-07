@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                                <a href="/tahsin/daftar-ulang-peserta-2021/print?id={{ $calonpeserta->no_tahsin }}&nama={{ $calonpeserta->nama_peserta }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
+                                <a href="/tahsin/daftar-ulang-peserta-XIX/print?id={{ $calonpeserta->no_tahsin }}&nama={{ $calonpeserta->nama_peserta }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
                         </div>
                         <div class="col">
                             <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_peserta }}</strong></div>
@@ -664,7 +664,7 @@
                  var hari = $(this).val();
                  $('#waktu').find('option').not(':first').remove();
                  $.ajax({
-                   url: '/tahsin/daftar-ulang-peserta-2021/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
+                   url: '/tahsin/daftar-ulang-peserta-XIX/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
                    type: 'get',
                    dataType: 'json',
                    success: function(response){
