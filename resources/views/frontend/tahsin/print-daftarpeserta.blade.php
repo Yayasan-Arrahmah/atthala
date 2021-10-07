@@ -19,7 +19,7 @@ background-repeat: no-repeat;
             Tahsin LTTQ Arrahmah Balikpapan
         </h3>
         <h5 style="margin-top: -10px; color: rgb(41, 41, 41); margin-bottom: 30px">
-            ANGKATAN {{ session('daftar_ulang_angkatan_tahsin') }}
+            ANGKATAN 19
         </h5>
     </center>
     <table style="font: 12px">
