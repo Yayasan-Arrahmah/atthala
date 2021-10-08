@@ -589,7 +589,7 @@ Tanggal Mengisi Formulir Online :";
         if (isset(request()->id)) {
             $pembayaran = Pembayaran::where('id', request()->id)->paginate(10);
         } else {
-            $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '19-SPP-%')->paginate(10);
+            $pembayaran = Pembayaran::where('bukti_transfer_pembayaran', 'like', '18-SPP-%')->paginate(10);
         }
 
         if (request()->metode == 'update') {
