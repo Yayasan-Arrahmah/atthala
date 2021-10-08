@@ -80,6 +80,7 @@ class JadwalRepository extends BaseRepository
                 'level_jadwal'    => $data['level_jadwal'],
                 'hari_jadwal'     => $data['hari_jadwal'],
                 'waktu_jadwal'    => $data['waktu_jadwal'],
+                'jumlah_peserta'  => $data['jumlah_peserta'],
                 'jenis_jadwal'    => $data['jenis_jadwal'],
                 'angkatan_jadwal' => $data['angkatan_jadwal'],
             ]);
@@ -109,6 +110,7 @@ class JadwalRepository extends BaseRepository
                 'level_jadwal'    => $data['level_jadwal'],
                 'hari_jadwal'     => $data['hari_jadwal'],
                 'waktu_jadwal'    => $data['waktu_jadwal'],
+                'jumlah_peserta'  => $data['jumlah_peserta'],
                 'jenis_jadwal'    => $data['jenis_jadwal'],
                 'angkatan_jadwal' => $data['angkatan_jadwal'],
                 'jumlah_peserta'  => $data['jumlah_peserta'],

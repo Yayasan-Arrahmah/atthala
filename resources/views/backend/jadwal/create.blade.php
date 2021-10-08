@@ -101,6 +101,12 @@
                             </select>
                         </div><!--col-->
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 form-control-label" >Batasan Peserta Per-Kelas</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="number" name="jumlah_peserta" placeholder="Jumlah Maksimal Peserta" maxlength="10" required="">
+                        </div><!--col-->
+                    </div>
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-body-->

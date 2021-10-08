@@ -134,6 +134,7 @@ class JadwalController extends Controller
             'level_jadwal',
             'hari_jadwal',
             'waktu_jadwal',
+            'jumlah_peserta',
             'jenis_jadwal',
             'angkatan_jadwal',
         ));
