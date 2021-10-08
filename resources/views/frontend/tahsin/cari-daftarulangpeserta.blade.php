@@ -75,7 +75,7 @@
                                                             <a href="https://s.id/registrasi_akhwat"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                         @endif
                                                     @else
-                                                            <a href="/tahsin/daftar-ulang-peserta-2021/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                            <a href="/tahsin/daftar-ulang-peserta-XIX/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @endif
                                                 </div>
                                                 <div class="col">
