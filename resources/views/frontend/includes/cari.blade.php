@@ -16,8 +16,8 @@
                     <option value="ASAASI 2">ASAASI 2</option>
                     <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
                     <option value="TAMHIDI">TAMHIDI</option>
-                    <option value="TAWATSUTHI">TAWATSUTHI</option>
-                    <option value="TILAWAH TAWATSUTHI">TILAWAH TAWATSUTHI</option>
+                    <option value="TAWASUTHI">TAWASUTHI</option>
+                    <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
                     <option value="IDADI">IDADI</option>
                     <option value="TAKMILI">TAKMILI</option>
                     <option value="TAHSINI">TAHSINI</option>

@@ -82,9 +82,9 @@
                                                 $warna = "#17a2b8";
                                             } elseif ($jadwal->level_peserta  == "TAMHIDI") {
                                                 $warna = "#f86c6b";
-                                            } elseif ($jadwal->level_peserta  == "TAWATSUTHI") {
+                                            } elseif ($jadwal->level_peserta  == "TAWASUTHI") {
                                                 $warna = "#6610f2";
-                                            } elseif ($jadwal->level_peserta  == "TILAWAH TAWATSUTHI") {
+                                            } elseif ($jadwal->level_peserta  == "TILAWAH TAWASUTHI") {
                                                 $warna = "#ffc107";
                                             } elseif ($jadwal->level_peserta  == "IDADI") {
                                                 $warna = "#e83e8c";
