@@ -678,7 +678,7 @@ https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.st
                         return $query->where('jenis_peserta', '=', $this->jenis);
                     }
                 })
-                ->where('angkatan_peserta', $this->angkatan ?? 18)
+                ->where('angkatan_peserta', $this->angkatan)
                 ->paginate(10);
         return view('backend.tahsin.pembayaran-rekap', compact('tahsins'));
     }
