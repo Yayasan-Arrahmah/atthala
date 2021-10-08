@@ -1089,7 +1089,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->where('angkatan_peserta', '=', 19)
+                ->where('angkatan_peserta', '=', 18)
                 ->paginate(15);
         } else {
             $pencarian = null;
@@ -1098,14 +1098,14 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', 19)
+            ->where('angkatan_peserta', '=', 18)
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', 19)
+            ->where('angkatan_peserta', '=', 18)
             ->get();
 
         return view('frontend.tahsin.cari-pembayaran', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -1113,7 +1113,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 
     public function pembayaran(Request $request)
     {
-        $sesibayar = '19-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
+        $sesibayar = '18-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
         Session::put('sesibayar', $sesibayar);
 
         // ngambil data profile
