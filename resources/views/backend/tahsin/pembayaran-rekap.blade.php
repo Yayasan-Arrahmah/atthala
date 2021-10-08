@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Rekapitulasi Pembayaran SPP Tahsin<small class="text-muted"> - Angkatan 18</small>
+                    Rekapitulasi Pembayaran SPP Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? 19 }}</small>
                 </h4>
             </div><!--col-->
 
