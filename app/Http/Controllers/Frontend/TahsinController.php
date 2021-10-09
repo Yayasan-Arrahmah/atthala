@@ -269,24 +269,6 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            // $url = 'https://api.wanotif.id/v1/send';
-
-            // $curl = curl_init();
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_HEADER, 0);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            // curl_setopt($curl, CURLOPT_POST, 1);
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            //     'Apikey'    => $apikey,
-            //     'Phone'     => $phone,
-            //     'Message'   => $message,
-            // ));
-            // $response = curl_exec($curl);
-            // curl_close($curl);
-
             // woo-wa.com
             $apikey = env('WA_KEY');
 
@@ -314,6 +296,49 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
             );
             echo $res=curl_exec($ch);
             curl_close($ch);
+
+            // woo-wa.com kasir 6282155171933
+        $phone   = '+6282155171933';
+        $apikey = env('WA_KEY');
+        $message =
+            'Assalamualaikum Warohmatullahi Wabarokaatuh,
+*Ini adalah pesan otomatis.*
+
+Telah dikirimkan pembayaran Daftar Baru & SPP Bulan Pertama dengan detail sebagai berikut :
+
+Nama Peserta : '.$tahsin->nama_peserta.'
+NIS : '.$tahsin->no_tahsin.'
+Nominal SPP : '.$nominal_pembayaran.'
+Keterangan : Daftar Baru & SPP Bulan Pertama
+Kontak : wa.me/62'.$tahsin->nohp_peserta.'
+
+Klik link berikut untuk memeriksa riwayat pembayaran
+https://atthala.arrahmahbalikpapan.or.id/admin/tahsin?nama='.$tahsin->nama_peserta.'&angkatan='.$tahsin->angkatan_peserta;
+
+        $url='http://116.203.191.58/api/send_message';
+        $data = array(
+            "phone_no"  => $phone,
+            "key"		=> $apikey,
+            "message"	=> $message,
+            "skip_link"	=> True // This optional for skip snapshot of link in message
+        );
+        $data_string = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        echo $res=curl_exec($ch);
+        curl_close($ch);
 
             $info = "berhasil";
         } catch (\Throwable $th) {
@@ -844,6 +869,51 @@ Panitia Daftar Ulang Tahsin Angkatan 19
                 );
                 echo $res=curl_exec($ch);
                 curl_close($ch);
+
+                // woo-wa.com kasir 6282155171933
+        $phone   = '+6282155171933';
+        $apikey = env('WA_KEY');
+        $message =
+            'Assalamualaikum Warohmatullahi Wabarokaatuh,
+*Ini adalah pesan otomatis.*
+
+Telah dikirimkan pembayaran Daftar Ulang & SPP Bulan Pertama dengan detail sebagai berikut :
+
+Nama Peserta : '.$peserta->nama_peserta.'
+NIS : '.$peserta->no_tahsin.'
+Level/Kelas : '.$peserta->level_peserta.' / '.$peserta->jadwal_tahsin.'
+Pengajar : '.$peserta->nama_pengajar.'
+Nominal SPP : '.$pembayaran->nominal_pembayaran.'
+Keterangan : Daftar Ulang & SPP Bulan Pertama
+Kontak : wa.me/62'.$peserta->nohp_peserta.'
+
+Klik link berikut untuk memeriksa riwayat pembayaran
+https://atthala.arrahmahbalikpapan.or.id/admin/tahsin?nama='.$peserta->nama_peserta.'&angkatan='.$peserta->angkatan_peserta;
+
+        $url='http://116.203.191.58/api/send_message';
+        $data = array(
+            "phone_no"  => $phone,
+            "key"		=> $apikey,
+            "message"	=> $message,
+            "skip_link"	=> True // This optional for skip snapshot of link in message
+        );
+        $data_string = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        echo $res=curl_exec($ch);
+        curl_close($ch);
 
 
         } catch (\Throwable $th) {
