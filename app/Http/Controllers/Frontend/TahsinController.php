@@ -313,7 +313,7 @@ Keterangan : Daftar Baru & SPP Bulan Pertama
 Kontak : wa.me/62'.$tahsin->nohp_peserta.'
 
 Klik link berikut untuk memeriksa riwayat pembayaran
-https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama='.str_replace(' ', '+', $tahsin->nama_peserta).'&angkatan='.$tahsin->angkatan_peserta;
+https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama='.str_replace(' ', '+', $tahsin->nama_peserta);
 
         $url='http://116.203.191.58/api/send_message';
         $data = array(
@@ -888,7 +888,7 @@ Keterangan : Daftar Ulang & SPP Bulan Pertama
 Kontak : wa.me/62'.$peserta->nohp_peserta.'
 
 Klik link berikut untuk memeriksa riwayat pembayaran
-https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_replace(' ', '+', $peserta->nama_peserta).'&angkatan='.$peserta->angkatan_peserta;
+https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_replace(' ', '+', $peserta->nama_peserta);
 
         $url='http://116.203.191.58/api/send_message';
         $data = array(
