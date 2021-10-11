@@ -76,7 +76,7 @@
                                 @foreach ( $datapeserta as $peserta )
                                 <tr>
                                     <td class="text-left">
-                                        <a href="https://wa.me/+62{{ $peserta->nohp_peserta }}?text=Peserta Tahsin Angkatan 18 - {{ $peserta->nama_peserta }}" target="_blank">
+                                        <a href="https://wa.me/+62{{ $peserta->nohp_peserta }}?text=Peserta Tahsin Angkatan 19 - {{ $peserta->nama_peserta }}" target="_blank">
                                             <div style="text-transform: uppercase;">{{ $peserta->nama_peserta }}</div>
                                             <div class="small text-muted">
                                                 {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }}

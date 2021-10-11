@@ -13,7 +13,7 @@
 <div class="row" style="padding-bottom: 30px">
     <div class="col">
         <div class="text-center" style="font-size: 19px; font-weight: 600">
-            Data Kelas Tahsin - ANGKATAN 18
+            Data Kelas Tahsin - ANGKATAN 19
         </div>
     </div><!--col-md-6-->
 </div><!--row-->
@@ -131,7 +131,7 @@
                                     @endif
                                     <div class="small text-muted">
                                         {{-- ANGKATAN {{ session('daftar_ulang_angkatan_tahsin') }} --}}
-                                        ANGKATAN 18
+                                        ANGKATAN 19
                                     </div>
                                 </div>
                                 <div class="col-4">
