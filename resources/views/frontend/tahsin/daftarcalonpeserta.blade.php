@@ -36,7 +36,7 @@
                 </center>
                 <div class="text-center">
                     <h4> Peserta Telah Terdaftar </h4>
-                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan 18</div>
+                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan 19</div>
                 </div>
                 <hr>
                 <div class="card-body">
@@ -82,7 +82,7 @@
                         </center>
                         <div class="text-center">
                             <h4> Formulir <br>Pendaftaran Peserta Tahsin </h4>
-                            <div class="text-muted">Angkatan 18</div>
+                            <div class="text-muted">Angkatan 19</div>
                         </div>
 
                         <div class="card-body">

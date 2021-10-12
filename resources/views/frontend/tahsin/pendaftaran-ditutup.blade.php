@@ -11,7 +11,7 @@
                 <div style="padding-top: 0px">
                     <h4>Pendaftaran Peserta Tahsin <br> Telah Ditutup</h4>
                     <div class="text-muted">
-                        Angkatan 18
+                        Angkatan 19
                     </div>
                 </div>
             </center>

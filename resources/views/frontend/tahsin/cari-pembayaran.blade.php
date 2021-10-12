@@ -26,7 +26,7 @@
                 <div style="padding-top: 0px">
                     <h4>Pembayaran SPP Tahsin</h4>
                     <div class="text-muted">
-                        Pencarian Peserta Angkatan 18
+                        Pencarian Peserta Angkatan 19
                     </div>
                 </div>
             </center>
