@@ -10,6 +10,51 @@
 {{-- <div class="card">
     @include('backend.tahsin.includes.cari')
 </div> --}}
+@if (request()->metode == 'edit')
+    <form class="row" action="">
+        @php
+            $peserta = DB::table('tahsins')->where('id', request()->peserta)->first();
+        @endphp
+        <input type="hidden" name="id" value="{{ request()->id }}">
+        <input type="hidden" name="idtahsin" value="{{ $peserta->no_tahsin }}">
+        <input type="hidden" name="metode" value="update">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <h5>Edit Nominal Pembayaran</h5>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Peserta</label>
+                        <label class="col-sm-10 col-form-label">
+                            <div style="text-transform: uppercase; font-weight: 700">{{ $peserta->no_tahsin }} - {{ $peserta->nama_peserta ?? '' }}</div>
+                            <div class="small text-muted">
+                                {{ $peserta->nohp_peserta ?? '' }} |  {{ $peserta->waktu_lahir_peserta ?? '' }} | {{ \Carbon\Carbon::createFromFormat('d-m-Y', $peserta->waktu_lahir_peserta ?? '01-01-1901')->age ?? '' }} Tahun
+                            </div>
+                        </label>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Nominal</label>
+                        <div class="col-sm-10 input-group">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input class="form-control" name="nominal" type="text" value="{{ request()->nominal }}" placeholder="Nominal">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <a href="{{ route('admin.tahsins.daftarulang') }}?page={{ request()->page ?? '' }}" class="btn btn-light">Tutup</a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+@endif
 
 <div class="card">
     <div class="card-body">
@@ -133,6 +178,7 @@
                                 <th>Bukti Transfer</th>
                                 <th class="text-center">Info</th>
                                 <th></th>
+                                <th></th>
                                 {{-- <th class="text-center">Level</th> --}}
                                 {{-- <th class="text-center">Jadwal</th> --}}
                                 {{-- <th class="text-center">Pengajar</th> --}}
@@ -193,20 +239,23 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <div class="row">
                                         <div class="col">
                                             <form action="{{ route('admin.tahsins.konfirmasidaftarulang') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $data->id }}">
                                                 @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $data->admin_pembayaran == 'TRANSFER')
-                                                    <button class="btn btn-warning btn-pill" style="font-weight: 700">Konfirmasi <i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-warning" style="font-weight: 700">Konfirmasi</button>
                                                 @elseif ($data->admin_pembayaran == 'BERHASIL')
-                                                    <button class="btn btn-info" style="font-weight: 700">Berhasil <i class="fas fa-check"></i></button>
+                                                    <button class="btn btn-success" style="font-weight: 700">Berhasil <i class="fas fa-"></i></button>
                                                 @endif
                                             </form>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <a href="/admin/tahsin/daftar-ulang?metode=edit&id={{ $data->id }}&peserta={{ $tahsin->id }}&nominal={{ $data->nominal_pembayaran }}" class="btn btn-sm btn-info">Edit <i class="fas fa-edit"></i></a>
                                 </td>
                             </tr>
 

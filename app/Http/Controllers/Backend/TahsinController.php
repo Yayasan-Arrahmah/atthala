@@ -158,8 +158,18 @@ class TahsinController extends Controller
 
     public function daftarulang(ManageTahsinRequest $request)
     {
+        if(request()->metode == 'update'){
+            $updatepembayaran = Pembayaran::find(request()->id);
+            $updatepembayaran->nominal_pembayaran = request()->nominal;
+            $updatepembayaran->save();
+
+            return redirect()->to('/admin/tahsin/daftar-ulang?idtahsin='.request()->idtahsin)->withFlashSuccess('Update Nominal Berhasil !');
+        }
         $tahsins = Tahsin::
-            when($this->nama, function ($query) {
+            when($this->idtahsin, function ($query) {
+                return $query->where('no_tahsin', 'like', $this->idtahsin);
+            })
+            ->when($this->nama, function ($query) {
                 return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
             })
             ->when($this->level, function ($query) {
