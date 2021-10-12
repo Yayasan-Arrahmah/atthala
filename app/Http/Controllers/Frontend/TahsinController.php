@@ -1145,7 +1145,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 
     public function printdaftarpeserta(Request $request)
     {
-        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', '18')->first();
+        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', '19')->first();
 
         $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', $data)->setPaper('a5', 'landscape');
 
@@ -1159,7 +1159,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->where('angkatan_peserta', '=', 18)
+                ->where('angkatan_peserta', '=', 19)
                 ->paginate(15);
         } else {
             $pencarian = null;
@@ -1168,14 +1168,14 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', 18)
+            ->where('angkatan_peserta', '=', 19)
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', 18)
+            ->where('angkatan_peserta', '=', 19)
             ->get();
 
         return view('frontend.tahsin.cari-pembayaran', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -1183,7 +1183,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 
     public function pembayaran(Request $request)
     {
-        $sesibayar = '18-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
+        $sesibayar = '19-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
         Session::put('sesibayar', $sesibayar);
 
         // ngambil data profile
