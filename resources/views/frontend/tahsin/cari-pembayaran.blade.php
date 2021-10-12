@@ -24,7 +24,7 @@
             <center>
                 <img class="navbar-brand-full" src="{{ asset('img/logo-lttq.jpeg') }}" width="150" alt="arrahmah">
                 <div style="padding-top: 0px">
-                    <h4>Pembayaran SPP Tahsin</h4>
+                    <h4>Pembayaran Tahsin</h4>
                     <div class="text-muted">
                         Pencarian Peserta Angkatan 19
                     </div>
@@ -76,40 +76,43 @@
                                                 <label class="text-muted mb-0">Riwayat Pembayaran</label>
                                                 <hr class="mt-1 mb-1">
                                                 <div class="row" style="font-weight: 600; padding-bottom: 10px;">
-                                                    <div class="col-2">No</div>
-                                                    <div class="col-3">Nominal</div>
-                                                    <div class="col-4">Waktu</div>
-                                                    <div class="col-3">Status</div>
+                                                    <div class="col">Nominal</div>
+                                                    <div class="col">Status</div>
+                                                    <div class="col">Info Pembayaran</div>
                                                 </div>
                                                 @php
                                                 $noriwayat = 1;
                                                 $riwayatpembayaran = DB::table('pembayarans')
-                                                        ->select('nominal_pembayaran', 'admin_pembayaran', 'created_at', 'admin_pembayaran' )
                                                         ->where('id_peserta', $tahsin->id)
                                                         ->get();
                                                 @endphp
                                                 @foreach($riwayatpembayaran as $riwayat)
                                                     <div class="row">
-                                                        <div class="col-2"> {{ $noriwayat++ }}. </div>
-                                                        <div class="col-3"> Rp. {{ number_format($riwayat->nominal_pembayaran, 0, '.', '.') }} </div>
-                                                        <div class="col-4" style="font-size: 10px"> {{ $riwayat->created_at }}</div>
-                                                        <div class="col-3" style="font-size: 10px">
-                                                            @if ($riwayat->admin_pembayaran == 'MENUNGGU KONFIRMASI')
+                                                        <div class="col" style="font-size: 16px"> Rp. {{ number_format($riwayat->nominal_pembayaran, 0, '.', '.') }} </div>
+                                                        <div class="col" style="font-size: 15px">
+                                                            @if ($riwayat->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $riwayat->admin_pembayaran == 'TRANSFER')
                                                                 <span class="badge badge-warning">{{ $riwayat->admin_pembayaran }}</span>
                                                             @elseif ($riwayat->admin_pembayaran == 'BERHASIL')
                                                                 <span class="badge badge-info">{{ $riwayat->admin_pembayaran }}</span>
+                                                            @elseif ($riwayat->admin_pembayaran == 'GAGAL MASUK')
+                                                                <span class="badge badge-danger">{{ $riwayat->admin_pembayaran }}</span>
                                                             @endif
+                                                        </div>
+                                                        <div class="col" style="font-size: 11px">
+                                                            <strong>{{ $riwayat->keterangan_pembayaran ?? 'DAFTAR ULANG' }}</strong>
+                                                            <div class="text-muted">
+                                                                {{ $riwayat->created_at }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 @endforeach
                                             </div>
-                                            <div class="col-12 mt-2">
+                                            <div class="col-12 mt-4 pt-2">
                                                 <div class="row">
-                                                    <div class="col-md-8"></div>
-                                                    <div class="col-md-4">
+                                                    <div class="col">
                                                         <a href="/tahsin/pembayaran?id={{ $tahsin->id }}&idt={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}"
                                                             style="color:white"
-                                                            class="btn btn-success btn-block">
+                                                            class="btn btn-success">
                                                             <i class="fas fa-chevron-right"></i> Form Pembayaran SPP
                                                         </a>
                                                     </div>

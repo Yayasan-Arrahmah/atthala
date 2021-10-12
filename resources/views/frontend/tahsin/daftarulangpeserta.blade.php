@@ -37,7 +37,7 @@
                 <div class="text-center">
                     <h4> Peserta Telah Daftar Ulang </h4>
                     {{-- <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
-                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan 18</div>
+                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan 19</div>
                 </div>
                 <hr>
                 <div class="card-body">

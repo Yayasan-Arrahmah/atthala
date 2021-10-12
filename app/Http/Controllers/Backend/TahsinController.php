@@ -684,6 +684,67 @@ https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.st
         return view('backend.tahsin.pembayaran-rekap', compact('tahsins'));
     }
 
+    public function konfirmasidaftarulang(Request $request)
+    {
+
+        $pembayaran = Pembayaran::find(request()->id);
+        $pembayaran->admin_pembayaran   = 'BERHASIL';
+        $pembayaran->save();
+
+        $data = Tahsin::find($pembayaran->id_peserta);
+
+        $phone = '+62'. $data->nohp_peserta;
+        $message =
+        'Assalamualaikum Warohmatullahi Wabarokaatuh,
+
+Alhamdulillah,
+Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
+Pembayaran Daftar Ulang Tahsin Angkatan 19 sebesar *Rp. ' . number_format($pembayaran->nominal_pembayaran, 0, ',', '.') . '*- Berhasil kami konfirmasi.
+Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
+
+Silahkan klik link ini untuk mengecek riwayat pembayaran
+https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.str_replace(' ', '+', $data->nama_peserta).'&level='.str_replace(' ', '+', $data->level_peserta).'&pengajar='.str_replace(' ', '+', $data->nama_pengajar).'
+
+Kami membuka kesempatan untuk bapak/ibu dalam program pengembangan dakwah Rumah Tahfizh Quran Ar Rahmah dengan berinfak sebesar Rp 20.000,- melalui transfer ke rekening 2182182226 a.n. Rumah Tahfidz Quran Putra Ar Rahmah. Tambahkan angka 26 untuk kode transaksi pengembangan dakwah. contoh Transfer : Rp 20.026,-
+
+Semoga Allah Subhanahu Wa Taala senantiasa melindungi kita semua. Aamiin Yaa Robbal Aalamiin
+
+Salam,
+*LTTQ Ar Rahmah Balikpapan*';
+
+        // woo-wa.com
+        $apikey = env('WA_KEY') ?? 'b2d4409bd29454b3db5cc8211b309340fb912fd2ea18482b';
+
+        $url='http://116.203.191.58/api/send_message';
+        $data = array(
+            "phone_no"  => $phone,
+            "key"		=> $apikey,
+            "message"	=> $message,
+            "skip_link"	=> True // This optional for skip snapshot of link in message
+        );
+        $data_string = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+
+        echo $res=curl_exec($ch);
+        curl_close($ch);
+
+        return redirect()->back()
+            ->withFlashSuccess('Konfirmasi Pembayaran Daftar Ulang Berhasil');
+    }
+
     public function createbayar(Request $request)
     {
         $nominal = preg_replace("/[^0-9]/", "", $request->nominalpembayaran);

@@ -132,6 +132,7 @@
                                 <th>Kode BBTT</th>
                                 <th>Bukti Transfer</th>
                                 <th class="text-center">Info</th>
+                                <th></th>
                                 {{-- <th class="text-center">Level</th> --}}
                                 {{-- <th class="text-center">Jadwal</th> --}}
                                 {{-- <th class="text-center">Pengajar</th> --}}
@@ -190,6 +191,21 @@
                                         @else
                                             Peserta Belum Pilih Jadwal
                                         @endif
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="{{ route('admin.tahsins.konfirmasidaftarulang') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $data->id }}">
+                                                @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $data->admin_pembayaran == 'TRANSFER')
+                                                    <button class="btn btn-warning btn-pill" style="font-weight: 700">Konfirmasi <i class="fas fa-edit"></i></button>
+                                                @elseif ($data->admin_pembayaran == 'BERHASIL')
+                                                    <button class="btn btn-info" style="font-weight: 700">Berhasil <i class="fas fa-check"></i></button>
+                                                @endif
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

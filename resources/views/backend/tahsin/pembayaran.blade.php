@@ -239,7 +239,7 @@
                                                 <input type="hidden" name="notahsin" value="{{ $data->tahsin->no_tahsin }}">
                                                 <input type="hidden" name="metode" value="update">
                                                 @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI')
-                                                    <button class="btn btn-warning btn-pill" style="font-weight: 700">Menunggu Konfirmasi</button>
+                                                    <button class="btn btn-warning btn-pill" style="font-weight: 700">Konfirmasi</button>
                                                 @elseif ($data->admin_pembayaran == 'BERHASIL')
                                                     <button class="btn btn-info" style="font-weight: 700">Berhasil</button>
                                                 @endif
