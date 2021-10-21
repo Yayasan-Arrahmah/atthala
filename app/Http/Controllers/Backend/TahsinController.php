@@ -254,7 +254,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'19'.'-%')
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatanbaru.'-%')
                         ->where('angkatan_peserta', '=', $this->angkatanbaru)
                         ->paginate(10);
 
@@ -330,7 +330,7 @@ Tanggal Mengisi Formulir Online :";
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'19'.'-%')
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatanbaru.'-%')
                         ->where('angkatan_peserta', '=', $this->angkatanbaru)
                         ->paginate(10);
 
@@ -338,7 +338,7 @@ Tanggal Mengisi Formulir Online :";
         }
 
 
-        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.'19'.'-%')
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatanbaru.'-%')
                 ->when($this->nama, function ($query) {
                     return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
                 })
