@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Daftar Ulang Tahsin<small class="text-muted"> - Angkatan 19</small>
+                    Daftar Ulang Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '19' }}</small>
                 </h4>
             </div><!--col-->
 
@@ -254,7 +254,7 @@
                                                         <button class="btn btn-success" style="font-weight: 700">Berhasil <i class="fas fa-"></i></button>
                                                     @endif
                                                 @else
-                                                    <label class="btn btn-success" style="font-weight: 700">Belum Daftar Ulang <i class="fas fa-"></i></label>
+                                                    <label class="btn btn-outline-dark" style="font-weight: 700">Belum Daftar Ulang<i class="fas fa-"></i></label>
                                                 @endif
                                             </form>
                                         </div>
