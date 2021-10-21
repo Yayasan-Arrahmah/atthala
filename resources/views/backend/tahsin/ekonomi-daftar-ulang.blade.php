@@ -246,7 +246,7 @@
                                         <div class="col">
                                             <form action="{{ route('admin.tahsins.konfirmasidaftarulang') }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="id" value="{{ $data->id }}">
+                                                <input type="hidden" name="id" value="{{ $data->id ?? '' }}">
                                                 @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $data->admin_pembayaran == 'TRANSFER')
                                                     <button class="btn btn-warning" style="font-weight: 700">Konfirmasi</button>
                                                 @elseif ($data->admin_pembayaran == 'BERHASIL')
@@ -257,7 +257,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="/admin/tahsin/daftar-ulang?metode=edit&id={{ $data->id }}&peserta={{ $tahsin->id }}&nominal={{ $data->nominal_pembayaran }}" class="btn btn-sm btn-info">Edit <i class="fas fa-edit"></i></a>
+                                    <a href="/admin/tahsin/daftar-ulang?metode=edit&id={{ $data->id ?? '' }}&peserta={{ $tahsin->id }}&nominal={{ $data->nominal_pembayaran ?? '' }}" class="btn btn-sm btn-info">Edit <i class="fas fa-edit"></i></a>
                                 </td>
                             </tr>
 
