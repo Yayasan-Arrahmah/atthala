@@ -166,25 +166,29 @@ class TahsinController extends Controller
             return redirect()->to('/admin/tahsin/daftar-ulang?idtahsin='.request()->idtahsin)->withFlashSuccess('Update Nominal Berhasil !');
         }
         $tahsins = Tahsin::
-            when($this->idtahsin, function ($query) {
-                return $query->where('no_tahsin', 'like', $this->idtahsin);
-            })
-            ->when($this->nama, function ($query) {
-                return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
-            })
-            ->when($this->level, function ($query) {
-                if( $this->level != 'SEMUA') {
-                    return $query->where('level_peserta', '=', $this->level);
-                }
-            })
-            ->when($this->jenis, function ($query) {
-                if( $this->jenis != 'SEMUA') {
-                    return $query->where('jenis_peserta', '=', $this->jenis);
-                }
-            })
-            // ->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')
-            ->where('angkatan_peserta', '=', 19)
-            ->paginate(10);
+                    when($this->nama, function ($query) {
+                        return $query->where('nama_peserta', 'like', '%'.$this->nama.'%');
+                    })
+                    ->when($this->level, function ($query) {
+                        if( $this->level != 'SEMUA') {
+                            return $query->where('level_peserta', '=', $this->level);
+                        }
+                    })
+                    ->when($this->jenis, function ($query) {
+                        if( $this->jenis != 'SEMUA') {
+                            return $query->where('jenis_peserta', '=', $this->jenis);
+                        }
+                    })
+                    ->when($this->angkatan, function ($query) {
+                        return $query->where('angkatan_peserta', '=', $this->angkatan)
+                                    ->where('no_tahsin', 'not like', '%-'.$this->angkatan.'-%');
+                    })
+                    ->when($this->pengajar, function ($query) {
+                        if( $this->pengajar != 'SEMUA') {
+                            return $query->where('nama_pengajar', '=', $this->pengajar);
+                        }
+                    })
+                    ->paginate(10);
 
         // if( auth()->user()->last_name === 'Ekonomi') {
             return view('backend.tahsin.ekonomi-daftar-ulang', compact('tahsins'));
