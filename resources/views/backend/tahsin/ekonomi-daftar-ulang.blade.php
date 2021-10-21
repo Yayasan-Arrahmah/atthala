@@ -199,7 +199,7 @@
                             @endphp
                             @foreach($tahsins as $key=> $tahsin)
                             @php
-                                $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first();
+                                $data = DB::table('pembayarans')->where('id_peserta', $tahsin->id)->first() ?? null;
                             @endphp
                             <tr>
                                 <td class="text-center" >
