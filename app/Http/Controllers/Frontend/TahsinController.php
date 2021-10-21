@@ -1032,7 +1032,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
 
     public function simpandaftarcalonpeserta(Request $request)
     {
-        $angkatan = 18;
+        $angkatan = 19;
 
         // $this->validate($request, [
         //     'notelp'           => 'required',
