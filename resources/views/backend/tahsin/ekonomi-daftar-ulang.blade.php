@@ -247,10 +247,14 @@
                                             <form action="{{ route('admin.tahsins.konfirmasidaftarulang') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $data->id ?? '' }}">
-                                                @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $data->admin_pembayaran == 'TRANSFER')
-                                                    <button class="btn btn-warning" style="font-weight: 700">Konfirmasi</button>
-                                                @elseif ($data->admin_pembayaran == 'BERHASIL')
-                                                    <button class="btn btn-success" style="font-weight: 700">Berhasil <i class="fas fa-"></i></button>
+                                                @if (!null == $data)
+                                                    @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $data->admin_pembayaran == 'TRANSFER')
+                                                        <button class="btn btn-warning" style="font-weight: 700">Konfirmasi</button>
+                                                    @elseif ($data->admin_pembayaran == 'BERHASIL')
+                                                        <button class="btn btn-success" style="font-weight: 700">Berhasil <i class="fas fa-"></i></button>
+                                                    @endif
+                                                @else
+                                                    <label class="btn btn-success" style="font-weight: 700">Belum Daftar Ulang <i class="fas fa-"></i></label>
                                                 @endif
                                             </form>
                                         </div>
