@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h4 class="card-title mb-0">
-                        Pendaftaran Baru Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('daftar_ulang_angkatan_tahsin') }}</small>
+                        Pendaftaran Baru Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '19' }}</small>
                         {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                     </h4>
                 </div><!--col-->
@@ -197,6 +197,7 @@
                                                     <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mpeg">
                                                     <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/mp4">
                                                     <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/wav">
+                                                    <source src="/app/public/rekaman/{{ $tahsin->rekaman_peserta }}" type="audio/opus">
                                                     error
                                                 </audio>
                                             </div>
