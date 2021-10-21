@@ -64,6 +64,7 @@ class TahsinController extends Controller
         $this->angkatan      = request()->angkatan ?? 19;
         // $this->angkatanbaru  = request()->angkatan ?? '18';
         $this->angkatanbaru  = request()->angkatan ?? 19;
+        $this->angkatanujian = request()->angkatan ?? 18;
     }
 
     /**
@@ -904,7 +905,11 @@ Salam,
         $pesertaujians = PesertaUjian::where('angkatan_ujian', 18)
                         ->when($this->idtahsin, function ($query) {
                             return $query->where('no_tahsin', 'like', $this->idtahsin);
-                        })->paginate($paged);
+                        })
+                        ->when($this->angkatanujian, function ($query) {
+                            return $query->where('angkatan_peserta', '=', $this->angkatanujian);
+                        })
+                        ->paginate($paged);
         return view('backend.tahsin.daftar-ujian', compact('pesertaujians', 'paged'));
     }
 
