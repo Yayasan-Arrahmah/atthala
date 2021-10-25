@@ -902,8 +902,7 @@ Salam,
         $paged         = $request->get('paged') ?? 10;
         $nama          = $request->get('nama') ?? null;
 
-        $pesertaujians = PesertaUjian::where('angkatan_ujian', 18)
-                        ->when($this->idtahsin, function ($query) {
+        $pesertaujians = PesertaUjian::when($this->idtahsin, function ($query) {
                             return $query->where('no_tahsin', 'like', $this->idtahsin);
                         })
                         ->when($this->angkatanujian, function ($query) {
