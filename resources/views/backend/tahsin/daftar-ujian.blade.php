@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Daftar Ulang Peserta Ujian <small class="text-muted">Angkatan 18</small>
+                    Daftar Ulang Peserta Ujian <small class="text-muted">Angkatan {{ request()->angkatan ?? '18' }}</small>
                 </h4>
             </div><!--col-->
 
@@ -39,8 +39,8 @@
             </div>
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
-                Angkatan
-                 </div>
+                    Angkatan
+                </div>
                 <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
                     @isset(request()->angkatan)
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
@@ -51,7 +51,10 @@
                     <option value="16">16</option>
                 </select>
             </div>
-            <div class="col-md-2 text-center">
+            {{-- <div class="col-md-2 text-center">
+                <div class="text-muted text-center" style="position: absolute">
+                    Angkatan
+                </div>
                 <select class="form-control" name="jenis" onchange='this.form.submit()'>
                     <option value="{{ request()->input('jenis') ?? '' }}">{{ request()->input('jenis') ?? 'Pilih Jenis' }}</option>
                     <option>---</option>
@@ -59,7 +62,7 @@
                     <option value="IKHWAN">IKHWAN</option>
                     <option value="AKHWAT">AKHWAT</option>
                 </select>
-            </div>
+            </div> --}}
             <div class="col-md-3 pull-right">
                 <div class="input-group">
                     <div class="input-group-prepend">
