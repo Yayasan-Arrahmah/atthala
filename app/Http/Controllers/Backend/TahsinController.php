@@ -906,7 +906,7 @@ Salam,
                             return $query->where('no_tahsin', 'like', $this->idtahsin);
                         })
                         ->when($this->angkatanujian, function ($query) {
-                            return $query->where('angkatan_peserta', '=', $this->angkatanujian);
+                            return $query->where('angkatan_ujian', '=', $this->angkatanujian);
                         })
                         ->paginate($paged);
         return view('backend.tahsin.daftar-ujian', compact('pesertaujians', 'paged'));
