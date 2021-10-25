@@ -101,7 +101,7 @@
                         @endphp
                         @foreach($pesertaujians as $key => $pesertaujian)
                         @php
-                            $data = DB::table('tahsins')->where('no_tahsin', $pesertaujian->no_tahsin)->where('angkatan_peserta', 18)->first();
+                            $data = DB::table('tahsins')->where('no_tahsin', $pesertaujian->no_tahsin)->where('angkatan_peserta', request()->angkatan ?? 18)->first();
                         @endphp
                         <tr>
                             <td class="text-center" >
