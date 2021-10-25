@@ -35,7 +35,7 @@
                 </select>
             </div>
 
-            <div class="col-md-4 text-center">
+            <div class="col text-center">
             </div>
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
@@ -60,7 +60,7 @@
                     <option value="AKHWAT">AKHWAT</option>
                 </select>
             </div>
-            <div class="col-md-4 pull-right">
+            <div class="col-md-3 pull-right">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
