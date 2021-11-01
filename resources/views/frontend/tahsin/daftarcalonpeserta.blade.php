@@ -220,7 +220,7 @@
                                 </div><!--col-->
                                 <div class="col-4" style="padding-left: 2px">
                                     <select id="waktu" name="waktu" class="form-control" required>
-                                        <option value="">Pilih Jam...</option>
+                                        <option value="">Pilih Hari Terlebih Dahulu...</option>
                                     </select>
                                 </div><!--col-->
                             </div>
@@ -622,6 +622,9 @@
                          var option = "<option value='"+id+"'>"+waktu+"</option>";
                          $("#waktu").append(option);
                        }
+                     } else {
+                        var option = "<option disabled>Maaf Kelas Penuh</option>";
+                         $("#waktu").append(option);
                      }
 
                    }

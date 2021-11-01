@@ -697,7 +697,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         $id           = $request->get('id');
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
-        $angkatan            = '18';
+        // $angkatan            = '18';
         $angkatandaftarulang = '19';
         $jadwalhari          = $request->get('hari');
 
@@ -962,7 +962,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-                    ->where('jumlah_peserta', '<', 10)
+                    // ->where('jumlah_peserta', '<', 10)
                     ->select('hari_jadwal')
                     ->groupBy('hari_jadwal')
                     ->get();
