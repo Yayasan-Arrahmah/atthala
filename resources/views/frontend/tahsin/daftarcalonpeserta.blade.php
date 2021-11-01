@@ -619,12 +619,10 @@
                        for(var i=0; i<len; i++){
                          var waktu  = response[i].waktu_jadwal;
                          var id     = response[i].id;
-                         var option = "<option value='"+id+"'>"+waktu+"</option>";
+                         var status = response[i].status;
+                         var option = "<option value='"+id+"' "+status+">"+waktu+"</option>";
                          $("#waktu").append(option);
                        }
-                     } else {
-                        var option = "<option disabled>Maaf Kelas Penuh</option>";
-                         $("#waktu").append(option);
                      }
 
                    }

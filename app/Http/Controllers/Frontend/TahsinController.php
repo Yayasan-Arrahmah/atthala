@@ -722,7 +722,9 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->count();
             if ($cekbanyakpeserta < $level->jumlah_peserta) {
-                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id];
+                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
+            } else {
+                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
             }
         }
         // $waktu = collect($waktu_)->get();
@@ -1015,7 +1017,9 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->count();
             if ($cekbanyakpeserta < $level->jumlah_peserta) {
-                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id];
+                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
+            } else {
+                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
             }
         }
         // $waktu = collect($waktu_)->get();
