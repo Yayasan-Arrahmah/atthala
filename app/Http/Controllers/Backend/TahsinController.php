@@ -31,6 +31,7 @@ use App\Events\Backend\Tahsin\TahsinDeleted;
 use App\Exports\TahsinPesertaBaru;
 use App\Models\PengaturanTahsin;
 use Illuminate\Support\Arr;
+use App\Models\Pengaturan;
 
 
 class TahsinController extends Controller
@@ -346,10 +347,84 @@ Tanggal Mengisi Formulir Online :";
                 ->when($this->idtahsin, function ($query) {
                         return $query->where('no_tahsin', '=', $this->idtahsin);
                 })
+                ->when(request()->status, function ($query) {
+                    if( request()->status != 'SEMUA') {
+                        if (request()->status == 1) {
+                            return $query->where('level_peserta', null);
+                        } elseif (request()->status == 2) {
+                            return $query->where('level_peserta', '!=', null)
+                                        ->where('nama_pengajar', null);
+                        } elseif (request()->status == 3) {
+                            return $query->where('level_peserta', '!=', null)
+                                        ->where('nama_pengajar', '!=', null);
+                        }
+                    }
+                })
                 ->where('angkatan_peserta', '=', $this->angkatanbaru)
             ->paginate(10);
 
         return view('backend.tahsin.daftar-baru', compact('tahsins'));
+    }
+
+    public function konfirmasidaftarbaru(Request $request)
+    {
+
+        $pembayaran = Pembayaran::find(request()->id);
+        $pembayaran->admin_pembayaran   = 'BERHASIL';
+        $pembayaran->save();
+
+        $data = Tahsin::find($pembayaran->id_peserta);
+
+        $phone = '+62'. $data->nohp_peserta;
+        $message =
+        'Assalamualaikum Warohmatullahi Wabarokaatuh,
+
+Alhamdulillah,
+Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
+Pendaftaran Tahsin Angkatan 19 sudah selesai.
+Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
+
+Silahkan klik link ini untuk mengecek riwayat pembayaran
+https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari?namapeserta='.str_replace(' ', '+', $data->nama_peserta).'&level='.str_replace(' ', '+', $data->level_peserta).'&pengajar='.str_replace(' ', '+', $data->nama_pengajar).'
+
+Kami membuka kesempatan untuk bapak/ibu dalam program pengembangan dakwah Rumah Tahfizh Quran Ar Rahmah dengan berinfak sebesar Rp 20.000,- melalui transfer ke rekening 2182182226 a.n. Rumah Tahfidz Quran Putra Ar Rahmah. Tambahkan angka 26 untuk kode transaksi pengembangan dakwah. contoh Transfer : Rp 20.026,-
+
+Semoga Allah Subhanahu Wa Taala senantiasa melindungi kita semua. Aamiin Yaa Robbal Aalamiin
+
+Salam,
+*LTTQ Ar Rahmah Balikpapan*';
+
+        // woo-wa.com
+        $apikey = env('WA_KEY') ?? 'b2d4409bd29454b3db5cc8211b309340fb912fd2ea18482b';
+
+        $url='http://116.203.191.58/api/send_message';
+        $data = array(
+            "phone_no"  => $phone,
+            "key"		=> $apikey,
+            "message"	=> $message,
+            "skip_link"	=> True // This optional for skip snapshot of link in message
+        );
+        $data_string = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+
+        echo $res=curl_exec($ch);
+        curl_close($ch);
+
+        return redirect()->back()
+            ->withFlashSuccess('Konfirmasi Peserta Daftar Baru Berhasil');
     }
 
     public function upload(ManageTahsinRequest $request)
@@ -385,7 +460,53 @@ Tanggal Mengisi Formulir Online :";
 
     public function pengaturan(ManageTahsinRequest $request)
     {
-        return view('backend.tahsin.pengaturan');
+        $data = Pengaturan::tahsin()->get();
+
+        // buat ngisi data awal
+        // $isidata = new Pengaturan;
+        // $isidata->create([
+        //         'jenis_pengaturan'    => 'TAHSIN',
+        //         'kode_pengaturan'     => 'daftar_baru',
+        //         'nama_pengaturan'     => 'Daftar Baru',
+        //         'status_pengaturan'   => 1,               // 1 DIBUKA - 2 DITUTUP - 3 PERBAIKAN
+        //         'angkatan_pengaturan' => 19,
+        //         'link_pengaturan'     => 'https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran',
+        // ]);
+        // $isidata->create([
+        //         'jenis_pengaturan'    => 'TAHSIN',
+        //         'kode_pengaturan'     => 'daftar_ulang',
+        //         'nama_pengaturan'     => 'Daftar Ulang',
+        //         'status_pengaturan'   => 1,
+        //         'angkatan_pengaturan' => 19,
+        //         'link_pengaturan'     => 'https://atthala.arrahmahbalikpapan.or.id/tahsin/daftar-ulang-peserta-XIX/cari',
+        // ]);
+        // $isidata->create([
+        //         'jenis_pengaturan'    => 'TAHSIN',
+        //         'kode_pengaturan'     => 'daftar_ujian',
+        //         'nama_pengaturan'     => 'Daftar Ujian',
+        //         'status_pengaturan'   => 1,
+        //         'angkatan_pengaturan' => 18,
+        //         'link_pengaturan'     => 'https://atthala.arrahmahbalikpapan.or.id/tahsin/calon-peserta-ujian/cari',
+        // ]);
+        // $isidata->create([
+        //         'jenis_pengaturan'    => 'TAHSIN',
+        //         'kode_pengaturan'     => 'pembayaran_spp',
+        //         'nama_pengaturan'     => 'Pembayaran SPP',
+        //         'status_pengaturan'   => 1,
+        //         'angkatan_pengaturan' => 18,
+        //         'link_pengaturan'     => 'https://atthala.arrahmahbalikpapan.or.id/tahsin/pembayaran/cari',
+        // ]);
+
+        if (request()->metode == 'update') {
+            $update = Pengaturan::find(request()->id);
+            $update->angkatan_pengaturan = request()->angkatan;
+            $update->status_pengaturan   = request()->status;
+            $update->save();
+
+            return redirect()->route('admin.tahsins.pengaturan')->withFlashSuccess('Pengaturan Tahsin Berhasil diperbaruhi !');
+        }
+
+        return view('backend.tahsin.pengaturan', compact('data'));
     }
 
     public function absen(ManageTahsinRequest $request)

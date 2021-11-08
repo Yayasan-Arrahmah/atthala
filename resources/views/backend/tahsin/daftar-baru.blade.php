@@ -88,6 +88,17 @@
             </div> --}}
             <div class="col-md-2">
                 <div class="text-muted text-center" style="position: absolute">
+                Status
+                 </div>
+                <select class="form-control mt-4" id="status" name="status" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    <option value="SEMUA">SEMUA</option>
+                    <option value="1">Belum Selesai Diperiksa</option>
+                    <option value="2">Belum Pilih Jadwal</option>
+                    <option value="3">Selesai</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
                 Angkatan
                  </div>
                 <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
@@ -125,6 +136,11 @@
                 </div>
             </div>
         </form>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                  $("#status").val("{!! request()->status !!}");
+            });
+        </script>
         <form action="{{ route('admin.tahsins.exportexceltahsinpesertabaru') }}" target="_blank" class="row">
             {{ csrf_field() }}
             <div class="col-2">
@@ -146,6 +162,9 @@
                                 <th>Nominal Pembayaran</th>
                                 <th>Kode BBTT</th>
                                 <th>Bukti Transfer</th>
+                                @if (auth()->user()->last_name === 'Ekonomi' || auth()->user()->last_name === 'Admin')
+                                <th>Status</th>
+                                @endif
                                 <th class="text-center">Rekaman / Hasil</th>
                                 {{-- <th class="text-center">Level</th> --}}
                                 {{-- <th class="text-center">Jadwal</th> --}}
@@ -190,12 +209,33 @@
                                         {{-- @isset($pesertaujian->bukti_transfer) --}}
                                         <div style="">
                                             <img class="zoom"
-                                                src="/app/public/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                                src="https://atthala.arrahmahbalikpapan.or.id/app/public/bukti-transfer/{{ $data->bukti_transfer_pembayaran ?? '404.jpg' }}"
                                             alt="" height="50">
                                         </div>
                                         {{-- @endisset --}}
                                     </div>
                                 </td>
+                                @if (auth()->user()->last_name === 'Ekonomi' || auth()->user()->last_name === 'Admin')
+                                <td>
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="{{ route('admin.tahsins.konfirmasidaftarbaru') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $data->id ?? '' }}">
+                                                @if ($tahsin->level_peserta != null && $tahsin->nama_pengajar != null)
+                                                    @if ($data->admin_pembayaran == 'MENUNGGU KONFIRMASI' || $data->admin_pembayaran == 'TRANSFER')
+                                                        <button class="btn btn-warning" style="font-weight: 700">Konfirmasi</button>
+                                                    @elseif ($data->admin_pembayaran == 'BERHASIL')
+                                                        <button class="btn btn-success" style="font-weight: 700">Berhasil <i class="fas fa-"></i></button>
+                                                    @endif
+                                                @else
+                                                    <label class="btn btn-outline-danger" style="font-weight: 700">Proses Belum Selesai<i class="fas fa-"></i></label>
+                                                @endif
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                                @endif
                                 <td>
                                     @if (auth()->user()->last_name === 'Ekonomi')
                                         <div style="text-transform: uppercase;">{{ $tahsin->level_peserta ?? 'Belum Diseleksi' }}</div>
@@ -203,7 +243,7 @@
                                             @if ($tahsin->jadwal_tahsin != null)
                                                 {{ $tahsin->nama_pengajar }} | {{ $tahsin->jadwal_tahsin }}
                                             @else
-                                                Peserta Belum Pilih Jadwal
+                                                <span class="text-danger" style="font-weight: 700">Peserta Belum Pilih Jadwal</span>
                                             @endif
                                         </div>
                                     @else
@@ -249,7 +289,7 @@
                                                         @if ($tahsin->jadwal_tahsin != null)
                                                             {{ $tahsin->nama_pengajar }} | {{ $tahsin->jadwal_tahsin }}
                                                         @else
-                                                            Peserta Belum Pilih Jadwal
+                                                            <span class="text-danger" style="font-weight: 700">Peserta Belum Pilih Jadwal</span>
                                                         @endif
                                                     </div>
                                                 @else

@@ -33,6 +33,7 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::get('peserta-ujian',             [TahsinController::class, 'pesertaujian'])->name('tahsins.pesertaujian');
     // Route::get('peserta-daftar-ulang',    [TahsinController::class, 'pesertadaftarulang'])->name('tahsins.ujian.pesertadaftarulang');
     Route::get('daftar-baru',               [TahsinController::class, 'daftarbaru'])->name('tahsins.daftarbaru');
+    Route::post('daftar-baru/konfirmasi',  [TahsinController::class, 'konfirmasidaftarbaru'])->name('tahsins.konfirmasidaftarbaru');
     Route::get('export-excel-tahsin',       [TahsinController::class, 'exportexceltahsin'])->name('tahsins.exportexceltahsin');
     Route::get('export-excel-tahsin-peserta-baru',   [TahsinController::class, 'exportexceltahsinpesertabaru'])->name('tahsins.exportexceltahsinpesertabaru');
 
