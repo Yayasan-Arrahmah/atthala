@@ -66,6 +66,7 @@
                         <option value="{{ request()->periode }}">{{ $periode_->nama_periode }} - {{ $periode_->tahun_ajaran }}</option>
                         <option value="">-------</option>
                     @endisset
+                    <option value="">Pilih...</option>
                     @foreach ($perioderapor as $periode)
                         <option value="{{ $periode->id }}">{{ $periode->nama_periode }} - {{ $periode->tahun_ajaran }}</option>
                     @endforeach
@@ -172,6 +173,8 @@
                 </div>
             </div>
         </form>
+        @isset(request()->periode)
+
         <div class="row mt-4">
             <div class="col">
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">
@@ -302,6 +305,8 @@
                 </div>
             </div><!--col-->
         </div><!--row-->
+        @endisset
+
     </div><!--card-body-->
 
     {{-- @livewire('rtq.peserta') --}}
