@@ -1010,15 +1010,14 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         // $waktu_[] = ['waktu_jadwal' => '-----', 'id' => ''];
         // dd($ceklevel);
         foreach ($ceklevel as $level) {
-            $cekbanyakpeserta = null; // loop reseta data variabel
+            $cekbanyakpeserta = null; // loop reset data variabel
             $cekbanyakpeserta = Tahsin::where('level_peserta', $level->level_jadwal)
                                 ->where('jadwal_tahsin', $level->hari_jadwal.' '.$level->waktu_jadwal)
                                 ->where('angkatan_peserta', $angkatandaftarulang)
+                                ->where('nama_pengajar', $level->pengajar_jadwal)
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->get();
-            // if ($cekbanyakpeserta == null) {
-            //     $cekbanyakpeserta = 0;
-            // }
+
             // if ($cekbanyakpeserta < $level->jumlah_peserta) {
             //     $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
             // } else {
