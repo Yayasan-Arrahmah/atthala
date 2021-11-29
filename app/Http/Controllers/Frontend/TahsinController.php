@@ -1027,13 +1027,13 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         // $waktu = collect($waktu_)->get();
         $waktu = collect($waktu_)->values();
 
-        // $waktu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
-        //                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-        //                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-        //                     ->where('hari_jadwal', $jadwalhari)
-        //                     ->get();
+        $waktuu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                            ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                            ->where('level_jadwal', $calonpeserta->level_peserta)
+                            ->where('hari_jadwal', $jadwalhari)
+                            ->get();
 
-        return response()->json($waktu);
+        return response()->json($waktuu);
     }
 
     public function simpandaftarcalonpeserta(Request $request)
