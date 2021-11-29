@@ -1015,25 +1015,28 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
                                 ->where('angkatan_peserta', $angkatandaftarulang)
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->count();
-            if ($cekbanyakpeserta == null) {
-                $cekbanyakpeserta = 0;
-            }
-            if ($cekbanyakpeserta < $level->jumlah_peserta) {
-                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
-            } else {
-                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
-            }
+            // if ($cekbanyakpeserta == null) {
+            //     $cekbanyakpeserta = 0;
+            // }
+            // if ($cekbanyakpeserta < $level->jumlah_peserta) {
+            //     $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
+            // } else {
+            //     $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
+            // }
+
+            $waktu_[] = ['waktu_jadwal_' => $level->waktu_jadwal, 'id_' => $level->id, 'status_' => ''];
+
         }
         // $waktu = collect($waktu_)->get();
         $waktu = collect($waktu_)->values();
 
-        $waktuu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
-                            ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                            ->where('level_jadwal', $calonpeserta->level_peserta)
-                            ->where('hari_jadwal', $jadwalhari)
-                            ->get();
+        // $waktuu['data'] = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+        //                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+        //                     ->where('level_jadwal', $calonpeserta->level_peserta)
+        //                     ->where('hari_jadwal', $jadwalhari)
+        //                     ->get();
 
-        return response()->json($waktuu);
+        return response()->json($waktu);
     }
 
     public function simpandaftarcalonpeserta(Request $request)
