@@ -1018,13 +1018,13 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->get();
 
-            // if ($cekbanyakpeserta < $level->jumlah_peserta) {
-            //     $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
-            // } else {
-            //     $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
-            // }
+            if ($cekbanyakpeserta < $level->jumlah_peserta) {
+                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
+            } else {
+                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
+            }
 
-            $waktu_[] = ['waktu_jadwal_' => $level->waktu_jadwal, 'id_' => $level->id, 'status_' => $cekbanyakpeserta];
+            // $waktu_[] = ['waktu_jadwal_' => $level->waktu_jadwal, 'id_' => $level->id, 'status_' => $cekbanyakpeserta];
 
         }
         // $waktu = collect($waktu_)->get();
