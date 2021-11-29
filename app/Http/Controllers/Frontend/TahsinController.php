@@ -1016,7 +1016,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
                                 ->where('angkatan_peserta', $angkatandaftarulang)
                                 ->where('nama_pengajar', $level->pengajar_jadwal)
                                 ->where('jenis_peserta', $level->jenis_jadwal)
-                                ->get();
+                                ->count();
             if ($cekbanyakpeserta == null) {
                 $cekbanyakpeserta = 0;
             }
