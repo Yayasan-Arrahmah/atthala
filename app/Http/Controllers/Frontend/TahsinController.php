@@ -1002,7 +1002,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         //cek banyak data jam sesuai level
         $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+                    ->where('level_jadwal', $calonpeserta->level_peserta)
                     ->where('hari_jadwal', $request->get('hari'))
                     ->orderBy('waktu_jadwal', 'ASC')
                     ->get();
