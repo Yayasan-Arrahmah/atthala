@@ -86,7 +86,7 @@
                 </select>
             </div>
 
-            <div class="col-md-2">
+            <div class="col">
                 <div class="text-muted text-center" style="position: absolute">
                     Level
                  </div>
@@ -108,7 +108,7 @@
                         <option value="ITQON">ITQON</option>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col">
                 <div class="text-muted text-center" style="position: absolute">
                 Angkatan
                  </div>
@@ -123,7 +123,7 @@
                     <option value="16">16</option>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col">
                 <div class="text-muted text-center" style="position: absolute">
                 Jenis
                  </div>
@@ -135,6 +135,20 @@
                     <option value="SEMUA">SEMUA</option>
                     <option value="IKHWAN">IKHWAN</option>
                     <option value="AKHWAT">AKHWAT</option>
+                </select>
+            </div>
+            <div class="col">
+                <div class="text-muted text-center" style="position: absolute">
+                Status
+                 </div>
+                <select class="form-control mt-4" name="status" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @isset(request()->status)
+                        <option value="{{ request()->status }}">{{ request()->status }}</option>
+                    @endisset
+                    <option value="">----</option>
+                    <option value="SEMUA">SEMUA</option>
+                    <option value="UMUM">UMUM</option>
+                    <option value="WARGA-SP">WARGA-SP</option>
                 </select>
             </div>
 

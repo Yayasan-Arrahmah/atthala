@@ -66,8 +66,8 @@ class TahsinController extends Controller
         // $this->angkatanbaru  = request()->angkatan ?? '18';
         $this->angkatanbaru  = request()->angkatan ?? 19;
         $this->angkatanujian = request()->angkatan ?? 18;
+        $this->status        = request()->status ?? null;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -138,6 +138,15 @@ class TahsinController extends Controller
                 ->when($this->pengajar, function ($query) {
                     if( $this->pengajar != 'SEMUA') {
                         return $query->where('nama_pengajar', '=', $this->pengajar);
+                    }
+                })
+                ->when($this->status, function ($query) {
+                    if( $this->status != 'SEMUA') {
+                        if( $this->status == 'UMUM') {
+                            return $query->where('pilih_jadwal_peserta', null);
+                        } elseif( $this->status == 'WARGA-SP') {
+                            return $query->where('pilih_jadwal_peserta', 'sepinggan-pratama');
+                        }
                     }
                 })
                 // ->withCount('no_tahsin')
