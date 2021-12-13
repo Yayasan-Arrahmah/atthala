@@ -40,7 +40,7 @@ class TahsinController extends Controller
     {
         $sesidaftar = Str::random(10);
         Session::put('sesidaftar', $sesidaftar);
-        return view('frontend.tahsin.pendaftaran', compact('sesidaftar'));
+        return view('frontend.tahsin.pendaftaran-ditutup', compact('sesidaftar'));
     }
 
     public function uploadktp(Request $request)
