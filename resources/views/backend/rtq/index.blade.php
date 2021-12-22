@@ -213,12 +213,12 @@
                                         </a>
                                     </td>
                                     <td class="text-center" >
-                                        @if ($rtq->tanggal_lahir)
+                                        @if (!empty($rtq->tanggal_lahir))
                                             @php
                                                 $birth = !empty($rtq->tanggal_lahir) ? $rtq->tanggal_lahir : \Carbon\Carbon::now()->format('Y-m-d');
                                                 $umur = !empty(\Carbon\Carbon::parse($birth)->age) ? \Carbon\Carbon::parse($birth)->age : '0';
                                             @endphp
-                                        {{ $umur }} Tahun
+                                            {{ $umur }}
                                         @else
                                             -
                                         @endif
