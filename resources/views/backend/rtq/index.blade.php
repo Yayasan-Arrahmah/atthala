@@ -213,7 +213,7 @@
                                         </a>
                                     </td>
                                     <td class="text-center" >
-                                        @if (!empty($rtq->tanggal_lahir))
+                                        {{-- @if (!empty($rtq->tanggal_lahir))
                                             @php
                                                 $birth = !empty($rtq->tanggal_lahir) ? $rtq->tanggal_lahir : \Carbon\Carbon::now()->format('Y-m-d');
                                                 $umur = !empty(\Carbon\Carbon::parse($birth)->age) ? \Carbon\Carbon::parse($birth)->age : '0';
@@ -221,7 +221,8 @@
                                             {{ $umur }}
                                         @else
                                             -
-                                        @endif
+                                        @endif --}}
+                                        {{ $rtq->tanggal_lahir }}
                                     </td>
                                     <td class="text-center" style="font-weight: 800">
                                         @php
