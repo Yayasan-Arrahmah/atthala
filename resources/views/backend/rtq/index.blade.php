@@ -182,7 +182,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th>Umur</th>
+                                <th>Tanggal Lahir</th>
                                 <th class="text-center">Verifikasi Mudir</th>
                                 <th class="text-center">Status</th>
                                 @if (auth()->user()->last_name == 'Admin')
@@ -212,7 +212,7 @@
                                             </div>
                                         </a>
                                     </td>
-                                    <td class="text-center" >
+                                    <td class="" >
                                         {{-- @if (!empty($rtq->tanggal_lahir))
                                             @php
                                                 $birth = !empty($rtq->tanggal_lahir) ? $rtq->tanggal_lahir : \Carbon\Carbon::now()->format('Y-m-d');
