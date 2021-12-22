@@ -174,7 +174,6 @@
             </div>
         </form>
         @isset(request()->periode)
-
         <div class="row mt-4">
             <div class="col">
                 <div class="table table-responsive-sm table-hover mb-0 table-sm">
@@ -214,11 +213,15 @@
                                         </a>
                                     </td>
                                     <td class="text-center" >
-                                        @php
-                                        $birth = !empty($rtq->tanggal_lahir) ? $rtq->tanggal_lahir : \Carbon\Carbon::now()->format('Y-m-d');
-                                        $umur = !empty(\Carbon\Carbon::parse($birth)->age) ? \Carbon\Carbon::parse($birth)->age : '0';
-                                        @endphp
+                                        @if ($rtq->tanggal_lahir)
+                                            @php
+                                                $birth = !empty($rtq->tanggal_lahir) ? $rtq->tanggal_lahir : \Carbon\Carbon::now()->format('Y-m-d');
+                                                $umur = !empty(\Carbon\Carbon::parse($birth)->age) ? \Carbon\Carbon::parse($birth)->age : '0';
+                                            @endphp
                                         {{ $umur }} Tahun
+                                        @else
+                                            -
+                                        @endif
                                     </td>
                                     <td class="text-center" style="font-weight: 800">
                                         @php
