@@ -45,9 +45,17 @@ class RtqController extends Controller
     {
         $perioderapor    = RtqPeriodeRapor::all()->sortByDesc('id');
         $setperioderapor = RtqPeriodeRapor::latest('created_at')->first();
-        $halaqoh         = Rtq::select('pengajar_santri')
+        if (auth()->user()->last_name === 'Admin'){
+            $halaqoh         = Rtq::select('pengajar_santri')
+                                ->groupBy('pengajar_santri')
+                                ->paginate(100);
+        } else {
+            $halaqoh         = Rtq::select('pengajar_santri')
                             ->groupBy('pengajar_santri')
+                            ->where('jenis_santri', auth()->user()->jenis)
                             ->paginate(100);
+        }
+
 
         return view('backend.rtq.index', compact('perioderapor', 'setperioderapor', 'halaqoh'))
             ->withrtqs($this->rtqRepository->getActivePaginated(25, 'id', 'asc'));
