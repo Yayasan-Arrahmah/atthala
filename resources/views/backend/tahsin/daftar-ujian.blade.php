@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Daftar Ulang Peserta Ujian <small class="text-muted">Angkatan {{ request()->angkatan ?? '18' }}</small>
+                    Daftar Ulang Peserta Ujian <small class="text-muted">Angkatan {{ request()->angkatan ?? session('daftar_ujian') }}</small>
                 </h4>
             </div><!--col-->
 
