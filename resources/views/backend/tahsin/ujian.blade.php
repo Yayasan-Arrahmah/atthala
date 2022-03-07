@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Ujian Tahsin<small class="text-muted"> - Angkatan {{ session('angkatan_tahsin') }}</small>
+                    Ujian Tahsin<small class="text-muted"> - Angkatan {{ session('daftar_ujian') }}</small>
                 </h4>
             </div><!--col-->
 

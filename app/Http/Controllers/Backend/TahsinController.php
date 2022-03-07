@@ -1022,6 +1022,7 @@ Salam,
             ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('jenis_peserta', 'IKHWAN')
+            ->where('angkatan_peserta', session('daftar_ujian'))
             ->paginate(2000);
 
         return view('backend.tahsin.ujian', compact('datajadwals'));
