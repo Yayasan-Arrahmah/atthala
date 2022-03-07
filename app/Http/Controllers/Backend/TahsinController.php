@@ -65,7 +65,7 @@ class TahsinController extends Controller
         $this->angkatan      = request()->angkatan ?? 19;
         // $this->angkatanbaru  = request()->angkatan ?? '18';
         $this->angkatanbaru  = request()->angkatan ?? 19;
-        $this->angkatanujian = request()->angkatan ?? 18;
+        $this->angkatanujian = request()->angkatan ?? 19;
         $this->status        = request()->status ?? null;
     }
     /**
