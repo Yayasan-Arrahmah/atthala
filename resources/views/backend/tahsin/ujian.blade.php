@@ -116,6 +116,7 @@
                                                     ->where('nama_pengajar', $tahsin->nama_pengajar)
                                                     ->where('jadwal_tahsin', $tahsin->jadwal_tahsin)
                                                     ->where('jenis_peserta', $tahsin->jenis_peserta)
+                                                    ->where('angkatan_peserta', session('daftar_ujian'))
                                                     ->get()
                                     @endphp
                                     @foreach ($peserta as $data)
