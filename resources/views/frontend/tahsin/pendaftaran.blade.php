@@ -287,6 +287,15 @@ hr {
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-4 form-control-label" >Pembelajaran </label>
+                        <div class="col-8">
+                            <select name="jenis_pembelajaran" class="gender form-control" required>
+                                <option value="OFFLINE">OFFLINE</option>
+                                <option value="ONLINE">ONLINE</option>
+                            </select>
+                        </div><!--col-->
+                    </div>
+                    <div class="form-group row">
                         <label class="col-12 form-control-label" >Foto KTP</label>
                         <div class="col-12">
                             <input type="file" class="upload-ktp"/>

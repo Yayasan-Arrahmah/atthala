@@ -209,7 +209,7 @@
                                         <a href="/admin/tahsins/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
                                             <div style="text-transform: uppercase;">{{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }}</div>
                                             <div class="small text-muted">
-                                                {{ $tahsin->waktu_lahir_peserta }} | {{ $tahsin->nohp_peserta }}
+                                                {{ $tahsin->waktu_lahir_peserta }} | {{ $tahsin->nohp_peserta }} | {{ $tahsin->jenis_pembelajaran }}
                                             </div>
                                         </a>
                                     </td>
