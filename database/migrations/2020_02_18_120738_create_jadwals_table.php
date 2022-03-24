@@ -23,6 +23,7 @@ class CreateJadwalsTable extends Migration
                 $table->text('waktu_jadwal', 80);
                 $table->text('jenis_jadwal', 10);
                 $table->text('angkatan_jadwal', 10);
+                $table->string('status_belajar', 10)->default('ONLINE / OFFLINE')->nullable();
                 $table->integer('jumlah_peserta')->default(0);
                 $table->softDeletes();
                 $table->timestamps();

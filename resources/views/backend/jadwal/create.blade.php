@@ -107,6 +107,16 @@
                             <input class="form-control" type="number" name="jumlah_peserta" placeholder="Jumlah Maksimal Peserta" maxlength="10" required="">
                         </div><!--col-->
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 form-control-label" >Status Belajar</label>
+                        <div class="col-md-7">
+                            <select name="status_belajar" class="form-control" required>
+                                <option value="ONLINE / OFFLINE">ONLINE / OFFLINE</option>
+                                <option value="ONLINE">ONLINE</option>
+                                <option value="OFFLINE">OFFLINE</option>
+                            </select>
+                        </div><!--col-->
+                    </div>
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-body-->

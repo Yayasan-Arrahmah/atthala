@@ -44,7 +44,7 @@ class JadwalRepository extends BaseRepository
                     return $query->where('jenis_jadwal', '=', request()->jenis);
                 }
             })
-            ->where('angkatan_jadwal', '=', request()->angkatan ?? '19')
+            ->where('angkatan_jadwal', '=', request()->angkatan ?? session('angkatan_tahsin'))
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }

@@ -31,6 +31,7 @@ class JadwalTambahData implements ToModel, WithStartRow
             'angkatan_jadwal' => @$row[5],
             'jumlah_peserta'  => @$row[6],
             'jenis_jadwal'    => @$row[7],
+            'status_belajar'  => @$row[8],
         ]);
     }
 

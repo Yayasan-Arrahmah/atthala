@@ -9,7 +9,6 @@ use App\Exceptions\GeneralException;
 use Session;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
-use Webpatser\Uuid\Uuid;
 use App\Imports\JadwalsImport;
 use Illuminate\Support\Facades\DB;
 
@@ -137,6 +136,7 @@ class JadwalController extends Controller
             'jumlah_peserta',
             'jenis_jadwal',
             'angkatan_jadwal',
+            'status_belajar',
         ));
 
         // Fire create event (JadwalCreated)
@@ -191,7 +191,7 @@ class JadwalController extends Controller
             'waktu_jadwal',
             'jenis_jadwal',
             'angkatan_jadwal',
-            'jumlah_peserta',
+            'status_belajar',
         ));
 
         // Fire update event (JadwalUpdated)

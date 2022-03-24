@@ -121,6 +121,7 @@
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
                         <option value="">-------</option>
                     @endisset
+                    <option value="20">20</option>
                     <option value="19">19</option>
                     <option value="18">18</option>
                     <option value="17">17</option>
@@ -163,7 +164,7 @@
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Angkatan</th>
-                                <th class="text-center">Jumlah Peserta</th>
+                                <th class="text-center">Batasan Peserta</th>
                                 <th width="100" class="text-center"></th>
                             </tr>
                         </thead>
@@ -264,6 +265,11 @@
                                                         ->count();
                                             @endphp --}}
                                             {{ $jadwal->jumlah_peserta }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-center">
+                                            {{ $jadwal->status_belajar }}
                                         </div>
                                     </td>
                                     <td>

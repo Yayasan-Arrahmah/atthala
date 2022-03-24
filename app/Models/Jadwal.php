@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Traits\Attribute\JadwalAttribute;
-use Webpatser\Uuid\Uuid;
 
 class Jadwal extends Model
 {
@@ -34,6 +33,7 @@ class Jadwal extends Model
         'jenis_jadwal',
         'angkatan_jadwal',
         'jumlah_peserta',
+        'status_belajar',
     ];
 
     // public static function boot()
