@@ -36,7 +36,7 @@
                 </center>
                 <div class="text-center">
                     <h4> Peserta Telah Terdaftar </h4>
-                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan 19</div>
+                    <div class="text-muted">Tahsin LTTQ Arrahmah Balikpapan Angkatan {{ session('angkatan_tahsin') }}</div>
                 </div>
                 <hr>
                 <div class="card-body">

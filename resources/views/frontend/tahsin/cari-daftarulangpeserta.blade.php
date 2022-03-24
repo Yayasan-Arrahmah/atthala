@@ -32,7 +32,7 @@
                     <div style="padding-top: 0px">
                         <h4>Pencarian <br>Daftar Ulang Peserta Tahsin</h4>
                         <div class="text-muted">
-                            Angkatan 19
+                            Angkatan {{ session('angkatan_tahsin') }}
                         </div>
                     </div>
                 </center>
