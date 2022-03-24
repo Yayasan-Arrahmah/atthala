@@ -586,7 +586,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
+                ->where('angkatan_peserta', '=', session('daftar_ujian'))
                 ->paginate(15);
 
         } else {
@@ -596,14 +596,14 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
         return view('frontend.tahsin.cari-daftarulangpeserta', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -621,7 +621,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
 
         $angkatan            = session('angkatan_tahsin');
-        $angkatandaftarulang = session('angkatan_tahsin');
+        $angkatandaftarulang = session('daftar_ujian');
 
         // ngambil data profile
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
