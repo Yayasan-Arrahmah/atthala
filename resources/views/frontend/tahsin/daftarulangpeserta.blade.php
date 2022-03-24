@@ -84,7 +84,7 @@
                         <div class="text-center">
                             <h4> Formulir <br>Daftar Ulang Peserta Tahsin </h4>
                             {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
-                            <div class="text-muted">Angkatan 18</div>
+                            <div class="text-muted">Angkatan {{ session('angkatan_tahsin')  }}</div>
                         </div>
 
                         <div class="card-body">
@@ -202,6 +202,15 @@
                                 </div>
                                 <div class="col-7">
                                     <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Kenaikan Level Tahsin" name="namapeserta" value="{{ $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta }}" maxlength="191" required="">
+                                </div><!--col-->
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4 form-control-label" >Pembelajaran </label>
+                                <div class="col-8">
+                                    <select name="jenis_pembelajaran" class="gender form-control" required>
+                                        <option value="OFFLINE">OFFLINE</option>
+                                        <option value="ONLINE">ONLINE</option>
+                                    </select>
                                 </div><!--col-->
                             </div>
                             <div class="form-group row">

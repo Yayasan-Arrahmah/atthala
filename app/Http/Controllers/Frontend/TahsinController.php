@@ -684,7 +684,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-                    ->where('hari_jadwal', $request->get('hari'))
+                    ->where('hari_jadwal', $jadwalhari)
                     ->orderBy('waktu_jadwal', 'ASC')
                     ->get();
 
@@ -756,6 +756,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             $peserta->no_tahsin            = $pesertadaftarulang->no_tahsin;
             $peserta->nama_peserta         = $pesertadaftarulang->nama_peserta;
             $peserta->jenis_peserta        = $pesertadaftarulang->jenis_peserta;
+            $peserta->jenis_pembelajaran   = $pesertadaftarulang->jenis_pembelajaran;
             $peserta->nohp_peserta         = $nohp;
             $peserta->level_peserta        = $pesertadaftarulang->kenaikan_level_peserta ?? $pesertadaftarulang->level_peserta;
             $peserta->nama_pengajar        = $datajadwal->pengajar_jadwal;
