@@ -620,8 +620,8 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
 
-        $angkatan            = session('angkatan_tahsin');
-        $angkatandaftarulang = session('daftar_ujian');
+        $angkatan            = session('daftar_ujian');
+        $angkatandaftarulang = session('angkatan_tahsin');
 
         // ngambil data profile
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
