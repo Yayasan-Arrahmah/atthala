@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Daftar Ulang Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? 18 }}</small>
+                    Daftar Ulang Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>

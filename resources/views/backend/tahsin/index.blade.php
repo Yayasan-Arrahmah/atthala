@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '19' }}</small>
+                    Peserta Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
 
                     {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                 </h4>
@@ -117,6 +117,7 @@
                         <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
                         <option value="">----</option>
                     @endisset
+                    <option value="20">20</option>
                     <option value="19">19</option>
                     <option value="18">18</option>
                     <option value="17">17</option>

@@ -62,9 +62,9 @@ class TahsinController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? 19;
+        $this->angkatan      = request()->angkatan ?? session('angkatan_tahsin');
         // $this->angkatanbaru  = request()->angkatan ?? '18';
-        $this->angkatanbaru  = request()->angkatan ?? 19;
+        $this->angkatanbaru  = request()->angkatan ?? session('angkatan_tahsin');
         $this->angkatanujian = request()->angkatan ?? 19;
         $this->status        = request()->status ?? null;
     }
@@ -444,7 +444,7 @@ Salam,
 
     public function jadwal(ManageTahsinRequest $request)
     {
-        $angkatanbaru  = '19';
+        $angkatanbaru  = $this->angkatan;
 
         $datajadwals = DB::table('tahsins')
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
