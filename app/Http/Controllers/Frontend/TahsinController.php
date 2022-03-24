@@ -80,7 +80,7 @@ class TahsinController extends Controller
     public function uploadrekaman(Request $request)
     {
         $file_rekaman      = $request->file('filepond');
-        $nama_file_rekaman = '19-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
+        $nama_file_rekaman = session('angkatan_tahsin').'-'.Session::get('sesidaftar').'.'.$file_rekaman->getClientOriginalExtension();
         Session::put('filerekaman', $nama_file_rekaman); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
         Storage::disk('rekaman')->put($nama_file_rekaman, File::get($file_rekaman));
     }
@@ -89,7 +89,7 @@ class TahsinController extends Controller
     {
         if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id') {
             $file_bukti_transfer      = $request->file('filepond');
-            $nama_file_bukti_transfer = '19-'.Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
+            $nama_file_bukti_transfer = session('angkatan_tahsin').'-'.Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
             Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
             // Storage::disk('bukti-transfer-atthala')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
 
@@ -101,7 +101,7 @@ class TahsinController extends Controller
             $buktitf->save($lokasibuktitf.Session::get('filebuktitransfer'));
         } else {
             $file_bukti_transfer      = $request->file('filepond');
-            $nama_file_bukti_transfer = '19-'.Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
+            $nama_file_bukti_transfer = session('angkatan_tahsin').'-'.Str::random(5).'-'.Carbon::now().'.'.$file_bukti_transfer->getClientOriginalExtension();
             Session::put('filebuktitransfer', $nama_file_bukti_transfer); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
             // Storage::disk('bukti-transfer')->put($nama_file_bukti_transfer, File::get($file_bukti_transfer));
 
@@ -160,8 +160,8 @@ class TahsinController extends Controller
         $tahsin     = new Tahsin;
         $pembayaran = new Pembayaran;
 
-        $banyakid   = $tahsin->where('angkatan_peserta', '19')
-                    ->where('no_tahsin', 'like', '%-'.'19'.'-%')
+        $banyakid   = $tahsin->where('angkatan_peserta', session('angkatan_tahsin'))
+                    ->where('no_tahsin', 'like', '%-'.session('angkatan_tahsin').'-%')
                     ->count();
         $generateid = $banyakid + 1;
 
@@ -179,36 +179,11 @@ class TahsinController extends Controller
                 $jenisid                         = "TA";
             }
 
-            $no_tahsin = $jenisid . '-'.'19'.'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
+            $no_tahsin = $jenisid . '-'.session('angkatan_tahsin').'-' . str_pad($generateid, 4, '0', STR_PAD_LEFT);
 
             // $nominal_pembayaran  = 200000 + ($request->has('bayar_modul') === true ? 60000 : 0) + ($request->has('bayar_mushaf') === true ? 110000 : 0);
             $nominal_pembayaran  = 200000;
             $waktu_lahir_peserta = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
-
-            // FUNGSI UPLOAD VERSI LAMA
-            // //upload ktp
-            // $file_ktp      = $request->file('fotoktp_peserta');
-            // $nama_file_ktp = $no_tahsin . ' ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s') . '-KTP';
-            // $extension_ktp = $file_ktp->getClientOriginalExtension();
-            // Storage::disk('ktp')->put($nama_file_ktp . '.' . $extension_ktp, File::get($file_ktp));
-
-            // //upload rekaman
-            // $file_rekaman      = $request->file('rekaman_peserta');
-            // $nama_file_rekaman = $no_tahsin . ' ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s') . '-REKAMAN';
-            // $extension_rekaman = $file_rekaman->getClientOriginalExtension();
-            // Storage::disk('rekaman')->put($nama_file_rekaman . '.' . $extension_rekaman, File::get($file_rekaman));
-
-            // //upload bukti transfer
-            // $file_buktitf      = $request->file('bukti_transfer_peserta');
-            // $nama_file_buktitf = $no_tahsin . ' ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s') . '-BUKTI-RANSFER';
-            // $extension_buktitf = $file_buktitf->getClientOriginalExtension();
-            // Storage::disk('bukti-transfer')->put($nama_file_buktitf . '.' . $extension_buktitf, File::get($file_buktitf));
-
-            // test script , ada bug no tahsin ganda. validasi uniqe (harus beda)
-            // $tahsin->validate([
-            //     'no_tahsin'    => 'unique',
-            // ]);
-            // gagal dari
 
 
             // jika terdapat no tahsin sama, maka akan ditambhkan 1
@@ -221,7 +196,8 @@ class TahsinController extends Controller
             $tahsin->nama_peserta                    = $request->nama_peserta;
             $tahsin->nohp_peserta                    = $request->nohp_peserta;
             $tahsin->jenis_peserta                   = $request->jenis_peserta;
-            $tahsin->angkatan_peserta                = '19';
+            $tahsin->jenis_pembelajaran             = $request->jenis_pembelajaran;
+            $tahsin->angkatan_peserta                = session('angkatan_tahsin');
             $tahsin->alamat_peserta                  = $request->alamat_peserta;
             $tahsin->pekerjaan_peserta               = $request->pekerjaan_peserta;
             $tahsin->tempat_lahir_peserta            = $request->tempat_lahir_peserta;
@@ -256,7 +232,7 @@ class TahsinController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan ".'19'."*.
+Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan ".session('angkatan_tahsin')."*.
 
 Anda akan kami hubungi kembali secara otomatis melalui pesan WhatsApp setelah hasil bacaan Al Qur'an dikoreksi oleh tim penguji kami.
 
@@ -266,7 +242,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             // woo-wa.com
@@ -644,8 +620,8 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
 
-        $angkatan            = 18;
-        $angkatandaftarulang = 19;
+        $angkatan            = 19;
+        $angkatandaftarulang = session('angkatan_tahsin');
 
         // ngambil data profile
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
@@ -698,7 +674,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
         // $angkatan            = '18';
-        $angkatandaftarulang = '19';
+        $angkatandaftarulang = session('angkatan_tahsin');
         $jadwalhari          = $request->get('hari');
 
         $calonpeserta = Tahsin::where('id', $id)
@@ -742,7 +718,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
     public function simpandaftarulangpeserta(Request $request)
     {
         $angkatan = session('daftar_ulang_angkatan_tahsin');
-        $angkatan = '19';
+        $angkatan = session('angkatan_tahsin');
 
         $this->validate($request, [
             'notelp'           => 'required',
@@ -819,7 +795,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Daftar Ulang Tahsin Angkatan 19
+Panitia Daftar Ulang Tahsin Angkatan ".session('angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             // $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
@@ -932,7 +908,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         $data = Tahsin::where('no_tahsin', $request->get('id'))
                         ->where('nama_peserta', $request->get('nama'))
                         // ->where('id', $request->get('idt'))
-                        ->where('angkatan_peserta', '19')
+                        ->where('angkatan_peserta', session('angkatan_tahsin'))
                         ->first();
 
         $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', $data)->setPaper('a5', 'landscape');
@@ -992,8 +968,8 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         $id           = $request->get('id');
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
-        $angkatan            = '18';
-        $angkatandaftarulang = '19';
+        $angkatan            = '19';
+        $angkatandaftarulang = session('angkatan_tahsin');
         $jadwalhari          = $request->get('hari');
 
         $calonpeserta = Tahsin::where('id', $id)
@@ -1044,7 +1020,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
 
     public function simpandaftarcalonpeserta(Request $request)
     {
-        $angkatan = 19;
+        $angkatan = session('angkatan_tahsin');
 
         // $this->validate($request, [
         //     'notelp'           => 'required',
@@ -1097,7 +1073,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan ".'19'." LTTQ Ar Rahmah Balikpapan.
+Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan ".session('angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan.
 
 Silakan melengkapi keperluan pembelajaran antara lain :
 *1. Modul - Rp 35.000*
@@ -1115,7 +1091,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
+Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
         $apikey = env('WA_KEY');
@@ -1157,7 +1133,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 
     public function printdaftarpeserta(Request $request)
     {
-        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', '19')->first();
+        $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', session('angkatan_tahsin'))->first();
 
         $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', $data)->setPaper('a5', 'landscape');
 
@@ -1171,7 +1147,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->where('angkatan_peserta', '=', 19)
+                ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
                 ->paginate(15);
         } else {
             $pencarian = null;
@@ -1180,14 +1156,14 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', 19)
+            ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', 19)
+            ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
             ->get();
 
         return view('frontend.tahsin.cari-pembayaran', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -1195,7 +1171,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".'19'."
 
     public function pembayaran(Request $request)
     {
-        $sesibayar = '19-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
+        $sesibayar = session('angkatan_tahsin').'-SPP-'.request()->idt.'-'.request()->id.'-'.\Str::random(5);
         Session::put('sesibayar', $sesibayar);
 
         // ngambil data profile
