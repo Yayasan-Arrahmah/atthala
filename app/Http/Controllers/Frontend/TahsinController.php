@@ -47,7 +47,7 @@ class TahsinController extends Controller
     {
         if ($_SERVER['HTTP_HOST'] == 'atthala.arrahmahbalikpapan.or.id') {
             $file_ktp      = $request->file('filepond');
-            $nama_file_ktp = '19-'.Str::random(5).'-'.Carbon::now().'.'.$file_ktp->getClientOriginalExtension();
+            $nama_file_ktp = session('angkatan_tahsin').'-'.Str::random(5).'-'.Carbon::now().'.'.$file_ktp->getClientOriginalExtension();
             Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
             // Storage::disk('bukti-transfer-atthala')->put($nama_file_ktp, File::get($file_ktp));
 
@@ -59,7 +59,7 @@ class TahsinController extends Controller
             $buktitf->save($lokasibuktitf.Session::get('filektp'));
         } else {
             $file_ktp      = $request->file('filepond');
-            $nama_file_ktp = '19-'.Str::random(5).'-'.Carbon::now().'.'.$file_ktp->getClientOriginalExtension();
+            $nama_file_ktp = session('angkatan_tahsin').'-'.Str::random(5).'-'.Carbon::now().'.'.$file_ktp->getClientOriginalExtension();
             Session::put('filektp', $nama_file_ktp); //membuat sesi nama file agar sesuai dengan pemilik pendaftar
             // Storage::disk('bukti-transfer')->put($nama_file_ktp, File::get($file_ktp));
 
@@ -586,7 +586,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->where('angkatan_peserta', '=', session('daftar_ujian'))
+                ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
                 ->paginate(15);
 
         } else {
@@ -596,14 +596,14 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', session('daftar_ujian'))
+            ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
             ->get();
 
         $datalevel = DB::table('tahsins')
             ->select('level_peserta')
             ->groupBy('level_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', session('daftar_ujian'))
+            ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
             ->get();
 
         return view('frontend.tahsin.cari-daftarulangpeserta', compact('datapengajars', 'datalevel', 'pencarian'));
@@ -620,7 +620,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
 
-        $angkatan            = 19;
+        $angkatan            = session('angkatan_tahsin');
         $angkatandaftarulang = session('angkatan_tahsin');
 
         // ngambil data profile
@@ -731,7 +731,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
 
 
         if(isset($cekterdaftarpeserta)){
-            return redirect()->to('/tahsin/daftar-ulang-peserta-XIX/daftar?id='.$cekterdaftarpeserta->no_tahsin.'&idt='.$cekterdaftarpeserta->id.'&nama='.$cekterdaftarpeserta->nama);
+            return redirect()->to('/tahsin/daftar-ulang-peserta-XX/daftar?id='.$cekterdaftarpeserta->no_tahsin.'&idt='.$cekterdaftarpeserta->id.'&nama='.$cekterdaftarpeserta->nama);
         }
 
         $pesertadaftarulang = Tahsin::find($request->input('idt'));
@@ -785,7 +785,7 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih telah mendaftarkan ulang sebagai *Peserta Tahsin di angkatan 19*.
+Terima kasih telah mendaftarkan ulang sebagai *Peserta Tahsin di angkatan ".session('angkatan_tahsin')."*.
 
 Semoga Allah subhanahu Wa ta'ala senantiasa memberikan kemudahan dan keberkahan kepada saudara/i.
 
@@ -898,7 +898,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
             $info      = "gagal";
             $no_tahsin = "null";
         }
-        return redirect()->to('/tahsin/daftar-ulang-peserta-XIX/print?id='.$pesertadaftarulang->no_tahsin.'&nama='.$pesertadaftarulang->nama_peserta);
+        return redirect()->to('/tahsin/daftar-ulang-peserta-XX/print?id='.$pesertadaftarulang->no_tahsin.'&nama='.$pesertadaftarulang->nama_peserta);
 
         // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
     }
@@ -922,7 +922,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         Session::put('sesidaftar', $sesidaftar);
 
         $notahsin            = $request->get('id');
-        $angkatandaftarulang = 19;
+        $angkatandaftarulang = session('angkatan_tahsin');
 
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
                             ->where('angkatan_peserta', $angkatandaftarulang)
@@ -968,7 +968,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama='.str_re
         $id           = $request->get('id');
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
-        $angkatan            = '19';
+        $angkatan            = session('angkatan_tahsin');
         $angkatandaftarulang = session('angkatan_tahsin');
         $jadwalhari          = $request->get('hari');
 
