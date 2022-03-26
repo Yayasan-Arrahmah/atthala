@@ -698,9 +698,9 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                                 ->where('jenis_peserta', $level->jenis_jadwal)
                                 ->count();
             if ($cekbanyakpeserta < $level->jumlah_peserta) {
-                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => '', 'pembelajaran' => ''];
+                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => '', 'pembelajaran' => $level->status_belajar];
             } else {
-                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled', 'pembelajaran' => $level->status_belajar];
+                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled', 'pembelajaran' => ''];
             }
         }
         // $waktu = collect($waktu_)->get();
