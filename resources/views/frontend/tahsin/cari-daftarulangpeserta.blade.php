@@ -3,7 +3,7 @@
 @section('title', app_name() . ' | ' . __('labels.frontend.auth.login_box_title'))
 
 @section('content')
-<div class="row justify-content-center align-items-center">
+{{-- <div class="row justify-content-center align-items-center">
     <div class="col col-sm-12 align-self-center">
         <div class="card">
             <center>
@@ -23,8 +23,8 @@
             </center>
         </div>
     </div>
-</div>
-	{{--  <div class="row justify-content-center align-items-center">
+</div> --}}
+	<div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
                 <center>
@@ -74,7 +74,7 @@
                                                         @else
                                                             <a href="https://docs.google.com/forms/d/e/1FAIpQLSftUK5M8aWT1M2zDvb4HMXjWN4_BlTaUs6GuDCIB7DlOCUVng/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                         @endif --}}
-                                                        {{--  <a href="https://forms.gle/rnK6SH4nJcck6LUc7"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                         <a href="https://forms.gle/rnK6SH4nJcck6LUc7"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @else
                                                             <a href="/tahsin/daftar-ulang-peserta-XX/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @endif
@@ -105,5 +105,5 @@
             </div><!--card-->
 
 		</div><!-- col-md-8 -->
-	</div><!-- row -->--}}
+	</div><!-- row -->
 @endsection

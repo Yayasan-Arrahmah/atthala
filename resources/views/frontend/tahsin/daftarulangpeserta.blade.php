@@ -204,7 +204,7 @@
                                     <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Kenaikan Level Tahsin" name="namapeserta" value="{{ $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta }}" maxlength="191" required="">
                                 </div><!--col-->
                             </div>
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label class="col-4 form-control-label" >Pembelajaran </label>
                                 <div class="col-8">
                                     <select name="jenis_pembelajaran" class="gender form-control" required>
@@ -212,7 +212,7 @@
                                         <option value="ONLINE">ONLINE</option>
                                     </select>
                                 </div><!--col-->
-                            </div>
+                            </div> --}}
                             <div class="form-group row">
                                 <label class="col-4 form-control-label" >Pilih Jadwal Tahsin</label>
                                 <div class="col-4" style="padding-right: 2px; padding-left: 2px">
@@ -688,7 +688,8 @@
                          var waktu  = response[i].waktu_jadwal;
                          var id     = response[i].id;
                          var status = response[i].status;
-                         var option = "<option value='"+id+"' "+status+">"+waktu+"</option>";
+                         var pembelajaran = response[i].pembelajaran;
+                         var option = "<option value='"+id+"' "+status+">"+waktu+" - "+pembelajaran+"</option>";
                          $("#waktu").append(option);
                        }
                      }
