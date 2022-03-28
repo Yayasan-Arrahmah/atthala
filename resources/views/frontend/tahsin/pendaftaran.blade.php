@@ -50,7 +50,7 @@ hr {
                     <input type="hidden" name="status_" value="sepinggan-pratama">
                     @endif
                     {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
-                    <div class="text-muted">Angkatan 19</div>
+                    <div class="text-muted">Angkatan {{ session('angkatan_tahsin') }}</div>
                 </div>
 
                 <div class="card-body">
