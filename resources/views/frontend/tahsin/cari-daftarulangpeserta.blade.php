@@ -69,14 +69,13 @@
                                             <div class="row kotak">
                                                 <div class="col-2 text-center">
                                                     @if (strpos($tahsin->kenaikan_level_peserta, 'TAJWIDI') !== false )
-                                                        {{-- @if ($tahsin->jenis_peserta == 'IKHWAN')
-                                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSftUK5M8aWT1M2zDvb4HMXjWN4_BlTaUs6GuDCIB7DlOCUVng/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                        @if ($tahsin->jenis_peserta == 'IKHWAN')
+                                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSej_RhGpejZfEpjeSPdV0uL079NA81pVpOV9pfCXn0r5dD0tg/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                         @else
-                                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSftUK5M8aWT1M2zDvb4HMXjWN4_BlTaUs6GuDCIB7DlOCUVng/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
-                                                        @endif --}}
-                                                         <a href="https://forms.gle/rnK6SH4nJcck6LUc7"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                            <a href="https://forms.gle/rnK6SH4nJcck6LUc7"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                        @endif
                                                     @else
-                                                            <a href="/tahsin/daftar-ulang-peserta-XX/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
+                                                        <a href="/tahsin/daftar-ulang-peserta-XX/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @endif
                                                 </div>
                                                 <div class="col">
