@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h4 class="card-title mb-0">
-                        Pendaftaran Baru Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? '19' }}</small>
+                        Pendaftaran Baru Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? session('angkatan_tahsin') }}</small>
                         {{-- {{ __('backend_tahsins.labels.management') }} <small class="text-muted">{{ __('backend_tahsins.labels.active') }}</small> --}}
                     </h4>
                 </div><!--col-->
