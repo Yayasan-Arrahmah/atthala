@@ -26,7 +26,7 @@
                 <div style="padding-top: 0px">
                     <h4>Pembayaran Tahsin</h4>
                     <div class="text-muted">
-                        Pencarian Peserta Angkatan 19
+                        Pencarian Peserta Angkatan {{ session('angkatan_tahsin') }}
                     </div>
                 </div>
             </center>
