@@ -32,7 +32,7 @@
         </div>
         <div class="col alert-secondary" style="border: 1px solid #eee;">
             <div  style="padding-top: 5px; padding-bottom: 5px">
-                <label class="form-check-label">Ustad / Ustadzah</label>
+                <label class="form-check-label">Pengajar</label>
             </div>
             <select name="pengajar" class="form-control" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Dipilih Terlebih Dahulu')" required>
                 <option value="">Nama Pengajar...</option>
