@@ -26,7 +26,7 @@
                 <div style="padding-top: 0px">
                     <h4>Pembayaran Tahsin</h4>
                     <div class="text-muted">
-                        Pencarian Peserta Angkatan {{ session('angkatan_tahsin') }}
+                        Pencarian Peserta
                     </div>
                 </div>
             </center>
@@ -62,7 +62,7 @@
                                         <div class="row kotak">
                                             <div class="col-12">
                                                 <h5 style="font-size: 13px; color: #185280">
-                                                    PEMBAYARAN ANGKATAN {{ $tahsin->angkatan_peserta }}
+                                                    <strong>PEMBAYARAN ANGKATAN {{ $tahsin->angkatan_peserta }}</strong>
                                                 </h5>
                                             </div>
                                             <hr>
