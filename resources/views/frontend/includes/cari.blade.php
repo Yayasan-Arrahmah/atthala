@@ -41,6 +41,15 @@
                 @endforeach
             </select>
         </div>
+        <div class="col alert-secondary" style="border: 1px solid #eee;">
+            <div  style="padding-top: 5px; padding-bottom: 5px">
+                <label class="form-check-label">Angkatan</label>
+            </div>
+            <select name="angkatan" class="form-control" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Dipilih Terlebih Dahulu')" required>
+                <option value="20">20</option>
+                <option value="19">19</option>
+            </select>
+        </div>
         <div class="col-md-2 alert-secondary" style="padding-top: 23px; border: 1px solid #eee; padding-bottom: 10px">
             <div class="align-middle">
                 <button type="submit" class="btn btn-primary btn-pill btn-block" > <i class="fas fa-search"></i> Cari</button>

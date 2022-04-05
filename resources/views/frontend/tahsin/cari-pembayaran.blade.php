@@ -60,6 +60,12 @@
 
                                         @foreach($pencarian as $key=> $tahsin)
                                         <div class="row kotak">
+                                            <div class="col-12">
+                                                <h5 style="font-size: 13px; color: #185280">
+                                                    PEMBAYARAN ANGKATAN {{ $tahsin->angkatan_peserta }}
+                                                </h5>
+                                            </div>
+                                            <hr>
                                             <div class="col-6">
                                                 <div style="text-transform: uppercase;"><strong>{{ $tahsin->nama_peserta }}</strong></div>
                                                 <div class="small text-muted">
@@ -110,7 +116,7 @@
                                             <div class="col-12 mt-4 pt-2">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <a href="/tahsin/pembayaran?id={{ $tahsin->id }}&idt={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}"
+                                                        <a href="/tahsin/pembayaran?id={{ $tahsin->id }}&idt={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}&angkatan={{ $tahsin->angkatan_peserta }}"
                                                             style="color:white"
                                                             class="btn btn-success">
                                                             <i class="fas fa-chevron-right"></i> Form Pembayaran SPP
