@@ -27,7 +27,7 @@
                         <div class="text-center">
                             <h4> Pembayaran SPP Tahsin </h4>
                             {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
-                            <div class="text-muted">Angkatan 19</div>
+                            <div class="text-muted">Angkatan {{ request('angkatan') }}</div>
                         </div>
 
                         <div class="card-body">
