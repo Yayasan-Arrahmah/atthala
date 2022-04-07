@@ -249,7 +249,13 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
             if($data->jenis_peserta === 'IKHWAN'){
                 $penguji = "Ustadz Arief wa.me/+6281350532338";
             } elseif ($data->jenis_peserta === 'AKHWAT'){
-                $penguji = "Ustadzah Ninin wa.me/+6282358271295";
+                if (auth()->user()->email === 'ilya.el.aditya@gmail.com'){
+                    $penguji = "Ustadzah Arina wa.me/+6281347942937";
+                } elseif (auth()->user()->email === 'bundaraira@gmail.com'){
+                    $penguji = "Ustadzah Yunita wa.me/+6282148293709";
+                } else {
+                    $penguji = "Ustadzah Ninin wa.me/+6282358271295";
+                }
             }
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
