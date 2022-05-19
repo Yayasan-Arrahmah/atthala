@@ -29,3 +29,8 @@ Breadcrumbs::for('admin.rtqs.rapor', function ($trail) {
     $trail->parent('admin.rtqs.index');
     $trail->push('Rapor Santri', route('admin.rtqs.rapor'));
 });
+
+Breadcrumbs::for('admin.rtqs.nilaipelajaran', function ($trail) {
+    $trail->parent('admin.rtqs.index');
+    $trail->push('Nilai Pelajaran Santri', route('admin.rtqs.nilaipelajaran'));
+});

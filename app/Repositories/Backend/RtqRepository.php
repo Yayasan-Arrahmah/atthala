@@ -8,6 +8,7 @@ use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Request;
+use App\Models\RtqPeriodeRapor;
 
 /**
  * Class RtqRepository.
@@ -32,6 +33,7 @@ class RtqRepository extends BaseRepository
     public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
     {
         $cek = 'CEK ADMIN';
+        $perioderapor = RtqPeriodeRapor::latest('created_at')->first();
         return $this->model
             ->when($cek, function ($query) {
                 if( auth()->user()->last_name != 'Admin') {
@@ -55,6 +57,7 @@ class RtqRepository extends BaseRepository
                 if( request()->angkatan != 'SEMUA') {
                     return $query->where('angkatan_santri', '=', request()->angkatan);
                 }
+
             })
             ->orderBy($orderBy, $sort)
             ->paginate($paged);

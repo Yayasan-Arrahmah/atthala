@@ -83,6 +83,7 @@ class JadwalRepository extends BaseRepository
                 'jumlah_peserta'  => $data['jumlah_peserta'],
                 'jenis_jadwal'    => $data['jenis_jadwal'],
                 'angkatan_jadwal' => $data['angkatan_jadwal'],
+                'status_belajar'  => $data['status_belajar'],
             ]);
 
             if ($jadwal) {
@@ -114,6 +115,7 @@ class JadwalRepository extends BaseRepository
                 'jenis_jadwal'    => $data['jenis_jadwal'],
                 'angkatan_jadwal' => $data['angkatan_jadwal'],
                 'jumlah_peserta'  => $data['jumlah_peserta'],
+                'status_belajar'  => $data['status_belajar'],
             ])) {
 
                 return $jadwal;

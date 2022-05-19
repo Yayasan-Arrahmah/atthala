@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Traits\Attribute\TahsinAttribute;
+use App\Models\PesertaUjian;
+use App\Models\LevelTahsin;
 
 class Tahsin extends Model
 {
@@ -74,44 +76,97 @@ class Tahsin extends Model
         return $this->hasMany('App\Models\Absen');
     }
 
+    public function ujian()
+    {
+        return $this->hasOne(PesertaUjian::class, 'id_tahsin', 'id');
+    }
+
+    public function level()
+    {
+        return $this->hasOne(LevelTahsin::class, 'nama', 'level_peserta');
+    }
+
+    public function scopeCari($query, $cari)
+    {
+        if (!null == $cari) {
+            return $query->where('nama_peserta', 'like', '%'.$cari.'%')
+                    ->orWhere('nohp_peserta', 'like', '%'.$cari.'%')
+                    ->orWhere('no_tahsin', 'like', '%'.$cari.'%');
+        }
+    }
+
     public function scopeCariNama($query, $nama)
     {
-        return $query->where('nama_peserta', 'like', '%'.$nama.'%');
+        if (!null == $nama) {
+            return $query->where('nama_peserta', 'like', '%'.$nama.'%');
+        }
     }
 
     public function scopeCariLevel($query, $level)
     {
-        if( $level != 'SEMUA') {
-            return $query->where('level_peserta', '=', $level);
+        if (!null == $level) {
+            if( $level != 'SEMUA') {
+                return $query->where('level_peserta', '=', $level);
+            }
         }
     }
 
     public function scopeJenis($query, $jenis)
     {
-        if( $jenis != 'SEMUA') {
-            return $query->where('jenis_peserta', '=', $jenis);
+        if (!null == $jenis) {
+            if( $jenis != 'SEMUA') {
+                return $query->where('jenis_peserta', '=', $jenis);
+            }
         }
     }
 
     public function scopeAngkatan($query, $angkatan)
     {
-        return $query->where('angkatan_peserta', 'like', '%'.$angkatan.'%');
+        if (!null == $angkatan) {
+            return $query->where('angkatan_peserta', 'like', '%'.$angkatan.'%');
+        }
     }
 
     public function scopePengajar($query, $pengajar)
     {
-        if( $pengajar != 'SEMUA') {
-            return $query->where('nama_pengajar', '=', $pengajar);
+        if (!null == $pengajar) {
+            if( $pengajar != 'SEMUA') {
+                return $query->where('nama_pengajar', '=', $pengajar);
+            }
         }
     }
 
     public function scopeStatusPeserta($query, $status)
     {
-        if( $status != 'SEMUA') {
-            if( $status == 'UMUM') {
-                return $query->where('pilih_jadwal_peserta', null);
-            } elseif( $status == 'WARGA-SP') {
-                return $query->where('pilih_jadwal_peserta', 'sepinggan-pratama');
+        if (!null == $status) {
+            if( $status != 'SEMUA') {
+                if( $status == 'UMUM') {
+                    return $query->where('pilih_jadwal_peserta', null);
+                } elseif( $status == 'WARGA-SP') {
+                    return $query->where('pilih_jadwal_peserta', 'sepinggan-pratama');
+                }
+            }
+        }
+    }
+
+    public function scopeStatusKeaktifan($query, $status)
+    {
+        if (!null == $status) {
+            if( $status != 'SEMUA') {
+                return $query->where('status_keaktifan', '=', $status);
+            }
+        }
+    }
+
+    public function scopeStatusDaftar($query, $status, $angkatan)
+    {
+        if (!null == $status) {
+            if( $status == 'daftar-baru') {
+                return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
+            } elseif( $status == 'daftar-ulang') {
+                return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
+            } elseif( $status == 'daftar-ujian') {
+                return $query->whereHas('ujian');
             }
         }
     }

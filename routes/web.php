@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\LanguageController;
-
+use Illuminate\Support\Facades\Route;
 /*
  * Global Routes
  * Routes that are used between both frontend and backend.
@@ -32,4 +32,10 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      * These routes can not be hit if the password is expired
      */
     include_route_files(__DIR__.'/backend/');
+
+    Route::auto('/tahsin/peserta', App\Http\Controllers\Backend\Tahsin\AdministrasiController::class);
+    // Route::auto('/tahsin/pengajar', App\Http\Controllers\Backend\Tahsin\PengajarController::class);
+    // Route::auto('/tahsin/jadwal', App\Http\Controllers\Backend\Tahsin\JadwalController::class);
+    Route::auto('/tahsin/pembayaran', App\Http\Controllers\Backend\Tahsin\PembayaranController::class);
+    // Route::auto('/tahsin/pengaturan', App\Http\Controllers\Backend\Tahsin\PengaturanController::class);
 });

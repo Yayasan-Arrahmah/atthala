@@ -101,4 +101,10 @@ class RtqRaporController extends Controller
         $santri = Rtq::where('id', $data->id_santri)->first();
         return $pdf->stream($santri->nis.' - '.$santri->nama_santri.' - RTQ Arrahmah Balikpapan.pdf');
     }
+
+    public function nilaipelajaran()
+    {
+        $data = null;
+        return view('backend.rtq.nilai-pelajaran', compact('data'));
+    }
 }
