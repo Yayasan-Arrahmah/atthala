@@ -19,12 +19,15 @@ Route::group(['prefix' => 'rtq'], function () {
 	Route::post('upload', 	[RtqController::class, 'upload']	)->name('rtqs.upload');
 
 
-    // Rapor
+    // Nilai & Rapor
     Route::get('prosesrapor', 	        [RtqRaporController::class, 'prosesrapor']	        )->name('rtqs.prosesrapor');
     Route::get('rapor', 	            [RtqRaporController::class, 'rapor']	            )->name('rtqs.rapor');
     Route::post('rapor/update', 	    [RtqRaporController::class, 'raporupdate']	        )->name('rtqs.raporupdate');
     Route::get('rapor/nilai', 	        [RtqRaporController::class, 'rapornilai']	        )->name('rtqs.rapornilai');
     Route::get('rapor/cetak', 	        [RtqRaporController::class, 'raporcetak']	        )->name('rtqs.raporcetak');
+
+    Route::get('nilai-pelajaran', 	    [RtqRaporController::class, 'nilaipelajaran']	    )->name('rtqs.nilaipelajaran');
+
 });
 
 Route::group(['prefix' => 'rtq/{rtq}'], function () {

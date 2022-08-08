@@ -89,3 +89,10 @@ Breadcrumbs::for('admin.tahsins.pembayaranrekap', function ($trail) {
     $trail->parent('admin.tahsins.pembayaran');
     $trail->push('Rekapitulasi', route('admin.tahsins.pembayaranrekap'));
 });
+
+
+// system v2
+Breadcrumbs::for('admin.tahsin/peserta.index', function ($trail) {
+    $trail->parent('admin.tahsins.index');
+    $trail->push('Peserta Tahsin', route('admin.tahsin/peserta.index'));
+});

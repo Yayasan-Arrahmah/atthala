@@ -39,9 +39,10 @@ class CreateTahsinsTable extends Migration
                 $table->text('fotoktp_peserta', 180)->nullable();
                 $table->text('rekaman_peserta', 180)->nullable();
                 $table->text('status_peserta', 180)->nullable();
-                $table->text('jenis_pembelajaran', 180)->nullable()->default('OFFLINE');
+                $table->string('jenis_pembelajaran', 180)->nullable()->default('OFFLINE');
                 $table->text('status_pembayaran', 180)->nullable();
                 $table->text('status_kelulusan', 180)->nullable();
+                $table->string('status_keaktifan', 180)->nullable()->default('AKTIF');
                 $table->text('kenaikan_level_peserta', 180)->nullable();
                 $table->softDeletes();
                 $table->timestamps();

@@ -18,14 +18,14 @@
 
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
-    {{ style(mix('css/backend.css')) }}
+    {{ style('css/backend.css') }}
     {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
     {{ style('css/bootstrap-editable.css') }}
+    {{-- {{ style('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css') }} --}}
 
-
-    <style>
+   <style>
     .card {
         border-radius: .45rem;
         -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
@@ -104,15 +104,31 @@
         z-index: 9999;
     }
 
+    .sidebar .nav-link.active {
+        color: #fff;
+        background: rgb(83, 163, 28);
+    }
+
+    .circle-icon {
+        background: rgb(83, 163, 28);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 100px;
+        vertical-align: middle;
+        padding: 30px;
+    }
+
     </style>
 
     @stack('after-styles')
     @livewireStyles
 
     @stack('before-scripts')
-    {!! script(mix('js/manifest.js')) !!}
-    {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/backend.js')) !!}
+    {!! script('js/manifest.js') !!}
+    {!! script('js/vendor.js') !!}
+    {!! script('js/backend.js') !!}
     {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js') !!} --}}
     {!! script('js/bootstrap-editable.min.js') !!}
 
@@ -154,7 +170,7 @@
     {{-- {!! script('https://coreui.io/demo/2.0/vendors/chart.js/js/Chart.min.js') !!} --}}
 
     {!! script('https://coreui.io/demo/2.0/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js') !!}
-    {!! script('https://coreui.io/demo/2.0/js/charts.js') !!} --}}
+    {!! script('https://coreui.io/demo/2.0/js/charts.js') !!}
 
     {!! script('//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js') !!}
     {!! script('//cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js') !!}

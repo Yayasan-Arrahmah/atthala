@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Rekapitulasi Pembayaran SPP Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? 19 }}</small>
+                    Rekapitulasi Pembayaran SPP Tahsin<small class="text-muted"> - Angkatan {{ request()->angkatan ?? 20 }}</small>
                 </h4>
             </div><!--col-->
 
@@ -151,7 +151,7 @@
                                 $totalpembayaran = DB::table('pembayarans')
                                         ->where('id_peserta', $data->id)
                                         ->where('admin_pembayaran', 'BERHASIL')
-                                        ->where('bukti_transfer_pembayaran', 'like', '18-SPP-%')
+                                        ->where('bukti_transfer_pembayaran', 'like', '19-SPP-%')
                                         ->sum('nominal_pembayaran');
                             @endphp
                             <div class="col-4">

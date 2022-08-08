@@ -4,8 +4,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
+use App\Http\Controllers\Backend\Tahsin\AdministrasiController;
 use App\Http\Controllers\Frontend\User\DashboardController;
-use Utils\Twilio;
 
 /*
  * Frontend Controllers
@@ -16,23 +16,13 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
 
-Route::get('/wa', function () {
-    $from = 'whatsapp:+14155238886';
-    $to   = 'whatsapp:+628125144744';
-    $body = 'Service Tinggal beberapa hari lagi!';
-    $twilio = new Twilio;
-    try {
-        return $twilio->sendSMS($from, $body, $to);
-    } catch (\Throwable $th) {
-        dd($th);
-    }
-});
-
 Route::get('/tes-moota', function () {
     return 'tes';
 });
 
 Route::get('/peserta-tahsin', [HomeController::class, 'pesertaTahsin'])->name('pesertaTahsin');
+
+Route::auto('/t', AdministrasiController::class);
 
 //EKONOMI
 Route::get('/ekonomi/sembako', [HomeController::class, 'sembako'])->name('sembako');

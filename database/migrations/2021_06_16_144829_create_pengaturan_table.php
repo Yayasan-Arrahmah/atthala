@@ -15,11 +15,15 @@ class CreatePengaturanTable extends Migration
     {
         Schema::create('pengaturan', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('pengaturan', 180);
-            $table->text('nama_pengaturan', 180);
+            $table->string('jenis_pengaturan'); // TAHSIN - TLA - RTQ
+            $table->string('kode_pengaturan');
+            $table->string('nama_pengaturan');
+            $table->integer('status_pengaturan'); // 1 DIBUKA - 2 DITUTUP - 3 PERBAIKAN
+            $table->integer('angkatan_pengaturan'); // ANGKATAN
+            $table->string('fungsi_pengaturan')->nullable(); // PESERTA - PENGAJAR - ADMIN
+            $table->string('link_pengaturan')->nullable();
             $table->text('keterangan_pengaturan')->nullable();
-            $table->text('nilai_pengaturan', 180)->nullable();
-            $table->text('user_pengaturan', 180)->nullable();
+            $table->text('user_pengaturan')->nullable();
             $table->timestamps();
         });
     }

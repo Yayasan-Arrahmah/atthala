@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\TahsinController;
+use App\Http\Controllers\Backend\Tahsin\PesertaController;
 
 use App\Models\Tahsin;
 
@@ -36,6 +37,10 @@ Route::group(['prefix' => 'tahsin'], function () {
     Route::post('daftar-baru/konfirmasi',  [TahsinController::class, 'konfirmasidaftarbaru'])->name('tahsins.konfirmasidaftarbaru');
     Route::get('export-excel-tahsin',       [TahsinController::class, 'exportexceltahsin'])->name('tahsins.exportexceltahsin');
     Route::get('export-excel-tahsin-peserta-baru',   [TahsinController::class, 'exportexceltahsinpesertabaru'])->name('tahsins.exportexceltahsinpesertabaru');
+
+
+    // Sistem V2
+    Route::get('/peserta', [PesertaController::class, 'peserta'])->name('tahsins.v2.peserta');
 
 });
 

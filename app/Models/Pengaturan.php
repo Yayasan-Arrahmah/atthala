@@ -21,10 +21,39 @@ class Pengaturan extends Model
      * @var array
      */
     protected $fillable = [
-        'pengaturan',
+        'jenis_pengaturan',
+        'kode_pengaturan',
         'nama_pengaturan',
+        'status_pengaturan',
+        'angkatan_pengaturan',
+        'link_pengaturan',
+        'fungsi_pengaturan',
         'keterangan_pengaturan',
-        'nilai_pengaturan',
         'user_pengaturan',
     ];
+
+    public function scopeTahsin($query)
+    {
+        return $query->where('jenis_pengaturan', '=', 'TAHSIN');
+    }
+
+    public function scopeTla($query)
+    {
+        return $query->where('jenis_pengaturan', '=', 'TLA');
+    }
+
+    public function scopePeserta($query)
+    {
+        return $query->where('fungsi_pengaturan', '=', 'PESERTA');
+    }
+
+    public function scopePengajar($query)
+    {
+        return $query->where('fungsi_pengaturan', '=', 'PENGAJAR');
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('fungsi_pengaturan', '=', 'ADMIN');
+    }
 }

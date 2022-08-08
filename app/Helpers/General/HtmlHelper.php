@@ -4,6 +4,8 @@ namespace App\Helpers\General;
 
 use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use App\Models\Pengaturan;
+
 
 /**
  * Class HtmlHelper.
@@ -34,6 +36,13 @@ class HtmlHelper
      *
      * @return mixed
      */
+
+    public function tahsin()
+    {
+        $data = Pengaturan::tahsin()->count();
+        return $data;
+    }
+
     public function style($url, $attributes = [], $secure = null)
     {
         $defaults = ['media' => 'all', 'type' => 'text/css', 'rel' => 'stylesheet'];

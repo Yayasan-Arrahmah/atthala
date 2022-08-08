@@ -18,7 +18,7 @@
 
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
-    {{ style(mix('css/backend.css')) }}
+    {{ style('css/backend.css') }}
 
     <style>
         body{
@@ -123,10 +123,10 @@
 
     @stack('before-scripts')
 
-    {!! script(mix('js/manifest.js')) !!}
-    {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/backend.js')) !!}
-    {{-- {!! script(mix('js/app.js')) !!} --}}
+    {!! script('js/manifest.js') !!}
+    {!! script('js/vendor.js') !!}
+    {!! script('js/backend.js') !!}
+    {{-- {!! script('js/app.js')) !!}--}}
 
     @stack('after-scripts')
 
