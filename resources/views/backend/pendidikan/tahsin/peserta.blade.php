@@ -3,7 +3,9 @@
 @section('title', app_name() . '| Tahsin')
 
 @section('content')
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
     <div class="row">
         <div class="col">
@@ -85,12 +87,29 @@
                                 </div>
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col-3">
-                                            <span class="badge bg-success">
-                                                <i class="fas fa-check"></i> AKTIF
-                                            </span>
+                                        <div class="col">
+                                            @php
+                                                $ceklevel = data_get($tahsin->cekstatusnaik($tahsin->angkatan_peserta), 'level_peserta');
+                                            @endphp
+                                            @if (!null == $ceklevel)
+                                                @if ($ceklevel == $tahsin->level_peserta)
+                                                    <div class="btn btn-sm btn-outline-danger" style="font-size: 10px">
+                                                        MENGULANG LEVEL <strong>{{ $ceklevel }}</strong>
+                                                    </div>
+                                                @else
+                                                    <div class="btn btn-sm btn-outline-success" style="font-size: 10px">
+                                                        NAIK LEVEL DARI <strong>{{ $ceklevel }}</strong>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="btn btn-sm btn-outline-info" style="font-size: 10px">
+                                                    BARU TERDAFTAR
+                                                </div>
+                                            @endif
+
+
                                             <div class="small text-muted">
-                                                PESERTA UMUM
+                                                PESERTA {{ $tahsin->status_peserta ?? 'UMUM' }}
                                             </div>
                                         </div>
                                         {{-- <div class="col-7">
@@ -98,21 +117,26 @@
                                                 <i class="fas fa-exclamation-triangle"></i> Belum Aktif
                                             </button>
                                         </div> --}}
-                                        <div class="col text-right" style="padding: 0px">
+                                        <div class="col-2 text-right p-0">
                                             <div class="btn-group dropleft">
                                                 <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                                                     Opsi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/admin/transaksi?id=2947&amp;metode=upload" class="dropdown-item">
-                                                        Aktif
-                                                    </a>
-                                                    <a href="/admin/transaksi?id=2947&amp;metode=upload" class="dropdown-item">
-                                                        Cuti
-                                                    </a>
-                                                        <a href="/admin/transaksi?id=2947&amp;metode=edit" class="dropdown-item">
-                                                        Off
-                                                    </a>
+                                                    @if ($tahsin->status_keaktifan == 'AKTIF')
+                                                        <a href="{{ route('admin.tahsin/peserta.getCutiPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Cuti ?');">
+                                                            Cuti
+                                                        </a>
+                                                            <a href="{{ route('admin.tahsin/peserta.getOffPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Off ?');">
+                                                            Off
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('admin.tahsin/peserta.getAktifPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Off ?');">
+                                                            Aktif
+                                                        </a>
+                                                    @endif
+
+
                                                     <a href="#" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
                                                         <form action="" onsubmit="return confirm('Apakah Anda yakin data Copywriting Next Level - rimbaborne@gmail.com dihapus ?');" style="display:none">
                                                             <input type="hidden" name="metode" value="hapus">
@@ -129,56 +153,153 @@
                                     <div class="col">
                                         <div class="collapse hide" id="detail{{ $key + $tahsins->firstItem() }}" style="">
                                             <hr>
-                                            <form class="row" action="" method="post">
+                                            <form class="row" action="{{ route('admin.tahsin/peserta.postUpdatePeserta') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $tahsin->id }}">
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label lass="form-label">Nama</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->nama_peserta }}">
+                                                        <input name="nama" type="text" class="form-control" value="{{ $tahsin->nama_peserta }}">
                                                     </div>
                                                     <div class="mb-3">
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <label lass="form-label">No. HP</label>
-                                                                <input type="text" class="form-control" value="{{ $tahsin->nohp_peserta }}">
+                                                                <input name="nohp" type="text" class="form-control" value="{{ $tahsin->nohp_peserta }}">
                                                             </div>
                                                             <div class="col-6">
                                                                 <label lass="form-label">Tanggal Lahir</label>
-                                                                <input type="text" class="form-control" value="{{ $tahsin->waktu_lahir_peserta }}">
+                                                                <input name="tgllahir" id="date{{ $tahsin->id }}" class="form-control" value="{{ $tahsin->waktu_lahir_peserta }}">
+                                                                <script>
+                                                                    $( function() {
+                                                                      $( "#date{{ $tahsin->id }}" ).datepicker({
+                                                                            dateFormat: 'dd-mm-yy',
+                                                                            yearRange: "{!! \Carbon\Carbon::now()->subYears(85)->year; !!}:{!! \Carbon\Carbon::now()->subYears(10)->year; !!}",
+                                                                            changeMonth: true,
+                                                                            changeYear: true
+                                                                        });
+                                                                    });
+                                                                </script>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="mb-3">
                                                         <label lass="form-label">Jenis</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->jenis_peserta }}">
+                                                        <select name="jenis" name="jenis" class="form-control"  id="">
+                                                            <option value="IKHWAN" {{ $tahsin->jenis_peserta == 'IKHWAN' ? 'selected' : '' }}>IKHWAN</option>
+                                                            <option value="AKHWAT" {{ $tahsin->jenis_peserta == 'AKHWAT' ? 'selected' : '' }}>AKHWAT</option>
+                                                        </select>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label lass="form-label">Status</label>
-                                                        <input type="text" class="form-control" value="WARGA UMUM">
+                                                        <label lass="form-label">Status Peserta</label>
+                                                        <select name="status" class="form-control"  id="">
+                                                            <option value="UMUM" {{ $tahsin->status_peserta == 'UMUM' || $tahsin->status_peserta == '' ? 'selected' : '' }}>UMUM</option>
+                                                            <option value="LAZIZ" {{ $tahsin->status_peserta == 'LAZIZ' ? 'selected' : '' }}>LAZIZ</option>
+                                                            <option value="KARYAWAN" {{ $tahsin->status_peserta == 'KARYAWAN' ? 'selected' : '' }}>KARYAWAN</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="mb-3">
                                                         <label lass="form-label">Level</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->level_peserta }}">
+                                                        <select name="level" class="form-control"  id="">
+                                                            @foreach ( $datalevel as $level )
+                                                                <option value="{{ $level->nama }}" {{ $tahsin->level_peserta == $level->nama ? 'selected' : '' }}>{{ $level->nama }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label lass="form-label">Pengajar</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->nama_pengajar }}">
+                                                        <select name="pengajar" class="form-control"  id="">
+                                                            @foreach ( $datapengajars as $pengajar )
+                                                                <option value="{{ $pengajar->nama_pengajar }}" {{ $tahsin->nama_pengajar == $pengajar->nama_pengajar ? 'selected' : '' }}>{{ $pengajar->nama_pengajar }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="mb-3">
-                                                        <label lass="form-label">Jadwal</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->jadwal_tahsin }}">
+                                                        <label lass="form-label">
+                                                            Jadwal
+                                                        </label>
+                                                        <a class="float-right" data-toggle="collapse" href="#editjadwal{{ $key + $tahsins->firstItem() }}" aria-expanded="false">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <div class="collapse hide" id="editjadwal{{ $key + $tahsins->firstItem() }}" style="">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 pr-0">
+                                                                    <select name="hari" class="form-control" id="hari{{ $tahsin->id }}">
+                                                                        <option value="">Hari...</option>
+                                                                        <option value="AHAD">AHAD</option>
+                                                                        <option value="SENIN">SENIN</option>
+                                                                        <option value="SELASA">SELASA</option>
+                                                                        <option value="RABU">RABU</option>
+                                                                        <option value="KAMIS">KAMIS</option>
+                                                                        <option value="JUMAT">JUMAT</option>
+                                                                        <option value="SABTU">SABTU</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-6 pl-0">
+                                                                    <select name="jam" class="form-control" id="jam{{ $tahsin->id }}">
+                                                                        <option value="">Jam...</option>
+                                                                        @php
+                                                                            for ($i = 5; $i <= 22; $i++) {
+                                                                                for ($j=0; $j <= 1 ; $j++) {
+                                                                                    echo '<option value="';
+                                                                                    if ($i < 10) { echo '0'; } else { echo ''; } echo $i;
+                                                                                    echo ':';
+                                                                                    if ($j == 0){ echo '00'; } elseif ($j == 1) { echo '30'; }
+                                                                                    echo '">';
+                                                                                    if ($i < 10) { echo '0'; } else { echo ''; } echo $i;
+                                                                                    echo ':';
+                                                                                    if ($j == 0){ echo '00'; } elseif ($j == 1) { echo '30'; }
+                                                                                    echo '</option>';
+                                                                                }
+                                                                            }
+                                                                        @endphp
+                                                                    </select>
+                                                                </div>
+                                                                @php
+                                                                    $datawaktu = $tahsin->jadwal_tahsin ? explode(" ",$tahsin->jadwal_tahsin) : null;
+                                                                @endphp
+                                                                <script type="text/javascript">
+                                                                    $(document).ready(function(){
+                                                                          $("#hari{{ $tahsin->id }}").val("{{ $datawaktu ? $datawaktu[0] : null }}");
+                                                                          $("#jam{{ $tahsin->id }}").val("{{ $datawaktu ? $datawaktu[1] : null }}");
+                                                                    });
+                                                                  </script>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" value="{{ $tahsin->jadwal_tahsin }}" readonly>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label lass="form-label">Pembelajaran</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->jenis_pembelajaran }}">
+                                                        <select name="pembelajaran" class="form-control" id="">
+                                                            <option value="ONLINE" {{ $tahsin->jenis_pembelajaran == 'ONLINE' ? 'selected' : '' }}>ONLINE</option>
+                                                            <option value="OFFLINE" {{ $tahsin->jenis_pembelajaran == 'OFFLINE' ? 'selected' : '' }}>OFFLINE</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-3">
+                                                        <label lass="form-label">KTP</label>
+                                                        @php
+                                                            $foto = DB::table('tahsins')->where('no_tahsin', $tahsin->no_tahsin )->first();
+                                                        @endphp
+                                                        <div class="img-thumbnail">
+                                                            <img data-src="https://atthala.arrahmahbalikpapan.or.id/app/public/ktp/{{ $foto->fotoktp_peserta ?? '-' }}" alt="" height="105" class="ktp img rounded lazy">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2"></div>
+                                                <div class="col-12">
+                                                    <div class="mb-3 float-right">
+                                                        <button type="submit" class="btn btn-outline-success">
+                                                            Update Profile
+                                                            <i class="fas fa-pen"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -211,5 +332,11 @@
             </div>
         </div><!--col-->
     </div><!--row-->
-
+    <script>
+        $(document).ready(function(){
+            var lazyLoadInstance = new LazyLoad({
+            // Your custom settings go here
+            });
+        });
+    </script>
 @endsection

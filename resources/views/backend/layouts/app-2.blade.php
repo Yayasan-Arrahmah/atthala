@@ -18,7 +18,7 @@
 
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
-    {{ style(mix('css/backend.css')) }}
+    {{ style('css/backend.css')  }}
     {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
@@ -104,6 +104,18 @@
         z-index: 9999;
     }
 
+    .ktp {
+            position: relative;
+        }
+    .ktp:hover {
+        position: absolute;
+        -ms-transform: scale(6); /* IE 9 */
+        -webkit-transform: scale(6); /* Safari 3-8 */
+        transform: scale(6);
+        z-index: 9999;
+        right: 100%;
+    }
+
     .sidebar .nav-link.active {
         color: #fff;
         background: rgb(83, 163, 28);
@@ -126,11 +138,11 @@
     @livewireStyles
 
     @stack('before-scripts')
-    {!! script(mix('js/manifest.js')) !!}
-    {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/backend.js')) !!}
+    {!! script('js/manifest.js') !!}
+    {!! script('js/vendor.js') !!}
+    {!! script('js/backend.js') !!}
     {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js') !!} --}}
-
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
     @stack('after-scripts')
 
 </head>

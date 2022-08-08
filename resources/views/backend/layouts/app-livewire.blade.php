@@ -18,7 +18,7 @@
 
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
-    {{ style(mix('css/backend.css')) }}
+    {{ style('css/backend.css') }}
     {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
 
@@ -108,9 +108,9 @@
 
     @stack('after-styles')
     @stack('before-scripts')
-    {!! script(mix('js/manifest.js')) !!}
-    {!! script(mix('js/vendor.js')) !!}
-    {!! script(mix('js/backend.js')) !!}
+    {!! script('js/manifest.js') !!}
+    {!! script('js/vendor.js') !!}
+    {!! script('js/backend.js') !!}
     @stack('after-scripts')
     @livewireStyles
 

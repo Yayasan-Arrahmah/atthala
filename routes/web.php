@@ -39,3 +39,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
     Route::auto('/tahsin/pembayaran', App\Http\Controllers\Backend\Tahsin\PembayaranController::class);
     // Route::auto('/tahsin/pengaturan', App\Http\Controllers\Backend\Tahsin\PengaturanController::class);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

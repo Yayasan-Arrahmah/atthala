@@ -81,9 +81,19 @@ class Tahsin extends Model
         return $this->hasOne(PesertaUjian::class, 'id_tahsin', 'id');
     }
 
+    public function belumdaftarulang()
+    {
+        return $this->hasOne(Tahsin::class, 'no_tahsin', 'no_tahsin')->where('angkatan_peserta', $this->angkatan_+1);
+    }
+
     public function level()
     {
         return $this->hasOne(LevelTahsin::class, 'nama', 'level_peserta');
+    }
+
+    public function cekstatusnaik($angkatan)
+    {
+        return $this->hasOne(Tahsin::class, 'no_tahsin', 'no_tahsin')->where('angkatan_peserta', '=', $angkatan-1)->first();
     }
 
     public function scopeCari($query, $cari)
@@ -123,7 +133,7 @@ class Tahsin extends Model
     public function scopeAngkatan($query, $angkatan)
     {
         if (!null == $angkatan) {
-            return $query->where('angkatan_peserta', 'like', '%'.$angkatan.'%');
+            return $query->where('angkatan_peserta', '=', $angkatan);
         }
     }
 
@@ -160,11 +170,14 @@ class Tahsin extends Model
 
     public function scopeStatusDaftar($query, $status, $angkatan)
     {
+        $this->angkatan_ = $angkatan;
         if (!null == $status) {
             if( $status == 'daftar-baru') {
                 return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
             } elseif( $status == 'daftar-ulang') {
                 return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
+            } elseif( $status == 'daftar-ulang-1') {
+                return $query->whereDoesntHave('belumdaftarulang');
             } elseif( $status == 'daftar-ujian') {
                 return $query->whereHas('ujian');
             }

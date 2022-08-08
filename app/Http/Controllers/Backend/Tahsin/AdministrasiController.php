@@ -22,9 +22,9 @@ class AdministrasiController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? 19;
-        $this->angkatanbaru  = request()->angkatan ?? 19;
-        $this->angkatanujian = request()->angkatan ?? 18;
+        $this->angkatan      = request()->input('daftar-ulang') == 1 ? request()->angkatan-1 : (request()->angkatan ?? 20);
+        $this->angkatanbaru  = request()->angkatan ?? 20;
+        $this->angkatanujian = request()->angkatan ?? 19;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
@@ -37,7 +37,7 @@ class AdministrasiController extends Controller
                                 ->orderBy('angkatan_peserta', 'desc')
                                 ->get();
         $this->liststatuspeserta = StatusPesertaTahsin::get();
-        $this->listlevel         = LevelTahsin::orderBy('sort', 'asc')->get();
+        $this->listlevel         = LevelTahsin::orderBy('id', 'asc')->get();
     }
 
     public function tahsin($statusdaftar, $statuskeaktifan)
@@ -73,7 +73,11 @@ class AdministrasiController extends Controller
 
     public function getDaftarUlang()
     {
-        return $this->tahsinbase('daftar-ulang', null, 'Peserta Daftar Ulang');
+        if (request()->input('daftar-ulang') == 1) {
+            return $this->tahsinbase('daftar-ulang-1', null, 'Peserta Daftar Ulang');
+        } else {
+            return $this->tahsinbase('daftar-ulang', null, 'Peserta Daftar Ulang');
+        }
     }
 
     public function getBaru()
@@ -104,13 +108,53 @@ class AdministrasiController extends Controller
     public function postUpdatePeserta()
     {
         $data = Tahsin::find($this->id);
+        $data->nama_peserta           = request()->nama;
+        $data->nohp_peserta           = request()->nohp;
+        $data->level_peserta          = request()->level;
+        $data->nama_pengajar          = request()->pengajar;
+        $data->jadwal_tahsin          = request()->hari.' '.request()->jam;
+        $data->jenis_peserta          = request()->jenis;
+        $data->waktu_lahir_peserta    = request()->tgllahir;
+        $data->status_peserta         = request()->status;
+        $data->jenis_pembelajaran     = request()->pembelajaran;
         $data->save();
+
+        return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi !');
     }
 
     public function getDeletePeserta()
     {
         $data = Tahsin::find($this->id);
         $data->delete();
+
+        return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Dihapus !');
+    }
+
+    public function getAktifPeserta()
+    {
+        $data = Tahsin::find($this->id);
+        $data->status_keaktifan = 'AKTIF';
+        $data->save();
+
+        return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi !');
+    }
+
+    public function getCutiPeserta()
+    {
+        $data = Tahsin::find($this->id);
+        $data->status_keaktifan = 'CUTI';
+        $data->save();
+
+        return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi dengan status Cuti !');
+    }
+
+    public function getOffPeserta()
+    {
+        $data = Tahsin::find($this->id);
+        $data->status_keaktifan = 'OFF';
+        $data->save();
+
+        return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi dengan status Off !');
     }
 
     // FUNGSI UNTUK PERBAIKAN BUG PEMBUATAN AWAL YG TIDAK DISERTAI RELASI KE TABEL PESERTA UJIAN
@@ -134,4 +178,7 @@ class AdministrasiController extends Controller
         }
         return 'OK';
     }
+
+    // TAMBAH KOLOM status_keaktifan
+    // ALTER TABLE `tahsins` ADD `status_keaktifan` VARCHAR(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'AKTIF' AFTER `status_kelulusan`;
 }

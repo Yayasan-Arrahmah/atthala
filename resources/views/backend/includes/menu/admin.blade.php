@@ -55,11 +55,6 @@
             </a>
             <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta')) ? 'active' : '' }}" href="/admin/tahsin/peserta">
-                        <i class="fas fa-caret-right pr-2 pl-2"></i> Peserta
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link {{ (request()->is('admin/tahsin/peserta/daftar-ulang')) ? 'active' : '' }}" href="/admin/tahsin/peserta/daftar-ulang">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Peserta Daftar Ulang
                     </a>
@@ -89,6 +84,11 @@
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Peserta OFF
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta')) ? 'active' : '' }}" href="/admin/tahsin/peserta">
+                        <i class="fas fa-caret-right pr-2 pl-2"></i> Peserta
+                    </a>
+                </li>
             </ul>
         </li>
 
@@ -102,12 +102,12 @@
             </a>
             <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="/admin/tahsin/daftar-baru">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Data Pengajar
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta/a')) ? 'active' : '' }}" href="/admin/tahsin/peserta/a">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta/a')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Absensi Pengajar o
                     </a>
                 </li>
@@ -126,22 +126,22 @@
             </a>
             <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="/admin/tahsin/daftar-baru">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Data Jadwal
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="/admin/tahsin/daftar-baru">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Status Jadwal
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta/a')) ? 'active' : '' }}" href="/admin/tahsin/peserta/a">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta/a')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Absensi Per-Jadwal
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta-ujian')) ? 'active' : '' }}" href="/admin/tahsin/peserta-ujian">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta-ujian')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Kalender Jadwal
                     </a>
                 </li>
@@ -152,7 +152,7 @@
         <li class="nav-item nav-dropdown {{-- PEMBAYARAN --}}
             {{ (request()->is('admin/tahsin/pembayaran/daftar-ulang')) ? 'open' : '' }}
             {{ (request()->is('admin/tahsin/pembayaran/daftar-baru')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/pembayaran/peserta-ujian')) ? 'open' : '' }}
+            {{ (request()->is('admin/tahsin/pembayaran/daftar-ujian')) ? 'open' : '' }}
             {{ (request()->is('admin/tahsin/pembayaran/spp')) ? 'open' : '' }}
             ">
             <a class="nav-link nav-dropdown-toggle" href="#">
@@ -161,22 +161,22 @@
             </a>
             <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ulang')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/daftar-ulang">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ulang')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Daftar Ulang
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-baru')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/daftar-baru">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-baru')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Daftar Baru
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/peserta-ujian')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/peserta-ujian">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ujian')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Daftar Ujian
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/spp')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/spp">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/spp')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> SPP
                     </a>
                 </li>
@@ -193,10 +193,10 @@
 
         {{-- #################### --}}
 
-        <li class="nav-title">
+        {{-- <li class="nav-title">
             TLA
         </li>
-        <li class="nav-item nav-dropdown {{-- ADMINISTRASI --}}
+        <li class="nav-item nav-dropdown <!- ADMINISTRASI -->
             {{ (request()->is('admin/tla/daftar-baru')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/peserta')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/peserta-ujian')) ? 'open' : '' }}
@@ -242,7 +242,7 @@
             </ul>
         </li>
 
-        <li class="nav-item nav-dropdown {{-- PENGAJAR --}}
+        <li class="nav-item nav-dropdown <!- PENGAJAR -->
             {{ (request()->is('admin/tla/daftar-baru')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/peserta-')) ? 'open' : '' }}
             ">
@@ -264,7 +264,7 @@
             </ul>
         </li>
 
-        <li class="nav-item nav-dropdown {{-- JADWAL --}}
+        <li class="nav-item nav-dropdown <!- JADWAL -->
             {{ (request()->is('admin/tla/daftar-baru')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/daftar-baru')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/peserta-')) ? 'open' : '' }}
@@ -299,7 +299,7 @@
             </ul>
         </li>
 
-        <li class="nav-item nav-dropdown {{-- PEMBAYARAN --}}
+        <li class="nav-item nav-dropdown <!- PEMBAYARAN -->
             {{ (request()->is('admin/tla/daftar-baru')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/peserta')) ? 'open' : '' }}
             {{ (request()->is('admin/tla/peserta-ujian')) ? 'open' : '' }}
@@ -341,7 +341,7 @@
             " > <i class="nav-icon fas fa-cog"></i>
             Pengaturan
             </a>
-        </li>
+        </li> --}}
 
 
         <li class="nav-title">

@@ -12,13 +12,9 @@
                     Pengajar
                  </div>
                 <select class="form-control mt-4" name="pengajar" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    @isset(request()->pengajar)
-                        <option value="{{ request()->pengajar }}">{{ request()->pengajar }}</option>
-                        <option value="">-------</option>
-                    @endisset
-                        <option value="SEMUA">SEMUA</option>
+                    <option value="SEMUA">SEMUA</option>
                     @foreach($datapengajars as $pengajar)
-                        <option value="{{ $pengajar->nama_pengajar }}">{{ $pengajar->nama_pengajar }}</option>
+                        <option value="{{ $pengajar->nama_pengajar }}" {{ request()->pengajar == $pengajar->nama_pengajar ? 'selected' : '' }}>{{ $pengajar->nama_pengajar }}</option>
                     @endforeach
                 </select>
             </div>
@@ -28,13 +24,9 @@
                     Level
                  </div>
                 <select class="form-control mt-4" name="level" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    @isset(request()->level)
-                        <option value="{{ request()->level }}">{{ request()->level }}</option>
-                        <option value="">-------</option>
-                    @endisset
                         <option value="SEMUA">SEMUA</option>
                         @foreach($datalevel as $level)
-                            <option value="{{ $level->nama }}">{{ $level->nama }}</option>
+                            <option value="{{ $level->nama }}" {{ request()->level == $level->nama ? 'selected' : '' }}>{{ $level->nama }}</option>
                         @endforeach
                 </select>
             </div>
@@ -44,12 +36,8 @@
                 Angkatan
                  </div>
                 <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    @isset(request()->angkatan)
-                        <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
-                        <option value="">----</option>
-                    @endisset
                     @foreach($dataangkatan as $angkatan)
-                        <option value="{{ $angkatan->angkatan_peserta }}">{{ $angkatan->angkatan_peserta }}</option>
+                        <option value="{{ $angkatan->angkatan_peserta }}" {{ request()->angkatan == $angkatan->angkatan_peserta ? 'selected' : '' }}>{{ $angkatan->angkatan_peserta }}</option>
                     @endforeach
                 </select>
             </div>
@@ -59,13 +47,9 @@
                 Jenis
                  </div>
                 <select class="form-control mt-4" name="jenis" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    @isset(request()->jenis)
-                        <option value="{{ request()->jenis }}">{{ request()->jenis }}</option>
-                        <option value="">----</option>
-                    @endisset
                     <option value="SEMUA">SEMUA</option>
-                    <option value="IKHWAN">IKHWAN</option>
-                    <option value="AKHWAT">AKHWAT</option>
+                    <option value="IKHWAN" {{ request()->jenis == "IKHWAN" ? 'selected' : '' }}>IKHWAN</option>
+                    <option value="AKHWAT" {{ request()->jenis == "AKHWAT" ? 'selected' : '' }}>AKHWAT</option>
                 </select>
             </div>
 
@@ -74,12 +58,9 @@
                 Status Peserta
                  </div>
                 <select class="form-control mt-4" name="status_peserta" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    @isset(request()->status_peserta)
-                        <option value="{{ request()->status_peserta }}">{{ request()->status_peserta }}</option>
-                    @endisset
                     <option value="">SEMUA</option>
                     @foreach($liststatus as $status)
-                        <option value="{{ $status->id }}">{{ $status->nama }}</option>
+                        <option value="{{ $status->id }}" {{ request()->status_peserta == $status->id ? 'selected' : '' }}>{{ $status->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -112,16 +93,15 @@
                         <option value="3">Selesai</option>
                     </select>
                 </div>
-            @elseif ($status_ == 'daftar-ulang')
+            @elseif ($status_ == 'daftar-ulang' || $status_ == 'daftar-ulang-1')
                 <div class="col-md-2">
                     <div class="text-muted text-center" style="position: absolute">
                     Status Daftar Ulang
                         </div>
-                    <select class="form-control mt-4" id="status" name="status" onchange='if(this.value != 0) { this.form.submit(); }'>
-                        <option value="SEMUA">SEMUA</option>
-                        <option value="1">Belum Daftar Ulang</option>
-                        <option value="2">Belum Pilih Jadwal</option>
-                        <option value="3">Selesai</option>
+                    <select class="form-control mt-4" id="status" name="daftar-ulang" onchange='if(this.value != 0) { this.form.submit(); }'>
+                        {{-- <option value="SEMUA">SEMUA</option> --}}
+                        <option value="2" {{ request()->input('daftar-ulang') == 2 ? 'selected' : '' }}>Selesai</option>
+                        <option value="1" {{ request()->input('daftar-ulang') == 1 ? 'selected' : '' }}>Belum Daftar Ulang</option>
                     </select>
                 </div>
             @elseif ($status_ == 'daftar-ujian')
