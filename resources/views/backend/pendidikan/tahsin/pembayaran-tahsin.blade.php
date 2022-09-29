@@ -92,7 +92,7 @@
                                                         -
                                                     </td>
                                                     <td>
-                                                        {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->status_pelunasan }}
+                                                        {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->status_pelunasan }} LUNAS
                                                     </td>
                                                 </tr>
                                             @else
@@ -187,7 +187,7 @@
                                                                         {{ 'Daftar Ujian' }}
                                                                     </td>
                                                                     <td>
-                                                                        {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->status_pelunasan }}
+                                                                        {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->status_pelunasan }} LUNAS
                                                                     </td>
                                                                     <td>
                                                                         <img class="zoom"
