@@ -157,27 +157,27 @@ class AdministrasiController extends Controller
         return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi dengan status Off !');
     }
 
-    // FUNGSI UNTUK PERBAIKAN BUG PEMBUATAN AWAL YG TIDAK DISERTAI RELASI KE TABEL PESERTA UJIAN
-    public function getUpdateIdTahsin()
-    {
-        $dataujian = PesertaUjian::where('id_tahsin', '=', NULL)->get();
+    // FUNGSI UNTUK PERBAIKAN BUG PEMBUATAN AWAL YG TIDAK DISERTAI RELASI KE TABEL PESERTA UJIAN - SATU KALI SAJA
+    // public function getUpdateIdTahsin()
+    // {
+    //     $dataujian = PesertaUjian::where('id_tahsin', '=', NULL)->get();
 
-        foreach($dataujian as $data){
-            $datatahsin = Tahsin::where('no_tahsin', '=', $data->no_tahsin)
-                                ->where('angkatan_peserta',  $data->angkatan_ujian)
-                                ->first();
-            if ($datatahsin) {
-                $update = PesertaUjian::where('no_tahsin', '=', $datatahsin->no_tahsin)
-                                ->where('angkatan_ujian',  $datatahsin->angkatan_peserta)
-                                ->first();
-                if ($update) {
-                    $update->id_tahsin = $datatahsin->id;
-                    $update->save();
-                }
-            }
-        }
-        return 'OK';
-    }
+    //     foreach($dataujian as $data){
+    //         $datatahsin = Tahsin::where('no_tahsin', '=', $data->no_tahsin)
+    //                             ->where('angkatan_peserta',  $data->angkatan_ujian)
+    //                             ->first();
+    //         if ($datatahsin) {
+    //             $update = PesertaUjian::where('no_tahsin', '=', $datatahsin->no_tahsin)
+    //                             ->where('angkatan_ujian',  $datatahsin->angkatan_peserta)
+    //                             ->first();
+    //             if ($update) {
+    //                 $update->id_tahsin = $datatahsin->id;
+    //                 $update->save();
+    //             }
+    //         }
+    //     }
+    //     return 'OK';
+    // }
 
     // TAMBAH KOLOM status_keaktifan
     // ALTER TABLE `tahsins` ADD `status_keaktifan` VARCHAR(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'AKTIF' AFTER `status_kelulusan`;

@@ -137,10 +137,10 @@
                                                     @endif
 
 
-                                                    <a href="#" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
-                                                        <form action="" onsubmit="return confirm('Apakah Anda yakin data Copywriting Next Level - rimbaborne@gmail.com dihapus ?');" style="display:none">
+                                                    <a href="{{ route('admin.tahsin/peserta.getDeletePeserta') }}" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
+                                                        <form action="" onsubmit="return confirm('Apakah Anda yakin {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }} dihapus ?');" style="display:none">
                                                             <input type="hidden" name="metode" value="hapus">
-                                                            <input type="hidden" name="id" value="2947">
+                                                            <input type="hidden" name="id" value="{{ $tahsin->id }}">
                                                         </form>
                                                         Hapus
                                                     </a>
@@ -195,6 +195,7 @@
                                                     <div class="mb-3">
                                                         <label lass="form-label">Status Peserta</label>
                                                         <select name="status" class="form-control"  id="">
+                                                            <option value=""></option>
                                                             <option value="UMUM" {{ $tahsin->status_peserta == 'UMUM' || $tahsin->status_peserta == '' ? 'selected' : '' }}>UMUM</option>
                                                             <option value="LAZIZ" {{ $tahsin->status_peserta == 'LAZIZ' ? 'selected' : '' }}>LAZIZ</option>
                                                             <option value="KARYAWAN" {{ $tahsin->status_peserta == 'KARYAWAN' ? 'selected' : '' }}>KARYAWAN</option>
@@ -205,6 +206,7 @@
                                                     <div class="mb-3">
                                                         <label lass="form-label">Level</label>
                                                         <select name="level" class="form-control"  id="">
+                                                            <option value=""></option>
                                                             @foreach ( $datalevel as $level )
                                                                 <option value="{{ $level->nama }}" {{ $tahsin->level_peserta == $level->nama ? 'selected' : '' }}>{{ $level->nama }}</option>
                                                             @endforeach
@@ -213,6 +215,7 @@
                                                     <div class="mb-3">
                                                         <label lass="form-label">Pengajar</label>
                                                         <select name="pengajar" class="form-control"  id="">
+                                                            <option value=""></option>
                                                             @foreach ( $datapengajars as $pengajar )
                                                                 <option value="{{ $pengajar->nama_pengajar }}" {{ $tahsin->nama_pengajar == $pengajar->nama_pengajar ? 'selected' : '' }}>{{ $pengajar->nama_pengajar }}</option>
                                                             @endforeach
@@ -277,6 +280,7 @@
                                                     <div class="mb-3">
                                                         <label lass="form-label">Pembelajaran</label>
                                                         <select name="pembelajaran" class="form-control" id="">
+                                                            <option value=""></option>
                                                             <option value="ONLINE" {{ $tahsin->jenis_pembelajaran == 'ONLINE' ? 'selected' : '' }}>ONLINE</option>
                                                             <option value="OFFLINE" {{ $tahsin->jenis_pembelajaran == 'OFFLINE' ? 'selected' : '' }}>OFFLINE</option>
                                                         </select>
