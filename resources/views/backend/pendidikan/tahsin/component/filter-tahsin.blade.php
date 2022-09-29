@@ -117,7 +117,7 @@
                         <option value="6" {{ request()->input('daftar-ujian') == 6 ? 'selected' : '' }}>Ujian Selesai Semua Peserta</option>
                     </select>
                 </div>
-                @if (request()->input('daftar-ujian') == 6)
+                @if (request()->input('daftar-ujian') == 5 || request()->input('daftar-ujian') == 6)
                     <div class="col-md-2">
                         <div class="text-muted text-center" style="position: absolute">
                             Pilih Kenaikan Level
