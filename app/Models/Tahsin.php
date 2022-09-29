@@ -185,6 +185,14 @@ class Tahsin extends Model
         if (!null == $status) {
             if( $status == 'daftar-baru') {
                 return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
+            } elseif( $status == 'belum-pilih-jadwal') {
+                return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%')
+                            ->whereNotNull('level_peserta');
+            } elseif( $status == 'selesai-daftar-baru') {
+                return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%')
+                            ->whereNotNull('level_peserta')
+                            ->whereNotNull('nama_pengajar')
+                            ->whereNotNull('jadwal_tahsin');
             } elseif( $status == 'daftar-ulang') {
                 return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
             } elseif( $status == 'belum-daftar-ulang') {
