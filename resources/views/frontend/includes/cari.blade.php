@@ -24,7 +24,7 @@
                     <option value="ITQON">ITQON</option> --}}
                     <option value="">Level Kelas...</option>
                     @foreach($datalevel as $level)
-                        <option value="{{ $level->level_peserta }}">{{ $level->level_peserta }}</option>
+                        <option value="{{ $level->nama }}">{{ $level->nama }}</option>
                     @endforeach
                 </select>
 

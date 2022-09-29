@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Traits\Attribute\TahsinAttribute;
 use App\Models\PesertaUjian;
 use App\Models\LevelTahsin;
+use App\Models\Pembayaran;
 
 class Tahsin extends Model
 {
@@ -95,6 +96,16 @@ class Tahsin extends Model
     {
         return $this->hasOne(Tahsin::class, 'no_tahsin', 'no_tahsin')->where('angkatan_peserta', '=', $angkatan-1)->first();
     }
+
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_peserta', 'id');
+    }
+    public function pembayaranujian($angkatan)
+    {
+        return $this->hasMany(PesertaUjian::class, 'no_tahsin', 'no_tahsin')->where('angkatan_ujian', '=', $angkatan)->first();
+    }
+
 
     public function scopeCari($query, $cari)
     {

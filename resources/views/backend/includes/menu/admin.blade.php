@@ -161,22 +161,22 @@
             </a>
             <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ulang')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ulang')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/daftar-ulang">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Daftar Ulang
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-baru')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-baru')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/daftar-baru">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Daftar Baru
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ujian')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/daftar-ujian')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/daftar-ujian">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Daftar Ujian
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/spp')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/spp')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/spp">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> SPP
                     </a>
                 </li>

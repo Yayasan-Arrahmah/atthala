@@ -46,16 +46,16 @@
                             $end    = 0;
                             $number = 1;
                         @endphp
-                        @foreach($tahsins as $key=> $tahsin)
-                            <div class="row kotak mb-1" style="border-left-color: {{ $tahsin->level->warna }} !important; border-left-width: 4px!important;">
-                                <td>{{ $key + $tahsins->firstItem() }}</td>
+                        @foreach($pembayarans as $key=> $pembayaran)
+                            <div class="row kotak mb-1" style="border-left-color: {{ $pembayaran->tahsin->level != null ? $pembayaran->tahsin->level->warna : '' }} !important; border-left-width: 4px!important;">
+                                <td>{{ $key + $pembayarans->firstItem() }}</td>
                                 <div class="col pr-0">
-                                    <a data-toggle="collapse" href="#detail{{ $key + $tahsins->firstItem() }}" aria-expanded="false" style="color: rgb(56, 56, 56);" class="">
+                                    <a data-toggle="collapse" href="#detail{{ $key + $pembayarans->firstItem() }}" aria-expanded="false" style="color: rgb(56, 56, 56);" class="">
                                         <div class="font-weight-bold text-uppercase">
-                                            {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }}
+                                            {{ $pembayaran->tahsin->no_tahsin }} - {{ $pembayaran->tahsin->nama_peserta }}
                                         </div>
                                         <div class="small text-muted">
-                                            <strong style="color:  {{ $tahsin->level->warna }} !important">{{ $tahsin->level_peserta }}</strong> | {{ $tahsin->nohp_peserta }}
+                                            <strong style="color:  {{ $pembayaran->tahsin->level != null ? $pembayaran->tahsin->level->warna : '' }} !important">{{ $pembayaran->tahsin->level_peserta }}</strong> | {{ $pembayaran->tahsin->nohp_peserta }}
                                         </div>
                                     </a>
                                 </div>
@@ -73,13 +73,13 @@
                                 </div>
                                 <div class="col-12" style="color: #4e4e4e">
                                     <div class="col">
-                                        <div class="collapse hide" id="detail{{ $key + $tahsins->firstItem() }}" style="">
+                                        <div class="collapse hide" id="detail{{ $key + $pembayarans->firstItem() }}" style="">
                                             <hr>
                                             <form class="row" action="" method="post">
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label lass="form-label">Nominal</label>
-                                                        <input type="text" class="form-control" value="{{ $tahsin->nama_peserta }}">
+                                                        <input type="text" class="form-control" value="{{ $pembayaran->tahsin->nama_peserta }}">
                                                     </div>
                                                     <div class="mb-3">
                                                         <button type="submit" class="btn btn-sm btn-primary">Perbaruhi</button>
@@ -104,8 +104,8 @@
                                 </div>
                             </div>
                             @php
-                            $first  = $tahsins->firstItem();
-                            $end    = $key + $tahsins->firstItem();
+                            $first  = $pembayarans->firstItem();
+                            $end    = $key + $pembayarans->firstItem();
                             @endphp
                         @endforeach
                     </div>
@@ -117,14 +117,14 @@
     <div class="row">
         <div class="col-7">
             <div class="float-left">
-                {!! $first !!} - {!! $end !!} Dari {!! $tahsins->total() !!} Data
+                {!! $first !!} - {!! $end !!} Dari {!! $pembayarans->total() !!} Data
             </div>
         </div><!--col-->
 
         <div class="col-5">
             <div class="float-right">
-                {{-- {!! $tahsins->links() !!} --}}
-                {!! $tahsins->appends(request()->query())->links() !!}
+                {{-- {!! $pembayarans->links() !!} --}}
+                {!! $pembayarans->appends(request()->query())->links() !!}
             </div>
         </div><!--col-->
     </div><!--row-->
