@@ -88,9 +88,11 @@ class AdministrasiController extends Controller
 
     public function getBaru()
     {
-        if (request()->input('daftar-baru') == 2) {
+        if (request()->input('daftar-baru') == 1) {
+            return $this->tahsinbase('belum-selesai-diperiksa', null, 'Peserta Pendaftar Baru');
+        }  elseif (request()->input('daftar-baru') == 2) {
             return $this->tahsinbase('belum-pilih-jadwal', null, 'Peserta Pendaftar Baru');
-        }  elseif (request()->input('daftar-baru') == 3) {
+        } elseif (request()->input('daftar-baru') == 3) {
             return $this->tahsinbase('selesai-daftar-baru', null, 'Peserta Daftar Ulang');
         } else {
             return $this->tahsinbase('daftar-baru', null, 'Peserta Pendaftar Baru');

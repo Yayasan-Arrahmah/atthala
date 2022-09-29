@@ -81,7 +81,7 @@
                     <option>100</option>
                 </select>
             </div>
-            @if ($status_ == 'daftar-baru' || $status_ == 'belum-pilih-jadwal' || $status_ == 'selesai-daftar-baru')
+            @if ($status_ == 'daftar-baru' || $status_ == 'belum-pilih-jadwal' || $status_ == 'selesai-daftar-baru' || $status_ == 'belum-selesai-diperiksa')
                 <div class="col-md-2">
                     <div class="text-muted text-center" style="position: absolute">
                         Status Daftar Baru
