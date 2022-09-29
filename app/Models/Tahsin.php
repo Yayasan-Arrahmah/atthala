@@ -183,6 +183,8 @@ class Tahsin extends Model
     {
         $this->angkatan_ = $angkatan;
         if (!null == $status) {
+
+            //DAFTAR BARU
             if( $status == 'daftar-baru') {
                 return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
             } elseif( $status == 'belum-selesai-diperiksa') {
@@ -200,24 +202,36 @@ class Tahsin extends Model
                             ->whereNotNull('level_peserta')
                             ->whereNotNull('nama_pengajar')
                             ->whereNotNull('jadwal_tahsin');
-            } elseif( $status == 'daftar-ulang') {
+            }
+
+            //DAFTAR ULANG
+            elseif( $status == 'daftar-ulang') {
                 return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
             } elseif( $status == 'belum-daftar-ulang') {
                 return $query->whereDoesntHave('belumdaftarulang');
-            } elseif( $status == 'daftar-ujian') {
+            }
+
+            //UJIAN
+            elseif( $status == 'ujian-1-semua') {
                 return $query->whereHas('ujian');
-            } elseif( $status == 'belum-daftar-ujian') {
-                return $query->whereDoesntHave('ujian');
-            } elseif( $status == 'pendaftar-belum-dinilai') {
-                return $query->whereHas('ujian')
-                            ->whereNull('kenaikan_level_peserta');
-            } elseif( $status == 'belum-dinilai-semua-peserta') {
-                return $query->whereNull('kenaikan_level_peserta');
-            } elseif( $status == 'pendaftar-ujian-selesai') {
+            } elseif( $status == 'ujian-1-1') {
                 return $query->whereHas('ujian')
                             ->whereNotNull('kenaikan_level_peserta');
-            } elseif( $status == 'ujian-selesai-semua-peserta') {
+            } elseif( $status == 'ujian-1-2') {
+                return $query->whereHas('ujian')
+                            ->whereNull('kenaikan_level_peserta');
+            } elseif( $status == 'ujian-2-semua') {
+                return $query->whereDoesntHave('ujian');
+            } elseif( $status == 'ujian-2-1') {
+                return $query->whereDoesntHave('ujian')
+                            ->whereNotNull('kenaikan_level_peserta');
+            } elseif( $status == 'ujian-2-2') {
+                return $query->whereDoesntHave('ujian')
+                            ->whereNull('kenaikan_level_peserta');
+            } elseif( $status == 'ujian-semua-1') {
                 return $query->whereNotNull('kenaikan_level_peserta');
+            } elseif( $status == 'ujian-semua-2') {
+                return $query->whereNull('kenaikan_level_peserta');
             }
         }
     }

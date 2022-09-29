@@ -103,8 +103,8 @@
                         <option value="2" {{ request()->input('daftar-ulang') == 2 ? 'selected' : '' }}>Belum Daftar Ulang</option>
                     </select>
                 </div>
-            @elseif ($status_ == 'daftar-ujian' || $status_ == 'belum-daftar-ujian' || $status_ == 'pendaftar-belum-dinilai' || $status_ == 'belum-dinilai-semua-peserta' || $status_ == 'pendaftar-ujian-selesai' || $status_ == 'ujian-selesai-semua-peserta')
-                <div class="col-md-2">
+            @elseif ($status_ == 'daftar-ujian' || request()->input('daftar-ujian'))
+                {{-- <div class="col-md-2">
                     <div class="text-muted text-center" style="position: absolute">
                         Status Ujian
                     </div>
@@ -116,8 +116,28 @@
                         <option value="5" {{ request()->input('daftar-ujian') == 5 ? 'selected' : '' }}>Pendaftar Ujian Selesai</option>
                         <option value="6" {{ request()->input('daftar-ujian') == 6 ? 'selected' : '' }}>Ujian Selesai Semua Peserta</option>
                     </select>
+                </div> --}}
+                <div class="col-md-2">
+                    <div class="text-muted text-center" style="position: absolute">
+                        Pendaftar Form Ujian
+                    </div>
+                    <select class="form-control mt-4" id="status" name="daftar-ujian" onchange='if(this.value != 0) { this.form.submit(); }'>
+                        <option value="SEMUA" {{ request()->input('daftar-ujian') == 'SEMUA' ? 'selected' : '' }}>Semua</option>
+                        <option value="1" {{ request()->input('daftar-ujian') == 1 ? 'selected' : '' }}>Daftar</option>
+                        <option value="2" {{ request()->input('daftar-ujian') == 2 ? 'selected' : '' }}>Tidak Daftar</option>
+                    </select>
                 </div>
-                @if (request()->input('daftar-ujian') == 5 || request()->input('daftar-ujian') == 6)
+                <div class="col-md-2">
+                    <div class="text-muted text-center" style="position: absolute">
+                        Penilaian Ujian
+                    </div>
+                    <select class="form-control mt-4" id="status" name="proses-ujian" onchange='if(this.value != 0) { this.form.submit(); }'>
+                        <option value="SEMUA" {{ request()->input('proses-ujian') == 'SEMUA' ? 'selected' : '' }}>Semua</option>
+                        <option value="1" {{ request()->input('proses-ujian') == 1 ? 'selected' : '' }}>Selesai</option>
+                        <option value="2" {{ request()->input('proses-ujian') == 2 ? 'selected' : '' }}>Belum Selesai</option>
+                    </select>
+                </div>
+                @if (request()->input('proses-ujian') == 1)
                     <div class="col-md-2">
                         <div class="text-muted text-center" style="position: absolute">
                             Pilih Kenaikan Level
