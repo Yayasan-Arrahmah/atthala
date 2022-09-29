@@ -151,7 +151,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
-                                                    <table>
+                                                    <table class="table table-sm table-bordered">
                                                         <tbody>
                                                             @php
                                                                 $nominal_ = 0;
@@ -160,9 +160,6 @@
                                                                 <tr class="font-weight-bold">
                                                                     <td>
                                                                         {{ $datapembayaran_->keterangan_pembayaran ?? 'Daftar' }}
-                                                                    </td>
-                                                                    <td>
-                                                                        -
                                                                     </td>
                                                                     <td>
                                                                         Rp. {{ number_format($datapembayaran_->nominal_pembayaran , 0, '.', '.') }}
@@ -190,9 +187,6 @@
                                                                         {{ 'Daftar Ujian' }}
                                                                     </td>
                                                                     <td>
-                                                                        -
-                                                                    </td>
-                                                                    <td>
                                                                         {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->status_pelunasan }}
                                                                     </td>
                                                                     <td>
@@ -205,8 +199,6 @@
                                                             <tr class="font-weight-bold">
                                                                 <td>
                                                                     Belum Daftar Ujian
-                                                                </td>
-                                                                <td>
                                                                 </td>
                                                                 <td>
                                                                 </td>
