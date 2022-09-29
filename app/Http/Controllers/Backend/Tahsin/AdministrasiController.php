@@ -19,10 +19,11 @@ class AdministrasiController extends Controller
         $this->kenaikanlevel = request()->kenaikanlevel ?? null;
         $this->idtahsin      = request()->idtahsin ?? null;
         $this->level         = request()->level ?? null;
+        $this->kenaikanlevel = request()->input('kenaikan-level') ?? null;
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 1 ? request()->angkatan-1 : (request()->angkatan ?? 21);
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 21);
         $this->angkatanbaru  = request()->angkatan ?? 21;
         $this->angkatanujian = request()->angkatan ?? 20;
         $this->status        = request()->status ?? null;
@@ -50,6 +51,11 @@ class AdministrasiController extends Controller
                     ->statusPeserta($this->status)
                     ->statusKeaktifan($statuskeaktifan)
                     ->statusDaftar($statusdaftar, $this->angkatan)
+                    ->when($this->kenaikanlevel, function($query){
+                        if ($this->kenaikanlevel != 'SEMUA') {
+                            $query->where('kenaikan_level_peserta', $this->kenaikanlevel);
+                        }
+                    })
                     ->paginate(10);
     }
 
@@ -73,8 +79,8 @@ class AdministrasiController extends Controller
 
     public function getDaftarUlang()
     {
-        if (request()->input('daftar-ulang') == 1) {
-            return $this->tahsinbase('daftar-ulang-1', null, 'Peserta Daftar Ulang');
+        if (request()->input('daftar-ulang') == 2) {
+            return $this->tahsinbase('belum-daftar-ulang', null, 'Peserta Daftar Ulang');
         } else {
             return $this->tahsinbase('daftar-ulang', null, 'Peserta Daftar Ulang');
         }
@@ -87,7 +93,19 @@ class AdministrasiController extends Controller
 
     public function getDaftarUjian()
     {
-        return $this->tahsinbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
+        if (request()->input('daftar-ujian') == 2) {
+            return $this->tahsinbase('belum-daftar-ujian', null, 'Peserta Pendaftar Ujian');
+        } elseif (request()->input('daftar-ujian') == 3) {
+            return $this->tahsinbase('pendaftar-belum-dinilai', null, 'Peserta Pendaftar Ujian');
+        } elseif (request()->input('daftar-ujian') == 4) {
+            return $this->tahsinbase('belum-dinilai-semua-peserta', null, 'Peserta Pendaftar Ujian');
+        } elseif (request()->input('daftar-ujian') == 5) {
+            return $this->tahsinbase('pendaftar-ujian-selesai', null, 'Peserta Pendaftar Ujian');
+        } elseif (request()->input('daftar-ujian') == 6) {
+            return $this->tahsinbase('ujian-selesai-semua-peserta', null, 'Peserta Pendaftar Ujian');
+        } else {
+            return $this->tahsinbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
+        }
     }
 
     public function getAktif()

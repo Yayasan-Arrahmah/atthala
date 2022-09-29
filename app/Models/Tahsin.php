@@ -79,7 +79,7 @@ class Tahsin extends Model
 
     public function ujian()
     {
-        return $this->hasOne(PesertaUjian::class, 'id_tahsin', 'id');
+        return $this->hasOne(PesertaUjian::class, 'no_tahsin', 'no_tahsin')->where('angkatan_ujian', '=', $this->angkatan_);
     }
 
     public function belumdaftarulang()
@@ -187,10 +187,22 @@ class Tahsin extends Model
                 return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
             } elseif( $status == 'daftar-ulang') {
                 return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
-            } elseif( $status == 'daftar-ulang-1') {
+            } elseif( $status == 'belum-daftar-ulang') {
                 return $query->whereDoesntHave('belumdaftarulang');
             } elseif( $status == 'daftar-ujian') {
                 return $query->whereHas('ujian');
+            } elseif( $status == 'belum-daftar-ujian') {
+                return $query->whereDoesntHave('ujian');
+            } elseif( $status == 'pendaftar-belum-dinilai') {
+                return $query->whereHas('ujian')
+                            ->whereNull('kenaikan_level_peserta');
+            } elseif( $status == 'belum-dinilai-semua-peserta') {
+                return $query->whereNull('kenaikan_level_peserta');
+            } elseif( $status == 'pendaftar-ujian-selesai') {
+                return $query->whereHas('ujian')
+                            ->whereNotNull('kenaikan_level_peserta');
+            } elseif( $status == 'ujian-selesai-semua-peserta') {
+                return $query->whereNotNull('kenaikan_level_peserta');
             }
         }
     }

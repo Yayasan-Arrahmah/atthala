@@ -40,7 +40,11 @@
                                 Pengajar
                             </div>
                             <div class="col font-weight-bold text-uppercase">
-                                Status
+                                @if (request()->input('daftar-ujian'))
+                                    Kenaikan Level
+                                @else
+                                    Status
+                                @endif
                             </div>
                         </div>
                         @php
@@ -86,66 +90,86 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            @php
-                                                $ceklevel = data_get($tahsin->cekstatusnaik($tahsin->angkatan_peserta), 'level_peserta');
-                                            @endphp
-                                            @if (!null == $ceklevel)
-                                                @if ($ceklevel == $tahsin->level_peserta)
-                                                    <div class="btn btn-sm btn-outline-danger" style="font-size: 10px">
-                                                        MENGULANG LEVEL <strong>{{ $ceklevel }}</strong>
-                                                    </div>
-                                                @else
-                                                    <div class="btn btn-sm btn-outline-success" style="font-size: 10px">
-                                                        NAIK LEVEL DARI <strong>{{ $ceklevel }}</strong>
-                                                    </div>
-                                                @endif
-                                            @else
-                                                <div class="btn btn-sm btn-outline-info" style="font-size: 10px">
-                                                    BARU TERDAFTAR
+                                    @if (request()->input('daftar-ujian'))
+                                        <form action="{{ Request::fullUrl() }}">
+                                            {{-- @csrf --}}
+                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
+                                            <input name="angkatan" value="{{ $tahsin->angkatan_peserta  }}" hidden>
+                                            @if(!empty(Request::get('nama')))
+                                                <input name="nama" value="{{ Request::get('nama') }}" hidden>
+                                            @endif
+                                            @if(!empty(Request::get('page')))
+                                                <input name="page" value="{{ Request::get('page') }}" hidden>
+                                            @endif
+                                            <select style="font-weight: 700;" class="form-control" name="kenaikanlevel" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                <option value="">{{ $tahsin->kenaikan_level_peserta }}</option>
+                                                <option value="">-----</option>
+                                                <option value="ASAASI 1">ASAASI 1</option>
+                                                <option value="ASAASI 2">ASAASI 2</option>
+                                                <option value="TILAWAH ASAASI">TILAWAH ASAASI</option>
+                                                <option value="TAMHIDI">TAMHIDI</option>
+                                                <option value="TAWASUTHI">TAWASUTHI</option>
+                                                <option value="TILAWAH TAWASUTHI">TILAWAH TAWASUTHI</option>
+                                                <option value="IDADI">IDADI</option>
+                                                <option value="TAKMILI">TAKMILI</option>
+                                                <option value="TAHSINI">TAHSINI</option>
+                                                <option value="ITQON">ITQON</option>
+                                                <option value="TAJWIDI 1">TAJWIDI 1</option>
+                                            </select>
+                                        </form>
+                                    @else
+                                        @php
+                                            $ceklevel = data_get($tahsin->cekstatusnaik($tahsin->angkatan_peserta), 'level_peserta');
+                                        @endphp
+                                        @if (!null == $ceklevel)
+                                            @if ($ceklevel == $tahsin->level_peserta)
+                                                <div class="btn btn-sm btn-outline-danger" style="font-size: 10px">
+                                                    MENGULANG LEVEL <strong>{{ $ceklevel }}</strong>
                                                 </div>
+                                            @else
+                                                <div class="btn btn-sm btn-outline-success" style="font-size: 10px">
+                                                    NAIK LEVEL DARI <strong>{{ $ceklevel }}</strong>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <div class="btn btn-sm btn-outline-info" style="font-size: 10px">
+                                                BARU TERDAFTAR
+                                            </div>
+                                        @endif
+
+
+                                        <div class="small text-muted">
+                                            PESERTA {{ $tahsin->status_peserta ?? 'UMUM' }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-1 text-right p-0">
+                                    <div class="btn-group dropleft">
+                                        <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                            Opsi
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            @if ($tahsin->status_keaktifan == 'AKTIF')
+                                                <a href="{{ route('admin.tahsin/peserta.getCutiPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Cuti ?');">
+                                                    Cuti
+                                                </a>
+                                                    <a href="{{ route('admin.tahsin/peserta.getOffPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Off ?');">
+                                                    Off
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin.tahsin/peserta.getAktifPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Off ?');">
+                                                    Aktif
+                                                </a>
                                             @endif
 
 
-                                            <div class="small text-muted">
-                                                PESERTA {{ $tahsin->status_peserta ?? 'UMUM' }}
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-7">
-                                            <button class="btn btn-danger btn-sm">
-                                                <i class="fas fa-exclamation-triangle"></i> Belum Aktif
-                                            </button>
-                                        </div> --}}
-                                        <div class="col-2 text-right p-0">
-                                            <div class="btn-group dropleft">
-                                                <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                                    Opsi
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    @if ($tahsin->status_keaktifan == 'AKTIF')
-                                                        <a href="{{ route('admin.tahsin/peserta.getCutiPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Cuti ?');">
-                                                            Cuti
-                                                        </a>
-                                                            <a href="{{ route('admin.tahsin/peserta.getOffPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Off ?');">
-                                                            Off
-                                                        </a>
-                                                    @else
-                                                        <a href="{{ route('admin.tahsin/peserta.getAktifPeserta') }}?id={{ $tahsin->id }}" class="dropdown-item" onclick="return confirm('Apakah Anda yakin {{ $tahsin->nama_peserta }} merubah status menjadi Off ?');">
-                                                            Aktif
-                                                        </a>
-                                                    @endif
-
-
-                                                    <a href="{{ route('admin.tahsin/peserta.getDeletePeserta') }}" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
-                                                        <form action="" onsubmit="return confirm('Apakah Anda yakin {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }} dihapus ?');" style="display:none">
-                                                            <input type="hidden" name="metode" value="hapus">
-                                                            <input type="hidden" name="id" value="{{ $tahsin->id }}">
-                                                        </form>
-                                                        Hapus
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <a href="{{ route('admin.tahsin/peserta.getDeletePeserta') }}" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
+                                                <form action="" onsubmit="return confirm('Apakah Anda yakin {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }} dihapus ?');" style="display:none">
+                                                    <input type="hidden" name="metode" value="hapus">
+                                                    <input type="hidden" name="id" value="{{ $tahsin->id }}">
+                                                </form>
+                                                Hapus
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
