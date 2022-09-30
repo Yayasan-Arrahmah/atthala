@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="legend p-3">
                         <div class="row kotak-atas mb-3">
-                            <div class="col pr-0 font-weight-bold text-uppercase">
+                            <div class="col font-weight-bold text-uppercase">
                                 Nama
                             </div>
                             <div class="col-1 font-weight-bold text-uppercase">
@@ -35,8 +35,8 @@
                             <div class="col-2 font-weight-bold text-uppercase">
                                 Nominal
                             </div>
-                            <div class="col-2 font-weight-bold text-uppercase" style="margin-left: 0px">
-                                Bukti Transfer
+                            <div class="col-1 font-weight-bold text-uppercase" style="margin-left: 0px">
+                                Bukti TF
                             </div>
                             <div class="col font-weight-bold text-uppercase">
                                 Keterangan
@@ -68,7 +68,7 @@
                                 <div class="col-2 font-weight-bold">
                                         Rp. {{ number_format($tahsin->pembayarandaftar->nominal_pembayaran , 0, '.', '.') }}
                                 </div>
-                                <div class="col-2" style="margin-left: 0px">
+                                <div class="col-1" style="margin-left: 0px">
                                     <img class="zoom"
                                         src="https://atthala.arrahmahbalikpapan.or.id/app/public/bukti-transfer/{{ $tahsin->pembayarandaftar->bukti_transfer_pembayaran ?? '404.jpg' }}"
                                         alt="" height="50">

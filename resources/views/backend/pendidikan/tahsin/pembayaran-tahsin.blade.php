@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="legend p-3">
                         <div class="row kotak-atas mb-3">
-                            <div class="col pr-0 font-weight-bold text-uppercase">
+                            <div class="col font-weight-bold text-uppercase">
                                 Nama
                             </div>
                             <div class="col font-weight-bold text-uppercase">
@@ -55,7 +55,7 @@
                                             {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }}
                                         </div>
                                         <div class="small text-muted">
-                                            <strong style="color:  {{ $tahsin->level != null ? $tahsin->level->warna : '' }} !important">{{ $tahsin->level_peserta }}</strong>
+                                            <strong style="color:  {{ $tahsin->level != null ? $tahsin->level->warna : '' }} !important">{{ $tahsin->level_peserta ?? 'BELUM PILIH LEVEL'  }}</strong>
                                             |
                                             {{ $tahsin->waktu_lahir_peserta ? \Carbon\Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md') : '' }}
                                         </div>

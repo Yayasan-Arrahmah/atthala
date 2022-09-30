@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="legend p-3">
                         <div class="row kotak-atas mb-3">
-                            <div class="col pr-0 font-weight-bold text-uppercase">
+                            <div class="col font-weight-bold text-uppercase">
                                 Nama
                             </div>
                             <div class="col-1 font-weight-bold text-uppercase">
@@ -35,8 +35,8 @@
                             <div class="col-2 font-weight-bold text-uppercase">
                                 Status
                             </div>
-                            <div class="col-2 font-weight-bold text-uppercase" style="margin-left: 0px">
-                                Bukti Transfer
+                            <div class="col-1 font-weight-bold text-uppercase" style="margin-left: 0px">
+                                Bukti TF
                             </div>
                             <div class="col font-weight-bold text-uppercase">
                                 Keterangan
@@ -50,7 +50,7 @@
                         @foreach($pesertaujians as $key=> $ujian)
                             <div class="row kotak mb-1" style="border-left-color: {{ $ujian->tahsin->level != null ? $ujian->tahsin->level->warna : '' }} !important; border-left-width: 4px!important;">
                                 <td>{{ $key + $pesertaujians->firstItem() }}</td>
-                                <div class="col pr-0">
+                                <div class="col">
                                     <a data-toggle="collapse" href="#detail{{ $key + $pesertaujians->firstItem() }}" aria-expanded="false" style="color: rgb(56, 56, 56);" class="">
                                         <div class="font-weight-bold text-uppercase">
                                             {{ $ujian->tahsin->no_tahsin }} - {{ $ujian->tahsin->nama_peserta }}
@@ -67,10 +67,10 @@
                                 <div class="col-1 font-weight-bold">
                                     {{ $ujian->tahsin->waktu_lahir_peserta ? \Carbon\Carbon::createFromFormat('d-m-Y', $ujian->tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md') : '' }}
                                 </div>
-                                <div class="col-2 font-weight-bold">
-                                    {{ $ujian->status_pelunasan }}
+                                <div class="col-2">
+                                    {{ $ujian->status_pelunasan }} LUNAS
                                 </div>
-                                <div class="col-2" style="margin-left: 0px">
+                                <div class="col-1" style="margin-left: 0px">
                                     <img class="zoom"
                                         src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-daftar-ujian/{{ $ujian->bukti_transfer ?? '404.jpg' }}"
                                         alt="" height="50">
