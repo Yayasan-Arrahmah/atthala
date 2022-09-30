@@ -39,7 +39,7 @@
                                 Bukti Transfer
                             </div>
                             <div class="col font-weight-bold text-uppercase">
-                                Status
+                                Keterangan
                             </div>
                         </div>
                         @php
@@ -74,12 +74,13 @@
                                         alt="" height="50">
                                 </div>
                                 <div class="col">
-                                    <div class="row">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col text-right" style="padding: 0px">
-                                        </div>
-                                    </div>
+                                    <table>
+                                        <tr>
+                                            <td>Waktu</td>
+                                            <td>:</td>
+                                            <td class="font-weight-bold">{{ $tahsin->created_at }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="col-12" style="color: #4e4e4e">
                                     <div class="col">

@@ -39,7 +39,7 @@
                                 Bukti Transfer
                             </div>
                             <div class="col font-weight-bold text-uppercase">
-                                Keterangan Pembayaran
+                                Keterangan
                             </div>
                         </div>
                         @php
@@ -74,7 +74,18 @@
                                         alt="" height="50">
                                 </div>
                                 <div class="col">
-                                    {{ $spp->keterangan_pembayaran }}
+                                    <table>
+                                        <tr>
+                                            <td>Pembayaran</td>
+                                            <td>:</td>
+                                            <td class="font-weight-bold">{{ $spp->keterangan_pembayaran }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Waktu</td>
+                                            <td>:</td>
+                                            <td class="font-weight-bold">{{ $spp->created_at }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="col-12" style="color: #4e4e4e">
                                     <div class="col">

@@ -165,6 +165,9 @@
                                                                         Rp. {{ number_format($datapembayaran_->nominal_pembayaran , 0, '.', '.') }}
                                                                     </td>
                                                                     <td>
+                                                                        {{ $datapembayaran_->created_at }}
+                                                                    </td>
+                                                                    <td>
                                                                         @if ($datapembayaran_->keterangan_pembayaran)
                                                                             <img class="zoom"
                                                                                 src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-spp/{{ $datapembayaran_->bukti_transfer_pembayaran ?? '404.jpg' }}"
@@ -188,6 +191,9 @@
                                                                     </td>
                                                                     <td>
                                                                         {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->status_pelunasan }} LUNAS
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ $tahsin->pembayaranujian($tahsin->angkatan_peserta)->created_at }}
                                                                     </td>
                                                                     <td>
                                                                         <img class="zoom"
