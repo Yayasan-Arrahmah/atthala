@@ -182,7 +182,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/rekapitulasi')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/rekapitulasi">
-                        <i class="fas fa-caret-right pr-2 pl-2"></i> Rekapaitulasi
+                        <i class="fas fa-caret-right pr-2 pl-2"></i> Rekapitulasi
                     </a>
                 </li>
             </ul>
