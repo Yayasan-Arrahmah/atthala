@@ -92,6 +92,11 @@ class Tahsin extends Model
         return $this->hasOne(LevelTahsin::class, 'nama', 'level_peserta');
     }
 
+    public function kenaikanlevel()
+    {
+        return $this->hasOne(LevelTahsin::class, 'nama', 'kenaikan_level_peserta');
+    }
+
     public function cekstatusnaik($angkatan)
     {
         return $this->hasOne(Tahsin::class, 'no_tahsin', 'no_tahsin')->where('angkatan_peserta', '=', $angkatan-1)->first();
@@ -101,9 +106,13 @@ class Tahsin extends Model
     {
         return $this->hasMany(Pembayaran::class, 'id_peserta', 'id');
     }
+    public function pembayarandaftar()
+    {
+        return $this->hasOne(Pembayaran::class, 'id_peserta', 'id');
+    }
     public function pembayaranujian($angkatan)
     {
-        return $this->hasMany(PesertaUjian::class, 'no_tahsin', 'no_tahsin')->where('angkatan_ujian', '=', $angkatan)->first();
+        return $this->hasOne(PesertaUjian::class, 'no_tahsin', 'no_tahsin')->where('angkatan_ujian', '=', $angkatan)->first();
     }
 
 

@@ -21,4 +21,9 @@ class PesertaUjian extends Model
     {
         return $this->belongsTo(Tahsin::class, 'no_tahsin', 'no_tahsin');
     }
+
+    public function tahsin()
+    {
+        return $this->hasOne(Tahsin::class, 'no_tahsin', 'no_tahsin')->where('angkatan_peserta', request()->angkatan);
+    }
 }

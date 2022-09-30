@@ -36,4 +36,9 @@ class Pembayaran extends Model
     {
         return $this->belongsTo(Tahsin::class, 'id_peserta', 'id');
     }
+
+    public function tahsinspp()
+    {
+        return $this->hasOne(Tahsin::class, 'id', 'id_peserta');
+    }
 }
