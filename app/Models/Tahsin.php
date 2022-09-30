@@ -211,6 +211,8 @@ class Tahsin extends Model
                             ->whereNotNull('level_peserta')
                             ->whereNotNull('nama_pengajar')
                             ->whereNotNull('jadwal_tahsin');
+            } elseif( $status == 'daftar-baru-pembayaran') {
+                return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
             }
 
             //DAFTAR ULANG
@@ -218,6 +220,8 @@ class Tahsin extends Model
                 return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
             } elseif( $status == 'belum-daftar-ulang') {
                 return $query->whereDoesntHave('belumdaftarulang');
+            } elseif( $status == 'daftar-ulang-pembayaran') {
+                return $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
             }
 
             //UJIAN
