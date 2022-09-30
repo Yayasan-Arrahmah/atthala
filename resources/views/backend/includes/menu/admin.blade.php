@@ -180,6 +180,11 @@
                         <i class="fas fa-caret-right pr-2 pl-2"></i> SPP
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/pembayaran/rekapitulasi')) ? 'active' : '' }}" href="/admin/tahsin/pembayaran/rekapitulasi">
+                        <i class="fas fa-caret-right pr-2 pl-2"></i> Rekapaitulasi
+                    </a>
+                </li>
             </ul>
         </li>
 

@@ -101,20 +101,6 @@ class AdministrasiController extends Controller
 
     public function getDaftarUjian()
     {
-        // if (request()->input('daftar-ujian') == 1) {
-        //     return $this->tahsinbase('belum-daftar-ujian', null, 'Peserta Pendaftar Ujian');
-        // } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 1) {
-        //     return $this->tahsinbase('pendaftar-belum-dinilai', null, 'Peserta Pendaftar Ujian');
-        // } elseif (request()->input('daftar-ujian') == 'SEMUA') {
-        //     return $this->tahsinbase('belum-dinilai-semua-peserta', null, 'Peserta Pendaftar Ujian');
-        // } elseif (request()->input('daftar-ujian') == 5) {
-        //     return $this->tahsinbase('pendaftar-ujian-selesai', null, 'Peserta Pendaftar Ujian');
-        // } elseif (request()->input('daftar-ujian') == 6) {
-        //     return $this->tahsinbase('ujian-selesai-semua-peserta', null, 'Peserta Pendaftar Ujian');
-        // } else {
-        //     return $this->tahsinbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
-        // }
-
         if (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 'SEMUA') {
             return $this->tahsinbase('ujian-1-semua', null, 'Peserta Pendaftar Ujian');
         } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 1) {

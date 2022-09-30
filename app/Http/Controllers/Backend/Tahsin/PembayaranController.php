@@ -24,7 +24,7 @@ class PembayaranController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? 21;
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 21);
         $this->angkatanbaru  = request()->angkatan ?? 21;
         $this->angkatanujian = request()->angkatan ?? 20;
         $this->status        = request()->status ?? null;
@@ -55,71 +55,128 @@ class PembayaranController extends Controller
                     ->paginate(10);
     }
 
-    public function pembayaran($statusdaftar, $statuskeaktifan)
+    public function pembayaranujianbase($statusdaftar, $statuskeaktifan)
     {
         $this->statusdaftar    = $statusdaftar;
         $this->statuskeaktifan = $statuskeaktifan;
-        return Pembayaran::whereHas('tahsin', function (Builder $query){
+        return PesertaUjian::whereHas('tahsin', function (Builder $query){
                             $query->cari($this->cari)
                             ->cariLevel($this->level)
                             ->jenis($this->jenis)
-                            ->angkatan($this->angkatan)
                             ->pengajar($this->pengajar)
                             ->statusPeserta($this->status)
                             ->statusKeaktifan($this->statuskeaktifan)
-                            ->statusDaftar($this->statusdaftar, $this->angkatan);
+                            ->when(request()->input('kenaikan-level'), function($query){
+                                if (request()->input('kenaikan-level') != 'SEMUA') {
+                                    $query->where('kenaikan_level_peserta', request()->input('kenaikan-level'));
+                                }
+                            })
+                            ->when(request()->input('proses-ujian'), function($query){
+                                if (request()->input('proses-ujian') != 'SEMUA') {
+                                    if (request()->input('proses-ujian') == 1) {
+                                        $query->whereNotNull('kenaikan_level_peserta');
+                                    } elseif (request()->input('proses-ujian') == 2) {
+                                        $query->whereNull('kenaikan_level_peserta');
+                                    }
+                                }
+                            });
                         })
+                        ->where('angkatan_ujian', $this->angkatan)
+                        ->orderBy('created_at', 'ASC')
                         ->paginate(10);
     }
 
-    public function pembayaranbase($statusA, $statusB, $titleA)
+    public function tahsinbase($statusA, $statusB, $titleA)
     {
         $status_       = $statusA;
         $tahsins       = $this->tahsin($statusA, $statusB);
-        $pembayarans   = $this->pembayaran($statusA, $statusB);
         $dataangkatan  = $this->listangkatan;
         $datalevel     = $this->listlevel;
         $datapengajars = $this->listpengajar;
         $liststatus    = $this->liststatuspeserta;
         $title         = $titleA;
 
-        return view('backend.pendidikan.tahsin.pembayaran',
-            compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pembayarans'));
+        if ($status_ == null) {
+            return view('backend.pendidikan.tahsin.pembayaran-tahsin',
+                compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
+        } else {
+            return view('backend.pendidikan.tahsin.pembayaran',
+                compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
+        }
+
     }
 
     public function getDaftarUlang()
     {
-        return $this->pembayaranbase('daftar-ulang', null, 'Peserta Daftar Ulang');
+        return $this->tahsinbase('daftar-ulang-pembayaran', null, 'Peserta Daftar Ulang');
     }
 
     public function getDaftarBaru()
     {
-        return $this->pembayaranbase('daftar-baru', null, 'Peserta Pendaftar Baru');
+        return $this->tahsinbase('daftar-baru-pembayaran', null, 'Peserta Pendaftar Baru');
     }
 
     public function getDaftarUjian()
     {
-        return $this->pembayaranbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
+        $statusA    = 'daftar-ujian-pembayaran';
+        $statusB    = null;
+        $titleA     = 'Peserta Pendaftar Ujian';
+
+        $status_          = $statusA;
+        $pesertaujians    = $this->pembayaranujianbase($statusA, $statusB);
+        $dataangkatan     = $this->listangkatan;
+        $datalevel        = $this->listlevel;
+        $datapengajars    = $this->listpengajar;
+        $liststatus       = $this->liststatuspeserta;
+        $title            = $titleA;
+
+        return view('backend.pendidikan.tahsin.pembayaran-ujian',
+            compact('title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pesertaujians'));
+
+        // return $this->pembayaranbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
+    }
+
+    public function pembayaransppbase($statusdaftar, $statuskeaktifan)
+    {
+        $this->statusdaftar    = $statusdaftar;
+        $this->statuskeaktifan = $statuskeaktifan;
+        return Pembayaran::whereHas('tahsinspp', function (Builder $query){
+                            $query->cari($this->cari)
+                            ->cariLevel($this->level)
+                            ->jenis($this->jenis)
+                            ->pengajar($this->pengajar)
+                            ->where('angkatan_peserta', $this->angkatan)
+                            ->statusPeserta($this->status)
+                            ->statusKeaktifan($this->statuskeaktifan)
+                            ;
+                        })
+                        ->where('jenis_pembayaran', 'SPP TAHSIN')
+                        ->orderBy('created_at', 'ASC')
+                        ->paginate(10);
     }
 
     public function getSpp()
     {
-        $statusA = NULL;
-        $statusB = 'AKTIF';
-        $titleA  = 'Peserta Aktif';
+        $statusA    = 'spp-pembayaran';
+        $statusB    = null;
+        $titleA     = 'Peserta Pembayaran Form SPP';
 
-        $status_       = $statusA;
-        $tahsins       = $this->tahsin($statusA, $statusB);
-        $pembayarans   = $this->pembayaran($statusA, $statusB);
-        $dataangkatan  = $this->listangkatan;
-        $datalevel     = $this->listlevel;
-        $datapengajars = $this->listpengajar;
-        $liststatus    = $this->liststatuspeserta;
-        $title         = $titleA;
+        $status_          = $statusA;
+        $pembayaranspp    = $this->pembayaransppbase($statusA, $statusB);
+        $dataangkatan     = $this->listangkatan;
+        $datalevel        = $this->listlevel;
+        $datapengajars    = $this->listpengajar;
+        $liststatus       = $this->liststatuspeserta;
+        $title            = $titleA;
 
-        return view('backend.pendidikan.tahsin.pembayaran-tahsin',
-            compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pembayarans'));
-        // return $this->pembayaranbase(null, 'AKTIF', 'Peserta Aktif');
+        return view('backend.pendidikan.tahsin.pembayaran-spp',
+            compact('title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pembayaranspp'));
+        // return $this->pembayaransppbase(null, 'AKTIF', 'Peserta Aktif');
+    }
+
+    public function getRekapitulasi()
+    {
+        return $this->tahsinbase(null, 'AKTIF', 'Peserta Aktif');
     }
 
     public function postUpdatePembayaran()
