@@ -189,6 +189,37 @@ class AdministrasiController extends Controller
         return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi dengan status Off !');
     }
 
+    public function getDashboard()
+    {
+        $dataangkatan  = $this->listangkatan;
+        $d_angkatan    = Tahsin::select('angkatan_peserta')
+                            ->groupBy('angkatan_peserta')
+                            ->orderBy('angkatan_peserta', 'asc')
+                            ->get();
+
+        foreach ($d_angkatan as $data_total) {
+            $total_angkatan[]               = (int)$data_total->angkatan_peserta;
+            $total_peserta[]                = Tahsin::angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_daftar_baru[]    = Tahsin::daftarBaru($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_daftar_ulang[]   = Tahsin::daftarUlang($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_ikhwan[]         = Tahsin::ikhwan()->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_akhwat[]         = Tahsin::akhwat()->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_alhaq[]          = Tahsin::where('kenaikan_level_peserta', 'TAJWIDI 1')->angkatan($data_total->angkatan_peserta)->count();
+        }
+
+        $statistik_utama = [
+            'total_angkatan'             => $total_angkatan ?? 0,
+            'total_peserta'              => $total_peserta ?? 0,
+            'total_peserta_daftar_baru'  => $total_peserta_daftar_baru ?? 0,
+            'total_peserta_daftar_ulang' => $total_peserta_daftar_ulang ?? 0,
+            'total_peserta_ikhwan'       => $total_peserta_ikhwan ?? 0,
+            'total_peserta_akhwat'       => $total_peserta_akhwat ?? 0,
+            'total_peserta_alhaq'        => $total_peserta_alhaq ?? 0,
+        ];
+
+        return view('backend.pendidikan.tahsin.dashboard', compact('dataangkatan', 'statistik_utama'));
+    }
+
     // FUNGSI UNTUK PERBAIKAN BUG PEMBUATAN AWAL YG TIDAK DISERTAI RELASI KE TABEL PESERTA UJIAN - SATU KALI SAJA
     // public function getUpdateIdTahsin()
     // {

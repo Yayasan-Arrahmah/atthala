@@ -188,6 +188,26 @@ class Tahsin extends Model
         }
     }
 
+    public function scopeDaftarBaru($query, $angkatan)
+    {
+        $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%');
+    }
+
+    public function scopeDaftarUlang($query, $angkatan)
+    {
+        $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
+    }
+
+    public function scopeIkhwan($query)
+    {
+        $query->where('jenis_peserta', 'IKHWAN');
+    }
+
+    public function scopeAkhwat($query)
+    {
+        $query->where('jenis_peserta', 'AKHWAT');
+    }
+
     public function scopeStatusDaftar($query, $status, $angkatan)
     {
         $this->angkatan_ = $angkatan;
