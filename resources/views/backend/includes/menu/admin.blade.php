@@ -41,6 +41,7 @@
             Tahsin
         </li>
         <li class="nav-item nav-dropdown {{-- ADMINISTRASI --}}
+            {{ (request()->is('admin/tahsin/dashboard')) ? 'open' : '' }}
             {{ (request()->is('admin/tahsin/peserta')) ? 'open' : '' }}
             {{ (request()->is('admin/tahsin/peserta/baru')) ? 'open' : '' }}
             {{ (request()->is('admin/tahsin/peserta/aktif')) ? 'open' : '' }}
@@ -54,6 +55,11 @@
                 Administrasi
             </a>
             <ul class="nav-dropdown-items">
+                <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta/dashboard')) ? 'active' : '' }}" href="/admin/tahsin/peserta/dashboard">
+                        <i class="fas fa-caret-right pr-2 pl-2"></i> Dashboard
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ (request()->is('admin/tahsin/peserta/daftar-ulang')) ? 'active' : '' }}" href="/admin/tahsin/peserta/daftar-ulang">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Peserta Daftar Ulang
