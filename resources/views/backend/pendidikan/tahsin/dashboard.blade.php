@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div id="chart8"></div>
+                        {{-- <div id="chart8"></div> --}}
                     </div>
                 </div>
             </div>
@@ -536,9 +536,7 @@
 </script>
 
 {{-- CHART 8 - DATA UMUR PESERTA--}}
-<script>
-
-
+{{-- <script>
     var options = {
         series: [{
             data: [
@@ -591,6 +589,6 @@
     var chart = new ApexCharts(document.querySelector("#chart8"), options);
     chart.render();
 
-</script>
+</script> --}}
 
 @endsection

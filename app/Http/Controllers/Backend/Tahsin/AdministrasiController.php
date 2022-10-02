@@ -265,12 +265,12 @@ class AdministrasiController extends Controller
             ];
         }
 
-        $a = 0;
-        $b = 0;
-        $c = 0;
-        $d = 0;
-        $e = 0;
-        $f = 0;
+        // $a = 0;
+        // $b = 0;
+        // $c = 0;
+        // $d = 0;
+        // $e = 0;
+        // $f = 0;
         // foreach ($peserta_aktif as $data_k){
         //     if ($data_k->waktu_lahir_peserta) {
         //         $kategori_umur = Carbon::createFromFormat('d-m-Y', $data_k->waktu_lahir_peserta)->age;
@@ -301,12 +301,12 @@ class AdministrasiController extends Controller
             'peserta_tidak_naik_level'   => $peserta_tidak_naik_level ?? 0,
             'peserta_ujian'              => $peserta_ujian ?? 0,
             'peserta_tidak_ujian'        => $peserta_tidak_ujian ?? 0,
-            'peserta_umur_1'             => $a,
-            'peserta_umur_2'             => $b,
-            'peserta_umur_3'             => $c,
-            'peserta_umur_4'             => $d,
-            'peserta_umur_5'             => $e,
-            'peserta_umur_6'             => $f,
+            // 'peserta_umur_1'             => $a,
+            // 'peserta_umur_2'             => $b,
+            // 'peserta_umur_3'             => $c,
+            // 'peserta_umur_4'             => $d,
+            // 'peserta_umur_5'             => $e,
+            // 'peserta_umur_6'             => $f,
         ];
 
         return view('backend.pendidikan.tahsin.dashboard',
