@@ -199,30 +199,30 @@ class AdministrasiController extends Controller
                             ->get();
         $datalevel     = $this->listlevel;
 
-        foreach ($d_angkatan as $data_total) {
-            $total_angkatan[]                     = (int)$data_total->angkatan_peserta;
-            $total_peserta[]                      = Tahsin::whereNotNull('level_peserta')->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_daftar_baru[]          = Tahsin::daftarBaru($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_daftar_ulang[]         = Tahsin::whereNotNull('level_peserta')->daftarUlang($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_tidak_daftar_ulang[]   = Tahsin::whereNotNull('level_peserta')->tidakDaftarUlang($data_total->angkatan_peserta-1)->angkatan($data_total->angkatan_peserta-1)->count();
-            $total_peserta_tidak_ujian[]          = Tahsin::whereNotNull('level_peserta')->whereNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_tidak_naik_level[]     = Tahsin::whereNotNull('level_peserta')->whereRaw('tahsins.level_peserta != tahsins.kenaikan_level_peserta')->whereNotNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_ikhwan[]               = Tahsin::whereNotNull('level_peserta')->ikhwan()->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_akhwat[]               = Tahsin::whereNotNull('level_peserta')->akhwat()->angkatan($data_total->angkatan_peserta)->count();
-            $total_peserta_alhaq[]                = Tahsin::whereNotNull('level_peserta')->where('kenaikan_level_peserta', 'TAJWIDI 1')->angkatan($data_total->angkatan_peserta)->count();
-        }
+        // foreach ($d_angkatan as $data_total) {
+        //     $total_angkatan[]                     = (int)$data_total->angkatan_peserta;
+        //     $total_peserta[]                      = Tahsin::whereNotNull('level_peserta')->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_daftar_baru[]          = Tahsin::daftarBaru($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_daftar_ulang[]         = Tahsin::whereNotNull('level_peserta')->daftarUlang($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_tidak_daftar_ulang[]   = Tahsin::whereNotNull('level_peserta')->tidakDaftarUlang($data_total->angkatan_peserta-1)->angkatan($data_total->angkatan_peserta-1)->count();
+        //     $total_peserta_tidak_ujian[]          = Tahsin::whereNotNull('level_peserta')->whereNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_tidak_naik_level[]     = Tahsin::whereNotNull('level_peserta')->whereRaw('tahsins.level_peserta != tahsins.kenaikan_level_peserta')->whereNotNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_ikhwan[]               = Tahsin::whereNotNull('level_peserta')->ikhwan()->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_akhwat[]               = Tahsin::whereNotNull('level_peserta')->akhwat()->angkatan($data_total->angkatan_peserta)->count();
+        //     $total_peserta_alhaq[]                = Tahsin::whereNotNull('level_peserta')->where('kenaikan_level_peserta', 'TAJWIDI 1')->angkatan($data_total->angkatan_peserta)->count();
+        // }
 
         $statistik_utama = [
-            'total_angkatan'                   => $total_angkatan ?? 0,
-            'total_peserta'                    => $total_peserta ?? 0,
-            'total_peserta_daftar_baru'        => $total_peserta_daftar_baru ?? 0,
-            'total_peserta_daftar_ulang'       => $total_peserta_daftar_ulang ?? 0,
-            'total_peserta_tidak_daftar_ulang' => $total_peserta_tidak_daftar_ulang ?? 0,
-            'total_peserta_tidak_ujian'        => $total_peserta_tidak_ujian ?? 0,
-            'total_peserta_tidak_naik_level'   => $total_peserta_tidak_naik_level ?? 0,
-            'total_peserta_ikhwan'             => $total_peserta_ikhwan ?? 0,
-            'total_peserta_akhwat'             => $total_peserta_akhwat ?? 0,
-            'total_peserta_alhaq'              => $total_peserta_alhaq ?? 0,
+            // 'total_angkatan'                   => $total_angkatan ?? 0,
+            // 'total_peserta'                    => $total_peserta ?? 0,
+            // 'total_peserta_daftar_baru'        => $total_peserta_daftar_baru ?? 0,
+            // 'total_peserta_daftar_ulang'       => $total_peserta_daftar_ulang ?? 0,
+            // 'total_peserta_tidak_daftar_ulang' => $total_peserta_tidak_daftar_ulang ?? 0,
+            // 'total_peserta_tidak_ujian'        => $total_peserta_tidak_ujian ?? 0,
+            // 'total_peserta_tidak_naik_level'   => $total_peserta_tidak_naik_level ?? 0,
+            // 'total_peserta_ikhwan'             => $total_peserta_ikhwan ?? 0,
+            // 'total_peserta_akhwat'             => $total_peserta_akhwat ?? 0,
+            // 'total_peserta_alhaq'              => $total_peserta_alhaq ?? 0,
         ];
 
         // DETAIL CHART
