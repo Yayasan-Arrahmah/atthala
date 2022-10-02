@@ -133,6 +133,31 @@
     }
 
     </style>
+    <style>
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
+
+        #loading-image {
+            z-index: 100;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <style>
+    body {
+      font-family: "Nunito", sans-serif;
+    }
+    </style>
 
     @stack('after-styles')
     @livewireStyles
@@ -158,6 +183,14 @@
             @include('includes.partials.logged-in-as')
             <div class="p-3"></div>
             {{-- {!! Breadcrumbs::render() !!} --}}
+
+            <div id="loading">
+                <div class="text-center">
+                    <div id="loading-image" class="spinner-border text-danger" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
 
             <div class="container-fluid">
                 <div class="animated fadeIn">
@@ -243,9 +276,20 @@
 
 
     <script>
-        $(document).ready( function () {
-
+        window.addEventListener( "pageshow", function ( event ) {
+        var historyTraversal = event.persisted ||
+                                ( typeof window.performance != "undefined" &&
+                                    window.performance.navigation.type === 2 );
+        if ( historyTraversal ) {
+            // Handle page restore.
+            window.location.reload();
+        }
         });
+    </script>
+    <script>
+        $(window).on('load', function () {
+        $('#loading').hide();
+        })
     </script>
 
     {{-- <script type="text/javascript">

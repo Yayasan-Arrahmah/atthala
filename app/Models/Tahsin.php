@@ -183,7 +183,12 @@ class Tahsin extends Model
     {
         if (!null == $status) {
             if( $status != 'SEMUA') {
-                return $query->where('status_keaktifan', '=', $status);
+                if ( $status == 'AKTIF') {
+                    return $query->where('status_keaktifan', '=', $status)
+                                ->whereNotNull('level_peserta');
+                } else {
+                    return $query->where('status_keaktifan', '=', $status);
+                }
             }
         }
     }
@@ -196,6 +201,12 @@ class Tahsin extends Model
     public function scopeDaftarUlang($query, $angkatan)
     {
         $query->where('no_tahsin', 'not like', '%-'.$angkatan.'-%');
+    }
+
+    public function scopeTidakDaftarUlang($query, $angkatan)
+    {
+        $this->angkatan_ = $angkatan;
+        $query->whereDoesntHave('belumdaftarulang');
     }
 
     public function scopeIkhwan($query)
