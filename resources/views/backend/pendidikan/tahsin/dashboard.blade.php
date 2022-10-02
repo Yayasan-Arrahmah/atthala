@@ -44,7 +44,7 @@
     </div><!--col-->
 </div><!--row-->
 
-<div class="row ">
+{{-- <div class="row ">
     <div class="col">
         <div class="card">
             <div class="card-body">
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="row ">
     <div class="col">
@@ -114,7 +114,7 @@
 </div>
 
 {{-- CHART 1 - DATA SELURUH ANGKATAN--}}
-<script>
+{{-- <script>
     var options = {
         series: [
         {
@@ -199,10 +199,10 @@
 
     var chart = new ApexCharts(document.querySelector("#chart1"), options);
     chart.render();
-</script>
+</script> --}}
 
 {{-- CHART 2 - DATA JENIS PESERTA--}}
-{{-- <script>
+<script>
     var options = {
         series: [{{ json_encode(data_get($statistik, 'peserta_ikhwan')) }}, {{ json_encode(data_get($statistik, 'peserta_akhwat')) }}],
         chart: {
@@ -247,10 +247,10 @@
 
     var chart = new ApexCharts(document.querySelector("#chart2"), options);
     chart.render();
-</script> --}}
+</script>
 
 {{-- CHART 3 - DATA KENAIKAN PESERTA--}}
-{{-- <script>
+<script>
     var options = {
         series: [{{ json_encode(data_get($statistik, 'peserta_naik_level')) }}, {{ json_encode(data_get($statistik, 'peserta_tidak_naik_level')) }}],
         chart: {
@@ -294,10 +294,10 @@
 
     var chart = new ApexCharts(document.querySelector("#chart3"), options);
     chart.render();
-</script> --}}
+</script>
 
 {{-- CHART 4 - DATA LEVEL --}}
-{{-- <script>
+<script>
     var options = {
         series: [{
             name: 'Daftar Baru',
@@ -367,10 +367,10 @@
     var chart = new ApexCharts(document.querySelector("#chart4"), options);
     chart.render();
 
-</script> --}}
+</script>
 
 {{-- CHART 5 - DAFTAR ULANG PESERTA--}}
-{{-- <script>
+<script>
     var options = {
         series: [{{ json_encode(data_get($statistik, 'peserta_daftar_ulang')) }}, {{ json_encode(data_get($statistik, 'peserta_tidak_daftar_ulang')) }}],
         chart: {
@@ -414,10 +414,10 @@
 
     var chart = new ApexCharts(document.querySelector("#chart5"), options);
     chart.render();
-</script> --}}
+</script>
 
 {{-- CHART 6 - DAFTAR UJIAN PESERTA--}}
-{{-- <script>
+<script>
     var options = {
         series: [{{ json_encode(data_get($statistik, 'peserta_ujian')) }}, {{ json_encode(data_get($statistik, 'peserta_tidak_ujian')) }}],
         chart: {
@@ -461,10 +461,10 @@
 
     var chart = new ApexCharts(document.querySelector("#chart6"), options);
     chart.render();
-</script> --}}
+</script>
 
 {{-- CHART 7 - DATA MARGIN SELURUH ANGKATAN--}}
-<script>
+{{-- <script>
     var options = {
         series: [
         {
@@ -533,10 +533,10 @@
 
     var chart = new ApexCharts(document.querySelector("#chart7"), options);
     chart.render();
-</script>
+</script> --}}
 
 {{-- CHART 8 - DATA UMUR PESERTA--}}
-{{-- <script>
+<script>
     var options = {
         series: [{
             data: [
@@ -589,6 +589,6 @@
     var chart = new ApexCharts(document.querySelector("#chart8"), options);
     chart.render();
 
-</script> --}}
+</script>
 
 @endsection
