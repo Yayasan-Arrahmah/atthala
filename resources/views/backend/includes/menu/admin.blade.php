@@ -8,7 +8,7 @@
                 active_class(Active::checkUriPattern('admin/dashboard'))
             }}" href="{{ route('admin.dashboard') }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                @lang('menus.backend.sidebar.dashboard')
+                Dashboard Tahsin
             </a>
         </li>
         <li class="nav-item">
@@ -55,11 +55,11 @@
                 Administrasi
             </a>
             <ul class="nav-dropdown-items">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ (request()->is('admin/tahsin/peserta/dashboard')) ? 'active' : '' }}" href="/admin/tahsin/peserta/dashboard">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Dashboard
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ (request()->is('admin/tahsin/peserta/daftar-ulang')) ? 'active' : '' }}" href="/admin/tahsin/peserta/daftar-ulang">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Peserta Daftar Ulang
