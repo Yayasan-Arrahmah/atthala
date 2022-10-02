@@ -271,25 +271,25 @@ class AdministrasiController extends Controller
         $d = 0;
         $e = 0;
         $f = 0;
-        foreach ($peserta_aktif as $data_k){
-            if ($data_k->waktu_lahir_peserta) {
-                $kategori_umur = Carbon::createFromFormat('d-m-Y', $data_k->waktu_lahir_peserta)->age;
-                $tes[] =  $kategori_umur;
-                if ($kategori_umur < 17) {
-                    $a++;
-                } elseif ($kategori_umur >= 17 && $kategori_umur <= 25) {
-                    $b++;
-                } elseif ($kategori_umur >= 26 && $kategori_umur <= 35) {
-                    $c++;
-                } elseif ($kategori_umur >= 36 && $kategori_umur <= 45) {
-                    $d++;
-                } elseif ($kategori_umur >= 46 && $kategori_umur <= 55) {
-                    $e++;
-                } elseif ($kategori_umur > 55) {
-                    $f++;
-                }
-            }
-        }
+        // foreach ($peserta_aktif as $data_k){
+        //     if ($data_k->waktu_lahir_peserta) {
+        //         $kategori_umur = Carbon::createFromFormat('d-m-Y', $data_k->waktu_lahir_peserta)->age;
+        //         $tes[] =  $kategori_umur;
+        //         if ($kategori_umur < 17) {
+        //             $a++;
+        //         } elseif ($kategori_umur >= 17 && $kategori_umur <= 25) {
+        //             $b++;
+        //         } elseif ($kategori_umur >= 26 && $kategori_umur <= 35) {
+        //             $c++;
+        //         } elseif ($kategori_umur >= 36 && $kategori_umur <= 45) {
+        //             $d++;
+        //         } elseif ($kategori_umur >= 46 && $kategori_umur <= 55) {
+        //             $e++;
+        //         } elseif ($kategori_umur > 55) {
+        //             $f++;
+        //         }
+        //     }
+        // }
 
         $statistik = [
             'peserta_daftar_baru'        => $peserta_daftar_baru ?? 0,
