@@ -186,7 +186,7 @@
 
             <div id="loading">
                 <div class="text-center">
-                    <div id="loading-image" class="spinner-border text-danger" role="status">
+                    <div id="loading-image" class="spinner-border text-success" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>
