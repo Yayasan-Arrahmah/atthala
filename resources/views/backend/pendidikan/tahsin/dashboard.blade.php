@@ -329,13 +329,21 @@
         stroke: {
             width: 0,
         },
+        grid: {
+            show: true,
+            xaxis: {
+                lines: {
+                    show: true
+                }
+            }
+        },
         title: {
             text: 'Data Level'
         },
         xaxis: {
             categories: [
             @foreach ($datalevel as $key_c => $level_c)
-            '{{ $level_c->nama }} - {{ (int)json_encode(data_get($statistik_level_daftar_baru[$key_c], $level_c->nama))+(int)json_encode(data_get($statistik_level_daftar_ulang[$key_c], $level_c->nama)) }}',
+            '{{ $level_c->nama_singkat }} : {{ (int)json_encode(data_get($statistik_level_daftar_baru[$key_c], $level_c->nama))+(int)json_encode(data_get($statistik_level_daftar_ulang[$key_c], $level_c->nama)) }}',
             @endforeach
             ]
         },
@@ -548,6 +556,15 @@
                 {{ json_encode(data_get($statistik, 'peserta_umur_6')) }},
             ]
         }],
+        grid: {
+            show: true,
+            strokeDashArray: 5,
+            xaxis: {
+                lines: {
+                    show: true
+                }
+            }
+        },
         chart: {
             type: 'bar',
             height: 400
