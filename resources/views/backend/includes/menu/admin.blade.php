@@ -8,7 +8,7 @@
                 active_class(Active::checkUriPattern('admin/dashboard'))
             }}" href="{{ route('admin.dashboard') }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                Dashboard
+                Dashboard Tahsin
             </a>
         </li>
         <li class="nav-item">
