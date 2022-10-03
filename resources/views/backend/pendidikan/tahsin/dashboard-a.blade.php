@@ -118,7 +118,7 @@
     var options = {
         series: [
         {
-            name: 'Jumlah Peserta',
+            name: 'Jumlah Peserta Aktif',
             type: 'line',
             data: {{ json_encode(data_get($statistik_utama, 'total_peserta')) }}
         },
@@ -151,7 +151,7 @@
         ],
         chart: {
             type: 'line',
-            height: 350,
+            height: 400,
             toolbar: {
                 show: true
             },
