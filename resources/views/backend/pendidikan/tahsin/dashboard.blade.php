@@ -23,20 +23,20 @@
                             Dashboard Administrasi Tahsin
                         </h4>
                     </div>
-                    {{-- <div class="col-3">
+                    <div class="col-3">
                         <form action="{{ Request::fullUrl() }}" class="row">
                             <div class="col-md-8 text-muted text-right pt-1">
                                 Angkatan
                             </div>
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <select class="form-control form-control-sm" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
                                     @foreach($dataangkatan as $angkatan)
                                     <option value="{{ $angkatan->angkatan_peserta }}" {{ request()->angkatan == $angkatan->angkatan_peserta ? 'selected' : '' }}>{{ $angkatan->angkatan_peserta }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         </form>
-                    </div> --}}
+                    </div>
                 </div>
 
             </div><!--card-header-->
@@ -44,7 +44,7 @@
     </div><!--col-->
 </div><!--row-->
 
-{{-- <div class="row ">
+<div class="row ">
     <div class="col">
         <div class="card">
             <div class="card-body">
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
 <div class="row ">
     <div class="col">
@@ -108,13 +108,21 @@
                         <div id="chart8"></div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div id="chart10"></div>
+                    </div>
+                    <div class="col-md-5">
+                        <div id="chart9"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 {{-- CHART 1 - DATA SELURUH ANGKATAN--}}
-{{-- <script>
+<script>
     var options = {
         series: [
         {
@@ -144,7 +152,7 @@
         }
         ,
         {
-            name: 'Al-Haq',
+            name: 'ke Al-Haq',
             type: 'line',
             data: {{ json_encode(data_get($statistik_utama, 'total_peserta_alhaq')) }}
         }
@@ -199,21 +207,20 @@
 
     var chart = new ApexCharts(document.querySelector("#chart1"), options);
     chart.render();
-</script> --}}
+</script>
 
-{{-- CHART 2 - DATA JENIS PESERTA--}}
+{{-- CHART 2 - DATA JENIS PESERTA Daftar Baru--}}
 <script>
     var options = {
-        series: [{{ json_encode(data_get($statistik, 'peserta_ikhwan')) }}, {{ json_encode(data_get($statistik, 'peserta_akhwat')) }}],
+        series: [{{ json_encode(data_get($statistik, 'peserta_ikhwan_daftar_baru')) }}, {{ json_encode(data_get($statistik, 'peserta_akhwat_daftar_baru')) }}],
         chart: {
             height: 200,
-
-            type: 'pie',
+            type: 'donut',
         },
         colors: ['#006bd8', '#e83e8c'],
         labels: ['Ikhwan', 'Akhwat'],
         title: {
-            text: 'Data Jenis Peserta'
+            text: 'Jenis Peserta Daftar Baru'
         },
         legend: {
             position: 'top'
@@ -472,7 +479,7 @@
 </script>
 
 {{-- CHART 7 - DATA MARGIN SELURUH ANGKATAN--}}
-{{-- <script>
+<script>
     var options = {
         series: [
         {
@@ -541,7 +548,7 @@
 
     var chart = new ApexCharts(document.querySelector("#chart7"), options);
     chart.render();
-</script> --}}
+</script>
 
 {{-- CHART 8 - DATA UMUR PESERTA--}}
 <script>
@@ -606,6 +613,134 @@
     var chart = new ApexCharts(document.querySelector("#chart8"), options);
     chart.render();
 
+</script>
+
+{{-- CHART 9 - DATA LEVEL JENIS PESERTA --}}
+<script>
+    var options = {
+        series: [{
+            name: 'Ikhwan',
+            data: [
+            @foreach ($datalevel as $key_a => $level_a)
+            {{ json_encode(data_get($statistik_level_ikhwan[$key_a], $level_a->nama)) }},
+            @endforeach
+            ]
+        }, {
+            name: 'Akhwat',
+            data: [
+            @foreach ($datalevel as $key_b => $level_b)
+            {{ json_encode(data_get($statistik_level_akhwat[$key_b], $level_b->nama)) }},
+            @endforeach
+            ]
+        }
+        ],
+        colors: ['#006bd8', '#e83e8c'],
+        chart: {
+            type: 'bar',
+            height: 400,
+            stacked: true,
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+            },
+        },
+        stroke: {
+            width: 0,
+        },
+        grid: {
+            show: true,
+            xaxis: {
+                lines: {
+                    show: true
+                }
+            }
+        },
+        title: {
+            text: 'Data Level Jenis Peserta'
+        },
+        xaxis: {
+            categories: [
+            @foreach ($datalevel as $key_c => $level_c)
+            '{{ $level_c->nama_singkat }} : {{ (int)json_encode(data_get($statistik_level_daftar_baru[$key_c], $level_c->nama))+(int)json_encode(data_get($statistik_level_daftar_ulang[$key_c], $level_c->nama)) }}',
+            @endforeach
+            ]
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " Peserta"
+                }
+            }
+        },
+        fill: {
+            type:'solid',
+            opacity: [0.9, 0.9],
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: '10px',
+                colors: ["#222"]
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 40
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart9"), options);
+    chart.render();
+
+</script>
+
+{{-- CHART 10 - DATA JENIS PESERTA--}}
+<script>
+    var options = {
+        series: [{{ json_encode(data_get($statistik, 'peserta_ikhwan')) }}, {{ json_encode(data_get($statistik, 'peserta_akhwat')) }}],
+        chart: {
+            height: 600,
+            type: 'pie',
+        },
+        colors: ['#006bd8', '#e83e8c'],
+        labels: ['Ikhwan', 'Akhwat'],
+        title: {
+            text: 'Data Total Jenis Peserta'
+        },
+        legend: {
+            position: 'top'
+        },
+        fill: {
+            type:'solid',
+            opacity: [0.8, 0.8],
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: '12px',
+                colors: ["#111"]
+            },
+            dropShadow: {
+                enabled: false
+            }
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'top'
+                }
+            }
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart10"), options);
+    chart.render();
 </script>
 
 @endsection

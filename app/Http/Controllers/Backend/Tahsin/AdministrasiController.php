@@ -199,30 +199,30 @@ class AdministrasiController extends Controller
                             ->get();
         $datalevel     = $this->listlevel;
 
-        // foreach ($d_angkatan as $data_total) {
-        //     $total_angkatan[]                     = (int)$data_total->angkatan_peserta;
-        //     $total_peserta[]                      = Tahsin::whereNotNull('level_peserta')->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_daftar_baru[]          = Tahsin::daftarBaru($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_daftar_ulang[]         = Tahsin::whereNotNull('level_peserta')->daftarUlang($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_tidak_daftar_ulang[]   = Tahsin::whereNotNull('level_peserta')->tidakDaftarUlang($data_total->angkatan_peserta-1)->angkatan($data_total->angkatan_peserta-1)->count();
-        //     $total_peserta_tidak_ujian[]          = Tahsin::whereNotNull('level_peserta')->whereNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_tidak_naik_level[]     = Tahsin::whereNotNull('level_peserta')->whereRaw('tahsins.level_peserta != tahsins.kenaikan_level_peserta')->whereNotNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_ikhwan[]               = Tahsin::whereNotNull('level_peserta')->ikhwan()->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_akhwat[]               = Tahsin::whereNotNull('level_peserta')->akhwat()->angkatan($data_total->angkatan_peserta)->count();
-        //     $total_peserta_alhaq[]                = Tahsin::whereNotNull('level_peserta')->where('kenaikan_level_peserta', 'TAJWIDI 1')->angkatan($data_total->angkatan_peserta)->count();
-        // }
+        foreach ($d_angkatan as $data_total) {
+            $total_angkatan[]                     = (int)$data_total->angkatan_peserta;
+            $total_peserta[]                      = Tahsin::whereNotNull('level_peserta')->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_daftar_baru[]          = Tahsin::daftarBaru($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_daftar_ulang[]         = Tahsin::whereNotNull('level_peserta')->daftarUlang($data_total->angkatan_peserta)->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_tidak_daftar_ulang[]   = Tahsin::whereNotNull('level_peserta')->tidakDaftarUlang($data_total->angkatan_peserta-1)->angkatan($data_total->angkatan_peserta-1)->count();
+            $total_peserta_tidak_ujian[]          = Tahsin::whereNotNull('level_peserta')->whereNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_tidak_naik_level[]     = Tahsin::whereNotNull('level_peserta')->whereRaw('tahsins.level_peserta != tahsins.kenaikan_level_peserta')->whereNotNull('kenaikan_level_peserta')->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_ikhwan[]               = Tahsin::whereNotNull('level_peserta')->ikhwan()->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_akhwat[]               = Tahsin::whereNotNull('level_peserta')->akhwat()->angkatan($data_total->angkatan_peserta)->count();
+            $total_peserta_alhaq[]                = Tahsin::whereNotNull('level_peserta')->where('kenaikan_level_peserta', 'TAJWIDI 1')->angkatan($data_total->angkatan_peserta)->count();
+        }
 
         $statistik_utama = [
-            // 'total_angkatan'                   => $total_angkatan ?? 0,
-            // 'total_peserta'                    => $total_peserta ?? 0,
-            // 'total_peserta_daftar_baru'        => $total_peserta_daftar_baru ?? 0,
-            // 'total_peserta_daftar_ulang'       => $total_peserta_daftar_ulang ?? 0,
-            // 'total_peserta_tidak_daftar_ulang' => $total_peserta_tidak_daftar_ulang ?? 0,
-            // 'total_peserta_tidak_ujian'        => $total_peserta_tidak_ujian ?? 0,
-            // 'total_peserta_tidak_naik_level'   => $total_peserta_tidak_naik_level ?? 0,
-            // 'total_peserta_ikhwan'             => $total_peserta_ikhwan ?? 0,
-            // 'total_peserta_akhwat'             => $total_peserta_akhwat ?? 0,
-            // 'total_peserta_alhaq'              => $total_peserta_alhaq ?? 0,
+            'total_angkatan'                   => $total_angkatan ?? 0,
+            'total_peserta'                    => $total_peserta ?? 0,
+            'total_peserta_daftar_baru'        => $total_peserta_daftar_baru ?? 0,
+            'total_peserta_daftar_ulang'       => $total_peserta_daftar_ulang ?? 0,
+            'total_peserta_tidak_daftar_ulang' => $total_peserta_tidak_daftar_ulang ?? 0,
+            'total_peserta_tidak_ujian'        => $total_peserta_tidak_ujian ?? 0,
+            'total_peserta_tidak_naik_level'   => $total_peserta_tidak_naik_level ?? 0,
+            'total_peserta_ikhwan'             => $total_peserta_ikhwan ?? 0,
+            'total_peserta_akhwat'             => $total_peserta_akhwat ?? 0,
+            'total_peserta_alhaq'              => $total_peserta_alhaq ?? 0,
         ];
 
         // DETAIL CHART
@@ -231,6 +231,8 @@ class AdministrasiController extends Controller
         $peserta_tidak_daftar_ulang   = Tahsin::whereNotNull('level_peserta')->tidakDaftarUlang($this->angkatan-1)->angkatan($this->angkatan-1)->count();
         $peserta_ikhwan               = Tahsin::whereNotNull('level_peserta')->ikhwan()->angkatan($this->angkatan)->count();
         $peserta_akhwat               = Tahsin::whereNotNull('level_peserta')->akhwat()->angkatan($this->angkatan)->count();
+        $peserta_ikhwan_daftar_baru   = Tahsin::whereNotNull('level_peserta')->ikhwan()->angkatan($this->angkatan)->daftarBaru($this->angkatan)->count();
+        $peserta_akhwat_daftar_baru   = Tahsin::whereNotNull('level_peserta')->akhwat()->angkatan($this->angkatan)->daftarBaru($this->angkatan)->count();
         $peserta_naik_level           = Tahsin::whereRaw('tahsins.level_peserta = tahsins.kenaikan_level_peserta')
                                         ->whereNotNull('level_peserta')
                                         ->whereNotNull('kenaikan_level_peserta')
@@ -262,6 +264,18 @@ class AdministrasiController extends Controller
         foreach ($datalevel as $d_level_daftar_ulang) {
             $statistik_level_daftar_ulang[] = [
                 strval($d_level_daftar_ulang->nama) => Tahsin::daftarUlang($this->angkatan)->where('level_peserta', $d_level_daftar_ulang->nama)->angkatan($this->angkatan)->count(),
+            ];
+        }
+
+        foreach ($datalevel as $d_level_ikhwan) {
+            $statistik_level_ikhwan[] = [
+                strval($d_level_ikhwan->nama) => Tahsin::ikhwan()->where('level_peserta', $d_level_ikhwan->nama)->angkatan($this->angkatan)->count(),
+            ];
+        }
+
+        foreach ($datalevel as $d_level_akhwat) {
+            $statistik_level_akhwat[] = [
+                strval($d_level_akhwat->nama) => Tahsin::akhwat()->where('level_peserta', $d_level_akhwat->nama)->angkatan($this->angkatan)->count(),
             ];
         }
 
@@ -297,6 +311,8 @@ class AdministrasiController extends Controller
             'peserta_tidak_daftar_ulang' => $peserta_tidak_daftar_ulang ?? 0,
             'peserta_ikhwan'             => $peserta_ikhwan ?? 0,
             'peserta_akhwat'             => $peserta_akhwat ?? 0,
+            'peserta_ikhwan_daftar_baru' => $peserta_ikhwan_daftar_baru ?? 0,
+            'peserta_akhwat_daftar_baru' => $peserta_akhwat_daftar_baru ?? 0,
             'peserta_naik_level'         => $peserta_naik_level ?? 0,
             'peserta_tidak_naik_level'   => $peserta_tidak_naik_level ?? 0,
             'peserta_ujian'              => $peserta_ujian ?? 0,
@@ -310,7 +326,7 @@ class AdministrasiController extends Controller
         ];
 
         return view('backend.pendidikan.tahsin.dashboard',
-            compact('dataangkatan', 'statistik_utama', 'statistik', 'statistik_level', 'statistik_level_daftar_baru', 'statistik_level_daftar_ulang', 'datalevel'));
+            compact('dataangkatan', 'statistik_utama', 'statistik', 'statistik_level', 'statistik_level_daftar_baru', 'statistik_level_daftar_ulang', 'statistik_level_ikhwan', 'statistik_level_akhwat', 'datalevel'));
     }
 
     // FUNGSI UNTUK PERBAIKAN BUG PEMBUATAN AWAL YG TIDAK DISERTAI RELASI KE TABEL PESERTA UJIAN - SATU KALI SAJA
