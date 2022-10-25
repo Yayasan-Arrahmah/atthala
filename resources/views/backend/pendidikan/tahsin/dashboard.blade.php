@@ -44,7 +44,7 @@
     </div><!--col-->
 </div><!--row-->
 
-<div class="row ">
+{{-- <div class="row ">
     <div class="col">
         <div class="card">
             <div class="card-body">
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="row ">
     <div class="col">
@@ -122,7 +122,7 @@
 </div>
 
 {{-- CHART 1 - DATA SELURUH ANGKATAN--}}
-<script>
+{{-- <script>
     var options = {
         series: [
         {
@@ -207,9 +207,9 @@
 
     var chart = new ApexCharts(document.querySelector("#chart1"), options);
     chart.render();
-</script>
+</script> --}}
 
-{{-- CHART 2 - DATA JENIS PESERTA Daftar Baru--}}
+{{-- CHART 2 - DATA JENIS PESERTA DAFTAR BARU--}}
 <script>
     var options = {
         series: [{{ json_encode(data_get($statistik, 'peserta_ikhwan_daftar_baru')) }}, {{ json_encode(data_get($statistik, 'peserta_akhwat_daftar_baru')) }}],
@@ -479,7 +479,7 @@
 </script>
 
 {{-- CHART 7 - DATA MARGIN SELURUH ANGKATAN--}}
-<script>
+{{-- <script>
     var options = {
         series: [
         {
@@ -548,7 +548,7 @@
 
     var chart = new ApexCharts(document.querySelector("#chart7"), options);
     chart.render();
-</script>
+</script> --}}
 
 {{-- CHART 8 - DATA UMUR PESERTA--}}
 <script>
