@@ -10,11 +10,257 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="m-0">
-                        SPP Tahsin - <u>{{ $title ?? 'Peserta' }}</u>
+                        Rekapitulasi Pembayaran - <u>{{ $title ?? 'Peserta' }}</u>
                     </h4>
                 </div><!--card-header-->
                 <div class="card-body">
                     @include('backend.pendidikan.tahsin.component.filter-tahsin')
+                </div><!--card-body-->
+            </div><!--card-->
+        </div><!--col-->
+    </div><!--row-->
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="pt-2 font-weight-bold">Total Perhitungan</h5>
+                            <hr>
+                            <table class="table table-sm table-borderless mb-0" style="font-size: 15px">
+                                <tbody>
+                                    <tr>
+                                        <td>Daftar Baru</td>
+                                        <td>: </td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'daftar_baru'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daftar Ulang</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'daftar_ulang'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daftar Ujian</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            -
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SPP</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'spp'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-info font-weight-bold">
+                                        <td>Total Pendapatan</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'total'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-success font-weight-bold">
+                                        <td>Potensi Pendapatan</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'total_potensi'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-danger font-italic font-weight-bold">
+                                        <td>Piutang</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right ">
+                                            {{ number_format(data_get($data_pembayaran, 'total_piutang'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4" style="background-color: #fafafa;">
+                            <h5 class="pt-2 font-weight-bold">Total Perhitungan Ikhwan</h5>
+                            <hr>
+                            <table class="table table-sm table-borderless mb-0" style="font-size: 15px">
+                                <tbody>
+                                    <tr>
+                                        <td>Daftar Baru</td>
+                                        <td>: </td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'daftar_baru_ikhwan'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daftar Ulang</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'daftar_ulang_ikhwan'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daftar Ujian</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            -
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SPP</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'spp_ikhwan'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-info font-weight-bold">
+                                        <td>Total Pendapatan</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'total_ikhwan'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-success font-weight-bold">
+                                        <td>Potensi Pendapatan</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'total_potensi_ikhwan'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-danger font-italic font-weight-bold">
+                                        <td>Piutang</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right ">
+                                            {{ number_format(data_get($data_pembayaran, 'total_piutang_ikhwan'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-4">
+                            <h5 class="pt-2 font-weight-bold">Total Perhitungan Akhwat</h5>
+                            <hr>
+                            <table class="table table-sm table-borderless mb-0" style="font-size: 15px">
+                                <tbody>
+                                    <tr>
+                                        <td>Daftar Baru</td>
+                                        <td>: </td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'daftar_baru_akhwat'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daftar Ulang</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'daftar_ulang_akhwat'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Daftar Ujian</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            -
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SPP</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'spp_akhwat'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-info font-weight-bold">
+                                        <td>Total Pendapatan</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'total_akhwat'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-success font-weight-bold">
+                                        <td>Potensi Pendapatan</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right">
+                                            {{ number_format(data_get($data_pembayaran, 'total_potensi_akhwat'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                    <tr class="text-danger font-italic font-weight-bold">
+                                        <td>Piutang</td>
+                                        <td>:</td>
+                                        <td class="font-weight-bold">
+                                            Rp
+                                        </td>
+                                        <td class="font-weight-bold text-right ">
+                                            {{ number_format(data_get($data_pembayaran, 'total_piutang_akhwat'), 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div><!--card-body-->
             </div><!--card-->
         </div><!--col-->

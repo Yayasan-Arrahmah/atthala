@@ -80,10 +80,10 @@ class PembayaranController extends Controller
                                     }
                                 }
                             });
-                        })
-                        ->where('angkatan_ujian', $this->angkatan)
-                        ->orderBy('created_at', 'ASC')
-                        ->paginate(10);
+        })
+        ->where('angkatan_ujian', $this->angkatan)
+        ->orderBy('created_at', 'ASC')
+        ->paginate(10);
     }
 
     public function tahsinbase($statusA, $statusB, $titleA)
@@ -98,10 +98,10 @@ class PembayaranController extends Controller
 
         if ($status_ == null) {
             return view('backend.pendidikan.tahsin.pembayaran-tahsin',
-                compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
+            compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
         } else {
             return view('backend.pendidikan.tahsin.pembayaran',
-                compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
+            compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
         }
 
     }
@@ -131,7 +131,7 @@ class PembayaranController extends Controller
         $title            = $titleA;
 
         return view('backend.pendidikan.tahsin.pembayaran-ujian',
-            compact('title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pesertaujians'));
+        compact('title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pesertaujians'));
 
         // return $this->pembayaranbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
     }
@@ -141,18 +141,18 @@ class PembayaranController extends Controller
         $this->statusdaftar    = $statusdaftar;
         $this->statuskeaktifan = $statuskeaktifan;
         return Pembayaran::whereHas('tahsinspp', function (Builder $query){
-                            $query->cari($this->cari)
-                            ->cariLevel($this->level)
-                            ->jenis($this->jenis)
-                            ->pengajar($this->pengajar)
-                            ->where('angkatan_peserta', $this->angkatan)
-                            ->statusPeserta($this->status)
-                            ->statusKeaktifan($this->statuskeaktifan)
-                            ;
-                        })
-                        ->where('jenis_pembayaran', 'SPP TAHSIN')
-                        ->orderBy('created_at', 'ASC')
-                        ->paginate(10);
+            $query->cari($this->cari)
+            ->cariLevel($this->level)
+            ->jenis($this->jenis)
+            ->pengajar($this->pengajar)
+            ->where('angkatan_peserta', $this->angkatan)
+            ->statusPeserta($this->status)
+            ->statusKeaktifan($this->statuskeaktifan)
+            ;
+        })
+        ->where('jenis_pembayaran', 'SPP TAHSIN')
+        ->orderBy('created_at', 'ASC')
+        ->paginate(10);
     }
 
     public function getSpp()
@@ -170,18 +170,122 @@ class PembayaranController extends Controller
         $title            = $titleA;
 
         return view('backend.pendidikan.tahsin.pembayaran-spp',
-            compact('title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pembayaranspp'));
+        compact('title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'pembayaranspp'));
         // return $this->pembayaransppbase(null, 'AKTIF', 'Peserta Aktif');
+    }
+
+    public function getPembayaransppbase($statusdaftar, $statuskeaktifan)
+    {
+        $this->statusdaftar    = $statusdaftar;
+        $this->statuskeaktifan = $statuskeaktifan;
+        return Pembayaran::whereHas('tahsinspp', function (Builder $query){
+            $query->cari($this->cari)
+            ->cariLevel($this->level)
+            ->jenis($this->jenis)
+            ->pengajar($this->pengajar)
+            ->where('angkatan_peserta', $this->angkatan)
+            ->statusPeserta($this->status)
+            ->statusKeaktifan($this->statuskeaktifan)
+            ;
+        })
+        ->where('jenis_pembayaran', 'SPP TAHSIN')
+        ->orderBy('created_at', 'ASC')
+        ->paginate(10);
     }
 
     public function getRekapitulasi()
     {
-        return $this->tahsinbase(null, 'AKTIF', 'Peserta Aktif');
+        $statusA = NULL;
+        $statusB = 'AKTIF';
+        $titleA  = 'Peserta Aktif';
+
+        $status_       = $statusA;
+        $tahsins       = $this->tahsin($statusA, $statusB);
+        $dataangkatan  = $this->listangkatan;
+        $datalevel     = $this->listlevel;
+        $datapengajars = $this->listpengajar;
+        $liststatus    = $this->liststatuspeserta;
+        $title         = $titleA;
+        // return $this->tahsinbase(null, 'AKTIF', 'Peserta Aktif');
+
+
+        $pembayaran_daftar_baru              = Pembayaran::jumlahdaftarbaru(null, $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_daftar_ulang             = Pembayaran::jumlahdaftarulang(null, $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_daftar_ujian             = 0;
+        $pembayaran_spp                      = Pembayaran::jumlahspp(null, $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_total                    = $pembayaran_daftar_baru + $pembayaran_daftar_ulang + $pembayaran_daftar_ujian + $pembayaran_spp;
+        $total_peserta_baru                  = Tahsin::whereNotNull('nama_pengajar')->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')->where('angkatan_peserta', $this->angkatan)->count();
+        $total_peserta_lama                  = Tahsin::whereNotNull('nama_pengajar')->where('no_tahsin', 'not like', '%-'.$this->angkatan.'-%')->where('angkatan_peserta', $this->angkatan)->count();
+        $total_pemasukan_peserta_baru        = $total_peserta_baru * 500000;
+        $total_pemasukan_peserta_lama        = $total_peserta_lama * 450000;
+        $total_pemasukan_peserta             = $total_pemasukan_peserta_baru + $total_pemasukan_peserta_lama;
+        $total_piutang                       = $total_pemasukan_peserta - $pembayaran_total;
+        $pembayaran_daftar_baru_ikhwan       = Pembayaran::jumlahdaftarbaru('IKHWAN', $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_daftar_ulang_ikhwan      = Pembayaran::jumlahdaftarulang('IKHWAN', $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_daftar_ujian_ikhwan      = 0;
+        $pembayaran_spp_ikhwan               = Pembayaran::jumlahspp('IKHWAN', $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_total_ikhwan             = $pembayaran_daftar_baru_ikhwan + $pembayaran_daftar_ulang_ikhwan + $pembayaran_daftar_ujian_ikhwan + $pembayaran_spp_ikhwan;
+        $total_peserta_baru_ikhwan           = Tahsin::where('jenis_peserta', 'IKHWAN')->whereNotNull('nama_pengajar')->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')->where('angkatan_peserta', $this->angkatan)->count();
+        $total_peserta_lama_ikhwan           = Tahsin::where('jenis_peserta', 'IKHWAN')->whereNotNull('nama_pengajar')->where('no_tahsin', 'not like', '%-'.$this->angkatan.'-%')->where('angkatan_peserta', $this->angkatan)->count();
+        $total_pemasukan_peserta_baru_ikhwan = $total_peserta_baru_ikhwan * 500000;
+        $total_pemasukan_peserta_lama_ikhwan = $total_peserta_lama_ikhwan * 450000;
+        $total_pemasukan_peserta_ikhwan      = $total_pemasukan_peserta_baru_ikhwan + $total_pemasukan_peserta_lama_ikhwan;
+        $total_piutang_ikhwan                = $total_pemasukan_peserta_ikhwan - $pembayaran_total_ikhwan;
+        $pembayaran_daftar_baru_akhwat       = Pembayaran::jumlahdaftarbaru('AKHWAT', $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_daftar_ulang_akhwat      = Pembayaran::jumlahdaftarulang('AKHWAT', $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_daftar_ujian_akhwat      = 0;
+        $pembayaran_spp_akhwat               = Pembayaran::jumlahspp('AKHWAT', $this->angkatan)->sum('nominal_pembayaran');
+        $pembayaran_total_akhwat             = $pembayaran_daftar_baru_akhwat + $pembayaran_daftar_ulang_akhwat + $pembayaran_daftar_ujian_akhwat + $pembayaran_spp_akhwat;
+        $total_peserta_baru_akhwat           = Tahsin::where('jenis_peserta', 'AKHWAT')->whereNotNull('nama_pengajar')->where('no_tahsin', 'like', '%-'.$this->angkatan.'-%')->where('angkatan_peserta', $this->angkatan)->count();
+        $total_peserta_lama_akhwat           = Tahsin::where('jenis_peserta', 'AKHWAT')->whereNotNull('nama_pengajar')->where('no_tahsin', 'not like', '%-'.$this->angkatan.'-%')->where('angkatan_peserta', $this->angkatan)->count();
+        $total_pemasukan_peserta_baru_akhwat = $total_peserta_baru_akhwat * 500000;
+        $total_pemasukan_peserta_lama_akhwat = $total_peserta_lama_akhwat * 450000;
+        $total_pemasukan_peserta_akhwat      = $total_pemasukan_peserta_baru_akhwat + $total_pemasukan_peserta_lama_akhwat;
+        $total_piutang_akhwat                = $total_pemasukan_peserta_akhwat - $pembayaran_total_akhwat;
+
+        $data_pembayaran=[
+            'daftar_baru'          => $pembayaran_daftar_baru ?? 0,
+            'daftar_ulang'         => $pembayaran_daftar_ulang ?? 0,
+            'daftar_ujian'         => $pembayaran_daftar_ujian ?? 0,
+            'spp'                  => $pembayaran_spp ?? 0,
+            'total'                => $pembayaran_total ?? 0,
+            'total_potensi'        => $total_pemasukan_peserta ?? 0,
+            'total_piutang'        => $total_piutang ?? 0,
+            'daftar_baru_ikhwan'   => $pembayaran_daftar_baru_ikhwan ?? 0,
+            'daftar_ulang_ikhwan'  => $pembayaran_daftar_ulang_ikhwan ?? 0,
+            'daftar_ujian_ikhwan'  => $pembayaran_daftar_ujian_ikhwan ?? 0,
+            'spp_ikhwan'           => $pembayaran_spp_ikhwan ?? 0,
+            'total_ikhwan'         => $pembayaran_total_ikhwan ?? 0,
+            'total_potensi_ikhwan' => $total_pemasukan_peserta_ikhwan ?? 0,
+            'total_piutang_ikhwan' => $total_piutang_ikhwan ?? 0,
+            'daftar_baru_akhwat'   => $pembayaran_daftar_baru_akhwat ?? 0,
+            'daftar_ulang_akhwat'  => $pembayaran_daftar_ulang_akhwat ?? 0,
+            'daftar_ujian_akhwat'  => $pembayaran_daftar_ujian_akhwat ?? 0,
+            'spp_akhwat'           => $pembayaran_spp_akhwat ?? 0,
+            'total_akhwat'         => $pembayaran_total_akhwat ?? 0,
+            'total_potensi_akhwat' => $total_pemasukan_peserta_akhwat ?? 0,
+            'total_piutang_akhwat' => $total_piutang_akhwat ?? 0,
+        ];
+
+        // $varr = Pembayaran::jumlahdaftarulang(null, $this->angkatan)->get();
+        // foreach ($varr as $key => $value) {
+        //     $oke_[] = $value->jenis_pembayaran;
+        // }
+        // dd($oke_);
+        // dd($data_pembayaran);
+
+        return view('backend.pendidikan.tahsin.pembayaran-tahsin',
+        compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus', 'data_pembayaran'));
     }
 
     public function postUpdatePembayaran()
     {
         $data = Tahsin::find($this->id);
         $data->save();
+    }
+
+    public function getDashboard()
+    {
+        # code...
     }
 }
