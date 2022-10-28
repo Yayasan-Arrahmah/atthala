@@ -161,7 +161,11 @@
                                                     Aktif
                                                 </a>
                                             @endif
-
+                                            @if ($tahsin->nama_pengajar == null)
+                                                <a href="https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id={{ $tahsin->no_tahsin }}" class="dropdown-item"  target="_blank">
+                                                    Link Pilih Jadwal
+                                                </a>
+                                            @endif
 
                                             <a href="{{ route('admin.tahsin/peserta.getDeletePeserta') }}" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
                                                 <form action="" onsubmit="return confirm('Apakah Anda yakin {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }} dihapus ?');" style="display:none">
