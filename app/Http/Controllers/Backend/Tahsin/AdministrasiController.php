@@ -130,17 +130,19 @@ class AdministrasiController extends Controller
             # code...
         $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
 
-Bimillah,
+Bismillah,
 Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
-Mengingatkan kembali kepada *Calon Peserta Tahsin Angkatan 21*.
+Sebentar lagi kita akan memasuki pembelajaran Tahsin Angkatan 21,
+Mari tetap jaga semangat untuk belajar Al Qur`an dengan mendaftarkan ulang di kelas tahsin bersama LTTQ Ar Rahmah Balikpapan.
 
-Silahkan klik link dibawah ini untuk mendapatkan Jadwal Tahsin Angkatan 21.
+Ayo Bapak/Ibu silakan klik link dibawah ini ya untuk mendapatkan Jadwal Tahsinnya.
 https://atthala.arrahmahbalikpapan.or.id/tahsin/daftar-ulang-peserta/daftar?id='.request()->notahsin.'&idt='.request()->id.'&nama='.str_replace(' ', '+', request()->nama).'
 
-Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
+Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan sifat keistiqomahan kepada kita semua untuk selalu belajar Al Qur`an.
 
 Salam,
-*LTTQ Ar Rahmah Balikpapan*';
+Dari kami yang menyayangimu
+*Pengurus LTTQ Ar Rahmah Balikpapan*';
 
         try {
             $datapeserta = Tahsin::find(request()->id);
