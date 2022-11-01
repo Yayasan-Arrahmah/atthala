@@ -142,16 +142,16 @@ Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/
 Salam,
 *LTTQ Ar Rahmah Balikpapan*';
 
-        try {
+        // try {
             $datapeserta = Tahsin::find(request()->id);
             $datapeserta->notif_daftar_ulang = $datapeserta->notif_daftar_ulang+1;
             $datapeserta->save();
 
             $this->notifwa(request()->notelp, $notif);
 
-        } catch (\Throwable $th) {
-            return redirect()->back()->withFlashDanger(request()->notahsin.' - '.request()->nama.' Terjadi Kesalahan. Notifikasi tidak terkirim !. Mohon Ulangi');
-        }
+        // } catch (\Throwable $th) {
+        //     return redirect()->back()->withFlashDanger(request()->notahsin.' - '.request()->nama.' Terjadi Kesalahan. Notifikasi tidak terkirim !. Mohon Ulangi');
+        // }
 
         return redirect()->back()->withFlashSuccess(request()->notahsin.' - '.request()->nama.' Notifikasi Daftar Ulang berhasil dikirim !');
 
