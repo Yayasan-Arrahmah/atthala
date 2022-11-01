@@ -44,6 +44,10 @@ class CreateTahsinsTable extends Migration
                 $table->text('status_kelulusan', 180)->nullable();
                 $table->string('status_keaktifan', 180)->nullable()->default('AKTIF');
                 $table->text('kenaikan_level_peserta', 180)->nullable();
+
+                $table->integer('notif_daftar_ulang', 3)->nullable();
+                // ALTER TABLE `tahsins` ADD `notif_daftar_ulang` SMALLINT NULL DEFAULT NULL AFTER `status_keaktifan`;
+
                 $table->softDeletes();
                 $table->timestamps();
             });
@@ -59,4 +63,17 @@ class CreateTahsinsTable extends Migration
     {
         Schema::dropIfExists('tahsins');
     }
+
+
+    //UPDATE NAMA PENGAJAR
+    // UPDATE `tahsins` SET `nama_pengajar` = REPLACE(`nama_pengajar`,'UST.','USTADZ') WHERE `nama_pengajar` LIKE '%UST.%';
+    // UPDATE `tahsins` SET `nama_pengajar` = CONCAT('USTADZAH ',`nama_pengajar`) WHERE `nama_pengajar` NOT LIKE '%USTADZ%';
+
+
+    // UPDATE `users` SET `user_pengajar` = REPLACE(`user_pengajar`,'UST.','USTADZ') WHERE `user_pengajar` LIKE '%UST.%';
+    // UPDATE `users` SET `user_pengajar` = CONCAT('USTADZAH ',`user_pengajar`) WHERE `user_pengajar` NOT LIKE '%USTADZ%' AND `user_pengajar` IS NOT NULL;
+
+    // UPDATE `jadwals` SET `pengajar_jadwal` = REPLACE(`pengajar_jadwal`,'UST.','USTADZ') WHERE `pengajar_jadwal` LIKE '%UST.%';
+    // UPDATE `jadwals` SET `pengajar_jadwal` = CONCAT('USTADZAH ',`pengajar_jadwal`) WHERE `pengajar_jadwal` NOT LIKE '%USTADZ%';
+
 }

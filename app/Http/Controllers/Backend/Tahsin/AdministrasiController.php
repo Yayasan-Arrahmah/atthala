@@ -42,6 +42,52 @@ class AdministrasiController extends Controller
         $this->listlevel         = LevelTahsin::orderBy('id', 'asc')->get();
     }
 
+    // public function convertnotif($isi)
+    // {
+    //     $notifikasi = str_replace('{Nama}', $this->nama, $isi);
+    //     $notifikasi = str_replace('{E-mail}', $this->email, $notifikasi);
+    //     $notifikasi = str_replace('{Panggilan}', $this->panggilan, $notifikasi);
+    //     $notifikasi = str_replace('{Gender}', $this->gender, $notifikasi);
+    //     $notifikasi = str_replace('{No. Telepon}', $this->nohp, $notifikasi);
+    //     $notifikasi = str_replace('{Kota}', $this->kota, $notifikasi);
+    //     $notifikasi = str_replace('{Nominal Transfer}', $this->total, $notifikasi);
+    //     $notifikasi = str_replace('{Ekspedisi}', $this->ekspedisi, $notifikasi);
+    //     $notifikasi = str_replace('{Jumlah Buku}', $this->jmlh_buku, $notifikasi);
+    //     $notifikasi = str_replace('{Alamat}', $this->alamat, $notifikasi);
+
+    //     return $notifikasi;
+    // }
+
+    public function notifwa($nomorhp, $isipesan)
+    {
+        $datawa = json_decode($isipesan);
+
+        $data = array(
+            "phone_no"  => '62'.$nomorhp,
+            "key"		=> env('WA_KEY'),
+            "message"	=> $isipesan,
+            // "message"	=> $this->convertnotif($datawa->isi),
+            "skip_link"	=> True // This optional for skip snapshot of link in message
+        );
+        $data_string = json_encode($data);
+
+        $ch = curl_init(env('WA_URL'));
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        echo $res=curl_exec($ch);
+        curl_close($ch);
+    }
+
     public function tahsin($statusdaftar, $statuskeaktifan)
     {
         return Tahsin::cari($this->cari)
@@ -80,6 +126,37 @@ class AdministrasiController extends Controller
 
     public function getDaftarUlang()
     {
+        if (request()->input('notif-daftar-ulang') == 1) {
+            # code...
+        $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
+
+Bimillah,
+Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
+Mengingatkan kembali kepada *Calon Peserta Tahsin Angkatan 21*.
+
+Silahkan klik link dibawah ini untuk mendapatkan Jadwal Tahsin Angkatan 21.
+https://atthala.arrahmahbalikpapan.or.id/tahsin/daftar-ulang-peserta/daftar?id='.request()->notahsin.'&idt='.request()->id.'&nama='.str_replace(' ', '+', request()->nama).'
+
+Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan kemudahan kepada Bapak/Ibu dalam proses pembelajaran Al Quran.
+
+Salam,
+*LTTQ Ar Rahmah Balikpapan*';
+
+        try {
+            $datapeserta = Tahsin::find(request()->id);
+            $datapeserta->notif_daftar_ulang = $datapeserta->notif_daftar_ulang+1;
+            $datapeserta->save();
+
+            $this->notifwa(request()->notelp, $notif);
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->withFlashDanger(request()->notahsin.' - '.request()->nama.' Terjadi Kesalahan. Notifikasi tidak terkirim !. Mohon Ulangi');
+        }
+
+        return redirect()->back()->withFlashSuccess(request()->notahsin.' - '.request()->nama.' Notifikasi Daftar Ulang berhasil dikirim !');
+
+        }
+
         if (request()->input('daftar-ulang') == 2) {
             return $this->tahsinbase('belum-daftar-ulang', null, 'Peserta Daftar Ulang');
         } else {

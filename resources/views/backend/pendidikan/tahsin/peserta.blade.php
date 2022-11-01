@@ -143,7 +143,18 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col-1 text-right p-0">
+                                <div class="col text-right p-0">
+                                    @if (request()->input('daftar-ulang') == 2)
+                                        <a href="{{ route('admin.tahsin/peserta.getDaftarUlang') }}?notif-daftar-ulang=1&notahsin={{ $tahsin->no_tahsin }}&id={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}&notelp={{ $tahsin->nohp_peserta }}"
+                                            class="btn {{ $tahsin->notif_daftar_ulang == null ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
+                                        >
+                                            <i class="fa fa-info-circle"></i>
+                                            Kirim Notif Daftar Ulang
+                                            @if ($tahsin->notif_daftar_ulang )
+                                                <span class="badge bg-danger ms-auto">{{ $tahsin->notif_daftar_ulang  }}</span>
+                                            @endif
+                                        </a>
+                                    @endif
                                     <div class="btn-group dropleft">
                                         <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                                             Opsi
