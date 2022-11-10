@@ -168,6 +168,38 @@ Dari kami yang menyayangimu
 
     public function getBaru()
     {
+        if (request()->input('notif-pilih-jadwal') == 1) {
+            # code...
+        $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
+
+Bismillah,
+Bapak/Ibu Peserta Tahsin Angkatan 21,
+Mengingatkan kembali bahwa Bapak/Ibu belum memilih jadwal belajar tahsin.
+
+Silakan klik tautan di bawah ini untuk mendapatkan tempat di jadwal belajar tersebut.
+https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id='.request()->notahsin.'
+
+Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan sifat keistiqomahan kepada kita semua untuk selalu belajar Al Qur`an.
+
+Salam,
+Panitia Pendaftaran Tahsin
+*LTTQ Ar Rahmah Balikpapan*';
+
+        try {
+            $datapeserta = Tahsin::find(request()->id);
+            $datapeserta->notif_pilih_jadwal = $datapeserta->notif_pilih_jadwal+1;
+            $datapeserta->save();
+
+            $this->notifwa(request()->notelp, $notif);
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->withFlashDanger(request()->notahsin.' - '.request()->nama.' Terjadi Kesalahan. Notifikasi tidak terkirim !. Mohon Ulangi');
+        }
+
+        return redirect()->back()->withFlashSuccess(request()->notahsin.' - '.request()->nama.' Notifikasi Daftar Ulang berhasil dikirim !');
+
+        }
+
         if (request()->input('daftar-baru') == 1) {
             return $this->tahsinbase('belum-selesai-diperiksa', null, 'Peserta Pendaftar Baru');
         }  elseif (request()->input('daftar-baru') == 2) {

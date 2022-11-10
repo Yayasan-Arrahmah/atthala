@@ -155,6 +155,17 @@
                                             @endif
                                         </a>
                                     @endif
+                                    @if (request()->input('daftar-baru') == 2)
+                                        <a href="{{ route('admin.tahsin/peserta.getBaru') }}?notif-pilih-jadwal=1&notahsin={{ $tahsin->no_tahsin }}&id={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}&notelp={{ $tahsin->nohp_peserta }}"
+                                            class="btn {{ $tahsin->notif_pilih_jadwal == null ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
+                                        >
+                                            <i class="fa fa-info-circle"></i>
+                                            Kirim Notif Pilih Jadwal
+                                            @if ($tahsin->notif_pilih_jadwal )
+                                                <span class="badge bg-danger ms-auto">{{ $tahsin->notif_pilih_jadwal  }}</span>
+                                            @endif
+                                        </a>
+                                    @endif
                                     <div class="btn-group dropleft">
                                         <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                                             Opsi

@@ -48,6 +48,9 @@ class CreateTahsinsTable extends Migration
                 $table->integer('notif_daftar_ulang', 3)->nullable();
                 // ALTER TABLE `tahsins` ADD `notif_daftar_ulang` SMALLINT NULL DEFAULT NULL AFTER `status_keaktifan`;
 
+                $table->integer('notif_pilih_jadwal', 3)->nullable();
+                // ALTER TABLE `tahsins` ADD `notif_pilih_jadwal` SMALLINT NULL DEFAULT NULL AFTER `status_keaktifan`;
+
                 $table->softDeletes();
                 $table->timestamps();
             });
