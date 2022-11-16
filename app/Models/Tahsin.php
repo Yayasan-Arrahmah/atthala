@@ -29,6 +29,7 @@ class Tahsin extends Model
      */
     protected $fillable = [
         'no_tahsin',
+        'uuid',
         'nama_peserta',
         'nohp_peserta',
         'level_peserta',

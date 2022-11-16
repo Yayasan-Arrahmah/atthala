@@ -9,6 +9,7 @@ use App\Models\PesertaUjian;
 use App\Models\StatusPesertaTahsin;
 use App\Models\LevelTahsin;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class AdministrasiController extends Controller
 {
@@ -464,4 +465,20 @@ Panitia Pendaftaran Tahsin
 
     // TAMBAH KOLOM status_keaktifan
     // ALTER TABLE `tahsins` ADD `status_keaktifan` VARCHAR(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'AKTIF' AFTER `status_kelulusan`;
+
+    public function getPerbaikanUuid()
+    {
+        $data = Tahsin::whereNull('uuid')->get();
+
+        foreach ($data as $d) {
+            try {
+                $d->uuid = Str::uuid();
+                $d->save();
+            } catch (\Throwable $th) {
+                return $th;
+            }
+        }
+
+        return 'oke';
+    }
 }

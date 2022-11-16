@@ -16,6 +16,9 @@ class CreateTahsinsTable extends Migration
         if (!Schema::hasTable('tahsins')) {
             Schema::create('tahsins', function (Blueprint $table) {
                 $table->increments('id');
+
+                $table->uuid('uuid');
+                // ALTER TABLE `tahsins` ADD `uuid` VARCHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `id`;
                 $table->text('no_tahsin', 180)->nullable();
                 $table->text('nama_peserta', 180)->nullable();
                 $table->text('nohp_peserta', 180)->nullable();
