@@ -25,9 +25,9 @@ class AdministrasiController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 21);
-        $this->angkatanbaru  = request()->angkatan ?? 21;
-        $this->angkatanujian = request()->angkatan ?? 20;
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 22);
+        $this->angkatanbaru  = request()->angkatan ?? 22;
+        $this->angkatanujian = request()->angkatan ?? 21;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
@@ -61,18 +61,46 @@ class AdministrasiController extends Controller
 
     public function notifwa($nomorhp, $isipesan)
     {
-        $datawa = json_decode($isipesan);
+        // $datawa = json_decode($isipesan);
 
-        $data = array(
-            "phone_no"  => '62'.$nomorhp,
-            "key"		=> env('WA_KEY'),
-            "message"	=> $isipesan,
-            // "message"	=> $this->convertnotif($datawa->isi),
-            "skip_link"	=> True // This optional for skip snapshot of link in message
-        );
-        $data_string = json_encode($data);
+        // $data = array(
+        //     "phone_no"  => '62'.$nomorhp,
+        //     "key"		=> env('WA_KEY'),
+        //     "message"	=> $isipesan,
+        //     // "message"	=> $this->convertnotif($datawa->isi),
+        //     "skip_link"	=> True // This optional for skip snapshot of link in message
+        // );
+        // $data_string = json_encode($data);
 
-        $ch = curl_init(env('WA_URL'));
+        // $ch = curl_init(env('WA_URL'));
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        // curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        //     'Content-Type: application/json',
+        //     'Content-Length: ' . strlen($data_string))
+        // );
+
+        // LIKANA WANOTIF
+        $phone    = '62'.$nomorhp;
+        $token    = env('WA_API_TOKEN');
+        $url      = env('WA_API_URL');
+        $data     = array(
+                        "device_id" => '1',
+                        "phone"     => $phone,
+                        "message"   => array(
+                                            'text' =>  $isipesan
+                                        )
+                    );
+
+        $data_string = json_encode($data,1);
+
+        $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -83,8 +111,10 @@ class AdministrasiController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string))
-        );
+            'Content-Length: ' . strlen($data_string),
+            'Authorization: Bearer '. $token,
+        ));
+
         echo $res=curl_exec($ch);
         curl_close($ch);
     }
@@ -133,7 +163,7 @@ class AdministrasiController extends Controller
 
 Bismillah,
 Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
-Sebentar lagi kita akan memasuki pembelajaran Tahsin Angkatan 21,
+Sebentar lagi kita akan memasuki pembelajaran Tahsin Angkatan 22,
 Mari tetap jaga semangat untuk belajar Al Qur`an dengan mendaftarkan ulang di kelas tahsin bersama LTTQ Ar Rahmah Balikpapan.
 
 Ayo Bapak/Ibu silakan klik link dibawah ini ya untuk mendapatkan Jadwal Tahsinnya.
@@ -174,7 +204,7 @@ Dari kami yang menyayangimu
         $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
 
 Bismillah,
-Bapak/Ibu Peserta Tahsin Angkatan 21,
+Bapak/Ibu Peserta Tahsin Angkatan 22,
 Mengingatkan kembali bahwa Bapak/Ibu belum memilih jadwal belajar tahsin.
 
 Silakan klik tautan di bawah ini untuk mendapatkan tempat di jadwal belajar tersebut.
