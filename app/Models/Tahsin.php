@@ -241,7 +241,7 @@ class Tahsin extends Model
                 return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%')
                             ->whereNotNull('level_peserta')
                             ->whereNull('nama_pengajar')
-                            ->whereNull('jadwal_tahsin');
+                            ->orWhere('nama_pengajar', '');
             } elseif( $status == 'selesai-daftar-baru') {
                 return $query->where('no_tahsin', 'like', '%-'.$angkatan.'-%')
                             ->whereNotNull('level_peserta')
