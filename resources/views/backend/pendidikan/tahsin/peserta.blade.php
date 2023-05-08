@@ -155,7 +155,7 @@
                                             @endif
                                         </a>
                                     @endif
-                                    @if (request()->input('daftar-baru') == 2)
+                                    @if ($tahsin->nama_pengajar == null)
                                         <a href="{{ route('admin.tahsin/peserta.getBaru') }}?notif-pilih-jadwal=1&notahsin={{ $tahsin->no_tahsin }}&id={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}&notelp={{ $tahsin->nohp_peserta }}"
                                             class="btn {{ $tahsin->notif_pilih_jadwal == null ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
                                         >
