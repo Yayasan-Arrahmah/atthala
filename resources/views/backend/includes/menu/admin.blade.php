@@ -4,15 +4,14 @@
             @lang('menus.backend.sidebar.general')
         </li>
         <li class="nav-item">
-            <a class="nav-link {{
-                active_class(Active::checkUriPattern('admin/dashboard'))
-            }}" href="{{ route('admin.dashboard') }}">
+            <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
+                href="{{ route('admin.dashboard') }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 Dashboard Tahsin
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/amalans/*')) }} "
+            <a class="nav-link {{ request()->is('admin/amalans/*') ? 'active' : '' }} "
             href="{{ route('admin.amalans.index') }}
             " > <i class="nav-icon fas fa-edit"></i>
             Amalan
@@ -23,7 +22,7 @@
             RTQ
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/rtq')) }} "
+            <a class="nav-link {{ request()->is('admin/rtq') ? 'active' : '' }} "
             href="{{ route('admin.rtqs.index') }}
             " > <i class="nav-icon fas fa-users"></i>
             Santri
@@ -195,7 +194,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengaturan')) }} "
+            <a class="nav-link {{ request()->is('admin/tahsin/pengaturan') ? 'active' : '' }} "
             href="{{ route('admin.tahsins.pengaturan') }}
             " > <i class="nav-icon fas fa-cog"></i>
             Pengaturan
@@ -204,7 +203,7 @@
 
         {{-- #################### --}}
 
-        {{-- <li class="nav-title">
+        <li class="nav-title">
             TLA
         </li>
         <li class="nav-item nav-dropdown <!- ADMINISTRASI -->
@@ -347,12 +346,12 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pengaturan')) }} "
+            <a class="nav-link {{ request()->is('admin/tahsin/pengaturan') ? 'active' : '' }} "
             href="{{ route('admin.tahsins.pengaturan') }}
             " > <i class="nav-icon fas fa-cog"></i>
             Pengaturan
             </a>
-        </li> --}}
+        </li>
 
 
         <li class="nav-title">
@@ -361,11 +360,9 @@
 
         @if ($logged_in_user->isAdmin())
 
-            <li class="nav-item nav-dropdown {{
-                active_class(Active::checkUriPattern('admin/auth*'), 'open')
-            }}">
+            <li class="nav-item nav-dropdown {{ request()->is('admin/auth*') ? 'open' : '' }}">
                 <a class="nav-link nav-dropdown-toggle {{
-                    active_class(Active::checkUriPattern('admin/auth*'))
+                    request()->is('admin/auth*')
                 }}" href="#">
                     <i class="nav-icon far fa-user"></i>
                     @lang('menus.backend.access.title')
@@ -378,7 +375,7 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/auth/user*'))
+                            request()->is('admin/auth/user*') ? 'active' : ''
                         }}" href="{{ route('admin.auth.user.index') }}">
                             @lang('labels.backend.access.users.management')
 
@@ -389,7 +386,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/auth/role*'))
+                            request()->is('admin/auth/role*') ? 'active' : ''
                         }}" href="{{ route('admin.auth.role.index') }}">
                             @lang('labels.backend.access.roles.management')
                         </a>
@@ -400,10 +397,10 @@
             <li class="divider"></li>
 
             <li class="nav-item nav-dropdown {{
-                active_class(Active::checkUriPattern('admin/log-viewer*'), 'open')
+                request()->is('admin/log-viewer*') ? 'open' : ''
             }}">
                     <a class="nav-link nav-dropdown-toggle {{
-                        active_class(Active::checkUriPattern('admin/log-viewer*'))
+                        request()->is('admin/log-viewer*') ? 'active' : ''
                     }}" href="#">
                     <i class="nav-icon fas fa-list"></i> @lang('menus.backend.log-viewer.main')
                 </a>
@@ -411,14 +408,14 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{
-                        active_class(Active::checkUriPattern('admin/log-viewer'))
+                        request()->is('admin/log-viewer') ? 'active' : ''
                     }}" href="{{ route('log-viewer::dashboard') }}">
                             @lang('menus.backend.log-viewer.dashboard')
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{
-                        active_class(Active::checkUriPattern('admin/log-viewer/logs*'))
+                        request()->is('admin/log-viewer/logs*') ? 'active' : ''
                     }}" href="{{ route('log-viewer::logs.list') }}">
                             @lang('menus.backend.log-viewer.logs')
                         </a>

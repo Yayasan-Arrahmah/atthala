@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Session;
-
+use URL;
+use Illuminate\Pagination\Paginator;
 /**
  * Class AppServiceProvider.
  */
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if (env('APP_ENV') !=='local') {
+            URL::forceScheme('https');
+          }
         // Sets third party service providers that are only needed on local/testing environments
         if ($this->app->environment() !== 'production') {
             /**
@@ -36,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
         Blade::directive('rupiah', function ($expression) {
             return "Rp. <?php echo number_format($expression, 0, ',', ','); ?>";
         });

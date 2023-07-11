@@ -6,35 +6,35 @@
                 Keuangan Tahsin
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/peserta-ujian')) }} "
+                <a class="nav-link {{ request()->is('admin/tahsin/peserta-ujian') ? 'active' : '' }} "
                 href="{{ route('admin.tahsins.pesertaujian') }}
                 " > <i class="nav-icon fas fa-user-check"></i>
                 Daftar Ujian
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-ulang')) }} "
+                <a class="nav-link {{ request()->is('admin/tahsin/daftar-ulang') ? 'active' : '' }} "
                 href="{{ route('admin.tahsins.daftarulang') }}
                 " > <i class="nav-icon fas fa-user-check"></i>
                 Daftar ulang
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/daftar-baru')) }} "
+                <a class="nav-link {{ request()->is('admin/tahsin/daftar-baru') ? 'active' : '' }} "
                 href="{{ route('admin.tahsins.daftarbaru') }}
                 " > <i class="nav-icon fas fa-user-plus"></i>
                 Daftar Baru
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin')) }} "
+                <a class="nav-link {{ request()->is('admin/tahsin') ? 'active' : '' }} "
                 href="{{ route('admin.tahsins.index') }}
                 " > <i class="nav-icon fas fa-users"></i>
                 Peserta
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/tahsin/pembayaran')) }} "
+                <a class="nav-link {{ request()->is('admin/tahsin/pembayaran') ? 'active' : '' }} "
                 href="{{ route('admin.tahsins.pembayaran') }}
                 " > <i class="nav-icon fas fa-credit-card"></i>
                 Pembayaran
