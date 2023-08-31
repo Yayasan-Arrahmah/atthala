@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Absen;
+use App\Models\AbsenPertemuan;
+use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tahsin;
@@ -19,6 +21,12 @@ class DashboardController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
+     public function __construct()
+    {
+        $this->angkatan_tahsin  = 22;
+    }
+
     public function index()
     {
         return view('frontend.user.dashboard.index');
@@ -58,8 +66,7 @@ class DashboardController extends Controller
             ->groupBy('jadwal_tahsin', 'level_peserta', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('nama_pengajar', auth()->user()->user_pengajar)
-            // ->where('angkatan_peserta', session('daftar_ulang_angkatan_tahsin'))
-            ->where('angkatan_peserta', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', $this->angkatan_tahsin)
             ->paginate(50);
 
         return view('frontend.user.absen.tahsin', compact('datajadwals'));
@@ -74,16 +81,36 @@ class DashboardController extends Controller
         $jenis        = $request->input('jenis') ?? '!!ERROR!!';
         $userpengajar = auth()->user()->user_pengajar;
         $pertemuanke  = $request->input('ke');
-        // $angkatan     = session('daftar_ulang_angkatan_tahsin');
-        $angkatan     = session('angkatan_tahsin');
+        $angkatan     = $this->angkatan_tahsin;
 
-        $datapeserta = DB::table('tahsins')
-            ->where('nama_pengajar', $userpengajar)
+        $datapeserta = Tahsin::where('nama_pengajar', $userpengajar)
             ->where('level_peserta', $level)
             ->where('jadwal_tahsin', $waktu)
             ->where('angkatan_peserta', $angkatan)
-            ->where('jenis_peserta', $jenis)
             ->paginate(50);
+
+        $w = explode(" ",$waktu);
+        $jadwal = Jadwal::where('pengajar_jadwal', $userpengajar)
+        ->where('level_jadwal', $level)
+        ->where('hari_jadwal', $w[0])
+        ->where('waktu_jadwal', $w[1])
+        ->where('angkatan_jadwal', $angkatan)
+        ->first();
+
+        $ketpertemuan = AbsenPertemuan::where('id_jadwal', $jadwal->id)
+                                        ->where('pertemuan', $pertemuanke)
+                                        ->first();
+        $datakp       = AbsenPertemuan::where('id_jadwal', $jadwal->id)->get();
+
+        $kp = array();
+        foreach ($datakp as $b) {
+            $kp[] = ([
+                    'pert'  => $b->pertemuan,
+                    'tgl'   => $b->tanggal_pertemuan,
+                    'surah' => $b->tilawah_pertemuan_surah,
+                    'ayat'  => $b->tilawah_pertemuan_ayat
+                ]);
+        }
 
         if (isset($pertemuanke)) {
             $pertemuanke = $request->input('ke');
@@ -91,47 +118,100 @@ class DashboardController extends Controller
             $pertemuanke = 'semua';
         }
 
+        $ab = Absen::where('user_create_absen', auth()->user()->id)
+        ->where('jenis_absen', 'TAHSIN')
+        ->where('angkatan_absen', $angkatan)
+        ->where('level_kelas_absen', $level)
+        ->where('waktu_kelas_absen', $waktu)
+        ->get();
+
+        $yess = array();
+        foreach ($ab as $a) {
+            $yess[] = ([
+                    'ke'   => $a->pertemuan_ke_absen,
+                    'id_p' => $a->id_peserta,
+                    'k_p'  => $a->keterangan_absen
+                ]);
+        }
+
+        $dataabsen        = collect($yess);
+        $dataketpertemuan = collect($kp);
+
         return view(
             'frontend.user.absen.tahsin-kelas',
-            compact('absen', 'pertemuanke', 'waktu', 'level', 'userpengajar', 'datapeserta', 'jenis', 'angkatan')
+            compact('absen', 'pertemuanke', 'waktu', 'level', 'userpengajar', 'datapeserta', 'jenis', 'angkatan', 'dataabsen', 'jadwal', 'ketpertemuan', 'dataketpertemuan')
         );
     }
 
     public function absentahsininput(Request $request)
     {
+
         $absen = new Absen;
-        $cekabsen = Absen::find($request->input('idabsen'));
 
-        if (request()->pertemuan == 'level') {
-            $tahsin = Tahsin::find(request()->peserta);
-            $tahsin->kenaikan_level_peserta = request()->keteranganabsen;
-            $tahsin->save();
+        foreach ($request->input('peserta') as $key => $datapeserta) {
+            // $tes[] = ([
+            //     'idp' => $datapeserta,
+            //     'idabsen' => $request->input('idabsen')[$key],
+            //     'absen' => $request->input('keteranganabsen'.$datapeserta)
+            // ]);
 
-            return back()->withFlashSuccess('Kenaikan Level berhasil ditambahkan!');
-        } else {
+            $cekabsen = Absen::find($request->input('idabsen')[$key]);
+            $ket_absen = $request->input('keteranganabsen'.$datapeserta);
+
             if (isset($cekabsen)) {
-                if ($request->input('keteranganabsen') == '-') {
-                    $cekabsen->delete();
-                } else {
-                    $cekabsen->update([
-                        'keterangan_absen' => $request->input('keteranganabsen'),
-                    ]);
-                }
+                $cekabsen->update([
+                    'keterangan_absen' => $ket_absen,
+                ]);
             } else {
                 $absen->create([
-                    'id_peserta'             => $request->input('peserta'),
+                    'id_peserta'             => $datapeserta,
                     'user_create_absen'      => auth()->user()->id,
                     'pertemuan_ke_absen'     => $request->input('pertemuan'),
                     'jenis_absen'            => 'TAHSIN',
-                    'angkatan_absen'         => session('angkatan_tahsin'),
+                    'angkatan_absen'         => $this->angkatan_tahsin,
                     'level_kelas_absen'      => $request->input('level'),
                     'waktu_kelas_absen'      => $request->input('waktu'),
                     'jenis_kelas_absen'      => $request->input('jenis'),
-                    'keterangan_absen'       => $request->input('keteranganabsen'),
+                    'keterangan_absen'       => $ket_absen,
                 ]);
             }
-            return back()->withFlashSuccess('Absen Berhasil Diperbaruhi !');
         }
+
+        $cekpertemuan = AbsenPertemuan::find($request->input('idketper'));
+        $absenpertemuan = new AbsenPertemuan;
+        if (isset($cekpertemuan)) {
+            $cekpertemuan->update([
+                'tilawah_pertemuan_surah' => $request->input('surah'),
+                'tilawah_pertemuan_ayat'  => $request->input('ayat'),
+                'tanggal_pertemuan'       => $request->input('tanggalpertemuan'),
+            ]);
+        } else {
+            $absenpertemuan->create([
+                'id_jadwal'               => $request->input('idjadwal'),
+                'pertemuan'               => $request->input('pertemuan'),
+                'tilawah_pertemuan_surah' => $request->input('surah'),
+                'tilawah_pertemuan_ayat'  => $request->input('ayat'),
+                'tanggal_pertemuan'       => $request->input('tanggalpertemuan'),
+            ]);
+        }
+
+
+        return redirect()->to('/absen/tahsin/kelas?waktu='.$request->input('waktu').'&jenis='.$request->input('jenis').'&level='.$request->input('level').'&ke=semua')
+                ->withFlashSuccess('Absen Ke '.$request->input('pertemuan').' Berhasil Diperbaruhi !');
+    }
+
+    public function absentahsininputlevel(Request $request)
+    {
+
+        foreach ($request->input('peserta') as $datapeserta) {
+
+            $pesertatahsin                           = Tahsin::find($datapeserta);
+            $pesertatahsin->kenaikan_level_peserta   = $request->input('keteranganhasil'.$datapeserta);
+            $pesertatahsin->save();
+        }
+
+        return redirect()->to('/absen/tahsin/kelas?waktu='.$request->input('waktu').'&jenis='.$request->input('jenis').'&level='.$request->input('level').'&ke=semua')
+                ->withFlashSuccess('Level Peserta Hasil Ujian Berhasil Diperbaruhi !');
     }
 
     public function absentahsinkelasgantiabsen(Request $request)
@@ -162,7 +242,7 @@ class DashboardController extends Controller
         if(isset(request()->level)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', request()->idtahsin)
-              ->where('angkatan_peserta', session('angkatan_tahsin'))
+              ->where('angkatan_peserta', $this->angkatan_tahsin)
               ->update(['level_peserta' => request()->level]);
 
             $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
@@ -170,7 +250,7 @@ class DashboardController extends Controller
             $message =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih Kepada Calon Peserta Tahsin Angkatan ".session('angkatan_tahsin')." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".$this->angkatan_tahsin." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
 
 Alhamdulillah, Level belajar anda adalah di level *".request()->level."*.
 Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".request()->idtahsin."
@@ -179,7 +259,7 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
+Panitia Pendaftaran Baru Tahsin Angkatan ".$this->angkatan_tahsin."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             // $url = 'https://api.wanotif.id/v1/send';
@@ -230,8 +310,8 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('angkatan_tahsin').'-%')
-                        ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
+                        ->where('angkatan_peserta', '=', $this->angkatan_tahsin)
                         ->paginate(10);
 
             return redirect()->to('/admin/tahsin/daftar-baru')->withFlashSuccess(request()->idtahsin.' Berhasil Diperbaruhi dengan Level '.request()->level);
@@ -239,11 +319,11 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
         if(isset(request()->notifikasi)){
             $updatestatus = DB::table('tahsins')
               ->where('no_tahsin', request()->notifikasi)
-              ->where('angkatan_peserta', session('angkatan_tahsin'))
+              ->where('angkatan_peserta', $this->angkatan_tahsin)
               ->update(['status_peserta' => 'NOTIF']);
 
             $data = DB::table('tahsins')->where('no_tahsin', request()->notifikasi)
-              ->where('angkatan_peserta', session('angkatan_tahsin'))
+              ->where('angkatan_peserta', $this->angkatan_tahsin)
               ->first();
 
             if($data->jenis_peserta === 'IKHWAN'){
@@ -322,8 +402,8 @@ Tanggal Mengisi Formulir Online :";
 
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('angkatan_tahsin').'-%')
-                        ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
+                        ->where('angkatan_peserta', '=', $this->angkatan_tahsin)
                         ->paginate(10);
 
             return redirect()->to('/admin/tahsin/daftar-baru');
@@ -332,18 +412,18 @@ Tanggal Mengisi Formulir Online :";
         if(isset(request()->idtahsin)){
             $updatelevel = DB::table('tahsins')
             ->where('no_tahsin', request()->idtahsin)
-            ->where('angkatan_peserta', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', $this->angkatan_tahsin)
             ->update(['status_peserta' => auth()->user()->first_name]);
         }
 
-        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.session('angkatan_tahsin').'-%')
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
                 ->when(request()->nama, function ($query) {
                     return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
                 })
                 ->when(request()->idtahsin, function ($query) {
                         return $query->where('no_tahsin', '=', request()->idtahsin);
                 })
-                ->where('angkatan_peserta', '=', session('angkatan_tahsin'))
+                ->where('angkatan_peserta', '=', $this->angkatan_tahsin)
             ->paginate(10);
         // }
 
@@ -365,7 +445,7 @@ Tanggal Mengisi Formulir Online :";
             ->where('nama_pengajar', 'like', '%'.$pengajar.'%')
             ->where('level_peserta', 'like', '%'.$level.'%')
             ->where('jadwal_tahsin', 'like', '%'.$waktu.'%')
-            ->where('angkatan_peserta', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', $this->angkatan_tahsin)
             ->paginate(10);
 
         $datapengajar = DB::table('tahsins')
@@ -374,7 +454,7 @@ Tanggal Mengisi Formulir Online :";
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
             ->whereNotNull('jadwal_tahsin')
             ->where('jenis_peserta', auth()->user()->jenis)
-            ->where('angkatan_peserta', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', $this->angkatan_tahsin)
             ->get();
 
         $datajadwaltahsin = DB::table('tahsins')
@@ -383,7 +463,7 @@ Tanggal Mengisi Formulir Online :";
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->whereNotNull('jadwal_tahsin')
             ->where('jenis_peserta', auth()->user()->jenis)
-            ->where('angkatan_peserta', session('angkatan_tahsin'))
+            ->where('angkatan_peserta', $this->angkatan_tahsin)
             ->get();
 
         return view('frontend.user.tahsin.peserta', compact('datajadwals', 'datapengajar', 'datajadwaltahsin'));
@@ -399,15 +479,15 @@ Tanggal Mengisi Formulir Online :";
         $userpengajar = $request->input('pengajar') ?? '!!ERROR!!';
         $pertemuanke  = $request->input('ke');
         // $angkatan     = session('daftar_ulang_angkatan_tahsin');
-        $angkatan     = session('angkatan_tahsin');
+        $angkatan     = $this->angkatan_tahsin;
 
         $datapeserta = DB::table('tahsins')
             ->where('nama_pengajar', $userpengajar)
             ->where('level_peserta', $level)
             ->where('jadwal_tahsin', $waktu)
             ->where('angkatan_peserta', $angkatan)
-            ->where('jenis_peserta', $jenis)
-            ->paginate(50);
+            // ->where('jenis_peserta', $jenis)
+            ->paginate(30);
 
         if (isset($pertemuanke)) {
             $pertemuanke = $request->input('ke');
