@@ -30,17 +30,21 @@
                                 Nama
                             </div>
                             <div class="col-1 font-weight-bold text-uppercase">
+                                Kode Unik
+                            </div>
+                            <div class="col-1 font-weight-bold text-uppercase">
                                 BBTT
                             </div>
                             <div class="col-2 font-weight-bold text-uppercase">
                                 Nominal
                             </div>
                             <div class="col-1 font-weight-bold text-uppercase" style="margin-left: 0px">
-                                Bukti TF
+                                Bukti
                             </div>
                             <div class="col font-weight-bold text-uppercase">
                                 Keterangan
                             </div>
+                            <div class="col-1"></div>
                         </div>
                         @php
                             $first  = 0;
@@ -63,6 +67,9 @@
                                     </a>
                                 </div>
                                 <div class="col-1 font-weight-bold">
+                                    {{ $spp->tahsinspp->kode_unik }}
+                                </div>
+                                <div class="col-1 font-weight-bold">
                                     {{ $spp->tahsinspp->waktu_lahir_peserta ? \Carbon\Carbon::createFromFormat('d-m-Y', $spp->tahsinspp->waktu_lahir_peserta ?? '01-01-1901')->format('md') : '' }}
                                 </div>
                                 <div class="col-2 font-weight-bold">
@@ -76,7 +83,7 @@
                                 <div class="col">
                                     <table>
                                         <tr>
-                                            <td>Pembayaran</td>
+                                            <td>SPP</td>
                                             <td>:</td>
                                             <td class="font-weight-bold">{{ $spp->keterangan_pembayaran }}</td>
                                         </tr>
@@ -86,6 +93,19 @@
                                             <td class="font-weight-bold">{{ $spp->created_at }}</td>
                                         </tr>
                                     </table>
+                                </div>
+                                <div class="col-1">
+                                    <form action="{{ Request::fullUrl() }}">
+                                        <input type="hidden" name="id" value="{{ $spp->id }}">
+                                        <input type="hidden" name="idp" value="{{ $spp->id_peserta }}">
+                                        <input type="hidden" name="notahsin" value="{{ $spp->tahsin->no_tahsin }}">
+                                        <input type="hidden" name="metode" value="update">
+                                        @if ($spp->admin_pembayaran == 'MENUNGGU KONFIRMASI')
+                                            <button class="btn btn-sm btn-warning btn-pill" style="font-weight: 700">Konfirmasi</button>
+                                        @elseif ($spp->admin_pembayaran == 'BERHASIL')
+                                            <button class="btn btn-sm btn-info" style="font-weight: 700">Berhasil</button>
+                                        @endif
+                                    </form>
                                 </div>
                                 <div class="col-12" style="color: #4e4e4e">
                                     <div class="col">
