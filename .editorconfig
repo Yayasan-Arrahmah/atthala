@@ -13,3 +13,7 @@ trim_trailing_whitespace = false
 
 [*.yml]
 indent_size = 2
+
+[*.php]
+php_diagnostic_php0418 = false
+php_diagnostic_php0443 = false

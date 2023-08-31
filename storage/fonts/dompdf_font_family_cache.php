@@ -81,6 +81,6 @@
     'normal' => $fontDir . '/lateefregot-normal_3d36d10a3f141a91d203320b7af96195',
   ),
   'amiri' => array(
-    'normal' => $fontDir . '/amiri-normal_68df70182b7ae7e903549e0d60f2507d',
+    'normal' => $fontDir . '/amiri-normal_ea946b0e56f17c9691ce005a4fe3171a',
   ),
 ) ?>
