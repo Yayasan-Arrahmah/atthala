@@ -1225,7 +1225,27 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
 
         // ngambil data profile
         $peserta = Tahsin::find(request()->id);
-        return view('frontend.tahsin.pembayaran', compact('sesibayar', 'peserta'));
+
+        // dd($jumlah = $peserta->pembayaran->sum('nominal_pembayaran'));
+
+        if ($peserta->pembayaran) {
+            $jumlah = $peserta->pembayaran->sum('nominal_pembayaran');
+        } else {
+            $jumlah = 0;
+        }
+
+        $periode = ([
+            ['id' => 1 , 'ket' => 'JUN 2023', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+            ['id' => 2 , 'ket' => 'JUL 2023', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+            ['id' => 3 , 'ket' => 'AGU 2023', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+            ['id' => 4 , 'ket' => 'SEP 2023', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+        ]);
+        $dataperiode = collect($periode);
+
+
+
+
+        return view('frontend.tahsin.pembayaran', compact('sesibayar', 'peserta', 'dataperiode'));
     }
 
     public function pembayaransimpan()
