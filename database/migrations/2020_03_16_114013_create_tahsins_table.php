@@ -54,6 +54,9 @@ class CreateTahsinsTable extends Migration
                 $table->integer('notif_pilih_jadwal', 3)->nullable();
                 // ALTER TABLE `tahsins` ADD `notif_pilih_jadwal` SMALLINT NULL DEFAULT NULL AFTER `status_keaktifan`;
 
+                $table->string('kode_unik', 10)->nullable();
+                // ALTER TABLE `tahsins` ADD `kode_unik` VARCHAR(5) NULL DEFAULT NULL AFTER `no_tahsin`;
+
                 $table->softDeletes();
                 $table->timestamps();
             });
@@ -82,4 +85,18 @@ class CreateTahsinsTable extends Migration
     // UPDATE `jadwals` SET `pengajar_jadwal` = REPLACE(`pengajar_jadwal`,'UST.','USTADZ') WHERE `pengajar_jadwal` LIKE '%UST.%';
     // UPDATE `jadwals` SET `pengajar_jadwal` = CONCAT('USTADZAH ',`pengajar_jadwal`) WHERE `pengajar_jadwal` NOT LIKE '%USTADZ%';
 
+
+    //UPDATE KODE UNIK
+    // ALTER TABLE `tahsins` ADD `kode_unik` VARCHAR(5) NULL DEFAULT NULL AFTER `no_tahsin`;
+
+
+    //data DELETE
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8032;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8229;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8281;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8335;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8378;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8393;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8454;
+    // DELETE FROM `tahsins` WHERE `tahsins`.`id` = 8508;
 }
