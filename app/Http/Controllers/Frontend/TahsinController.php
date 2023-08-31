@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
 use App\Models\Tahsin;
 use App\Models\PesertaUjian;
+use App\Models\LevelTahsin;
 // use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use App\Models\Jadwal;
+use Illuminate\Support\Facades\Http;
 use DB;
 use PDF;
 use Image;
+use Throwable;
 
 class TahsinController extends Controller
 {
@@ -30,11 +33,43 @@ class TahsinController extends Controller
         // return view('frontend.tahsin.pendaftaran');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function notifwa($nomorhp, $isipesan)
+    {
+        // $datawa = json_decode($isipesan);
+
+        $apikey     = env('WAHA_API_KEY');
+        $url        = env('WAHA_API_URL');
+        $sessionApi = env('WAHA_API_SESSION');
+        $requestApi = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept'       => 'application/json',
+            'X-Api-Key'    => $apikey,
+        ]);
+
+        // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
+
+        try {
+            #1 Send Seen
+            $requestApi->post($url.'/api/sendSeen', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+
+            #2 Start Typing
+            $requestApi->post($url.'/api/startTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+
+            sleep(1); // jeda seolah olah ngetik
+
+            #3 Stop Typing
+            $requestApi->post($url.'/api/stopTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+
+            #4 Send Message
+            $requestApi->post($url.'/api/sendText', [
+                "session" => $sessionApi,
+                "chatId"  => $nomorhp.'@c.us',
+                "text"    => $isipesan,
+            ]);
+        } catch (Throwable $th) {
+            throw $th;
+        }
+    }
 
     public function pendaftaran(Request $request)
     {
@@ -586,7 +621,8 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
                 ->where('nama_peserta', 'like', '%' . request('namapeserta') . '%')
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
-                ->where('angkatan_peserta', '=', session('daftar_ujian'))
+                // ->where('angkatan_peserta', '=', session('daftar_ujian'))
+                ->where('angkatan_peserta', '=', 22)
                 ->paginate(15);
 
         } else {
@@ -596,15 +632,16 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', session('daftar_ujian'))
+            // ->where('angkatan_peserta', '=', session('daftar_ujian'))
             ->get();
 
-        $datalevel = DB::table('tahsins')
-            ->select('level_peserta')
-            ->groupBy('level_peserta')
-            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', session('daftar_ujian'))
-            ->get();
+        // $datalevel = DB::table('tahsins')
+        //     ->select('level_peserta')
+        //     ->groupBy('level_peserta')
+        //     ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+        //     ->where('angkatan_peserta', '=', session('daftar_ujian'))
+        //     ->get();
+        $datalevel = LevelTahsin::get();
 
         return view('frontend.tahsin.cari-daftarulangpeserta', compact('datapengajars', 'datalevel', 'pencarian'));
     }
@@ -620,8 +657,8 @@ Panitia Ujian Tahsin Angkatan ".session('daftar_ujian')."
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
 
-        $angkatan            = session('daftar_ujian');
-        $angkatandaftarulang = session('angkatan_tahsin');
+        $angkatan            = session('daftar_ujian') ?? 22;
+        $angkatandaftarulang = session('angkatan_tahsin') ?? 23;
 
         // ngambil data profile
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
@@ -1167,15 +1204,16 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
             ->select('nama_pengajar')
             ->groupBy('nama_pengajar')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', request('angkatan') ?? session('angkatan_tahsin'))
+            // ->where('angkatan_peserta', '=', request('angkatan') ?? session('angkatan_tahsin'))
             ->get();
 
-        $datalevel = DB::table('tahsins')
-            ->select('level_peserta')
-            ->groupBy('level_peserta')
-            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', request('angkatan') ?? session('angkatan_tahsin'))
-            ->get();
+        // $datalevel = DB::table('tahsins')
+        //     ->select('level_peserta')
+        //     ->groupBy('level_peserta')
+        //     ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
+        //     ->where('angkatan_peserta', '=', request('angkatan') ?? session('angkatan_tahsin'))
+        //     ->get();
+        $datalevel = LevelTahsin::get();
 
         return view('frontend.tahsin.cari-pembayaran', compact('datapengajars', 'datalevel', 'pencarian'));
     }
@@ -1195,14 +1233,8 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
         $pesertadaftar = Tahsin::find(request()->id);
 
         $nohp = $pesertadaftar->nohp_peserta;
-        if (substr($nohp, 0, 1) === '0') {
+        if (substr($nohp, 0, 1) == '0') {
             $nohp = substr($nohp, 1);
-        } elseif (substr($nohp, 0, 2) === '62') {
-            $nohp = substr($nohp, 2);
-        } elseif (substr($nohp, 0, 3) === '+62') {
-            $nohp = substr($nohp, 3);
-        } else {
-            $nohp = $nohp;
         }
 
         $pembayaran                            = new Pembayaran;
@@ -1214,99 +1246,114 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".session('angkatan_tahsin')."
         $pembayaran->keterangan_pembayaran     = collect(request()->pembayaran)->implode('-');
         $pembayaran->save();
         Session::put('id', $pembayaran->id);
-        // dd($pembayaran);
 
-        $phone = '+62'. $nohp;
-        $message =
-                "Assalamualaikum Warrohmarullah Wabarokatuh
+        $pesan ="Assalamualaikum Warrohmarullah Wabarokatuh
 
-*Ini adalah balasan otomatis.*
-Terima kasih telah melakukan pembayaran Tahsin. Kasir kami akan memverifikasi pembayaran Bapak/Ibu/Saudara/i sekalian.
-
-Berita terkini :
-LTTQ Ar Rahmah Balikpapan sedang melakukan penggalangan dana untuk pembelian Gedung Belajar Al Qur’an Bersama. Donasi terkumpul saat ini adalah Rp 143.440.017 dari total kebutuhan 4 Milyar Rupiah. Gabung bersama kami untuk tetap mendapatkan amal jariyah dari ratusan santri-santri yang menghafalkan Kitabullah disini.
-
-Transfer ke rekening Bank Syariah Indonesia 455-00000-60 a.n. Yayasan Ar Rahmah Balikpapan. Konfirmasi donasi ke wa.me/6281549225157.
-Jazaakumullahu Khoiron
-
-“Perumpamaan (nafkah yang dikeluarkan oleh) orang-orang yang menafkahkan hartanya di jalan Allah adalah serupa dengan sebutir benih yang menumbuhkan tujuh bulir, pada tiap-tiap bulir seratus biji. Allah melipat gandakan (ganjaran) bagi siapa yang Dia kehendaki. Dan Allah Maha Luas (karunia-Nya) lagi Maha Mengetahui.”
-"
-;
-
-        $apikey = env('WA_KEY');
-
-        $url='http://116.203.191.58/api/send_message';
-        $data = array(
-            "phone_no"  => $phone,
-            "key"		=> $apikey,
-            "message"	=> $message,
-            "skip_link"	=> True // This optional for skip snapshot of link in message
-        );
-        $data_string = json_encode($data);
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, 0);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string))
-        );
-        echo $res=curl_exec($ch);
-        curl_close($ch);
-
-        $data = Pembayaran::find(Session::get('id'));
-        $phone = '+6282155171933';
-
-        // woo-wa.com kasir
-        $apikey = env('WA_KEY');
-        $message =
-            'Assalamualaikum Warohmatullahi Wabarokaatuh,
-*Ini adalah pesan otomatis.*
-
-Telah dikirimkan pembayaran SPP dengan detail sebagai berikut :
-
-Nama Peserta : '.$data->tahsin->nama_peserta.'
-NIS : '.$data->tahsin->no_tahsin.'
-Level/Kelas : '.$data->tahsin->level_peserta.' / '.$data->tahsin->jadwal_tahsin.'
-Pengajar : '.$data->tahsin->nama_pengajar.'
-Nominal SPP : '.$data->nominal_pembayaran.'
-Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
-Kontak : wa.me/62'.$data->tahsin->nohp_peserta.'
+Terima kasih telah melakukan Pembayaran Tahsin. Kasir kami akan memverifikasi pembayaran Bapak/Ibu/Saudara/i sekalian.
 
 Klik link berikut untuk memeriksa riwayat pembayaran
-https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/pembayaran?id='.$data->id.'
-';
+https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/pembayaran?id='.$pembayaran->id.'
 
-        $url='http://116.203.191.58/api/send_message';
-        $data = array(
-            "phone_no"  => $phone,
-            "key"		=> $apikey,
-            "message"	=> $message,
-            "skip_link"	=> True // This optional for skip snapshot of link in message
-        );
-        $data_string = json_encode($data);
+Jazaakumullahu Khoiron
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, 0);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string))
-        );
-        echo $res=curl_exec($ch);
-        curl_close($ch);
+Tim Tahsin
+LTTQ Arrahmah Balikpapan
+"
+;
+        $this->notifwa('62'.$nohp, $pesan);
+        // dd($pembayaran);
+
+//         $phone = '+62'. $nohp;
+//         $message =
+//                 "Assalamualaikum Warrohmarullah Wabarokatuh
+
+// *Ini adalah balasan otomatis.*
+// Terima kasih telah melakukan pembayaran Tahsin. Kasir kami akan memverifikasi pembayaran Bapak/Ibu/Saudara/i sekalian.
+
+// Berita terkini :
+// LTTQ Ar Rahmah Balikpapan sedang melakukan penggalangan dana untuk pembelian Gedung Belajar Al Qur’an Bersama. Donasi terkumpul saat ini adalah Rp 143.440.017 dari total kebutuhan 4 Milyar Rupiah. Gabung bersama kami untuk tetap mendapatkan amal jariyah dari ratusan santri-santri yang menghafalkan Kitabullah disini.
+
+// Transfer ke rekening Bank Syariah Indonesia 455-00000-60 a.n. Yayasan Ar Rahmah Balikpapan. Konfirmasi donasi ke wa.me/6281549225157.
+// Jazaakumullahu Khoiron
+
+// “Perumpamaan (nafkah yang dikeluarkan oleh) orang-orang yang menafkahkan hartanya di jalan Allah adalah serupa dengan sebutir benih yang menumbuhkan tujuh bulir, pada tiap-tiap bulir seratus biji. Allah melipat gandakan (ganjaran) bagi siapa yang Dia kehendaki. Dan Allah Maha Luas (karunia-Nya) lagi Maha Mengetahui.”
+// "
+// ;
+
+//         $apikey = env('WA_KEY');
+
+//         $url='http://116.203.191.58/api/send_message';
+//         $data = array(
+//             "phone_no"  => $phone,
+//             "key"		=> $apikey,
+//             "message"	=> $message,
+//             "skip_link"	=> True // This optional for skip snapshot of link in message
+//         );
+//         $data_string = json_encode($data);
+
+//         $ch = curl_init($url);
+//         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+//         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+//         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//         curl_setopt($ch, CURLOPT_VERBOSE, 0);
+//         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+//         curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+//         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//             'Content-Type: application/json',
+//             'Content-Length: ' . strlen($data_string))
+//         );
+//         echo $res=curl_exec($ch);
+//         curl_close($ch);
+
+//         $data = Pembayaran::find(Session::get('id'));
+//         $phone = '+6282155171933';
+
+//         // woo-wa.com kasir
+//         $apikey = env('WA_KEY');
+//         $message =
+//             'Assalamualaikum Warohmatullahi Wabarokaatuh,
+// *Ini adalah pesan otomatis.*
+
+// Telah dikirimkan pembayaran SPP dengan detail sebagai berikut :
+
+// Nama Peserta : '.$data->tahsin->nama_peserta.'
+// NIS : '.$data->tahsin->no_tahsin.'
+// Level/Kelas : '.$data->tahsin->level_peserta.' / '.$data->tahsin->jadwal_tahsin.'
+// Pengajar : '.$data->tahsin->nama_pengajar.'
+// Nominal SPP : '.$data->nominal_pembayaran.'
+// Keterangan : Pembayaran SPP Bulan Ke '.$data->keterangan_pembayaran.'
+// Kontak : wa.me/62'.$data->tahsin->nohp_peserta.'
+
+// Klik link berikut untuk memeriksa riwayat pembayaran
+// https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/pembayaran?id='.$data->id.'
+// ';
+
+//         $url='http://116.203.191.58/api/send_message';
+//         $data = array(
+//             "phone_no"  => $phone,
+//             "key"		=> $apikey,
+//             "message"	=> $message,
+//             "skip_link"	=> True // This optional for skip snapshot of link in message
+//         );
+//         $data_string = json_encode($data);
+
+//         $ch = curl_init($url);
+//         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+//         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+//         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//         curl_setopt($ch, CURLOPT_VERBOSE, 0);
+//         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+//         curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+//         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//             'Content-Type: application/json',
+//             'Content-Length: ' . strlen($data_string))
+//         );
+//         echo $res=curl_exec($ch);
+//         curl_close($ch);
 
         return redirect()->route('frontend.tahsin.pembayaranselesai');
 

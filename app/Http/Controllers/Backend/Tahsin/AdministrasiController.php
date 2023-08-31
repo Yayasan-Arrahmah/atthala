@@ -10,6 +10,8 @@ use App\Models\StatusPesertaTahsin;
 use App\Models\LevelTahsin;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class AdministrasiController extends Controller
 {
@@ -66,60 +68,38 @@ class AdministrasiController extends Controller
     {
         // $datawa = json_decode($isipesan);
 
-        // $data = array(
-        //     "phone_no"  => '62'.$nomorhp,
-        //     "key"		=> env('WA_KEY'),
-        //     "message"	=> $isipesan,
-        //     // "message"	=> $this->convertnotif($datawa->isi),
-        //     "skip_link"	=> True // This optional for skip snapshot of link in message
-        // );
-        // $data_string = json_encode($data);
+        $apikey     = env('WAHA_API_KEY');
+        $url        = env('WAHA_API_URL');
+        $sessionApi = env('WAHA_API_SESSION');
+        $requestApi = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept'       => 'application/json',
+            'X-Api-Key'    => $apikey,
+        ]);
 
-        // $ch = curl_init(env('WA_URL'));
-        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_VERBOSE, 0);
-        // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        // curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        //     'Content-Type: application/json',
-        //     'Content-Length: ' . strlen($data_string))
-        // );
+        // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
 
-        // LIKANA WANOTIF
-        $phone    = '62'.$nomorhp;
-        $token    = env('WA_API_TOKEN');
-        $url      = env('WA_API_URL');
-        $data     = array(
-                        "device_id" => env('WA_API_ID'),
-                        "phone"     => $phone,
-                        "message"   => array(
-                                            'text' =>  $isipesan
-                                        )
-                    );
+        try {
+            #1 Send Seen
+            $requestApi->post($url.'/api/sendSeen', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
 
-        $data_string = json_encode($data,1);
+            #2 Start Typing
+            $requestApi->post($url.'/api/startTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, 0);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string),
-            'Authorization: Bearer '. $token,
-        ));
+            sleep(1); // jeda seolah olah ngetik
 
-        echo $res=curl_exec($ch);
-        curl_close($ch);
+            #3 Stop Typing
+            $requestApi->post($url.'/api/stopTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+
+            #4 Send Message
+            $requestApi->post($url.'/api/sendText', [
+                "session" => $sessionApi,
+                "chatId"  => $nomorhp.'@c.us',
+                "text"    => $isipesan,
+            ]);
+        } catch (Throwable $th) {
+            throw $th;
+        }
     }
 
     public function tahsin($statusdaftar, $statuskeaktifan)
@@ -499,9 +479,6 @@ Panitia Pendaftaran Tahsin
     // TAMBAH KOLOM status_keaktifan
     // ALTER TABLE `tahsins` ADD `status_keaktifan` VARCHAR(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'AKTIF' AFTER `status_kelulusan`;
 
-    /**
-     * @suppress PHP0418
-     */
     public function getPerbaikanUuid()
     {
         $data = Tahsin::whereNull('uuid')->get();
@@ -539,5 +516,14 @@ Panitia Pendaftaran Tahsin
         }
 
         return 'perbaruhi kode unik berhasil';
+    }
+
+    public function getTeskirim()
+    {
+        $nohp='8125144744';
+        $pesan='tes';
+        $this->notifwa('62'.$nohp, $pesan);
+
+        return 'tes wa';
     }
 }
