@@ -230,6 +230,18 @@ LTTQ Arrahmah Balikpapan
 
         }
 
+        if (request()->metode == 'nominal') {
+
+            $data = Pembayaran::find(request()->id);
+            $nominal_lama = $data->nominal_pembayaran;
+            $data->nominal_pembayaran = request()->nominalupdate;
+            $data->save();
+
+            return redirect()->back()
+                ->withFlashSuccess($data->tahsinspp->nama_peserta.', Nominal '.$nominal_lama.' menjadi '.$data->nominal_pembayaran.' Berhasil Diupdate');
+
+        }
+
         $statusA    = 'spp-pembayaran';
         $statusB    = null;
         $titleA     = 'Peserta Pembayaran Form SPP';

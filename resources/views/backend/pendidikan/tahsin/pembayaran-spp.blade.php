@@ -111,7 +111,7 @@
                                     <div class="col">
                                         <div class="collapse hide" id="detail{{ $key + $pembayaranspp->firstItem() }}" style="">
                                             <hr>
-                                            <form class="row" action="" method="post">
+                                            <div class="row">
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <table>
@@ -141,15 +141,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <div class="mb-3">
-                                                        <label lass="form-label">Nominal</label>
-                                                        <input type="text" class="form-control" value="{{ $spp->nominal_pembayaran }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <button type="submit" class="btn btn-sm btn-primary">Perbaruhi</button>
-                                                    </div>
+                                                    <form action="{{ Request::fullUrl() }}">
+                                                        <input type="hidden" name="id" value="{{ $spp->id }}">
+                                                        <input type="hidden" name="metode" value="nominal">
+                                                        <div class="mb-3">
+                                                            <label lass="form-label">Nominal</label>
+                                                            <input type="text" name="nominalupdate" class="form-control" value="{{ $spp->nominal_pembayaran }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <button type="submit" class="btn btn-sm btn-primary">Perbaruhi</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
