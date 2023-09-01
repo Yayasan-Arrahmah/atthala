@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/filepond/app.css">
 @stack('after-styles')
 {{-- {{ $sesibayar }} --}}
-        <form action="{{ route('frontend.tahsin.pembayaransimpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data">
+        <form action="{{ route('frontend.tahsin.pembayaransimpan') }}" onsubmit="return checkForm(this);" method="post" enctype="multipart/form-data" autocomplete="off">
             @csrf
             <div class="row justify-content-center align-items-center">
                 <div class="col col-sm-5 align-self-center">
@@ -84,70 +84,12 @@
                                     <input disabled  onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" placeholder="Kenaikan Level Tahsin" name="tglpeserta" value="{{ $peserta->waktu_lahir_peserta }}" maxlength="191" required="">
                                 </div><!--col-->
                             </div>
-                            {{-- <div class="form-group row">
-                                <div class="col-md-12 table-responsive">
-                                    <div class="alert alert-primary" role="alert" style="margin-bottom: 0rem">
-                                        <h4 class="alert-heading">Rincian Biaya</h4>
-                                        <table class="table table-sm table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <strong>Daftar Ulang</strong>
-                                                    </td>
-                                                    <td>
-                                                        :
-                                                    </td>
-                                                    <td>
-                                                        Rp. 50.000
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <strong>SPP 1 Periode</strong>
-                                                    </td>
-                                                    <td>
-                                                        :
-                                                    </td>
-                                                    <td>
-                                                        Rp. 100.000 x 4 Bulan
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                        ___________
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <strong>Total Biaya</strong>
-                                                    </td>
-                                                    <td>
-                                                        :
-                                                    </td>
-                                                    <td>
-                                                        <strong>Rp. 450.000</strong>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <p>
-                                            *Minimal Transfer Biaya daftar ulang Rp. 50.000
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> --}}
 
                             <div id="ikhwan-rek" class="form-group row">
                                 <div class="col-md-12 table-responsive">
                                     <div class="alert alert-success" role="alert" style="margin-bottom: 0rem">
                                         <h4 class="alert-heading">Rekening Pembayaran (IKHWAN)</h4>
                                         <p>
-                                            {{-- <div><strong>Nominal Transfer : Rp 100,000</strong></div> --}}
                                             <div><strong>Bank Syariah Indonesia</strong> : 4550 0000 15</div>
                                             <div><strong>A.N</strong> : Yayasan Arrahmah</div>
                                         </p>
@@ -159,133 +101,142 @@
                                     <div class="alert alert-warning" role="alert" style="margin-bottom: 0rem">
                                         <h4 class="alert-heading">Rekening Pembayaran (AKHWAT)</h4>
                                         <p>
-                                            {{-- <div><strong>Nominal Transfer : Rp 100,000</strong></div> --}}
                                             <div><strong>Bank Syariah Indonesia</strong> : 7009 9997 05</div>
                                             <div><strong>A.N</strong> : Yayasan Arrahmah</div>
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="form-group row">
-                                <label class="col-6 form-control-label" >Biaya daftar ulang</label>
-                                <div class="col-6">
-                                    <select name="pelunasan_tahsin" class="buktitf form-control">
-                                        <option value="SUDAH">SUDAH</option>
-                                        <option value="BELUM">BELUM</option>
-                                    </select>
-                                </div><!--col-->
-                            </div> --}}
                             <div class="form-group row">
                                 <label class="col-4 col-form-label">Pembayaran Ke-</label>
-                                <div class="col-4 col-form-label">
+                                <div class="col-6 col-form-label">
+                                    @foreach ($dataperiode as $data)
+                                        @if ($data['status'] == 1)
+                                            <div class="border border-success rounded p-1 mb-1">
+                                                <input
+                                                    class   ="btn-check float-left mr-2 ml-2"
+                                                    type    ="checkbox"
+                                                    checked
+                                                    disabled
+                                                    style   ="margin-top: 6px;" >
+                                                <label for="nominal{{ $data['id'] }}" class="btn p-0 text-left btn-sm btn-block text-success" style="font-weight: 500;margin: 3px 0 0 0;"> {{ $data['ket'] }} </label>
+                                            </div>
+                                        @else
+                                            <div class="border border-danger rounded p-1 mb-1">
+                                                <input onclick ="hitung()"
+                                                    id      ="nominal{{ $data['id'] }}"
+                                                    class   ="btn-check float-left mr-2 ml-2"
+                                                    type    ="checkbox"
+                                                    name    ="pembayaran[]"
+                                                    value   ="{{ $data['id'] }}"
+                                                    style   ="margin-top: 6px;" >
+                                                <label for="nominal{{ $data['id'] }}" class="btn p-0 text-left btn-sm btn-block text-danger" style="font-weight: 500;margin: 3px 0 0 0;"> {{ $data['ket'] }} </label>
+                                            </div>
+
+                                        @endif
+
+                                    @endforeach
+
+                                </div>
+                                {{-- perebahan pertama, 2 kolom --}}
+                                {{-- <div class="col-4 col-form-label">
                                     <div class="form-check checkbox">
-                                        <input class="form-check-input" type="checkbox" name="pembayaran[]" value="1">
-                                        <label class="form-check-label">1</label>
+                                        <input class="form-check-input" type="checkbox" onclick="hitung()" id="nominal1" value="1" checked disabled>
+                                        <label class="form-check-label text-success">JUN 2023</label>
                                     </div>
                                     <div class="form-check checkbox">
-                                        <input class="form-check-input" type="checkbox" name="pembayaran[]" value="2">
-                                        <label class="form-check-label">2</label>
-                                    </div>
-                                    <div class="form-check checkbox">
-                                        <input class="form-check-input" type="checkbox" name="pembayaran[]" value="Donasi">
-                                        <label class="form-check-label">Donasi</label>
+                                        <input class="form-check-input" type="checkbox" onclick="hitung()" id="nominal2" value="2" checked disabled>
+                                        <label class="form-check-label text-success">JUL 2023</label>
                                     </div>
                                 </div>
                                 <div class="col-4 col-form-label">
                                     <div class="form-check checkbox">
-                                        <input class="form-check-input" type="checkbox" name="pembayaran[]" value="3">
-                                        <label class="form-check-label">3</label>
+                                        <input class="form-check-input" type="checkbox" onclick="hitung()" id="nominal3" name="pembayaran[]" value="3">
+                                        <label class="form-check-label text-danger">AGU 2023</label>
                                     </div>
                                     <div class="form-check checkbox">
-                                        <input class="form-check-input" type="checkbox" name="pembayaran[]" value="4">
-                                        <label class="form-check-label">4</label>
+                                        <input class="form-check-input" type="checkbox" onclick="hitung()" id="nominal4" name="pembayaran[]" value="4">
+                                        <label class="form-check-label text-danger">SEP 2023</label>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
+
+                            <div class="form-group row col-12">
+                                <label class="col-5 form-control-label" >Kode Unik</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control"
+                                    maxlength="4" placeholder="Kode Unik"
+                                    value="{{ $peserta->kode_unik ?? 0 }}"
+                                    style="background-color: white;
+                                            border: 0px;
+                                            text-align: end;
+                                            font-weight: 600;"
+                                    disabled>
+                                </div><!--col-->
+                            </div>
+                            <div class="form-group row col-12">
+                                <label class="col-5 form-control-label" >Donasi</label>
+                                <div class="col-7">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                Rp
+                                            </span>
+                                        </div>
+                                        <input type="number" autocomplete="off" onkeydown="hitung()" oninput="hitung()" value="{{ old('donasi') }}" id="donasi" class="form-control" maxlength="12" placeholder="0">
+                                    </div><!--form-group-->
+                                    {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
+                                </div><!--col-->
+                            </div>
+                            <div class="form-group row col-12" style="font-size: 18px;">
+                                <label class="col-5 form-control-label">Total Transfer</label>
+                                <div class="col-7">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"
+                                            style="background-color: white;
+                                            border: 0px;
+                                            font-weight: 600;">
+                                                Rp
+                                            </span>
+                                        </div>
+                                        <input type="text" id="totalnominal" name="nominaltf"
+                                            value="{{ old('nominaltf') }}" oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}"
+                                            class="form-control" maxlength="12" placeholder="0"
+                                            style="background-color: white;
+                                            border: 0px;
+                                            text-align: end;
+                                            font-size: 18px;
+                                            font-weight: 900;"
+                                            disabled>
+                                    </div><!--form-group-->
+                                    {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
+                                </div><!--col-->
+                            </div>
+                            <hr>
                             <div id="bukti-tf" class="form-group row">
                                 <label class="col-4 form-control-label" >Bukti Transfer</label>
                                 <div class="col-8">
                                     <input type="file" class="upload-buktitransfer" accept="image/png, image/jpeg" required/>
-
-                                    {{-- <div class="custom-file">
-                                        <input class="filestyle custom-file-input" type="file" name="bukti_transfer_peserta" id="upload-3" required="" data-buttonText="Your label here.">
-                                        <label class="custom-file-label" id="upload-3-label">Foto Bukti Transfer</label>
-                                    </div> --}}
                                 </div><!--col-->
                                 <div class="form-group row col-12">
-                                <div class="col text-muted" style="text-align: justify;">
-                                  Gunakan Kode Bulan Lahir dan Tanggal Lahir ketika melakukan transfer.
-                                  <br>
-                                  <strong>
-                                      Contoh : Rp 150.000 + 0418 <br>(Lahir Di Bulan April Tanggal 18) = Rp 150.418
-                                  </strong>
+                                    <div class="col text-muted">
+                                        Mohon Transfer sesuai dengan nominal yang tertera terlebih dahulu. Kemudian klik 'Pembayaran Selesai'.
+                                    </div>
                                 </div>
                             </div>
-                                <div class="form-group row col-12">
-                                    <label class="col-4 form-control-label" >Nominal</label>
-                                    <div class="col-8">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    Rp
-                                                </span>
-                                            </div>
-                                            <input type="number" name="nominaltf" value="{{ old('nominaltf') }}" oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Nonimal Transfer">
-                                        </div><!--form-group-->
-                                        {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
-                                    </div><!--col-->
-                                </div>
-                                <div class="col-12">
-                                    <p class="text-muted" style="font-weight: 700; text-align:justify">
-                                        {{-- Apabila sudah membayar / melunasi infaq SPP namun tidak memiliki bukti pembayaran, maka kami akan memverifikasi sendiri ke bagian keuangan. --}}
-                                    </p>
-                                </div>
-                            </div>
-                            {{-- <div id="non-bukti-tf" class="form-group row">
-                                <div class="col-12">
-                                    <p class="text-muted" style="font-weight: 700; text-align:justify">
-                                        Apabila saudara belum sempat melunasi pembayaran infaq SPP, maka saudara bisa melakukan pembayaran setelah selesai daftar ulang ini dan melakukan konfirmasi ke nomor WhatsApp kasir di 08115430077 dengan format:
-                                        <br>
-                                        <br> 1. Nama Lengkap Sesuai KTP
-                                        <br> 2. Level
-                                        <br> 3. Tanggal Lahir Lengkap
-                                        <br> 4. Periode SPP
-                                        <br> 5. Nominal Transfer .
-                                    </p>
-                                </div>
-                            </div> --}}
+                            <hr>
                             <div class="form-group row">
                                 <div class="col-12">
                                     <p class="text-muted" style="font-weight: 700; text-align:justify">
+                                        Kami merubah dari kode BBTT menjadi Kode Unik.
+                                        Mohon maaf atas pembaruan ini.
+                                        Kami selalu berusaha menyajikan pelayanan yang terbaik.
+                                        <br><br>
                                         Terima kasih atas perhatiannya. Semoga Allah Subhanahu Wa Ta'ala memberikan kelancaran dalam kegiatan belajar tahsin saudara.
                                     </p>
                                 </div>
                             </div>
-                            {{-- <div id="admin-ikhwan" class="form-group row">
-                                <div class="col-md-12 table-responsive">
-                                    <div class="alert alert-success" role="alert" style="margin-bottom: 0rem; font-size: 17px">
-                                        <p>
-                                            <div><strong>No. HP</strong> : 0852 4665 5951</div>
-                                            <div><strong>A.N</strong> : Admin Ikhwan</div>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="admin-akhwat" class="form-group row">
-                                <div class="col-md-12 table-responsive">
-                                    <div class="alert alert-warning" role="alert" style="margin-bottom: 0rem; font-size: 17px">
-                                        <p>
-                                            <div><strong>No. HP</strong> : 0813 5012 8157</div>
-                                            <div><strong>A.N</strong> : Admin Akhwat</div>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="form-group row">
-                                <div class="col-md-12">
-                                    <img class="img-fluid" src="https://lh5.googleusercontent.com/fa9h1brjURoz-uilFI0C881v4VXDR2HJxbOWc4hH7hGdItrftVaU6eWRncRHpcexyq5H6KDwoGAfBNYVLYh_jpSxdl-i4lhbnU1tigImh3SXQlmayuYAtJRk77-g=w675" alt="">
-                                </div>
-                            </div> --}}
                             <div class="form-group row">
                                 <div class="col">
                                     <input oninvalid="setCustomValidity('Centang Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" id="setuju" type="checkbox" value="" required/> <label style="margin-bottom: 2px">Data yang diisi sudah benar.</label>
@@ -411,8 +362,37 @@
                     });
                 }).change();
             });
+
         </script>
 
+        <script>
+            function hitung(){
+                var spp             = document.querySelectorAll('input[type=checkbox][name="pembayaran[]"]:checked').length;
+                var totalspp        = 100000 * Number(spp);
+                var kodeunik        = '{!! $peserta->kode_unik ?? 0 !!}';
+                var kdu             = Number(kodeunik.replace(/^0+/, ''));
+                var totalnominal    = totalspp + kdu;
+                var donasi          = document.getElementById("donasi").value;
+                var totaltf         = totalnominal + Number(donasi);
+                var cek             = Number(document.getElementById("totalnominal").value);
+                if (spp == 0 && donasi == 0) {
+                    document.getElementById("totalnominal").value = 0;
+                } else {
+                    document.getElementById("totalnominal").value = totaltf.toLocaleString();
+                }
+
+                // var a_ = document.querySelector('input[type=checkbox][name="pembayaran[]"]:checked');
+                // let myArray = [];
+                // let checkboxes = document.querySelectorAll('input[type=checkbox][name="pembayaran[]"]');
+                // checkboxes.forEach(function(checkbox) {
+                //     if (checkbox.checked) {
+                //         console.log(checkbox.id);
+                //     }
+                // });
+
+                // console.log(checkboxes);
+            }
+        </script>
 
 @stack('after-scripts')
 
