@@ -97,6 +97,19 @@ class PembayaranController extends Controller
                     ->paginate(10);
     }
 
+    public function tahsinrekap($statusdaftar, $statuskeaktifan)
+    {
+        return Tahsin::cari($this->cari)
+                    ->cariLevel($this->level)
+                    ->jenis($this->jenis)
+                    ->angkatan($this->angkatan)
+                    ->pengajar($this->pengajar)
+                    ->statusPeserta($this->status)
+                    ->statusKeaktifan($statuskeaktifan)
+                    ->statusDaftar($statusdaftar, $this->angkatan)
+                    ->paginate(1000);
+    }
+
     public function pembayaranujianbase($statusdaftar, $statuskeaktifan)
     {
         $this->statusdaftar    = $statusdaftar;
@@ -287,7 +300,7 @@ LTTQ Arrahmah Balikpapan
         $titleA  = 'Peserta Aktif';
 
         $status_       = $statusA;
-        $tahsins       = $this->tahsin($statusA, $statusB);
+        $tahsins       = $this->tahsinrekap($statusA, $statusB);
         $dataangkatan  = $this->listangkatan;
         $datalevel     = $this->listlevel;
         $datapengajars = $this->listpengajar;

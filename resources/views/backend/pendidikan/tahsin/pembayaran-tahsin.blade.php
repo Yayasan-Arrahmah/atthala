@@ -3,7 +3,59 @@
 @section('title', app_name() . '| Tahsin')
 
 @section('content')
+    <style>
+        /* table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        } */
+        div.dt-buttons {
+            float: none !important;
+        }
 
+    </style>
+    <script src="
+    https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js
+    "></script>
+    <link href="
+    https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css
+    " rel="stylesheet">
+    <script src="
+    https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js
+    "></script>
+    <script src="
+    https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js
+    "></script>
+    <script src="
+    https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js
+    "></script>
+    <script src="
+    https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js
+    "></script>
+    <script src="
+    https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js
+    "></script>
+    <script src="
+    //cdn.datatables.net/plug-ins/1.13.6/api/sum().js
+    "></script>
+    <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css
+    " rel="stylesheet">
+    <script>
+        $(document).ready( function () {
+        $('#rekap').DataTable({
+            "autoWidth": true,
+            "scrollX": true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download Data Excel',
+                    title: 'Riwayat Pembayaran Peserta Tahsin Angkatan {!! request()->angkatan ?? 22 !!}',
+                }
+            ],
+        });
+    } );
+    </script>
 
     <div class="row">
         <div class="col">
@@ -20,7 +72,7 @@
         </div><!--col-->
     </div><!--row-->
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-body">
@@ -264,9 +316,9 @@
                 </div><!--card-body-->
             </div><!--card-->
         </div><!--col-->
-    </div><!--row-->
+    </div><!--row--> --}}
 
-    <div class="row ">
+    {{-- <div class="row ">
         <div class="col">
             <div class="card">
                 <div class="card-body">
@@ -461,13 +513,13 @@
                                                     </table>
                                                 </div>
                                                 <div class="col-3">
-                                                    {{-- <div class="mb-3">
+                                                    <div class="mb-3">
                                                         <label lass="form-label">Nominal</label>
                                                         <input type="text" class="form-control" value="">
                                                     </div>
                                                     <div class="mb-3">
                                                         <button type="submit" class="btn btn-sm btn-primary">Perbaruhi</button>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
 
                                             </form>
@@ -481,6 +533,209 @@
                             @endphp
                         @endforeach
                     </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="row ">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-lg table-striped display nowrap" id="rekap" width="100%">
+                        <thead style="font-weight: bold;">
+                            <tr>
+                                <th>No</th>
+                                <th>NIS</th>
+                                <th>Nama</th>
+                                <th>No. Telp</th>
+                                <th>Level</th>
+                                <th>Kelas</th>
+                                <th>Pengajar</th>
+                                <th>Kode Unik</th>
+                                <th>Pendaftaran</th>
+                                <th>Daftar Ulang</th>
+                                <th>
+                                    {{ request()->angkatan == 22 || empty(request()->angkatan) ? 'JUN 2023' : 'SPP - I' }}
+                                </th>
+                                <th>
+                                    {{ request()->angkatan == 22 || empty(request()->angkatan) ? 'JUL 2023' : 'SPP - II' }}
+                                </th>
+                                <th>
+                                    {{ request()->angkatan == 22 || empty(request()->angkatan) ? 'AGU 2023' : 'SPP - III' }}
+                                </th>
+                                <th>
+                                    {{ request()->angkatan == 22 || empty(request()->angkatan) ? 'SEP 2023' : 'SPP - IV' }}
+                                </th>
+                                <th>Status</th>
+                                <th>Total Tercatat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $first  = 0;
+                                $end    = 0;
+                                $number = 1;
+                                $angkt  = request()->angkatan ?? 22;
+                                $nom_daftar = 0;
+                                $nom_ulang = 0;
+                                $nom_jun = 0;
+                                $nom_jul = 0;
+                                $nom_agu = 0;
+                                $nom_sep = 0;
+                                $nom_total = 0;
+                            @endphp
+                        @foreach($tahsins as $key => $tahsin)
+                        <tr style="padding: 5px">
+                            @php
+                                $no_ = $key + $tahsins->firstItem();
+                            @endphp
+                            <td>{{ $no_ }}</td>
+                            <td>{{ $tahsin->no_tahsin }}</td>
+                            <td>{{ $tahsin->nama_peserta }}</td>
+                            <td>62{{ $tahsin->nohp_peserta }}</td>
+
+                            <td>{{ $tahsin->level_peserta ?? '-'  }}</td>
+                            <td>{{ $tahsin->jadwal_tahsin ?? '-'  }}</td>
+                            <td>{{ $tahsin->nama_pengajar ?? '-'  }}</td>
+
+                            <td><center>{{ str_pad( $no_, 4, '0', STR_PAD_LEFT) }}</center></td>
+                            <td>
+                                @if ($angkt > 16)
+                                    @if (strpos($tahsin->no_tahsin, '-'.$angkt.'-'))
+                                        Rp. 100.000
+                                        @php
+                                            $nom_daftar = $nom_daftar + 100000;
+                                        @endphp
+                                    @else
+                                        <center> - </center>
+                                    @endif
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if ($angkt > 18)
+                                    @if (!strpos($tahsin->no_tahsin, '-'.$angkt.'-'))
+                                        Rp. 50.000
+                                        @php
+                                            $nom_ulang = $nom_ulang + 50000;
+                                        @endphp
+                                    @else
+                                        <center> - </center>
+                                    @endif
+                                @else
+                                    -
+                                @endif
+
+                            </td>
+                                @php
+                                    if ($tahsin->pembayaran) {
+                                        $jumlah = $tahsin->pembayaran->sum('nominal_pembayaran');
+                                    } else {
+                                        $jumlah = 0;
+                                    }
+                                @endphp
+                            <td>
+                                @if ($jumlah > 100000)
+                                    Rp. 100.000
+                                    @php
+                                        $nom_jun = $nom_jun + 100000;
+                                    @endphp
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if ($jumlah > 200000)
+                                    Rp. 100.000
+                                    @php
+                                        $nom_jul = $nom_jul + 100000;
+                                    @endphp
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if ($jumlah > 300000)
+                                    Rp. 100.000
+                                    @php
+                                        $nom_agu = $nom_agu + 100000;
+                                    @endphp
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if ($jumlah > 400000)
+                                    Rp. 100.000
+                                    @php
+                                        $nom_sep = $nom_sep + 100000;
+                                    @endphp
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if ($jumlah > 400000)
+                                    LUNAS
+                                @else
+                                    @if ($tahsin->pembayaranujian($tahsin->angkatan_peserta))
+                                       LUNAS DI FORM UJIAN
+                                    @else
+                                        (Belum Isi Form Ujian) / N.A
+                                    @endif
+                                @endif
+
+                            </td>
+                            <td>
+                                Rp. {{ !empty($jumlah) ? number_format($jumlah , 0, '.', '.') : '-' }}
+                                @php
+                                    $nom_total = $nom_total + $jumlah;
+                                @endphp
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>TOTAL</th>
+                                <th>Rp. {{ !empty($nom_daftar) ? number_format($nom_daftar , 0, '.', '.') : '0' }}</th>
+                                <th>Rp. {{ !empty($nom_ulang) ? number_format($nom_ulang , 0, '.', '.') : '0' }}</th>
+                                <th>Rp. {{ !empty($nom_jun) ? number_format($nom_jun , 0, '.', '.') : '0' }}</th>
+                                <th>Rp. {{ !empty($nom_jul) ? number_format($nom_jul , 0, '.', '.') : '0' }}</th>
+                                <th>Rp. {{ !empty($nom_agu) ? number_format($nom_agu , 0, '.', '.') : '0' }}</th>
+                                <th>Rp. {{ !empty($nom_sep) ? number_format($nom_sep , 0, '.', '.') : '0' }}</th>
+                                <th></th>
+                                <th>Rp. {{ !empty($nom_total) ? number_format($nom_total , 0, '.', '.') : '0' }}</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>PENDAPATAN</th>
+                                <th>Rp. {{ number_format($nom_daftar+$nom_ulang+$nom_jun+$nom_jul+$nom_agu+$nom_sep , 0, '.', '.') }}</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
