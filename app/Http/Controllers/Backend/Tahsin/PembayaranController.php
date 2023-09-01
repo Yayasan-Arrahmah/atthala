@@ -31,6 +31,7 @@ class PembayaranController extends Controller
         $this->angkatanbaru  = request()->angkatan ?? 22;
         $this->angkatanujian = request()->angkatan ?? 21;
         $this->status        = request()->status ?? null;
+        $this->tanggal       = request()->tanggal ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
                                 ->where('nama_pengajar', '!=', NULL)
@@ -192,6 +193,7 @@ class PembayaranController extends Controller
             ;
         })
         ->where('jenis_pembayaran', 'SPP TAHSIN')
+        ->tanggal($this->tanggal)
         ->orderBy('created_at', 'ASC')
         ->paginate(10);
     }

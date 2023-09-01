@@ -22,7 +22,10 @@
     {{-- {{ style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap') }} --}}
     {{-- {{ style('https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css') }} --}}
     {{ style('//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css') }}
-    {{ style('css/bootstrap-editable.css') }}
+    {{-- {{ style('css/bootstrap-editable.css') }} --}}
+    {{ style('css/bootstrap-datepicker.css') }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     {{-- {{ style('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css') }} --}}
 
    <style>
@@ -166,8 +169,16 @@
     {!! script('js/manifest.js') !!}
     {!! script('js/vendor.js') !!}
     {!! script('js/backend.js') !!}
+    {!! script('js/bootstrap-datepicker.js') !!}
     {{-- {!! script('https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js') !!} --}}
     <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.datepicker').datepicker({ format: 'yyyy-mm-dd' });
+        });
+    </script>
     @stack('after-scripts')
 
 </head>

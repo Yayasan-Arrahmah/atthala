@@ -81,6 +81,12 @@
                     <option>100</option>
                 </select>
             </div>
+            <div class="col-md-2">
+                <div class="text-muted text-center" style="position: absolute">
+                    Tanggal
+                </div>
+                <input class="form-control mt-4 datepicker" value="{{ request()->tanggal }}" type="text" name="tanggal" id="" maxlength="11" size="11" onchange='if(this.value != 0) { this.form.submit(); }'>
+            </div>
             @if ($status_ == 'daftar-baru' || $status_ == 'belum-pilih-jadwal' || $status_ == 'selesai-daftar-baru' || $status_ == 'belum-selesai-diperiksa')
                 <div class="col-md-2">
                     <div class="text-muted text-center" style="position: absolute">

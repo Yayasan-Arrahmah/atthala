@@ -97,4 +97,11 @@ class Pembayaran extends Model
                 ;
             });
     }
+
+    public function scopeTanggal($query, $tanggal)
+    {
+        if (!null == $tanggal) {
+            return $query->whereDate('created_at', '=', $tanggal);
+        }
+    }
 }
