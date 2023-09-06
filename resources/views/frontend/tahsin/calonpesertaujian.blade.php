@@ -494,6 +494,19 @@
                                 </div><!--col-->
                             </div> --}}
                             <input type="hidden" name="jumlah" value="{{ $jumlah }}">
+                            <div class="form-group row col-12">
+                                <label class="col-5 form-control-label" >Kode Unik (BBTT)</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control"
+                                    maxlength="4" placeholder="Kode Unik"
+                                    value="{{ $calonpeserta->waktu_lahir_peserta ? \Carbon\Carbon::createFromFormat('d-m-Y', $calonpeserta->waktu_lahir_peserta ?? '01-01-1901')->format('md') : '' }}"
+                                    style="background-color: white;
+                                            border: 0px;
+                                            text-align: end;
+                                            font-weight: 600;"
+                                    disabled>
+                                </div><!--col-->
+                            </div>
                             @if ($jumlah <= 400000)
                                 <div class="form-group row col-12" style="font-size: 18px;">
                                     <label class="col-5 form-control-label">Total Transfer</label>
@@ -679,7 +692,7 @@
                     // var donasi          = document.getElementById("donasi").value;
                     var totaltf         = totalnominal // + Number(donasi);
                     var cek             = Number(document.getElementById("totalnominal").value);
-                    if (spp == 0 && donasi == 0) {
+                    if (spp == 0) {
                         document.getElementById("totalnominal").value = 0;
                     } else {
                         document.getElementById("totalnominal").value = totaltf.toLocaleString();
