@@ -590,8 +590,8 @@
                                         <div class="form-group mb-0 clearfix">
                                             {{-- {{ form_submit(__('labels.frontend.auth.register_button')) }} --}}
                                             <button type="submit" class="btn btn-primary px-4 btn-block"
-                                                style="background-color: rgb(83, 163, 28); border: rgb(83, 163, 28);">Daftar
-                                                & Simpan Kartu Ujian</button>
+                                                style="background-color: rgb(83, 163, 28); border: rgb(83, 163, 28);">
+                                                Selesai</button>
                                         </div><!--form-group-->
                                     </div><!--col-->
                                 </div><!--row-->
