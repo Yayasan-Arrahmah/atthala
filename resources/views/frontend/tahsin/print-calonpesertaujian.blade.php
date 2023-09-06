@@ -22,7 +22,7 @@ background-repeat: no-repeat;
             ANGKATAN {{ session('daftar_ujian') }}
         </h5>
     </center>
-    <table style="font: 12px">
+    <table style="font: 10px">
         <tr>
             <td>No. Peserta Tahsin</td>
             <td>:</td>
@@ -93,7 +93,7 @@ background-repeat: no-repeat;
         <br>
         <br>
         <br>
-        <center> https://arrahmahbalikpapan.or.id &copy; 2021 </center>
+        <center> https://arrahmahbalikpapan.or.id &copy; 2023 </center>
     </div>
 
 </body>
