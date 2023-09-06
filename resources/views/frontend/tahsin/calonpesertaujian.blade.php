@@ -660,7 +660,7 @@
                 function hitung(){
                     var spp             = document.querySelectorAll('input[type=checkbox][name="pembayaran[]"]:checked').length;
                     var totalspp        = 100000 * Number(spp);
-                    var kodeunik        = "{!! $spp->tahsinspp->waktu_lahir_peserta ? \Carbon\Carbon::createFromFormat('d-m-Y', $spp->tahsinspp->waktu_lahir_peserta ?? '01-01-1901')->format('md') : '' !!}"
+                    var kodeunik        = "{!! $calonpeserta->waktu_lahir_peserta ? \Carbon\Carbon::createFromFormat('d-m-Y', $calonpeserta->waktu_lahir_peserta ?? '01-01-1901')->format('md') : '' !!}"
                     // var kodeunik        = '{!! $peserta->kode_unik ?? 0 !!}';
                     var kdu             = Number(kodeunik.replace(/^0+/, ''));
                     var totalnominal    = totalspp + kdu;
