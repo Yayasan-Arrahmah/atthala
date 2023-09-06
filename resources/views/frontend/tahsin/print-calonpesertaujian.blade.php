@@ -35,7 +35,7 @@ background-repeat: no-repeat;
         <tr>
             <td>Nama Peserta</td>
             <td>:</td>
-            <td><strong>{{ strtoupper($nama_peserta) }}</strong></td>
+            <td><strong>{{ strtoupper($data->nama_peserta) }}</strong></td>
             <td></td>
             <td>Level Tahsin</td>
             <td>:</td>
@@ -44,7 +44,7 @@ background-repeat: no-repeat;
         <tr>
             <td>No. HP (WhatsApp)</td>
             <td>:</td>
-            <td><strong>{{ strtoupper($nohp_peserta) }}</strong></td>
+            <td><strong>{{ strtoupper($data->nohp_peserta) }}</strong></td>
             <td></td>
             <td>Jadwal Tahsin / Ujian</td>
             <td>:</td>
@@ -53,7 +53,7 @@ background-repeat: no-repeat;
         <tr>
             <td>Tempat, Tanggal Lahir</td>
             <td>:</td>
-            <td><strong>{{ strtoupper($tempat_lahir_peserta) }}, {{ $data->waktu_lahir_peserta }}</strong></td>
+            <td><strong>{{ strtoupper($data->tempat_lahir_peserta) }}, {{ $data->waktu_lahir_peserta }}</strong></td>
             <td></td>
             <td>Pengajar</td>
             <td>:</td>
@@ -71,7 +71,7 @@ background-repeat: no-repeat;
     </table>
     <div style="font: 10px;">
         <center>
-            BALIKPAPAN, {{ \Carbon\Carbon::create($updated_at)->format('d-m-Y') }}
+            BALIKPAPAN, {{ \Carbon\Carbon::create($data->updated_at)->format('d-m-Y') }}
             <br>
             Panitia Ujian Tahsin
             <br>
