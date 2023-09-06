@@ -472,7 +472,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
 
         // dd($jumlah = $peserta->pembayaran->sum('nominal_pembayaran'));
 
-        if ($calonpeserta->pembayaran) {
+        if (!empty($calonpeserta->pembayaran)) {
             $jumlah = $calonpeserta->pembayaran->sum('nominal_pembayaran');
         } else {
             $jumlah = 0;
