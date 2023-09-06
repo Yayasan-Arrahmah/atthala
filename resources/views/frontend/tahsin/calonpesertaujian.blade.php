@@ -494,7 +494,7 @@
                                 </div><!--col-->
                             </div> --}}
                             <input type="hidden" name="jumlah" value="{{ $jumlah }}">
-                            @if ($jumlah >= 400000)
+                            @if ($jumlah <= 400000)
                                 <div class="form-group row col-12" style="font-size: 18px;">
                                     <label class="col-5 form-control-label">Total Transfer</label>
                                     <div class="col-7">
