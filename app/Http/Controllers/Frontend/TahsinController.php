@@ -483,7 +483,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
 
         $cekterdaftarujian = PesertaUjian::where('no_tahsin', $notahsin)->where('angkatan_ujian', $angkatan)->first();
 
-        return view('frontend.tahsin.calonpesertaujian', compact('calonpeserta', 'cekterdaftarujian', 'dataperiode'));
+        return view('frontend.tahsin.calonpesertaujian', compact('calonpeserta', 'cekterdaftarujian', 'dataperiode', 'jumlah'));
     }
 
     public function simpancalonpesertaujian(Request $request)

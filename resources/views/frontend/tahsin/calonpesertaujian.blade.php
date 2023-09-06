@@ -493,6 +493,8 @@
                                     </select>
                                 </div><!--col-->
                             </div> --}}
+                            <input type="hidden" name="jumlah" value="{{ $jumlah }}">
+                            @if ($jumlah >= 400000)
                                 <div class="form-group row col-12" style="font-size: 18px;">
                                     <label class="col-5 form-control-label">Total Transfer</label>
                                     <div class="col-7">
@@ -544,6 +546,15 @@
                                         </p>
                                     </div>
                                 </div>
+                            @else
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <p class="text-muted" style="font-weight: 700; text-align:justify">
+                                            Pembayaran Anda Sudah Lengkap.
+                                        </p>
+                                    </div>
+                                </div>
+                            @endif
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <p class="text-muted" style="font-weight: 700; text-align:justify">
@@ -591,7 +602,8 @@
                                             {{-- {{ form_submit(__('labels.frontend.auth.register_button')) }} --}}
                                             <button type="submit" class="btn btn-primary px-4 btn-block"
                                                 style="background-color: rgb(83, 163, 28); border: rgb(83, 163, 28);">
-                                                Selesai</button>
+                                                Selesai
+                                            </button>
                                         </div><!--form-group-->
                                     </div><!--col-->
                                 </div><!--row-->
