@@ -440,18 +440,13 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
             $pencarian = null;
         }
         $datapengajars = DB::table('tahsins')
-            ->select('nama_pengajar')
-            ->groupBy('nama_pengajar')
-            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-            ->where('angkatan_peserta', '=', session('daftar_ujian'))
-            ->get();
+                ->select('nama_pengajar')
+                ->groupBy('nama_pengajar')
+                ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            // ->where('angkatan_peserta', '=', request('angkatan') ?? session('angkatan_tahsin'))
+                ->get();
 
-        $datalevel = DB::table('tahsins')
-            ->select('level_peserta')
-            ->groupBy('level_peserta')
-            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY level_peserta ASC'))
-            ->where('angkatan_peserta', '=', session('daftar_ujian'))
-            ->get();
+        $datalevel = LevelTahsin::get();
 
         return view('frontend.tahsin.cari-calonpesertaujian', compact('datapengajars', 'datalevel', 'pencarian'));
     }

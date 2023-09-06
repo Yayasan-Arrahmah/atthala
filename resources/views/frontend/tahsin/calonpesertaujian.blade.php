@@ -36,7 +36,7 @@
                         <div class="text-center">
                             <h4> Peserta Telah Terdaftar </h4>
                             <div class="text-muted">Ujian Tahsin LTTQ Arrahmah Balikpapan Angkatan
-                                {{ session('daftar_tahsin') }}</div>
+                                {{ session('daftar_ujian') }}</div>
                         </div>
                         <hr>
                         <div class="card-body">
