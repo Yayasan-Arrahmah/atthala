@@ -484,17 +484,17 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
 
         if (strstr($notahsin, '-'.session('daftar_ujian'.'-'))) {
             $periode = ([
-                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
-                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
-                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
-                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
-            ]);
-        } else {
-            $periode = ([
                 ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
                 ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
                 ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
                 ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+            ]);
+        } else {
+            $periode = ([
+                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
             ]);
         }
 
@@ -1228,17 +1228,17 @@ Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 
         if (strstr($peserta->no_tahsin, '-'.session('daftar_ujian'.'-'))) {
             $periode = ([
-                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
-                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
-                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
-                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
-            ]);
-        } else {
-            $periode = ([
                 ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
                 ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
                 ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
                 ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+            ]);
+        } else {
+            $periode = ([
+                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
             ]);
         }
         $dataperiode = collect($periode);
