@@ -17,14 +17,14 @@
             @endif
 
             @auth
-                <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Route::is('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
+                <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{  (request()->is(Route::is('frontend.user.dashboard'))) ? 'active' : '' }}">@lang('navs.frontend.dashboard')</a></li>
             @endauth
 
             @guest
-                <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Route::is('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
+                <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{  (request()->is(Route::is('frontend.auth.login'))) ? 'active' : '' }}">@lang('navs.frontend.login')</a></li>
 
                 @if(config('access.registration'))
-                    <li class="nav-item"><a href="{{route('frontend.auth.register')}}" class="nav-link {{ active_class(Route::is('frontend.auth.register')) }}">@lang('navs.frontend.register')</a></li>
+                    <li class="nav-item"><a href="{{route('frontend.auth.register')}}" class="nav-link {{  (request()->is(Route::is('frontend.auth.register'))) ? 'active' : '' }}">@lang('navs.frontend.register')</a></li>
                 @endif
             @else
                 <li class="nav-item dropdown">
@@ -36,13 +36,13 @@
                             <a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
                         @endcan
 
-                        <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Route::is('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+                        <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{  (request()->is(Route::is('frontend.user.account'))) ? 'active' : '' }}">@lang('navs.frontend.user.account')</a>
                         <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
                     </div>
                 </li>
             @endguest
 
-            <li class="nav-item"><a href="{{route('frontend.contact')}}" class="nav-link {{ active_class(Route::is('frontend.contact')) }}">@lang('navs.frontend.contact')</a></li>
+            <li class="nav-item"><a href="{{route('frontend.contact')}}" class="nav-link {{  (request()->is(Route::is('frontend.contact'))) ? 'active' : '' }}">@lang('navs.frontend.contact')</a></li>
         </ul>
     </div>
 </nav>

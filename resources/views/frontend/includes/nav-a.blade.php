@@ -14,12 +14,12 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Route::is('frontend.user.dashboard')) }}"> <i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ (request()->is(Route::is('frontend.user.dashboard'))) ? 'active' : '' }}"> <i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                         @if (auth()->user()->last_name == 'PENGAJAR')
-                            <li class="nav-item"><a href="{{route('frontend.user.absentahsin')}}" class="nav-link {{ active_class(Route::is('frontend.user.absen')) }}"> <i class="fas fa-list-alt"></i> Absen</a></li>
+                            <li class="nav-item"><a href="{{route('frontend.user.absentahsin')}}" class="nav-link {{ (request()->is(Route::is('frontend.user.absen'))) ? 'active' : '' }}"> <i class="fas fa-list-alt"></i> Absen</a></li>
                         @endif
-                        <li class="nav-item"><a href="{{route('frontend.user.amal-yaumiah')}}" class="nav-link {{ active_class(Route::is('frontend.user.amal-yaumiah')) }}"> <i class="fas fa-edit"></i> Amal Yaumiah</a></li>
-                        <li class="nav-item"><a href="{{route('frontend.user.account')}}" class="nav-link {{ active_class(Route::is('frontend.user.account')) }}"> <i class="fas fa-user"></i> Akun, {{ $logged_in_user->email }}</a></li>
+                        <li class="nav-item"><a href="{{route('frontend.user.amal-yaumiah')}}" class="nav-link {{ (request()->is(Route::is('frontend.user.amal-yaumiah'))) ? 'active' : '' }}"> <i class="fas fa-edit"></i> Amal Yaumiah</a></li>
+                        <li class="nav-item"><a href="{{route('frontend.user.account')}}" class="nav-link {{ (request()->is(Route::is('frontend.user.account'))) ? 'active' : '' }}"> <i class="fas fa-user"></i> Akun, {{ $logged_in_user->email }}</a></li>
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i> Menu</a>
@@ -29,7 +29,7 @@
                                     <a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
                                 @endcan
 
-                                <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Route::is('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+                                <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ (request()->is(Route::is('frontend.user.account'))) ? 'active' : '' }}">@lang('navs.frontend.user.account')</a>
                                 <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
                             </div>
                         </li>
