@@ -482,7 +482,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
             $jumlah = 0;
         }
 
-        if (strstr($request->get('idt'), '-'.session('daftar_ujian'.'-'))) {
+        if (strstr($request->get('idt'), '-'.session('daftar_ujian').'-')) {
             $periode = ([
                 ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
                 ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
@@ -1226,7 +1226,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
             $jumlah = 0;
         }
 
-        if (strstr($peserta->no_tahsin, '-'.session('daftar_ujian'.'-'))) {
+        if (strstr($peserta->no_tahsin, '-'.session('daftar_ujian').'-')) {
             $periode = ([
                 ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
                 ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
