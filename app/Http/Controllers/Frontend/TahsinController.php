@@ -1110,8 +1110,8 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
         //             'jumlah_peserta' => $datajadwal->jumlah_peserta + 1,
         //         ]);
 
-        $phone = '+62' . $nohp;
-        $message =
+
+        $pesan =
         "Assalamualaikum Warrohmarullah Wabarokatuh
 
 Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsin Angkatan " . session('angkatan_tahsin') . " LTTQ Ar Rahmah Balikpapan.
@@ -1135,32 +1135,7 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-        $apikey = env('WA_KEY');
-
-        $url = 'http://116.203.191.58/api/send_message';
-        $data = array(
-            "phone_no" => $phone,
-            "key" => $apikey,
-            "message" => $message,
-            "skip_link" => true, // This optional for skip snapshot of link in message
-        );
-        $data_string = json_encode($data);
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, 0);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string))
-        );
-        echo $res = curl_exec($ch);
-        curl_close($ch);
+        $this->notifwa('62' . $nohp, $pesan);
 
         // } catch (\Throwable $th) {
         //     $info      = "gagal";
@@ -1175,7 +1150,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
     {
         $data = Tahsin::where('no_tahsin', $request->get('id'))->where('angkatan_peserta', session('angkatan_tahsin'))->first();
 
-        $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', $data)->setPaper('a5', 'landscape');
+        $pdf = PDF::loadView('frontend.tahsin.print-daftarpeserta', compact('data'))->setPaper('a4', 'landscape');
 
         return $pdf->stream($data->nama_peserta . ' - Kartu Pendaftaran Tahsin LTTQ Arrahmah Balikpapan.pdf');
     }
