@@ -511,8 +511,6 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
     {
         $angkatan = session('daftar_ujian');
 
-        dd($request->get('nominaltf'));
-
         $this->validate($request, [
             'notelp'                => 'required',
             'tempat_lahir_peserta'  => 'required',
