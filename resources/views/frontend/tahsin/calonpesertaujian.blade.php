@@ -506,7 +506,7 @@
                                                 border: 0px;
                                                 text-align: end;
                                                 font-weight: 600;"
-                                        disabled>
+                                        readonly>
                                     </div><!--col-->
                                 </div>
                                 <div class="form-group row col-12" style="font-size: 18px;">
@@ -529,7 +529,7 @@
                                                 text-align: end;
                                                 font-size: 18px;
                                                 font-weight: 900;"
-                                                disabled>
+                                                readonly>
                                         </div><!--form-group-->
                                         {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                                     </div><!--col-->
