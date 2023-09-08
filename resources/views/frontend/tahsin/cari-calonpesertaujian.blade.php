@@ -26,7 +26,7 @@
                 <div style="padding-top: 0px">
                     <h4>Pencarian <br>Calon Peserta Ujian Tahsin</h4>
                     <div class="text-muted">
-                        Angkatan {{ session('angkatan_tahsin') }}
+                        Angkatan {{ session('daftar_ujian') }}
                     </div>
                 </div>
             </center>
