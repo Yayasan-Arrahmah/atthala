@@ -559,6 +559,8 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
                 $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
 
             }
+            $pesertaujian->nominal          = $request->get('nominaltf') ?? 0;
+            $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
 
             $pesertaujian->save();
 
