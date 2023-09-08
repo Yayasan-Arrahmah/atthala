@@ -132,11 +132,8 @@
                                                     style   ="margin-top: 6px;" >
                                                 <label for="nominal{{ $data['id'] }}" class="btn p-0 text-left btn-sm btn-block text-danger" style="font-weight: 500;margin: 3px 0 0 0;"> {{ $data['ket'] }} </label>
                                             </div>
-
                                         @endif
-
                                     @endforeach
-
                                 </div>
                                 {{-- perebahan pertama, 2 kolom --}}
                                 {{-- <div class="col-4 col-form-label">
@@ -171,7 +168,7 @@
                                             border: 0px;
                                             text-align: end;
                                             font-weight: 600;"
-                                    disabled>
+                                    readonly>
                                 </div><!--col-->
                             </div>
                             <div class="form-group row col-12">
@@ -208,7 +205,7 @@
                                             text-align: end;
                                             font-size: 18px;
                                             font-weight: 900;"
-                                            disabled>
+                                            readonly>
                                     </div><!--form-group-->
                                     {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                                 </div><!--col-->

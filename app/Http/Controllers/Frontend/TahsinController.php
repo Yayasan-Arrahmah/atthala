@@ -522,15 +522,15 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
         $pesertaujian = new PesertaUjian;
 
         $cekterdaftarujian = PesertaUjian::where('no_tahsin', $request->input('notahsin'))->where('angkatan_ujian', $angkatan)->first();
+        $datacekpeserta = Tahsin::where('no_tahsin', $request->input('notahsin'))->where('angkatan_peserta', $angkatan)->first();
 
         if (isset($cekterdaftarujian)) {
-            $datacekpeserta = Tahsin::where('no_tahsin', $cekterdaftarujian->no_tahsin)->first();
             return redirect()->to('/tahsin/calon-peserta-ujian/daftar?id=' . $cekterdaftarujian->no_tahsin . '&notelp=' . $datacekpeserta->nohp_peserta);
         } else {
 
             // try {
 
-            $updatepeserta = Tahsin::where('no_tahsin', $request->input('notahsin'))
+            $updatepeserta = Tahsin::where('no_tahsin', $request->input('notahsin'))->where('angkatan_peserta', $angkatan)
                 ->update([
                     'nohp_peserta' => $request->input('notelp'),
                     'tempat_lahir_peserta' => $request->input('tempat_lahir_peserta'),
@@ -546,8 +546,8 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
 
             if(!empty($request->get('nominaltf'))) {
                 $pembayaran                               = new Pembayaran;
-                $pembayaran->id_peserta                   = $updatepeserta->id;
-                $pembayaran->nominal_pembayaran           = $request->get('nominaltf');
+                $pembayaran->id_peserta                   = $datacekpeserta->id;
+                $pembayaran->nominal_pembayaran           = str_replace(",","",$request->get('nominaltf')) ?? 0;
                 $pembayaran->jenis_pembayaran             = 'SPP TAHSIN';
                 $pembayaran->admin_pembayaran             = 'MENUNGGU KONFIRMASI';
                 $pembayaran->bukti_transfer_pembayaran    = Session::get('filebuktitransfer');
@@ -555,12 +555,12 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_r
                 $pembayaran->save();
 
                  // ALTER TABLE `peserta_ujians` ADD `nominal` INT(100) NULL DEFAULT NULL AFTER `bukti_transfer`;
-                $pesertaujian->nominal          = $request->get('nominaltf') ?? 0;
+                $pesertaujian->nominal          = str_replace(",","",$request->get('nominaltf')) ?? 0;
                 $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
 
             }
-            $pesertaujian->nominal          = $request->get('nominaltf') ?? 0;
-            $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
+            // $pesertaujian->nominal          = str_replace(",","",$request->get('nominaltf')) ?? 0;
+            // $pesertaujian->bukti_transfer   = Session::get('filebuktitransferujian');
 
             $pesertaujian->save();
 
