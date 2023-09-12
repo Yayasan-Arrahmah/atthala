@@ -78,7 +78,7 @@
                                 <div class="col-1" style="margin-left: 0px">
                                     <img class="zoom"
                                         @if ($spp->keterangan_pembayaran == 'FORM UJIAN')
-                                            src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-daftar-ujian/{{ $spp->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                            src="https://atthala.arrahmahbalikpapan.or.id/app/public/bukti-transfer/{{ $spp->bukti_transfer_pembayaran ?? '404.jpg' }}"
                                         @else
                                             src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-spp/{{ $spp->bukti_transfer_pembayaran ?? '404.jpg' }}"
                                         @endif
