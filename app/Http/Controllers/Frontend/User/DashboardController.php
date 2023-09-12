@@ -8,8 +8,10 @@ use App\Models\AbsenPertemuan;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use App\Models\Tahsin;
 use Illuminate\Support\Carbon;
+use Throwable;
 // use Illuminate\Support\Facades\Request;
 
 
@@ -24,12 +26,50 @@ class DashboardController extends Controller
 
      public function __construct()
     {
-        $this->angkatan_tahsin  = 22;
+        $this->angkatan_tahsin  = 23;
     }
 
     public function index()
     {
         return view('frontend.user.dashboard.index');
+    }
+
+    public function notifwa($nomorhp, $isipesan)
+    {
+        // $datawa = json_decode($isipesan);
+
+        $apikey = env('WAHA_API_KEY');
+        $url = env('WAHA_API_URL');
+        $sessionApi = env('WAHA_API_SESSION');
+        $requestApi = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'X-Api-Key' => $apikey,
+        ]);
+
+        // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
+
+        try {
+            #1 Send Seen
+            $requestApi->post($url . '/api/sendSeen', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+
+            #2 Start Typing
+            $requestApi->post($url . '/api/startTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+
+            sleep(1); // jeda seolah olah ngetik
+
+            #3 Stop Typing
+            $requestApi->post($url . '/api/stopTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+
+            #4 Send Message
+            $requestApi->post($url . '/api/sendText', [
+                "session" => $sessionApi,
+                "chatId" => $nomorhp . '@c.us',
+                "text" => $isipesan,
+            ]);
+        } catch (Throwable $th) {
+            throw $th;
+        }
     }
 
     public function amalyaumiah()
@@ -245,9 +285,11 @@ class DashboardController extends Controller
               ->where('angkatan_peserta', $this->angkatan_tahsin)
               ->update(['level_peserta' => request()->level]);
 
-            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '+62'. request()->nohp;
-            $message =
+            $nohp = $request->input('nohp');
+            if (substr($nohp, 0, 1) === '0') {
+                $nohp = substr($nohp, 1);
+            }
+            $pesan =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
 Terima kasih Kepada Calon Peserta Tahsin Angkatan ".$this->angkatan_tahsin." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
@@ -262,52 +304,7 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan ".$this->angkatan_tahsin."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            // $url = 'https://api.wanotif.id/v1/send';
-
-            // $curl = curl_init();
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_HEADER, 0);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            // curl_setopt($curl, CURLOPT_POST, 1);
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            //     'Apikey'    => $apikey,
-            //     'Phone'     => $phone,
-            //     'Message'   => $message,
-            // ));
-            // $response = curl_exec($curl);
-            // curl_close($curl);
-
-            // woo-wa.com
-            $apikey = env('WA_KEY');
-
-            $url='http://116.203.191.58/api/send_message';
-                $data = array(
-                    "phone_no"  => $phone,
-                    "key"		=> $apikey,
-                    "message"	=> $message,
-                    "skip_link"	=> True // This optional for skip snapshot of link in message
-                );
-                $data_string = json_encode($data);
-
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_VERBOSE, 0);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen($data_string))
-                );
-                echo $res=curl_exec($ch);
-                curl_close($ch);
-
+            $this->notifwa('62' . $nohp, $pesan);
             $info = "berhasil";
 
             $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
@@ -338,10 +335,11 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".$this->angkatan_tahsin."
                 }
             }
 
-            $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '+62'. $data->nohp_peserta;
-            $message =
-                "Assalamu'alaikum warahmatullahi bapak/ibu calon peserta, mohon maaf rekaman anda tidak terbaca di sistem kami dikarenakan ketidakcocokan teknis.
+            $nohp = $data->nohp_peserta;
+            if (substr($nohp, 0, 1) === '0') {
+                $nohp = substr($nohp, 1);
+            }
+            $pesan = "Assalamu'alaikum warahmatullahi bapak/ibu calon peserta, mohon maaf rekaman anda tidak terbaca di sistem kami dikarenakan ketidakcocokan teknis.
 
 Oleh karenanya mohon mengirimkan rekaman ulang ke penguji kami melalui fitur WhatsApp Voice Note.
 
@@ -354,52 +352,7 @@ Silakan isi format berikut sebelum mengirimkan rekaman suara:
 Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
 
-            // $url = 'https://api.wanotif.id/v1/send';
-
-            // $curl = curl_init();
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_HEADER, 0);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            // curl_setopt($curl, CURLOPT_POST, 1);
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            //     'Apikey'    => $apikey,
-            //     'Phone'     => $phone,
-            //     'Message'   => $message,
-            // ));
-            // $response = curl_exec($curl);
-            // curl_close($curl);
-
-            // woo-wa.com
-            $apikey = env('WA_KEY');
-
-            $url='http://116.203.191.58/api/send_message';
-                $data = array(
-                    "phone_no"  => $phone,
-                    "key"		=> $apikey,
-                    "message"	=> $message,
-                    "skip_link"	=> True // This optional for skip snapshot of link in message
-                );
-                $data_string = json_encode($data);
-
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_VERBOSE, 0);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen($data_string))
-                );
-                echo $res=curl_exec($ch);
-                curl_close($ch);
-
+            $this->notifwa('62' . $nohp, $pesan);
             $info = "berhasil";
 
             $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')

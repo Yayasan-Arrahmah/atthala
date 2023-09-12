@@ -1,8 +1,18 @@
 <?php
 
 use Illuminate\Support\Str;
+use App\Models\Pengaturan;
 
 return [
+
+
+    /*
+        CUSTOM SESSION
+    */
+    'angkatan_tahsin' => 23,
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Default Session Driver
