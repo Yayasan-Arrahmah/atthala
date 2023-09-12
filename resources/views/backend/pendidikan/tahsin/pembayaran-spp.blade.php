@@ -77,8 +77,12 @@
                                 </div>
                                 <div class="col-1" style="margin-left: 0px">
                                     <img class="zoom"
-                                        src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-spp/{{ $spp->bukti_transfer_pembayaran ?? '404.jpg' }}"
-                                        alt="" height="50">
+                                        @if ($spp->keterangan_pembayaran == 'FORM UJIAN')
+                                            src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-spp/{{ str_replace('23-', '22-', $spp->bukti_transfer_pembayaran)  ?? '404.jpg' }}"
+                                        @else
+                                            src="https://atthala.arrahmahbalikpapan.or.id/bukti-transfer-spp/{{ $spp->bukti_transfer_pembayaran ?? '404.jpg' }}"
+                                        @endif
+                                    alt="" height="50">
                                 </div>
                                 <div class="col">
                                     <table>
