@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
      public function __construct()
     {
-        $this->angkatan_tahsin  = 23;
+        $this->angkatan_tahsin  = 22;
     }
 
     public function index()
@@ -279,10 +279,11 @@ class DashboardController extends Controller
 
     public function pesertatahsinbaru(Request $request)
     {
+        $angkatanbaru = 23;
         if(isset(request()->level)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', request()->idtahsin)
-              ->where('angkatan_peserta', $this->angkatan_tahsin)
+              ->where('angkatan_peserta', $angkatanbaru)
               ->update(['level_peserta' => request()->level]);
 
             $nohp = $request->input('nohp');
@@ -292,7 +293,7 @@ class DashboardController extends Controller
             $pesan =
                 "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih Kepada Calon Peserta Tahsin Angkatan ".$this->angkatan_tahsin." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
+Terima kasih Kepada Calon Peserta Tahsin Angkatan ".$angkatanbaru." LTTQ Ar Rahmah Balikpapan, tim penguji kami telah selesai memeriksa bacaan anda.
 
 Alhamdulillah, Level belajar anda adalah di level *".request()->level."*.
 Silakan klik link berikut untuk memilih kelas belajar yang tersedia. Link : https://atthala.arrahmahbalikpapan.or.id/tahsin/pendaftaran/peserta?id=".request()->idtahsin."
@@ -301,14 +302,14 @@ Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
 
 Salam,
-Panitia Pendaftaran Baru Tahsin Angkatan ".$this->angkatan_tahsin."
+Panitia Pendaftaran Baru Tahsin Angkatan ".$angkatanbaru."
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
             $this->notifwa('62' . $nohp, $pesan);
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
-                        ->where('angkatan_peserta', '=', $this->angkatan_tahsin)
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$angkatanbaru.'-%')
+                        ->where('angkatan_peserta', '=', $angkatanbaru)
                         ->paginate(10);
 
             return redirect()->to('/admin/tahsin/daftar-baru')->withFlashSuccess(request()->idtahsin.' Berhasil Diperbaruhi dengan Level '.request()->level);
@@ -316,11 +317,11 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".$this->angkatan_tahsin."
         if(isset(request()->notifikasi)){
             $updatestatus = DB::table('tahsins')
               ->where('no_tahsin', request()->notifikasi)
-              ->where('angkatan_peserta', $this->angkatan_tahsin)
+              ->where('angkatan_peserta', $angkatanbaru)
               ->update(['status_peserta' => 'NOTIF']);
 
             $data = DB::table('tahsins')->where('no_tahsin', request()->notifikasi)
-              ->where('angkatan_peserta', $this->angkatan_tahsin)
+              ->where('angkatan_peserta', $angkatanbaru)
               ->first();
 
             if($data->jenis_peserta === 'IKHWAN'){
@@ -355,8 +356,8 @@ Tanggal Mengisi Formulir Online :";
             $this->notifwa('62' . $nohp, $pesan);
             $info = "berhasil";
 
-            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
-                        ->where('angkatan_peserta', '=', $this->angkatan_tahsin)
+            $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$angkatanbaru.'-%')
+                        ->where('angkatan_peserta', '=', $angkatanbaru)
                         ->paginate(10);
 
             return redirect()->to('/admin/tahsin/daftar-baru');
@@ -365,18 +366,18 @@ Tanggal Mengisi Formulir Online :";
         if(isset(request()->idtahsin)){
             $updatelevel = DB::table('tahsins')
             ->where('no_tahsin', request()->idtahsin)
-            ->where('angkatan_peserta', $this->angkatan_tahsin)
+            ->where('angkatan_peserta', $angkatanbaru)
             ->update(['status_peserta' => auth()->user()->first_name]);
         }
 
-        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$this->angkatan_tahsin.'-%')
+        $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$angkatanbaru.'-%')
                 ->when(request()->nama, function ($query) {
                     return $query->where('nama_peserta', 'like', '%'.request()->nama.'%');
                 })
                 ->when(request()->idtahsin, function ($query) {
                         return $query->where('no_tahsin', '=', request()->idtahsin);
                 })
-                ->where('angkatan_peserta', '=', $this->angkatan_tahsin)
+                ->where('angkatan_peserta', '=', $angkatanbaru)
             ->paginate(10);
         // }
 
