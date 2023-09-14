@@ -243,9 +243,9 @@ class DashboardController extends Controller
     public function absentahsininputlevel(Request $request)
     {
 
-        foreach ($request->input('peserta') as $datapeserta) {
+        foreach ($request->input('peserta') as $key => $datapeserta) {
 
-            $pesertatahsin                           = Tahsin::find($datapeserta);
+            $pesertatahsin                           = Tahsin::find($request->input('peserta')[$key]);
             $pesertatahsin->kenaikan_level_peserta   = $request->input('keteranganhasil'.$datapeserta);
             $pesertatahsin->save();
         }
