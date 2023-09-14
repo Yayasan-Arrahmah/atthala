@@ -10,6 +10,8 @@ use App\Models\PesertaUjian;
 use App\Models\LevelTahsin;
 use App\Models\Pembayaran;
 
+use App\Models\Absen;
+
 class Tahsin extends Model
 {
     use TahsinAttribute,
@@ -102,6 +104,11 @@ class Tahsin extends Model
         return $this->hasOne(LevelTahsin::class, 'nama', 'kenaikan_level_peserta');
     }
 
+    public function kenaikanlevelhasil()
+    {
+        return $this->hasOne(Tahsin::class, 'id', 'id')->where('kenaikan_level_peserta', '!=', null)->first();
+    }
+
     public function cekstatusnaik($angkatan)
     {
         return $this->hasOne(Tahsin::class, 'no_tahsin', 'no_tahsin')->where('angkatan_peserta', '=', $angkatan-1)->first();
@@ -120,6 +127,10 @@ class Tahsin extends Model
         return $this->hasOne(PesertaUjian::class, 'no_tahsin', 'no_tahsin')->where('angkatan_ujian', '=', $angkatan)->first();
     }
 
+    public function absenpertemuankelas($pertemuan)
+    {
+        return $this->hasMany(Absen::class, 'id_peserta', 'id')->where('pertemuan_ke_absen', $pertemuan)->first();
+    }
 
     public function scopeCari($query, $cari)
     {
