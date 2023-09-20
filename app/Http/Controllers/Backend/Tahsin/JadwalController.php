@@ -9,6 +9,9 @@ use DB;
 use App\Models\PesertaUjian;
 use App\Models\StatusPesertaTahsin;
 use App\Models\LevelTahsin;
+use App\Models\Jadwal;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class JadwalController extends Controller
 {
@@ -16,121 +19,123 @@ class JadwalController extends Controller
     {
         $this->id            = request()->id ?? null;
         $this->nama          = request()->nama ?? null;
-        $this->cari          = request()->cari ?? null;
-        $this->kenaikanlevel = request()->kenaikanlevel ?? null;
-        $this->idtahsin      = request()->idtahsin ?? null;
         $this->level         = request()->level ?? null;
-        $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->angkatan ?? 19;
-        $this->angkatanbaru  = request()->angkatan ?? 19;
-        $this->angkatanujian = request()->angkatan ?? 18;
+        $this->hari          = request()->hari ?? null;
+        $this->waktu         = request()->waktu ?? null;
+        $this->angkatan      = request()->angkatan ?? 23;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
                                 ->where('nama_pengajar', '!=', NULL)
                                 ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-                                ->angkatan($this->angkatan)
+                                // ->angkatan($this->angkatan)
                                 ->get();
-        $this->listangkatan  = Tahsin::select('angkatan_peserta')
-                                ->groupBy('angkatan_peserta')
-                                ->orderBy('angkatan_peserta', 'desc')
+        $this->listangkatan  = Jadwal::select('angkatan_jadwal')
+                                ->groupBy('angkatan_jadwal')
+                                ->orderBy('angkatan_jadwal', 'desc')
                                 ->get();
         $this->liststatuspeserta = StatusPesertaTahsin::get();
-        $this->listlevel         = LevelTahsin::orderBy('sort', 'asc')->get();
+        $this->listlevel         = LevelTahsin::get();
+
     }
 
-    public function tahsin($statusdaftar, $statuskeaktifan)
+    public function jadwalbase()
     {
-        return Tahsin::cari($this->cari)
-                    ->cariLevel($this->level)
+        return Jadwal::pengajar($this->pengajar)
+                    ->level($this->level)
+                    ->hari($this->hari)
+                    ->waktu($this->waktu)
                     ->jenis($this->jenis)
+                    ->status($this->status)
                     ->angkatan($this->angkatan)
-                    ->pengajar($this->pengajar)
-                    ->statusPeserta($this->status)
-                    ->statusKeaktifan($statuskeaktifan)
-                    ->statusDaftar($statusdaftar, $this->angkatan)
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
     }
 
-    public function tahsinbase($statusA, $statusB, $titleA)
+    public function jadwal($titleA)
     {
-        $status_       = $statusA;
-        $tahsins       = $this->tahsin($statusA, $statusB);
+        $jadwals       = $this->jadwalbase();
         $dataangkatan  = $this->listangkatan;
         $datalevel     = $this->listlevel;
         $datapengajars = $this->listpengajar;
         $liststatus    = $this->liststatuspeserta;
         $title         = $titleA;
-
-        return view('backend.pendidikan.tahsin.peserta', compact('tahsins', 'title', 'datalevel', 'datapengajars', 'status_', 'dataangkatan', 'liststatus'));
+        $datawaktu     = Jadwal::select('hari_jadwal', 'waktu_jadwal')
+                            ->pengajar($this->pengajar)
+                            ->level($this->level)
+                            ->jenis($this->jenis)
+                            ->status($this->status)
+                            ->angkatan($this->angkatan)
+                            ->groupBy('hari_jadwal', 'waktu_jadwal')
+                            ->get();
+        return view('backend.pendidikan.tahsin.jadwal.data', compact('jadwals', 'title', 'datalevel', 'datapengajars', 'dataangkatan', 'datawaktu', 'liststatus'));
     }
 
     public function index()
     {
-        return $this->tahsinbase(null, null, 'Peserta');
+        return $this->jadwal(null, null, 'Peserta');
     }
 
-    public function getDaftarUlang()
+    public function postCreateJadwal(Request $request)
     {
-        return $this->tahsinbase('daftar-ulang', null, 'Peserta Daftar Ulang');
-    }
+        $request->validate([
+            'pengajar'      => 'required',
+            'level'         => 'required',
+            'hari'          => 'required',
+            'jam'           => 'required',
+            'jenis'         => 'required',
+            'jumlahpeserta' => 'required',
+            'statusbelajar' => 'required',
+            'angkatan'      => 'required',
+        ]);
 
-    public function getBaru()
+        $data = new Jadwal;
+        $data->uuid_jadwal     = Str::uuid();
+        $data->pengajar_jadwal = $request->pengajar;
+        $data->level_jadwal    = $request->level;
+        $data->hari_jadwal     = $request->hari;
+        $data->waktu_jadwal    = $request->jam;
+        $data->jenis_jadwal    = $request->jenis;
+        $data->jumlah_peserta  = $request->jumlahpeserta;
+        $data->status_belajar  = $request->statusbelajar;
+        $data->angkatan_jadwal = $request->angkatan;
+        $data->save();
+
+        return redirect()->back()->withFlashSuccess('Jadwal Berhasil Ditambahkan !');
+    }
+    public function postUpdateJadwal(Request $request)
     {
-        return $this->tahsinbase('daftar-baru', null, 'Peserta Pendaftar Baru');
+        $request->validate([
+            'pengajar'      => 'required',
+            'level'         => 'required',
+            'hari'          => 'required',
+            'jam'           => 'required',
+            'jenis'         => 'required',
+            'jumlahpeserta' => 'required',
+            'statusbelajar' => 'required',
+        ]);
+
+        $data = Jadwal::find($this->id);
+        $data->pengajar_jadwal = $request->pengajar;
+        $data->level_jadwal    = $request->level;
+        $data->hari_jadwal     = $request->hari;
+        $data->waktu_jadwal    = $request->jam;
+        $data->jenis_jadwal    = $request->jenis;
+        $data->jumlah_peserta  = $request->jumlahpeserta;
+        $data->status_belajar  = $request->statusbelajar;
+        $data->save();
+
+        return redirect()->back()->withFlashSuccess('Jadwal Berhasil Diperbaruhi !');
     }
 
-    public function getDaftarUjian()
+    public function getDeleteJadwal()
     {
-        return $this->tahsinbase('daftar-ujian', null, 'Peserta Pendaftar Ujian');
+        $data = Jadwal::find($this->id);
+        $data->delete();
+
+        return redirect()->back()->withFlashSuccess('Jadwal Berhasil Dihapus !');
     }
 
-    public function getAktif()
-    {
-        return $this->tahsinbase(null, 'AKTIF', 'Peserta Aktif');
-    }
-
-    public function getCuti()
-    {
-        return $this->tahsinbase(null, 'CUTI', 'Peserta Cuti');
-    }
-
-    public function getOff()
-    {
-        return $this->tahsinbase(null, 'OFF', 'Peserta Off');
-    }
-
-    public function postUpdatePeserta()
-    {
-        $data = Tahsin::find($this->id);
-    }
-
-    public function getDeletePeserta()
-    {
-        $data = Tahsin::find($this->id);
-    }
-
-    // FUNGSI UNTUK PERBAIKAN BUG PEMBUATAN AWAL YG TIDAK DISERTAI RELASI KE TABEL PESERTA UJIAN
-    public function getUpdateIdTahsin()
-    {
-        $dataujian = PesertaUjian::where('id_tahsin', '=', NULL)->get();
-
-        foreach($dataujian as $data){
-            $datatahsin = Tahsin::where('no_tahsin', '=', $data->no_tahsin)
-                                ->where('angkatan_peserta',  $data->angkatan_ujian)
-                                ->first();
-            if ($datatahsin) {
-                $update = PesertaUjian::where('no_tahsin', '=', $datatahsin->no_tahsin)
-                                ->where('angkatan_ujian',  $datatahsin->angkatan_peserta)
-                                ->first();
-                if ($update) {
-                    $update->id_tahsin = $datatahsin->id;
-                    $update->save();
-                }
-            }
-        }
-        return 'OK';
-    }
 }

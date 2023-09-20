@@ -41,13 +41,7 @@
         </li>
         <li class="nav-item nav-dropdown {{-- ADMINISTRASI --}}
             {{ (request()->is('admin/tahsin/dashboard')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/baru')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/aktif')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/daftar-ujian')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/daftar-ulang')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/cuti')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/off')) ? 'open' : '' }}
+            {{ (request()->is('admin/tahsin/peserta*')) ? 'open' : '' }}
             ">
             <a class="nav-link nav-dropdown-toggle" href="#">
                 <i class="nav-icon fas fa-book-open"></i>
@@ -120,10 +114,7 @@
         </li>
 
         <li class="nav-item nav-dropdown {{-- JADWAL --}}
-            {{ (request()->is('admin/tahsin/daftar-baru')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/daftar-baru')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta/a')) ? 'open' : '' }}
-            {{ (request()->is('admin/tahsin/peserta-ujian')) ? 'open' : '' }}
+            {{ (request()->is('admin/tahsin/jadwal*')) ? 'open' : '' }}
             ">
             <a class="nav-link nav-dropdown-toggle" href="#">
                 <i class="nav-icon fas fa-list"></i>
@@ -131,22 +122,17 @@
             </a>
             <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/jadwal')) ? 'active' : '' }}" href="/admin/tahsin/jadwal">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Data Jadwal
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/daftar-baru')) ? 'active' : '' }}" href="#">
-                        <i class="fas fa-caret-right pr-2 pl-2"></i> Status Jadwal
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta/a')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/jadwal/absensi')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Absensi Per-Jadwal
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/peserta-ujian')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/jadwal/kalender')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Kalender Jadwal
                     </a>
                 </li>
