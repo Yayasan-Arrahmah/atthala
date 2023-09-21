@@ -7,7 +7,7 @@
 
     <div class="col">
         <div class="row">
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                     Pengajar
                  </div>
@@ -19,7 +19,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                     Level
                  </div>
@@ -31,7 +31,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                 Angkatan
                  </div>
@@ -42,7 +42,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                 Jenis
                  </div>
@@ -53,7 +53,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                 Status Belajar
                  </div>
@@ -74,7 +74,7 @@
                     <option>100</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
                 <div class="text-muted text-center" style="position: absolute">
                     Waktu
                 </div>
@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="col"></div>
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="text-right mt-4">
                     <button class="btn btn-info btn-block" type="submit">
                         <div class="float-left">

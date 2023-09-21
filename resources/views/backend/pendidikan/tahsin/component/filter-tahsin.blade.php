@@ -7,7 +7,7 @@
 
     <div class="col">
         <div class="row">
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                     Pengajar
                  </div>
@@ -19,7 +19,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                     Level
                  </div>
@@ -31,7 +31,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                 Angkatan
                  </div>
@@ -42,7 +42,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                 Jenis
                  </div>
@@ -53,7 +53,7 @@
                 </select>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="text-muted text-center" style="position: absolute">
                 Status Peserta
                  </div>
@@ -65,7 +65,7 @@
                 </select>
             </div>
 
-            <div class="col-3">
+            <div class="col-md-3">
                 <div class="text-muted text-center" style="position: absolute">
                     Nama / No. Tahsin / No.Telp
                 </div>
@@ -74,6 +74,9 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-1">
+                <div class="text-muted text-center" style="position: absolute">
+                    Per Page
+                </div>
                 <select class="form-control mt-4" name="perPage" onchange='if(this.value != 0) { this.form.submit(); }'>
                     <option>10</option>
                     <option>25</option>
@@ -171,7 +174,7 @@
                 @endif
             @endif
             <div class="col"></div>
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="text-right mt-4">
                     <button class="btn btn-info btn-block" type="submit">
                         <div class="float-left">
