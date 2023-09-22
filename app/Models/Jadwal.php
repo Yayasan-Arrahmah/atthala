@@ -49,11 +49,19 @@ class Jadwal extends Model
         return $this->hasOne(LevelTahsin::class, 'nama', 'level_jadwal');
     }
 
+    public function jumlahpeserta()
+    {
+        return $this->hasMany(Tahsin::class, 'nama_pengajar', 'pengajar_jadwal')
+                                ->where('level_peserta', 'level_jadwal')
+                                ->where('jadwal_tahsin', 'hari_jadwal'.' '.'waktu_jadwal')
+                                ->where('angkatan_peserta', '=', $this->angkatan);
+    }
+
     public function scopePengajar($query, $pengajar)
     {
         if (!null == $pengajar) {
             if( $pengajar != 'SEMUA') {
-                return $query->where('nama_pengajar', '=', $pengajar);
+                return $query->where('pengajar_jadwal', '=', $pengajar);
             }
         }
     }
