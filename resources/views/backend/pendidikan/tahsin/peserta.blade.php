@@ -147,10 +147,10 @@
                                 </div>
                                 <div class="col-md">
                                     @if (request()->input('daftar-ujian'))
-                                        <form action="{{ route('admin.tahsin/peserta.postUjianUpdateLevel') }}">
+                                        <form action="{{ route('admin.tahsin/peserta.postUjianUpdateLevel') }}" method="POST">
                                             @csrf
                                             <input name="id" value="{{ $tahsin->id  }}" hidden>
-                                            <input name="idtahsin" value="{{ $tahsin->id  }}" hidden>
+                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
                                             <input name="angkatan" value="{{ $tahsin->angkatan_peserta  }}" hidden>
                                             @if(!empty(Request::get('nama')))
                                                 <input name="nama" value="{{ Request::get('nama') }}" hidden>
