@@ -8,6 +8,8 @@ use DB;
 use App\Models\PesertaUjian;
 use App\Models\StatusPesertaTahsin;
 use App\Models\LevelTahsin;
+use App\Models\Jadwal;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
@@ -315,6 +317,15 @@ Panitia Pendaftaran Tahsin
         return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi dengan status Off !');
     }
 
+    public function postUjianUpdateLevel()
+    {
+        $data = Tahsin::find($this->id);
+        $data->kenaikan_level_peserta = request()->kenaikanlevel;
+        $data->save();
+
+        return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi, Level Kenaikan Ujian !');
+    }
+
     public function getDashboard()
     {
         $dataangkatan  = $this->listangkatan;
@@ -518,6 +529,28 @@ Panitia Pendaftaran Tahsin
         return 'perbaruhi kode unik berhasil';
     }
 
+    public function getCariJadwal()
+    {
+        $data     = explode(" ",request()->q);
+        $jadwals  = Jadwal::query();
+
+        $jadwals->select("id","pengajar_jadwal", "level_jadwal", "hari_jadwal", "waktu_jadwal", "status_belajar",  "jenis_jadwal", "angkatan_jadwal")
+                ->where('angkatan_jadwal', 22);
+
+        foreach($data as $d){
+            $this->q_ = $d;
+            $jadwals->where(function ($query) {
+                $query->whereRaw('LOWER(pengajar_jadwal) LIKE ? ', '%' . strtolower($this->q_) . '%')
+                ->orWhereRaw('LOWER(level_jadwal) LIKE ? ', '%' . strtolower($this->q_) . '%')
+                ->orWhereRaw('LOWER(hari_jadwal) LIKE ? ', '%' . strtolower($this->q_) . '%')
+                ->orWhereRaw('LOWER(waktu_jadwal) LIKE ? ', '%' . strtolower($this->q_) . '%')
+                ->orWhereRaw('LOWER(status_belajar) LIKE ? ', '%' . strtolower($this->q_) . '%')
+                ->orWhereRaw('LOWER(jenis_jadwal) LIKE ? ', '%' . strtolower($this->q_) . '%');
+            });
+        }
+        return response()->json($jadwals->get());
+    }
+
     public function getTeskirim()
     {
         $nohp='8125144744';
@@ -525,5 +558,21 @@ Panitia Pendaftaran Tahsin
         $this->notifwa('62'.$nohp, $pesan);
 
         return 'tes wa';
+    }
+
+    public function getSeting()
+    {
+        settings()->set('foo', 'mantap');
+
+        $tes = settings()->get('foo');
+
+        return $tes;
+    }
+
+    public function getOke()
+    {
+        $tes = settings()->get('foo');
+
+        return $tes;
     }
 }

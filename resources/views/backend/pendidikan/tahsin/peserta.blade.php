@@ -7,6 +7,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <div class="row">
         <div class="col">
             <div class="card">
@@ -22,21 +25,79 @@
         </div><!--col-->
     </div><!--row-->
 
-    <div class="row ">
+    <div class="row">
+        <div class="col-md-8 collapse hide" id="tambahdata">
+            <div class="card">
+                <div class="card-body m-4">
+                    <form action="{{ route('admin.tahsin/jadwal.postCreateJadwal') }}" method="post">
+                        <div class="mb-3 row">
+                            <h5 class="modal-title" id="tambahdata">Tambah Data Peserta</h5>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 form-label">Nama <span style="color:red !important">*</span></label>
+                            <div class="col-md-8">
+                            <input name="nama" class="form-control" type="text" value="" placeholder="Nama Peserta" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 form-label">No. Telp. <span style="color:red !important">*</span></label>
+                            <div class="col-md-8">
+                            <input name="notelp" class="form-control" type="number" value="" placeholder="No. Telp. Whatsapp" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 form-label">Tanggal Lahir <span style="color:red !important">*</span></label>
+                            <div class="col-md-8">
+                            <input name="tgllahir" id="datelahir" class="form-control" value="" required>
+                            </div>
+                            <script>
+                                $( function() {
+                                  $( "#datelahir" ).datepicker({
+                                        dateFormat: 'dd-mm-yy',
+                                        yearRange: "{!! \Carbon\Carbon::now()->subYears(85)->year !!}:{!! \Carbon\Carbon::now()->subYears(10)->year !!}",
+                                        changeMonth: true,
+                                        changeYear: true
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-12 form-label">Pilih Jadwal <span style="color:red !important">*</span></label>
+                            <div class="col-md-12">
+                                <select class="livesearch form-control p-3" name="jadwal" style="width: 100%">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-3 row">
+                            <div class="col-12 text-right">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-body">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" href="#tambahdata" aria-expanded="false">
+                            <i class="fas fa-plus-circle"></i> Tambah Data
+                        </button>
+                    </div>
                     <div class="legend p-3">
                         <div class="row kotak-atas mb-3">
-                            <div class="col pr-0 font-weight-bold text-uppercase">
+                            <div class="col-md-4 pr-0 font-weight-bold text-uppercase">
                                 Nama
                             </div>
-                            <div class="col-2 font-weight-bold text-uppercase">
-                                <div class="pl-4">
-                                    Level
-                                </div>
+                            <div class="col-md-2 font-weight-bold text-uppercase">
+                                Level
                             </div>
-                            <div class="col-2 font-weight-bold text-uppercase" style="margin-left: 0px">
+                            <div class="col-md-2 font-weight-bold text-uppercase" style="margin-left: 0px">
                                 Pengajar
                             </div>
                             <div class="col font-weight-bold text-uppercase">
@@ -55,7 +116,7 @@
                         @foreach($tahsins as $key=> $tahsin)
                             <div class="row kotak mb-1">
                                 <td>{{ $key + $tahsins->firstItem() }}</td>
-                                <div class="col pr-0">
+                                <div class="col-md-4 pr-0">
                                     <a data-toggle="collapse" href="#detail{{ $key + $tahsins->firstItem() }}" aria-expanded="false" style="color: rgb(56, 56, 56);" class="">
                                         <div class="font-weight-bold text-uppercase">
                                             {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }}
@@ -65,35 +126,31 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-2">
-                                    <div class="row">
-                                        <div class="col pr-0" style="text-align: center;">
-                                            <span class="fa-stack">
-                                                <i class="fa fa-circle fa-stack-2x icon-background" style="color: {{ $tahsin->level->warna ?? '-' }}"></i>
-                                                <i class="fa fa-book fa-stack-1x" style="color: #fff"></i>
-                                            </span>
-                                        </div>
-                                        <div class="col-9 pl-0">
-                                            <div class="font-weight-bold text-uppercase">
-                                                {{ $tahsin->level_peserta }}
-                                            </div>
-                                            <div class="small text-muted">
-                                                {{ $tahsin->jenis_pembelajaran }} | Angkatan {{ $tahsin->angkatan_peserta }}
-                                            </div>
-                                        </div>
+                                <div class="col-md-2">
+                                    <span class="fa-stack float-left mr-2">
+                                        <i class="fa fa-circle fa-stack-2x icon-background" style="color: {{ $tahsin->level->warna ?? '-' }}"></i>
+                                        <i class="fa fa-book fa-stack-1x" style="color: #fff"></i>
+                                    </span>
+                                    <div class="font-weight-bold text-uppercase">
+                                        {{ $tahsin->level_peserta }}
+                                    </div>
+                                    <div class="small text-muted">
+                                        {{-- {{ $tahsin->jenis_pembelajaran }} |  --}}
+                                        Angkatan {{ $tahsin->angkatan_peserta }}
                                     </div>
                                 </div>
-                                <div class="col-2" style="margin-left: 0px">
+                                <div class="col-md-2" style="margin-left: 0px">
                                     <div class="font-weight-bold text-uppercase">{{ $tahsin->nama_pengajar }}</div>
                                     <div class="small text-muted">
                                         {{ $tahsin->jadwal_tahsin }} | {{ $tahsin->jenis_peserta }}
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-md">
                                     @if (request()->input('daftar-ujian'))
-                                        <form action="{{ Request::fullUrl() }}">
-                                            {{-- @csrf --}}
-                                            <input name="idtahsin" value="{{ $tahsin->no_tahsin  }}" hidden>
+                                        <form action="{{ route('admin.tahsin/peserta.postUjianUpdateLevel') }}">
+                                            @csrf
+                                            <input name="id" value="{{ $tahsin->id  }}" hidden>
+                                            <input name="idtahsin" value="{{ $tahsin->id  }}" hidden>
                                             <input name="angkatan" value="{{ $tahsin->angkatan_peserta  }}" hidden>
                                             @if(!empty(Request::get('nama')))
                                                 <input name="nama" value="{{ Request::get('nama') }}" hidden>
@@ -143,7 +200,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col text-right p-0">
+                                <div class="col-md text-right p-0">
                                     @if (request()->input('daftar-ulang') == 2)
                                         <a href="{{ route('admin.tahsin/peserta.getDaftarUlang') }}?notif-daftar-ulang=1&notahsin={{ $tahsin->no_tahsin }}&id={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}&notelp={{ $tahsin->nohp_peserta }}"
                                             class="btn {{ $tahsin->notif_daftar_ulang == null ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
@@ -224,7 +281,7 @@
                                                                     $( function() {
                                                                       $( "#date{{ $tahsin->id }}" ).datepicker({
                                                                             dateFormat: 'dd-mm-yy',
-                                                                            yearRange: "{!! \Carbon\Carbon::now()->subYears(85)->year; !!}:{!! \Carbon\Carbon::now()->subYears(10)->year; !!}",
+                                                                            yearRange: "{!! \Carbon\Carbon::now()->subYears(85)->year !!}:{!! \Carbon\Carbon::now()->subYears(10)->year !!}",
                                                                             changeMonth: true,
                                                                             changeYear: true
                                                                         });
@@ -391,6 +448,34 @@
             var lazyLoadInstance = new LazyLoad({
             // Your custom settings go here
             });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.livesearch').select2({
+            placeholder: 'Cari Jadwal',
+            ajax: {
+                url: '{{ route("admin.tahsin/peserta.getCariJadwal") }}',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.pengajar_jadwal+' - '+
+                                        item.level_jadwal+' - '+
+                                        item.hari_jadwal+' - '+
+                                        item.waktu_jadwal+' - '+
+                                        item.status_belajar+' - '+
+                                        item.jenis_jadwal+' - '+
+                                        item.angkatan_jadwal
+                                        ,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
         });
     </script>
 @endsection
