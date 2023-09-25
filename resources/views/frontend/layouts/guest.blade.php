@@ -14,6 +14,11 @@
     @yield('meta')
 
     {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
+    <!-- Alpine Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine Core -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     @stack('before-styles')
 
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
@@ -24,6 +29,14 @@
         body{
             background-color: #f3f8fd;
         }
+    </style>
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <style>
+    body {
+        font-family: "Nunito", sans-serif;
+    }
     </style>
 
     <style>
@@ -123,10 +136,12 @@
 
     @stack('before-scripts')
 
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    {{-- <script src="/js/jquery.priceformat.js"></script> --}}
     {!! script('js/manifest.js') !!}
     {!! script('js/vendor.js') !!}
     {!! script('js/backend.js') !!}
-    {{-- {!! script('js/app.js')) !!}--}}
+    {{-- {!! script('js/app.js') !!} --}}
 
     @stack('after-scripts')
 
@@ -145,9 +160,9 @@
 
             @yield('content')
             <div class="row justify-content-center align-items-center">
-                <div class="col col-sm-3 align-self-center">
+                <div class="col col-lg-4 align-self-center">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <p class="text-justify">
                                 Dukung dakwah Al Qur'an dengan Subscribe Channel kami.
                             </p>

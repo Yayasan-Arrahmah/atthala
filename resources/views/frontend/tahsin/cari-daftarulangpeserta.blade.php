@@ -18,8 +18,8 @@
             </center>
         </div>
     </div>
-{{-- </div>
-	<div class="row justify-content-center align-items-center">
+</div>
+{{-- 	<div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
                 <center>
