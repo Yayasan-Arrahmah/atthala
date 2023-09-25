@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                                <a href="/tahsin/daftar-ulang-peserta-XX/print?id={{ $calonpeserta->no_tahsin }}&nama={{ $calonpeserta->nama_peserta }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
+                                <a href="/tahsin/daftar-ulang-peserta/print?id={{ $calonpeserta->no_tahsin }}&nama={{ $calonpeserta->nama_peserta }}"  style="color:white; font-size: 11px" class="btn btn-success">KARTU DAFTAR ULANG</a>
                         </div>
                         <div class="col">
                             <div style="text-transform: uppercase;"><strong>{{ $calonpeserta->nama_peserta }}</strong></div>
