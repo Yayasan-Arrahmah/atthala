@@ -683,7 +683,7 @@
                  var hari = $(this).val();
                  $('#waktu').find('option').not(':first').remove();
                  $.ajax({
-                   url: '/tahsin/daftar-ulang-peserta-XX/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
+                   url: '/tahsin/daftar-ulang-peserta/daftar/datawaktu?id={!! $calonpeserta->id !!}&hari='+hari,
                    type: 'get',
                    dataType: 'json',
                    success: function(response){
