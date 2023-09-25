@@ -3,7 +3,7 @@
 @section('title', app_name() . ' | ' . __('labels.frontend.auth.login_box_title'))
 
 @section('content')
-{{-- <div class="row justify-content-center align-items-center">
+<div class="row justify-content-center align-items-center">
     <div class="col col-sm-12 align-self-center">
         <div class="card">
             <center>
@@ -14,17 +14,11 @@
                         Angkatan 23
                     </div>
                     <p>Belum Dibuka</p>
-                    {{-- <p>Mohon Maaf Server DAFTAR ULANG TAHSIN sedang mengalami gangguan dan akan beroperasi pada jam 22.00 WITA</p>
-                    <div>
-                    <p>
-                        Mohon doanya agar proses perbaikan selesai dengan cepat. Syukron :)
-                    </p> --}}
-                    </div>
                 </div>
             </center>
         </div>
     </div>
-</div>
+{{-- </div>
 	<div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
@@ -101,5 +95,5 @@
             </div><!--card-->
 
 		</div><!-- col-md-8 -->
-	</div><!-- row -->
+	</div><!-- row --> --}}
 @endsection
