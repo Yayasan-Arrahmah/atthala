@@ -882,7 +882,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
             ->where('angkatan_peserta', session('angkatan_tahsin'))
             ->first();
 
-        $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', compact($data))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', compact('data'))->setPaper('a4', 'landscape');
 
         return $pdf->stream($data->nama_peserta . ' - Kartu Daftar Ulang Tahsin LTTQ Arrahmah Balikpapan.pdf');
     }
