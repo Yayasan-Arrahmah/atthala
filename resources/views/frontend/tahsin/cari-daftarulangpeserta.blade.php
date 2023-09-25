@@ -24,7 +24,7 @@
             </center>
         </div>
     </div>
-</div> --}}
+</div>
 	<div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
@@ -70,11 +70,7 @@
                                             <div class="row kotak">
                                                 <div class="col-2 text-center">
                                                     @if (strpos($tahsin->kenaikan_level_peserta, 'TAJWIDI') !== false )
-                                                        @if ($tahsin->jenis_peserta == 'IKHWAN')
-                                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSej_RhGpejZfEpjeSPdV0uL079NA81pVpOV9pfCXn0r5dD0tg/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
-                                                        @else
-                                                            <a href="https://forms.gle/rnK6SH4nJcck6LUc7"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
-                                                        @endif
+                                                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2_AR0PDkF4q3zLQszYdrOnygi0x6Fwq1pg4_ubiXBN8p7lQ/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @else
                                                         <a href="/tahsin/daftar-ulang-peserta/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @endif
