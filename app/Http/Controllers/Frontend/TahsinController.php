@@ -776,7 +776,7 @@ Panitia Ujian Tahsin Angkatan " . session('daftar_ujian') . "
             ->first();
 
         if (isset($cekterdaftarpeserta)) {
-            return redirect()->to('/tahsin/daftar-ulang-peserta-XX/daftar?id=' . $cekterdaftarpeserta->no_tahsin . '&idt=' . $cekterdaftarpeserta->id . '&nama=' . $cekterdaftarpeserta->nama);
+            return redirect()->to('/tahsin/daftar-ulang-peserta/daftar?id=' . $cekterdaftarpeserta->no_tahsin . '&idt=' . $cekterdaftarpeserta->id . '&nama=' . $cekterdaftarpeserta->nama);
         }
 
         $pesertadaftarulang = Tahsin::find($request->input('idt'));
@@ -869,7 +869,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
             $info = "gagal";
             $no_tahsin = "null";
         }
-        return redirect()->to('/tahsin/daftar-ulang-peserta-XX/print?id=' . $pesertadaftarulang->no_tahsin . '&nama=' . $pesertadaftarulang->nama_peserta);
+        return redirect()->to('/tahsin/daftar-ulang-peserta/print?id=' . $pesertadaftarulang->no_tahsin . '&nama=' . $pesertadaftarulang->nama_peserta);
 
         // return redirect()->route('frontend.tahsin.printcalonpesertaujian', ['id' => $uuid]);
     }
@@ -882,7 +882,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
             ->where('angkatan_peserta', session('angkatan_tahsin'))
             ->first();
 
-        $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', $data)->setPaper('a5', 'landscape');
+        $pdf = PDF::loadView('frontend.tahsin.print-daftarulangpeserta', compact($data))->setPaper('a4', 'landscape');
 
         return $pdf->stream($data->nama_peserta . ' - Kartu Daftar Ulang Tahsin LTTQ Arrahmah Balikpapan.pdf');
     }
