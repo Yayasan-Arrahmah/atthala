@@ -115,7 +115,7 @@
                                                 +62
                                             </span>
                                         </div>
-                                        <input id="notelp" type="number" name="notelp" value="{{ old('notelp') }}" oninvalid="setCustomValidity('Masukkan No. HP Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Masukkan Nomor HP WhatsApp" required="">
+                                        <input id="notelp" type="number" name="notelp" value="{{ old('notelp') ?? $calonpeserta->nohp_peserta }}" oninvalid="setCustomValidity('Masukkan No. HP Terlebih Dahulu')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Masukkan Nomor HP WhatsApp" required="">
                                     </div><!--form-group-->
                                     {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                                 </div><!--col-->
