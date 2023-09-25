@@ -826,8 +826,7 @@ Panitia Ujian Tahsin Angkatan " . session('daftar_ujian') . "
             $pembayaran->save();
             // }
 
-            $phone = '+62' . $nohp;
-            $message =
+            $pesan =
             "Assalamualaikum Warrohmarullah Wabarokatuh
 
 Terima kasih telah mendaftarkan ulang sebagai *Peserta Tahsin di angkatan " . session('angkatan_tahsin') . "*.
@@ -843,60 +842,11 @@ Salam,
 Panitia Daftar Ulang Tahsin Angkatan " . session('angkatan_tahsin') . "
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
 
-            // $apikey = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
+            $this->notifwa('62' . $nohp, $pesan);
 
-            // $url = 'https://api.wanotif.id/v1/send';
-
-            // $curl = curl_init();
-            // curl_setopt($curl, CURLOPT_URL, $url);
-            // curl_setopt($curl, CURLOPT_HEADER, 0);
-            // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            // curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-            // curl_setopt($curl, CURLOPT_POST, 1);
-            // curl_setopt($curl, CURLOPT_POSTFIELDS, array(
-            //     'Apikey'    => $apikey,
-            //     'Phone'     => $phone,
-            //     'Message'   => $message,
-            // ));
-            // $response = curl_exec($curl);
-            // curl_close($curl);
-
-            // $info = "berhasil";
-
-            // woo-wa.com
-            $apikey = env('WA_KEY');
-
-            $url = 'http://116.203.191.58/api/send_message';
-            $data = array(
-                "phone_no" => $phone,
-                "key" => $apikey,
-                "message" => $message,
-                "skip_link" => true, // This optional for skip snapshot of link in message
-            );
-            $data_string = json_encode($data);
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, 0);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data_string))
-            );
-            echo $res = curl_exec($ch);
-            curl_close($ch);
-
-            // woo-wa.com kasir 6282155171933
-            $phone = '+6282155171933';
-            $apikey = env('WA_KEY');
-            $message =
+            // kasir 6282155171933
+            $nohp_kasir = '82155171933';
+            $pesan_kasir =
             'Assalamualaikum Warohmatullahi Wabarokaatuh,
 *Ini adalah pesan otomatis.*
 
@@ -913,30 +863,7 @@ Kontak : wa.me/62' . $peserta->nohp_peserta . '
 Klik link berikut untuk memeriksa riwayat pembayaran
 https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_replace(' ', '+', $peserta->nama_peserta);
 
-            $url = 'http://116.203.191.58/api/send_message';
-            $data = array(
-                "phone_no" => $phone,
-                "key" => $apikey,
-                "message" => $message,
-                "skip_link" => true, // This optional for skip snapshot of link in message
-            );
-            $data_string = json_encode($data);
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, 0);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data_string))
-            );
-            echo $res = curl_exec($ch);
-            curl_close($ch);
+        $this->notifwa('62' . $nohp_kasir, $pesan_kasir);
 
         } catch (\Throwable $th) {
             $info = "gagal";

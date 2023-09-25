@@ -556,11 +556,21 @@
                                     <div class="col-8">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">
+                                                <span class="input-group-text"
+                                                    style="background-color: white;
+                                                    border: 0px;
+                                                    text-align: end;
+                                                    font-weight: 600;">
                                                     Rp
                                                 </span>
                                             </div>
-                                            <input id="notelp" type="number" name="nominaltf" value="{{ old('nominaltf') }}" oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" maxlength="12" placeholder="Nonimal Transfer">
+                                            <input id="notelp" type="number" name="nominaltf" value="{{ old('nominaltf') }}"
+                                                    oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}"
+                                                    class="form-control" maxlength="12" placeholder="Nonimal Transfer"
+                                                    style="background-color: white;
+                                                    border: 0px;
+                                                    text-align: end;
+                                                    font-weight: 600;">
                                         </div><!--form-group-->
                                         {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
                                     </div><!--col-->
