@@ -28,7 +28,7 @@ background-repeat: no-repeat;
             <td>No. Peserta Tahsin</td>
             <td>:</td>
             <td><strong>{{ $data->no_tahsin }}</strong></td>
-            <td style="color: #fff">-----------------------</td>
+            <td style="color: #fff">--------------------------------</td>
             <td>Jenis Peserta</td>
             <td>:</td>
             <td><strong>{{ $data->jenis_peserta }}</strong></td>
@@ -70,6 +70,7 @@ background-repeat: no-repeat;
             <td></td>
         </tr>
     </table>
+    <br>
     <div style="font: 10px;">
         <center>
             BALIKPAPAN, {{ \Carbon\Carbon::create($data->created_at)->format('d-m-Y') }}
