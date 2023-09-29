@@ -93,7 +93,7 @@ background-repeat: no-repeat;
             LAPORAN HASIL BELAJAR TAHUN AJARAN {{ $perioderapor->tahun_ajaran }}
         </h5>
     </center>
-    <table  style="font: 12px; width: 100%">
+    <table  style="font-size: 12px; width: 100%">
         <thead>
             <tr>
                 <th style="width: 15%"></th>
@@ -149,7 +149,7 @@ background-repeat: no-repeat;
 
     <div>
         <div style="float: left; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <thead>
                     <tr>
                         <th style="width: 10%; border: 1px solid #000; border-right: 0px; text-align: center">NO</th>
@@ -185,7 +185,7 @@ background-repeat: no-repeat;
             </table>
         </div>
         <div style="margin-left: 55%; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <thead>
                     <tr>
                         <th style="width: 10%; border: 1px solid #000; border-right: 0px; text-align: center">NO</th>
@@ -224,7 +224,7 @@ background-repeat: no-repeat;
     <br>
     <div>
         <div style="float: left; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <thead>
                     <tr>
                         <th style="width: 10%; border: 1px solid #000; border-right: 0px; text-align: center">NO</th>
@@ -260,7 +260,7 @@ background-repeat: no-repeat;
             </table>
         </div>
         <div style="margin-left: 55%; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <thead>
                     <tr>
                         <th style="width: 10%; border: 1px solid #000; border-right: 0px; text-align: center">NO</th>
@@ -301,7 +301,7 @@ background-repeat: no-repeat;
 
     <div>
         <div style="float: left; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <thead>
                     <tr>
                         <th style="width: 50%;"></th>
@@ -329,7 +329,7 @@ background-repeat: no-repeat;
             </table>
         </div>
         <div style="margin-left: 55%; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <thead>
                     <tr>
                         <th style="width: 50%;"></th>
@@ -369,7 +369,7 @@ background-repeat: no-repeat;
         Catatan Pembimbing :
     </div>
     <div>
-        <table  style="font: 12px; width: 100%; border-spacing: 0px">
+        <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
             <tbody>
                 <tr>
                     <td style="border: 1px solid #000;">
@@ -383,7 +383,7 @@ background-repeat: no-repeat;
     </div>
     <div style="padding: 20px 0px 0px 0px">
         <div style="float: left; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <tbody>
                     <tr>
                         <td style="padding: 0px; color: #fff; font-weight: 700; ">
@@ -409,7 +409,7 @@ background-repeat: no-repeat;
             </table>
         </div>
         <div style="margin-left: 55%; width: 45%;">
-            <table  style="font: 12px; width: 100%; border-spacing: 0px">
+            <table  style="font-size: 12px; width: 100%; border-spacing: 0px">
                 <tbody>
                     <tr>
                         <td style="padding: 0px; font-weight: 700; padding: 0px; border-top: 0px; text-align: right">
