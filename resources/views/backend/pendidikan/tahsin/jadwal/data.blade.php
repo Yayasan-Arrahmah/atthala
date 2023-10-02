@@ -144,10 +144,13 @@
                             <div class="col font-weight-bold text-uppercase text-center small">
                                 Batasan Peserta
                             </div>
+                            <div class="col font-weight-bold text-uppercase text-center small">
+                                Banyak Peserta
+                            </div>
                             <div class="col font-weight-bold text-uppercase text-center">
                                 Angkatan
                             </div>
-                            <div class="col font-weight-bold text-uppercase text-center">
+                            <div class="col-2 font-weight-bold text-uppercase">
                                 Status
                             </div>
                             <div class="col-1"></div>
@@ -158,7 +161,7 @@
                             $number = 1;
                         @endphp
                         @foreach($jadwals as $key => $jadwal)
-                            <div class="row kotak mb-1" style="border-left-color: {{ $jadwal->level != null ? $jadwal->level->warna : '' }} !important; border-left-width: 4px!important;">
+                            <div class="row d-flex align-content-between flex-wrap kotak mb-1" style="border-left-color: {{ $jadwal->level != null ? $jadwal->level->warna : '' }} !important; border-left-width: 4px!important;">
                                 <div class="position-absolute">{{ $key + $jadwals->firstItem() }}</div>
                                 <div class="col-2 ml-3 d-flex align-items-center font-weight-bold">
                                     {{ $jadwal->pengajar_jadwal }}
@@ -178,13 +181,22 @@
                                     {{ $jadwal->jumlah_peserta }}
                                 </div>
                                 <div class="col d-flex align-items-center justify-content-center font-weight-bold">
+                                    @php
+                                        $jadwal_ = $jadwal->hari_jadwal.' '.$jadwal->waktu_jadwal;
+                                    @endphp
+                                    {{ $jadwal->jumlahpeserta($jadwal->level_jadwal, $jadwal_, $jadwal->angkatan_jadwal) }}
+                                </div>
+                                <div class="col d-flex align-items-center justify-content-center font-weight-bold">
                                     <button class="btn btn-sm btn-outline-dark">{{ $jadwal->angkatan_jadwal }}</button>
 
                                 </div>
-                                <div class="col d-flex align-items-center justify-content-center font-weight-bold small">
+                                <div class="col-2 d-flex align-items-center font-weight-bold small">
                                     {{ $jadwal->status_belajar }}
                                 </div>
                                 <div class="col-1 d-flex align-items-center justify-content-end">
+                                    <a class="btn btn-sm btn-primary mr-2" href="#" >
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <a class="btn btn-sm btn-warning mr-2" data-toggle="collapse" href="#detail{{ $key + $jadwals->firstItem() }}" aria-expanded="false" >
                                         Edit
                                     </a>
