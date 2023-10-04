@@ -63,7 +63,7 @@
                                             @foreach($pencarian as $key=> $tahsin)
                                             <div class="row kotak">
                                                 <div class="col-2 text-center">
-                                                    @if (strpos($tahsin->kenaikan_level_peserta, 'TAJWIDI') !== false )
+                                                    @if (strpos($tahsin->kenaikan_level_peserta, 'TAJWIDI 1') !== false )
                                                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2_AR0PDkF4q3zLQszYdrOnygi0x6Fwq1pg4_ubiXBN8p7lQ/viewform"  style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
                                                     @else
                                                         <a href="/tahsin/daftar-ulang-peserta/daftar?id={{ $tahsin->no_tahsin }}&idt={{ $tahsin->id }}&nama={{ $tahsin->nama_peserta }}" style="color:white; font-size: 11px" class="btn btn-primary">DAFTAR ULANG</a>
