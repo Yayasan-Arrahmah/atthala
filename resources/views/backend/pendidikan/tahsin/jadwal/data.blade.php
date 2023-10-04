@@ -184,7 +184,7 @@
                                     @php
                                         $jadwal_ = $jadwal->hari_jadwal.' '.$jadwal->waktu_jadwal;
                                     @endphp
-                                    {{ $jadwal->jumlahpeserta($jadwal->level_jadwal, $jadwal_, $jadwal->angkatan_jadwal) }}
+                                    {{ $jadwal->jumlahpeserta($jadwal->level_jadwal, $jadwal_, $jadwal->angkatan_jadwal)->count() }}
                                 </div>
                                 <div class="col d-flex align-items-center justify-content-center font-weight-bold">
                                     <button class="btn btn-sm btn-outline-dark">{{ $jadwal->angkatan_jadwal }}</button>
@@ -194,7 +194,7 @@
                                     {{ $jadwal->status_belajar }}
                                 </div>
                                 <div class="col-1 d-flex align-items-center justify-content-end">
-                                    <a class="btn btn-sm btn-primary mr-2" href="#" >
+                                    <a class="btn btn-sm btn-primary mr-2" data-toggle="collapse" href="#peserta{{ $key + $jadwals->firstItem() }}" aria-expanded="false"  >
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a class="btn btn-sm btn-warning mr-2" data-toggle="collapse" href="#detail{{ $key + $jadwals->firstItem() }}" aria-expanded="false" >
@@ -215,8 +215,33 @@
                                     </div>
                                 </div>
                                 <div class="col-12" style="color: #4e4e4e">
-                                    <div class="col">
-                                        <div class="collapse hide" id="detail{{ $key + $jadwals->firstItem() }}" style="">
+                                    <div class="row">
+                                        <div class="col-12 collapse hide" id="peserta{{ $key + $jadwals->firstItem() }}">
+                                            <hr>
+                                            <table class="table table-sm table-bordered">
+                                                <tbody>
+                                                    @php
+                                                        $no_ = 1;
+                                                    @endphp
+                                                    @foreach ( $jadwal->jumlahpeserta($jadwal->level_jadwal, $jadwal_, $jadwal->angkatan_jadwal) as $peserta)
+                                                    <tr>
+                                                        <td class="text-center">{{ $no_++ }}</td>
+                                                        <td class="text-center">
+                                                            {{ $peserta->no_tahsin }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $peserta->nama_peserta }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $peserta->nohp_peserta }}
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="col-12 collapse hide" id="detail{{ $key + $jadwals->firstItem() }}" style="">
                                             <hr>
                                             <form class="row" action="{{ route('admin.tahsin/jadwal.postUpdateJadwal') }}" method="post">
                                                 @csrf

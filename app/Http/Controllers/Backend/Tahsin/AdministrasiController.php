@@ -119,7 +119,7 @@ class AdministrasiController extends Controller
                             $query->where('kenaikan_level_peserta', $this->kenaikanlevel);
                         }
                     })
-                    ->paginate(10);
+                    ->paginate(request()->perPage ?? 10);
     }
 
     public function tahsinbase($statusA, $statusB, $titleA)

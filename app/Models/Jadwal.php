@@ -55,7 +55,7 @@ class Jadwal extends Model
                                 ->where('level_peserta', $level)
                                 ->where('jadwal_tahsin', $jadwal)
                                 ->where('angkatan_peserta', $angkatan)
-                                ->count();
+                                ->get();
     }
 
     public function scopePengajar($query, $pengajar)
