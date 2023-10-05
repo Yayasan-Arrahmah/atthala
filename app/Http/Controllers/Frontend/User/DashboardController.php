@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
      public function __construct()
     {
-        $this->angkatan_tahsin  = 22;
+        $this->angkatan_tahsin  = 23;
     }
 
     public function index()
