@@ -27,6 +27,10 @@ class DashboardController extends Controller
      public function __construct()
     {
         $this->angkatan_tahsin  = 23;
+        $this->listangkatan  = Tahsin::select('angkatan_peserta')
+                            ->groupBy('angkatan_peserta')
+                            ->orderBy('angkatan_peserta', 'desc')
+                            ->get();
     }
 
     public function index()
@@ -101,8 +105,8 @@ class DashboardController extends Controller
 
     public function absentahsin(Request $request)
     {
-        $datajadwals = DB::table('tahsins')
-            ->select('jadwal_tahsin', 'level_peserta', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+
+        $datajadwals = Tahsin::select('jadwal_tahsin', 'level_peserta', 'jenis_peserta', 'angkatan_peserta', (DB::raw('COUNT(*) as jumlah ')))
             ->groupBy('jadwal_tahsin', 'level_peserta', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('nama_pengajar', auth()->user()->user_pengajar)
