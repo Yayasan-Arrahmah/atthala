@@ -106,7 +106,8 @@ class DashboardController extends Controller
     public function absentahsin(Request $request)
     {
 
-        $datajadwals = Tahsin::select('jadwal_tahsin', 'level_peserta', 'jenis_peserta', 'angkatan_peserta', (DB::raw('COUNT(*) as jumlah ')))
+        $datajadwals = DB::table('tahsins')
+            ->select('jadwal_tahsin', 'level_peserta', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
             ->groupBy('jadwal_tahsin', 'level_peserta', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('nama_pengajar', auth()->user()->user_pengajar)

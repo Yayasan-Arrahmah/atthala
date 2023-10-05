@@ -75,7 +75,7 @@
                                 @endif
                                 <div class="small text-muted">
                                     {{-- ANGKATAN {{ session('daftar_ulang_angkatan_tahsin') }} --}}
-                                    ANGKATAN {{ $jadwal->angkatan_peserta }}
+                                    ANGKATAN {{ session('angkatan_tahsin') }}
                                 </div>
                             </div>
                             <div class="col-4">
