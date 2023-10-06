@@ -67,7 +67,7 @@
         @foreach ( $datapeserta as $peserta )
             <tr>
                 <td class="text-left p-2">
-                    <a href="#">
+                    <a href="https://wa.me/62{{ $peserta->nohp_peserta }}?text=Peserta Tahsin Angkatan {{ session('angkatan_tahsin') }} - {{ $peserta->nama_peserta }}" target="_blank">
                         <div style="text-transform: uppercase; color:#222222; font-weight: 800; font-size: 12px">
                             @php
                                 $nama = explode(" ", $peserta->nama_peserta)
