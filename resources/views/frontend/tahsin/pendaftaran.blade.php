@@ -49,6 +49,10 @@ hr {
                     <h6> Warga Sepinggan Pratama </h6>
                     <input type="hidden" name="status_" value="sepinggan-pratama">
                     @endif
+                    @if (request()->status == 'laziz')
+                    <h6> Program LAZIZ </h6>
+                    <input type="hidden" name="status_" value="laziz">
+                    @endif
                     {{-- <div class="text-muted">Angkatan {{ session('daftar_ulang_angkatan_tahsin') }}</div> --}}
                     <div class="text-muted">Angkatan {{ session('angkatan_tahsin') }}</div>
                 </div>
