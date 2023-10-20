@@ -106,7 +106,7 @@ class AdministrasiController extends Controller
 
     public function tahsin($statusdaftar, $statuskeaktifan)
     {
-        return  $this->angkatan
+        return  !empty(request()->pengajar)
                 ?
                 Tahsin::cari($this->cari)
                     ->cariLevel($this->level)
@@ -123,7 +123,7 @@ class AdministrasiController extends Controller
                     })
                     ->paginate(request()->perPage ?? 10)
                 :
-                NULL
+                Tahsin::angkatan('null')->paginate(0)
                 ;
     }
 
