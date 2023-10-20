@@ -40,7 +40,7 @@ class AdministrasiController extends Controller
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
                                 ->where('nama_pengajar', '!=', NULL)
                                 ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
-                                ->angkatan($this->angkatan)
+                                // ->angkatan($this->angkatan)
                                 ->get();
         $this->listangkatan  = Tahsin::select('angkatan_peserta')
                                 ->groupBy('angkatan_peserta')
