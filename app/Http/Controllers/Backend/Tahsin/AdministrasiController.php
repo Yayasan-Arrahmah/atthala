@@ -106,7 +106,9 @@ class AdministrasiController extends Controller
 
     public function tahsin($statusdaftar, $statuskeaktifan)
     {
-        return Tahsin::cari($this->cari)
+        return  $this->angkatan
+                ?
+                Tahsin::cari($this->cari)
                     ->cariLevel($this->level)
                     ->jenis($this->jenis)
                     ->angkatan($this->angkatan)
@@ -119,7 +121,10 @@ class AdministrasiController extends Controller
                             $query->where('kenaikan_level_peserta', $this->kenaikanlevel);
                         }
                     })
-                    ->paginate(request()->perPage ?? 10);
+                    ->paginate(request()->perPage ?? 10)
+                :
+                NULL
+                ;
     }
 
     public function tahsinbase($statusA, $statusB, $titleA)
