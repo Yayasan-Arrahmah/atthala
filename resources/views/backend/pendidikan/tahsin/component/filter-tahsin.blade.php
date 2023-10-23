@@ -174,7 +174,8 @@
                 @endif
             @endif
             <div class="col-2 mt-4">
-                <a href="#" class="btn btn-success">Export <i class="fas fa-file-excel"></i></a>
+                <a href="{{ route('admin.tahsin/peserta.getExportData') }}?proses-ujian={{ request()->get('proses-ujian') }}&daftar-ujian={{ request()->get('daftar-ujian') }}&daftar-baru={{ request()->get('daftar-baru') }}&daftar-ulang={{ request()->get('daftar-ulang') }}&jenis={{ request()->jenis }}&angkatan={{ request()->angkatan }}&level={{ request()->level }}&pengajar={{ request()->pengajar }}&cari={{ request()->cari }}"
+                            target="_blank" class="btn btn-success">Export <i class="fas fa-file-excel"></i></a>
             </div>
             <div class="col"></div>
             <div class="col-md-2">

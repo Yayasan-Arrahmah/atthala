@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tahsin;
 use DB;
 use App\Models\PesertaUjian;
+use App\Exports\Tahsin\Peserta as ExportDataTahsin;
 use App\Models\StatusPesertaTahsin;
 use App\Models\LevelTahsin;
 use App\Models\Jadwal;
@@ -32,9 +33,9 @@ class AdministrasiController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 22);
-        $this->angkatanbaru  = request()->angkatan ?? 22;
-        $this->angkatanujian = request()->angkatan ?? 21;
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 23);
+        $this->angkatanbaru  = request()->angkatan ?? 23;
+        $this->angkatanujian = request()->angkatan ?? 22;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
@@ -153,7 +154,7 @@ class AdministrasiController extends Controller
 
 Bismillah,
 Bapak/Ibu yang sama-sama mengharapkan ridho Allah Subhanahu Wataala,
-Sebentar lagi kita akan memasuki pembelajaran Tahsin Angkatan 22,
+Sebentar lagi kita akan memasuki pembelajaran Tahsin Angkatan 23,
 Mari tetap jaga semangat untuk belajar Al Qur`an dengan mendaftarkan ulang di kelas tahsin bersama LTTQ Ar Rahmah Balikpapan.
 
 Ayo Bapak/Ibu silakan klik link dibawah ini ya untuk mendapatkan Jadwal Tahsinnya.
@@ -194,7 +195,7 @@ Dari kami yang menyayangimu
         $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
 
 Bismillah,
-Bapak/Ibu Peserta Tahsin Angkatan 22,
+Bapak/Ibu Peserta Tahsin Angkatan 23,
 Mengingatkan kembali bahwa Bapak/Ibu belum memilih jadwal belajar tahsin.
 
 Silakan klik tautan di bawah ini untuk mendapatkan tempat di jadwal belajar tersebut.
@@ -516,8 +517,8 @@ Panitia Pendaftaran Tahsin
      */
     public function getKodeunik()
     {
-        $data = Tahsin::where('angkatan_peserta', '22')
-                        ->orWhere('angkatan_peserta', 22)
+        $data = Tahsin::where('angkatan_peserta', '23')
+                        ->orWhere('angkatan_peserta', 23)
                         ->get();
         $no_ = 1;
         foreach ($data as $d) {
@@ -540,7 +541,7 @@ Panitia Pendaftaran Tahsin
         $jadwals  = Jadwal::query();
 
         $jadwals->select("id","pengajar_jadwal", "level_jadwal", "hari_jadwal", "waktu_jadwal", "status_belajar",  "jenis_jadwal", "angkatan_jadwal")
-                ->where('angkatan_jadwal', 22);
+                ->where('angkatan_jadwal', 23);
 
         foreach($data as $d){
             $this->q_ = $d;
@@ -579,5 +580,71 @@ Panitia Pendaftaran Tahsin
         $tes = settings()->get('foo');
 
         return $tes;
+    }
+
+    public function getExportData()
+    {
+        // $statuskeaktifan =
+        $statusdaftar = null;
+        $namastatusdaftar = null;
+        $datetime = date('Y-m-d H:i:s');
+
+        if (request()->input('daftar-ulang') == 2) {    // DAFTAR ULANG
+            $statusdaftar = 'belum-daftar-ulang';
+            $namastatusdaftar = 'Belum Daftar Ulang';
+        } elseif (request()->input('daftar-ulang') == 1) {
+            $statusdaftar = 'daftar-ulang';
+            $namastatusdaftar = 'Daftar Ulang';
+        } elseif (request()->input('daftar-baru') == 1) {
+            $statusdaftar = 'belum-selesai-diperiksa';
+            $namastatusdaftar = 'Belum Selesai Diperiksa';
+        } elseif (request()->input('daftar-baru') == 2) { // DAFTAR BARU
+            $statusdaftar = 'belum-pilih-jadwal';
+            $namastatusdaftar = 'Belum Pilih Jadwal';
+        } elseif (request()->input('daftar-baru') == 3) {
+            $statusdaftar = 'selesai-daftar-baru';
+            $namastatusdaftar = 'Selesai Daftar Baru';
+        } elseif (request()->input('daftar-baru') == 'SEMUA') {
+            $statusdaftar = 'daftar-baru';
+            $namastatusdaftar = 'Daftar Baru';
+        } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 'SEMUA') { // DAFTAR UJIAN
+            $statusdaftar = 'ujian-1-semua';
+            $namastatusdaftar = 'Ujian 1 Semua';
+        } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 1) {
+            $statusdaftar = 'ujian-1-1';
+            $namastatusdaftar = 'Ujian1-1';
+        } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 2) {
+            $statusdaftar = 'ujian-1-2';
+            $namastatusdaftar = 'Ujian1-2';
+        } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 'SEMUA') {
+            $statusdaftar = 'ujian-2-semua';
+            $namastatusdaftar = 'Ujian 2 Semua';
+        } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 1) {
+            $statusdaftar = 'ujian-2-1';
+            $namastatusdaftar = 'Ujian2-1';
+        } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 2) {
+            $statusdaftar = 'ujian-2-2';
+            $namastatusdaftar = 'Ujian2-2';
+        } elseif (request()->input('daftar-ujian') == 'SEMUA' && request()->input('proses-ujian') == 1) {
+            $statusdaftar = 'ujian-semua-1';
+            $namastatusdaftar = 'Ujian Semua 1';
+        } elseif (request()->input('daftar-ujian') == 'SEMUA' && request()->input('proses-ujian') == 2) {
+            $statusdaftar = 'ujian-semua-2';
+            $namastatusdaftar = 'Ujian Semua 2';
+        } elseif (request()->input('daftar-ujian') == 'SEMUA' && request()->input('proses-ujian') == 3) {
+            $statusdaftar = 'daftar-ujian';
+            $namastatusdaftar = 'Daftar Ujian';
+        }
+
+        // $statuskeaktifan = 'AKTIF';
+        return (new ExportDataTahsin)
+                ->pengajar($this->pengajar)
+                ->level($this->level)
+                ->angkatan($this->angkatan)
+                ->jenis($this->jenis)
+                // ->statuskeaktifan($statuskeaktifan)
+                ->statusdaftar($statusdaftar)
+                ->cari($this->cari)
+                ->download('Data Peserta Tahsin '.$namastatusdaftar.' Angkatan '.request()->angkatan.' - '.$datetime.'.xlsx');
     }
 }
