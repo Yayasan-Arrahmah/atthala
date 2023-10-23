@@ -196,7 +196,7 @@
 
 
                                         <div class="small text-muted">
-                                            PESERTA {{ $tahsin->status_peserta ?? 'UMUM' }}
+                                            PESERTA {{ $tahsin->status_peserta ?? 'UMUM' }} || {{ $tahsin->created_at }}
                                         </div>
                                     @endif
                                 </div>
