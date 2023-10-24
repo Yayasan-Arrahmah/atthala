@@ -107,7 +107,7 @@ class Peserta extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implement
                     ->angkatan($this->angkatan)
                     ->pengajar($this->pengajar)
                     // ->statusPeserta($this->status)
-                    ->statusKeaktifan($this->statuskeaktifan)
+                    // ->statusKeaktifan($this->statuskeaktifan)
                     ->statusDaftar($this->statusdaftar, $this->angkatan)
                     // ->when($this->kenaikanlevel, function($query){
                     //     if ($this->kenaikanlevel != 'SEMUA') {
