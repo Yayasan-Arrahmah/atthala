@@ -162,6 +162,10 @@ https://atthala.arrahmahbalikpapan.or.id/tahsin/daftar-ulang-peserta/daftar?id='
 
 Terima Kasih, Semoga Allah Subhanahu Wa Taala memberikan sifat keistiqomahan kepada kita semua untuk selalu belajar Al Qur`an.
 
+Apabila ada pertanyaan, silakan menghubungi nomor dibawah ini
+Pak Fauzan wa.me/6282149604546 (Ikhwan)
+Mba Risma wa.me/6281930418501 (Akhwat)
+
 Salam,
 Dari kami yang menyayangimu
 *Pengurus LTTQ Ar Rahmah Balikpapan*';
@@ -171,7 +175,7 @@ Dari kami yang menyayangimu
             $datapeserta->notif_daftar_ulang = $datapeserta->notif_daftar_ulang+1;
             $datapeserta->save();
 
-            $this->notifwa(request()->notelp, $notif);
+            $this->notifwa('62'.request()->notelp, $notif);
 
         } catch (\Throwable $th) {
             return redirect()->back()->withFlashDanger(request()->notahsin.' - '.request()->nama.' Terjadi Kesalahan. Notifikasi tidak terkirim !. Mohon Ulangi');
@@ -212,7 +216,7 @@ Panitia Pendaftaran Tahsin
             $datapeserta->notif_pilih_jadwal = $datapeserta->notif_pilih_jadwal+1;
             $datapeserta->save();
 
-            $this->notifwa(request()->notelp, $notif);
+            $this->notifwa('62'.request()->notelp, $notif);
 
         } catch (\Throwable $th) {
             return redirect()->back()->withFlashDanger(request()->notahsin.' - '.request()->nama.' Terjadi Kesalahan. Notifikasi tidak terkirim !. Mohon Ulangi');
