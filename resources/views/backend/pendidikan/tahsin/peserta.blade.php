@@ -178,20 +178,27 @@
                                         @php
                                             $ceklevel = data_get($tahsin->cekstatusnaik($tahsin->angkatan_peserta), 'level_peserta');
                                         @endphp
-                                        @if (!null == $ceklevel)
-                                            @if ($ceklevel == $tahsin->level_peserta)
-                                                <div class="btn btn-sm btn-outline-danger" style="font-size: 10px">
-                                                    MENGULANG LEVEL <strong>{{ $ceklevel }}</strong>
-                                                </div>
+                                        @if (request()->input('daftar-ulang') == 2)
+                                            HASIL UJIAN -
+                                            <div class="btn btn-sm btn-outline-success" style="font-size: 10px">
+                                                LEVEL <strong>{{ $tahsin->kenaikan_level_peserta }}</strong>
+                                            </div>
+                                        @else
+                                            @if (!null == $ceklevel)
+                                                @if ($ceklevel == $tahsin->level_peserta)
+                                                    <div class="btn btn-sm btn-outline-danger" style="font-size: 10px">
+                                                        MENGULANG LEVEL <strong>{{ $ceklevel }}</strong>
+                                                    </div>
+                                                @else
+                                                    <div class="btn btn-sm btn-outline-success" style="font-size: 10px">
+                                                        NAIK LEVEL DARI <strong>{{ $ceklevel }}</strong>
+                                                    </div>
+                                                @endif
                                             @else
-                                                <div class="btn btn-sm btn-outline-success" style="font-size: 10px">
-                                                    NAIK LEVEL DARI <strong>{{ $ceklevel }}</strong>
+                                                <div class="btn btn-sm btn-outline-info" style="font-size: 10px">
+                                                    BARU TERDAFTAR
                                                 </div>
                                             @endif
-                                        @else
-                                            <div class="btn btn-sm btn-outline-info" style="font-size: 10px">
-                                                BARU TERDAFTAR
-                                            </div>
                                         @endif
 
 
