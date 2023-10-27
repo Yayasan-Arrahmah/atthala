@@ -35,7 +35,7 @@ background-repeat: no-repeat;
         <tr>
             <td>Nama Peserta</td>
             <td>:</td>
-            <td><strong>{{ strtoupper($nama_peserta) }}</strong></td>
+            <td><strong>{{ strtoupper($data->nama_peserta) }}</strong></td>
             <td></td>
             <td>Level Tahsin</td>
             <td>:</td>
@@ -44,7 +44,7 @@ background-repeat: no-repeat;
         <tr>
             <td>No. HP (WhatsApp)</td>
             <td>:</td>
-            <td><strong>{{ strtoupper($nohp_peserta) }}</strong></td>
+            <td><strong>{{ strtoupper($data->nohp_peserta) }}</strong></td>
             <td></td>
             <td>Jadwal Tahsin</td>
             <td>:</td>
@@ -77,7 +77,7 @@ background-repeat: no-repeat;
             <br>
             <br>
             <br>
-            <strong>{{ strtoupper($nama_peserta) }}</strong>
+            <strong>{{ strtoupper($data->nama_peserta) }}</strong>
         </center>
     </div>
 
