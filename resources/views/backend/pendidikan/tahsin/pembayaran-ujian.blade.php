@@ -14,7 +14,7 @@
                     </h4>
                 </div><!--card-header-->
                 <div class="card-body">
-                    @include('backend.pendidikan.tahsin.component.filter-tahsin')
+                    @include('backend.pendidikan.tahsin.component.filter-pembayaran')
                 </div><!--card-body-->
             </div><!--card-->
         </div><!--col-->

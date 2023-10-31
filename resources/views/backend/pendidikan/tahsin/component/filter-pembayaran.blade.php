@@ -185,10 +185,14 @@
                 </div>
                 {{-- <input class="form-control datepicker" value="" type="text" name="tanggal" id="" maxlength="11" size="11" > --}}
             </div>
-            <div class="col-1 mt-4">
-                <a href="{{ route('admin.tahsin/pembayaran.getExportData') }}?proses-ujian={{ request()->get('proses-ujian') }}&daftar-ujian={{ request()->get('daftar-ujian') }}&daftar-baru={{ request()->get('daftar-baru') }}&daftar-ulang={{ request()->get('daftar-ulang') }}&jenis={{ request()->jenis }}&angkatan={{ request()->angkatan }}&level={{ request()->level }}&pengajar={{ request()->pengajar }}&cari={{ request()->cari }}"
-                            target="_blank" class="btn btn-success">Export <i class="fas fa-file-excel"></i></a>
-            </div>
+            @if ($status_ == 'daftar-ujian-pembayaran' || $status_ == 'spp-pembayaran')
+
+            @else
+                <div class="col-1 mt-4">
+                    <a href="{{ route('admin.tahsin/pembayaran.getExportData') }}?proses-ujian={{ request()->get('proses-ujian') }}&daftar-ujian={{ request()->get('daftar-ujian') }}&daftar-baru={{ request()->get('daftar-baru') }}&daftar-ulang={{ request()->get('daftar-ulang') }}&jenis={{ request()->jenis }}&angkatan={{ request()->angkatan }}&level={{ request()->level }}&pengajar={{ request()->pengajar }}&cari={{ request()->cari }}"
+                                target="_blank" class="btn btn-success">Export <i class="fas fa-file-excel"></i></a>
+                </div>
+            @endif
             <div class="col"></div>
             <div class="col-md-2">
                 <div class="text-right mt-4">
