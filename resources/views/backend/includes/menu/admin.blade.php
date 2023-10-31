@@ -181,7 +181,7 @@
 
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/tahsin/pengaturan') ? 'active' : '' }} "
-            href="{{ route('admin.tahsins.pengaturan') }}
+            href="{{ route('admin.tahsin/pengaturan.index') }}
             " > <i class="nav-icon fas fa-cog"></i>
             Pengaturan
             </a>
@@ -189,7 +189,7 @@
 
         {{-- #################### --}}
 
-        <li class="nav-title">
+        {{-- <li class="nav-title">
             TLA
         </li>
         <li class="nav-item nav-dropdown <!- ADMINISTRASI -->
@@ -337,7 +337,7 @@
             " > <i class="nav-icon fas fa-cog"></i>
             Pengaturan
             </a>
-        </li>
+        </li> --}}
 
 
         <li class="nav-title">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tahsin;
 use DB;
 use App\Models\PesertaUjian;
+use App\Exports\Tahsin\Pembayaran as ExportDataTahsinPembayaran;
 use App\Models\StatusPesertaTahsin;
 use App\Models\LevelTahsin;
 use App\Models\Pembayaran;
@@ -32,6 +33,8 @@ class PembayaranController extends Controller
         $this->angkatanujian = request()->angkatan ?? 21;
         $this->status        = request()->status ?? null;
         $this->tanggal       = request()->tanggal ?? null;
+        $this->start         = request()->start ?? null;
+        $this->end           = request()->end ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
                                 ->where('nama_pengajar', '!=', NULL)
@@ -86,7 +89,18 @@ class PembayaranController extends Controller
 
     public function tahsin($statusdaftar, $statuskeaktifan)
     {
-        return Tahsin::cari($this->cari)
+        // return Tahsin::cari($this->cari)
+        //             ->cariLevel($this->level)
+        //             ->jenis($this->jenis)
+        //             ->angkatan($this->angkatan)
+        //             ->pengajar($this->pengajar)
+        //             ->statusPeserta($this->status)
+        //             ->statusKeaktifan($statuskeaktifan)
+        //             ->statusDaftar($statusdaftar, $this->angkatan)
+        //             ->paginate(10);
+        return  !empty(request()->pengajar)
+                ?
+                Tahsin::cari($this->cari)
                     ->cariLevel($this->level)
                     ->jenis($this->jenis)
                     ->angkatan($this->angkatan)
@@ -94,7 +108,16 @@ class PembayaranController extends Controller
                     ->statusPeserta($this->status)
                     ->statusKeaktifan($statuskeaktifan)
                     ->statusDaftar($statusdaftar, $this->angkatan)
-                    ->paginate(10);
+                    ->when($this->kenaikanlevel, function($query){
+                        if ($this->kenaikanlevel != 'SEMUA') {
+                            $query->where('kenaikan_level_peserta', $this->kenaikanlevel);
+                        }
+                    })
+                    ->tanggal($this->start, $this->end)
+                    ->paginate(request()->perPage ?? 10)
+                :
+                Tahsin::angkatan('null')->paginate(0)
+                ;
     }
 
     public function tahsinrekap($statusdaftar, $statuskeaktifan)
@@ -163,12 +186,26 @@ class PembayaranController extends Controller
 
     public function getDaftarUlang()
     {
-        return $this->tahsinbase('daftar-ulang-pembayaran', null, 'Peserta Daftar Ulang');
+        if (request()->input('daftar-ulang') == 2) {
+            return $this->tahsinbase('belum-daftar-ulang', null, 'Peserta Daftar Ulang');
+        } else {
+            return $this->tahsinbase('daftar-ulang', null, 'Peserta Daftar Ulang');
+        }
+        // return $this->tahsinbase('daftar-ulang-pembayaran', null, 'Peserta Daftar Ulang');
     }
 
     public function getDaftarBaru()
     {
-        return $this->tahsinbase('daftar-baru-pembayaran', null, 'Peserta Pendaftar Baru');
+        if (request()->input('daftar-baru') == 1) {
+            return $this->tahsinbase('belum-selesai-diperiksa', null, 'Peserta Pendaftar Baru');
+        }  elseif (request()->input('daftar-baru') == 2) {
+            return $this->tahsinbase('belum-pilih-jadwal', null, 'Peserta Pendaftar Baru');
+        } elseif (request()->input('daftar-baru') == 3) {
+            return $this->tahsinbase('selesai-daftar-baru', null, 'Peserta Daftar Ulang');
+        } else {
+            return $this->tahsinbase('daftar-baru', null, 'Peserta Pendaftar Baru');
+        }
+        // return $this->tahsinbase('daftar-baru-pembayaran', null, 'Peserta Pendaftar Baru');
     }
 
     public function getDaftarUjian()
@@ -219,8 +256,7 @@ class PembayaranController extends Controller
             $data->admin_pembayaran = 'BERHASIL';
             $data->save();
 
-            $pesan =
-                'Assalamualaikum Warohmatullahi Wabarokaatuh,
+            $pesan ='Assalamualaikum Warohmatullahi Wabarokaatuh,
 
 Telah dikirimkan pembayaran SPP dengan detail sebagai berikut :
 
@@ -387,6 +423,74 @@ LTTQ Arrahmah Balikpapan
     public function getDashboard()
     {
         # code...
+    }
+
+    public function getExportData()
+    {
+        // $statuskeaktifan =
+        $statusdaftar = null;
+        $namastatusdaftar = null;
+        $datetime = date('Y-m-d H:i:s');
+
+        if (request()->input('daftar-ulang') == 2) {    // DAFTAR ULANG
+            $statusdaftar = 'belum-daftar-ulang';
+            $namastatusdaftar = 'Belum Daftar Ulang';
+        } elseif (request()->input('daftar-ulang') == 1) {
+            $statusdaftar = 'daftar-ulang';
+            $namastatusdaftar = 'Daftar Ulang';
+        } elseif (request()->input('daftar-baru') == 1) {
+            $statusdaftar = 'belum-selesai-diperiksa';
+            $namastatusdaftar = 'Belum Selesai Diperiksa';
+        } elseif (request()->input('daftar-baru') == 2) { // DAFTAR BARU
+            $statusdaftar = 'belum-pilih-jadwal';
+            $namastatusdaftar = 'Belum Pilih Jadwal';
+        } elseif (request()->input('daftar-baru') == 3) {
+            $statusdaftar = 'selesai-daftar-baru';
+            $namastatusdaftar = 'Selesai Daftar Baru';
+        } elseif (request()->input('daftar-baru') == 'SEMUA') {
+            $statusdaftar = 'daftar-baru';
+            $namastatusdaftar = 'Daftar Baru';
+        } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 'SEMUA') { // DAFTAR UJIAN
+            $statusdaftar = 'ujian-1-semua';
+            $namastatusdaftar = 'Ujian 1 Semua';
+        } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 1) {
+            $statusdaftar = 'ujian-1-1';
+            $namastatusdaftar = 'Ujian1-1';
+        } elseif (request()->input('daftar-ujian') == 1 && request()->input('proses-ujian') == 2) {
+            $statusdaftar = 'ujian-1-2';
+            $namastatusdaftar = 'Ujian1-2';
+        } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 'SEMUA') {
+            $statusdaftar = 'ujian-2-semua';
+            $namastatusdaftar = 'Ujian 2 Semua';
+        } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 1) {
+            $statusdaftar = 'ujian-2-1';
+            $namastatusdaftar = 'Ujian2-1';
+        } elseif (request()->input('daftar-ujian') == 2 && request()->input('proses-ujian') == 2) {
+            $statusdaftar = 'ujian-2-2';
+            $namastatusdaftar = 'Ujian2-2';
+        } elseif (request()->input('daftar-ujian') == 'SEMUA' && request()->input('proses-ujian') == 1) {
+            $statusdaftar = 'ujian-semua-1';
+            $namastatusdaftar = 'Ujian Semua 1';
+        } elseif (request()->input('daftar-ujian') == 'SEMUA' && request()->input('proses-ujian') == 2) {
+            $statusdaftar = 'ujian-semua-2';
+            $namastatusdaftar = 'Ujian Semua 2';
+        } elseif (request()->input('daftar-ujian') == 'SEMUA' && request()->input('proses-ujian') == 3) {
+            $statusdaftar = 'daftar-ujian';
+            $namastatusdaftar = 'Daftar Ujian';
+        }
+
+        // $statuskeaktifan = 'AKTIF';
+        return (new ExportDataTahsinPembayaran)
+                ->pengajar($this->pengajar)
+                ->level($this->level)
+                ->angkatan($this->angkatan)
+                ->jenis($this->jenis)
+                // ->statuskeaktifan($statuskeaktifan)
+                ->statusdaftar($statusdaftar)
+                ->start($this->start)
+                ->end($this->end)
+                ->cari($this->cari)
+                ->download('Data Pembayaran Peserta Tahsin '.$namastatusdaftar.' Angkatan '.request()->angkatan.' - '.$datetime.'.xlsx');
     }
 
     // public function getMoota()
