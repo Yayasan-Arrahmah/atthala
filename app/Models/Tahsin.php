@@ -208,6 +208,14 @@ class Tahsin extends Model
             }
         }
     }
+    public function scopeTanggal($query, $start, $end)
+    {
+        if (!null == $start) {
+            return $query->whereDate('created_at', '>=', $start)
+                        ->whereDate('created_at', '<=', $end)
+                        ;
+        }
+    }
 
     public function scopeDaftarBaru($query, $angkatan)
     {

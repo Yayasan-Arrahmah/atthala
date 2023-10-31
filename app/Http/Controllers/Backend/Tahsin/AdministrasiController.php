@@ -292,7 +292,7 @@ Panitia Pendaftaran Tahsin
         return redirect()->back()->withFlashSuccess($data->no_tahsin.' - '.$data->nama_peserta.' Berhasil Diperbaruhi !');
     }
 
-    public function getDeletePeserta()
+    public function postDeletePeserta()
     {
         $data = Tahsin::find($this->id);
         $data->delete();

@@ -253,8 +253,9 @@
                                                 </a>
                                             @endif
 
-                                            <a href="{{ route('admin.tahsin/peserta.getDeletePeserta') }}" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="rimbaborne@gmail.com dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
-                                                <form action="" onsubmit="return confirm('Apakah Anda yakin {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }} dihapus ?');" style="display:none">
+                                            <a href="{{ route('admin.tahsin/peserta.postDeletePeserta') }}?id={{ $tahsin->id }}" title="Hapus" data-method="delete" data-trans-button-cancel="Batal" data-trans-button-confirm="Hapus" data-trans-title="dihapus?" class=" dropdown-item" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();">
+                                                <form action="{{ route('admin.tahsin/peserta.postDeletePeserta') }}" onsubmit="return confirm('Apakah Anda yakin {{ $tahsin->no_tahsin }} - {{ $tahsin->nama_peserta }} dihapus ?');" method="post" style="display:none">
+                                                    @csrf
                                                     <input type="hidden" name="metode" value="hapus">
                                                     <input type="hidden" name="id" value="{{ $tahsin->id }}">
                                                 </form>
