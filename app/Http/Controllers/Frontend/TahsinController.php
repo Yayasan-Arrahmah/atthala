@@ -37,6 +37,9 @@ class TahsinController extends Controller
     {
         // $datawa = json_decode($isipesan);
 
+        // disable wa notif
+        return null;
+
         $apikey = env('WAHA_API_KEY');
         $url = env('WAHA_API_URL');
         $sessionApi = env('WAHA_API_SESSION');
