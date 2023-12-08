@@ -127,7 +127,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/tahsin/jadwal/absensi')) ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/jadwal/absensi')) ? 'active' : '' }}" href="/admin/tahsin/jadwal/absensi">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Absensi Per-Jadwal
                     </a>
                 </li>

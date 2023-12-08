@@ -12,6 +12,9 @@ use App\Models\LevelTahsin;
 use App\Models\Jadwal;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\DataTables\AbsenDataTable;
+use App\Models\Absen;
+use App\Models\Auth\User;
 
 class JadwalController extends Controller
 {
@@ -136,6 +139,36 @@ class JadwalController extends Controller
         $data->delete();
 
         return redirect()->back()->withFlashSuccess('Jadwal Berhasil Dihapus !');
+    }
+
+    public function getAbsensi(AbsenDataTable $dataTable)
+    {
+        // dd($dataTable);
+
+        // return $dataTable->render('backend.pendidikan.tahsin.jadwal.absensi');
+
+        $dataabsen = new Absen;
+        $datauser  = new User;
+        $angkatan  = session('angkatan_tahsin');
+
+
+
+        $datajadwals = DB::table('tahsins')
+            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->paginate(1000);
+
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->paginate(200);
+
+        // dd($datapengajars);
+
+        return view('backend.pendidikan.tahsin.jadwal.absensi', compact('datajadwals', 'datapengajars', 'angkatan', 'datauser', 'dataabsen'));
+
     }
 
 }
