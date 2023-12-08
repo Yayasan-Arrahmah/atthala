@@ -12,7 +12,7 @@ use App\Models\LevelTahsin;
 use App\Models\Jadwal;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\DataTables\AbsenDataTable;
+// use App\DataTables\AbsenDataTable;
 use App\Models\Absen;
 use App\Models\Auth\User;
 
@@ -141,7 +141,7 @@ class JadwalController extends Controller
         return redirect()->back()->withFlashSuccess('Jadwal Berhasil Dihapus !');
     }
 
-    public function getAbsensi(AbsenDataTable $dataTable)
+    public function getAbsensi()
     {
         // dd($dataTable);
 
