@@ -19,7 +19,7 @@ use Throwable;
 class AdministrasiController extends Controller
 {
     /**
-     * @suppress PHP0418
+     *
      */
     public function __construct()
     {
@@ -72,7 +72,7 @@ class AdministrasiController extends Controller
         // $datawa = json_decode($isipesan);
 
         // disable wa notif
-        return null;
+        // return null;
 
         $apikey     = env('WAHA_API_KEY');
         $url        = env('WAHA_API_URL');
@@ -575,18 +575,18 @@ Panitia Pendaftaran Tahsin
 
     public function getSeting()
     {
-        settings()->set('foo', 'mantap');
+        // settings()->set('foo', 'mantap');
 
-        $tes = settings()->get('foo');
+        // $tes = settings()->get('foo');
 
-        return $tes;
+        // return $tes;
     }
 
     public function getOke()
     {
-        $tes = settings()->get('foo');
+        // $tes = settings()->get('foo');
 
-        return $tes;
+        // return $tes;
     }
 
     public function getExportData()

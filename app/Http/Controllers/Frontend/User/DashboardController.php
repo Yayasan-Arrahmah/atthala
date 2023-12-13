@@ -43,7 +43,7 @@ class DashboardController extends Controller
         // $datawa = json_decode($isipesan);
 
         // disable wa notif
-        return null;
+        // return null;
 
         $apikey = env('WAHA_API_KEY');
         $url = env('WAHA_API_URL');
