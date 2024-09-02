@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
      public function __construct()
     {
-        $this->angkatan_tahsin  = 23;
+        $this->angkatan_tahsin  = 24;
         $this->listangkatan  = Tahsin::select('angkatan_peserta')
                             ->groupBy('angkatan_peserta')
                             ->orderBy('angkatan_peserta', 'desc')
@@ -73,6 +73,47 @@ class DashboardController extends Controller
                 "session" => $sessionApi,
                 "chatId" => $nomorhp . '@c.us',
                 "text" => $isipesan,
+            ]);
+        } catch (Throwable $th) {
+            throw $th;
+        }
+    }
+    public function notifwalink($nomorhp, $title, $link)
+    {
+        // $datawa = json_decode($isipesan);
+
+        // disable wa notif
+        // return null;
+
+        $apikey = env('WAHA_API_KEY');
+        $url = env('WAHA_API_URL');
+        $sessionApi = env('WAHA_API_SESSION');
+        $requestApi = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'X-Api-Key' => $apikey,
+        ]);
+
+        // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
+
+        try {
+            #1 Send Seen
+            $requestApi->post($url . '/api/sendSeen', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+
+            #2 Start Typing
+            $requestApi->post($url . '/api/startTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+
+            sleep(1); // jeda seolah olah ngetik
+
+            #3 Stop Typing
+            $requestApi->post($url . '/api/stopTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+
+            #4 Send Message
+            $requestApi->post($url . '/api/sendLinkPreview', [
+                "session" => $sessionApi,
+                "chatId" => $nomorhp . '@c.us',
+                "url" => $link,
+                "title" => $title,
             ]);
         } catch (Throwable $th) {
             throw $th;
@@ -131,19 +172,22 @@ class DashboardController extends Controller
         $pertemuanke  = $request->input('ke');
         $angkatan     = $this->angkatan_tahsin;
 
-        $datapeserta = Tahsin::where('nama_pengajar', $userpengajar)
-            ->where('level_peserta', $level)
-            ->where('jadwal_tahsin', $waktu)
-            ->where('angkatan_peserta', $angkatan)
-            ->paginate(50);
-
-        $w = explode(" ",$waktu);
-        $jadwal = Jadwal::where('pengajar_jadwal', $userpengajar)
-        ->where('level_jadwal', $level)
-        ->where('hari_jadwal', $w[0])
-        ->where('waktu_jadwal', $w[1])
-        ->where('angkatan_jadwal', $angkatan)
-        ->first();
+        
+           
+            $datapeserta = Tahsin::where('nama_pengajar', $userpengajar)
+                ->where('level_peserta', $level)
+                ->where('jadwal_tahsin', $waktu)
+                ->where('angkatan_peserta', $angkatan)
+                ->paginate(50);
+    
+            $w = explode(" ",$waktu);
+            $jadwal = Jadwal::where('pengajar_jadwal', $userpengajar)
+            ->where('level_jadwal', $level)
+            ->where('hari_jadwal', $w[0])
+            ->where('waktu_jadwal', $w[1])
+            ->where('angkatan_jadwal', $angkatan)
+            ->first();
+            
 
         $ketpertemuan = AbsenPertemuan::where('id_jadwal', $jadwal->id)
                                         ->where('pertemuan', $pertemuanke)
@@ -287,7 +331,7 @@ class DashboardController extends Controller
 
     public function pesertatahsinbaru(Request $request)
     {
-        $angkatanbaru = 23;
+        $angkatanbaru = 24;
         if(isset(request()->level)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', request()->idtahsin)
@@ -348,6 +392,30 @@ Panitia Pendaftaran Baru Tahsin Angkatan ".$angkatanbaru."
             if (substr($nohp, 0, 1) === '0') {
                 $nohp = substr($nohp, 1);
             }
+            
+            if ($data->jenis_peserta == "AKHWAT"){
+            $pesan = "Assalamu'alaikum warahmatullahi, 
+            
+Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan " . session('angkatan_tahsin') . "*.
+
+Silahkan masuk grup ini whatsapp melalui link dibawah ini untuk proses penempatan level.
+Peserta Wajib menyimpan nomor notifikasi ini agar peserta dapat klik link grup yang tertera.
+
+Diwajibkan setelah memasuki grup,
+1. Salam
+2. Perkenalan dengan nama lengkap yang terdaftar.
+
+Akan ada informasi di grup tersebut dan Ustadzah Penguji yang mengarahkan.
+
+Silakan isi format berikut sebelum mengirimkan rekaman suara:
+
+Nama Lengkap :
+Tanggal Mengisi Formulir Online :";
+$this->notifwa('62' . $nohp, $pesan);
+$this->notifwalink('62' . $nohp, 'Grup Whatsapp Pengujian Penempatan Level Peserta Baru Tahsin Akhwat Angkatan 24 LTTQ Ar Rahmah', 'https://chat.whatsapp.com/IdWfreku7KoLTCRppHmp0r');
+
+            } else {
+                
             $pesan = "Assalamu'alaikum warahmatullahi bapak/ibu calon peserta, mohon maaf rekaman anda tidak terbaca di sistem kami dikarenakan ketidakcocokan teknis.
 
 Oleh karenanya mohon mengirimkan rekaman ulang ke penguji kami melalui fitur WhatsApp Voice Note.
@@ -360,8 +428,9 @@ Silakan isi format berikut sebelum mengirimkan rekaman suara:
 
 Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
-
-            $this->notifwa('62' . $nohp, $pesan);
+$this->notifwa('62' . $nohp, $pesan);
+            }
+            
             $info = "berhasil";
 
             $tahsins = \App\Models\Tahsin::where('no_tahsin', 'like', '%-'.$angkatanbaru.'-%')

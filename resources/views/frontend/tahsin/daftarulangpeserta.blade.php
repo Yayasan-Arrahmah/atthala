@@ -445,12 +445,12 @@
                             <div class="form-group row">
                                 <div class="col-md-12 table-responsive">
                                     <div class="alert alert-primary" role="alert" style="margin-bottom: 0rem">
-                                        <h4 class="alert-heading">Rincian Biaya</h4>
-                                        <table class="table table-sm table-borderless">
+                                        <h4 class="alert-heading">Rincian Biaya Daftar Ulang</h4>
+                                        <table class="table table-sm table-borderless pb-0">
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <strong>Daftar Ulang</strong>
+                                                        <strong>Administrasi</strong>
                                                     </td>
                                                     <td>
                                                         :
@@ -462,7 +462,7 @@
 
                                                 <tr>
                                                     <td>
-                                                        <strong>SPP 1 Periode</strong>
+                                                        <strong>Total SPP 1 periode</strong>
                                                     </td>
                                                     <td>
                                                         :
@@ -494,7 +494,49 @@
                                             </tbody>
                                         </table>
                                         <p>
-                                            *Minimal Transfer Biaya daftar ulang Rp. 50.000
+                                            *Semua Peserta diharapkan melunasi total pembayaran di awal masuk pembelajaran. 
+                                        </p>
+                                        <p>
+                                            <strong>Bagi Peserta yang ingin membayar bertahap : </strong>
+                                        </p>
+                                        <table class="table table-sm table-borderless pb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Pembayaran Pertama</strong>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        <strong>Rp. 250.000</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Pembayaran Kedua</strong>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        <strong>Rp. 200.000</strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <p>
+                                            *Pembayaran pertama dibayarkan saat daftar ulang form ini.
+                                        </p>
+                                        <p>
+                                            *Pembayaran kedua dibayarkan di bulan kedua pembelajaran Tahsin. 
+                                        </p>
+                                        <p>
+                                            *Jika ada peserta yang memiliki masalah terkait pembayaran, silahkan hubungi kasir. Klik kontak whatsapp ini. <a href="https://wa.me/6282155171944" target="_blank">wa.me/6282155171944</a>
+                                        </p>
+                                        <p>
+                                            *Bagi peserta yang ingin Donasi/Infaq sukarela, dipersilahkan untuk menyesuaikan inputan nominal. Syukron. 
                                         </p>
                                     </div>
                                 </div>
@@ -564,7 +606,7 @@
                                                     Rp
                                                 </span>
                                             </div>
-                                            <input id="notelp" type="number" name="nominaltf" value="{{ old('nominaltf') }}"
+                                            <input type="number" name="nominaltf" value="{{ old('nominaltf') ?? '250000' }}"
                                                     oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}"
                                                     class="form-control" maxlength="12" placeholder="Nonimal Transfer"
                                                     style="background-color: white;

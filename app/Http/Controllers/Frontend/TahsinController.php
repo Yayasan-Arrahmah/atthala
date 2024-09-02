@@ -252,7 +252,7 @@ class TahsinController extends Controller
             // $tahsin->pilih_jadwal_cadangan_1_peserta = $pilih_jadwal_cadangan_1_peserta;
             // $tahsin->pilih_jadwal_cadangan_2_peserta = $pilih_jadwal_cadangan_2_peserta;
             $tahsin->fotoktp_peserta = Session::get('filektp');
-            $tahsin->rekaman_peserta = Session::get('filerekaman');
+            $tahsin->rekaman_peserta = Session::get('filerekaman') ?? 'https://chat.whatsapp.com/IdWfreku7KoLTCRppHmp0r';
             $tahsin->save();
 
             $pembayaran->id_peserta = $tahsin->id;
@@ -273,16 +273,38 @@ class TahsinController extends Controller
                 $nohp = $nohp;
             }
 
-            // $apikey  = 'gzUeDIPcqUzYRiupTR2wTRIUccaEizKs';
-            $phone = '+62' . $nohp;
+            if ($request->jenis_peserta == "AKHWAT"){
+                
+                $message =
+            "Assalamualaikum Warrohmarullah Wabarokatuh
+
+Terima kasih $request->nama_peserta, telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan " . session('angkatan_tahsin') . "*.
+
+Silahkan masuk grup ini whatsapp melalui link dibawah ini
+s.id/PesertaBaruAkhwat-LTTQArrahmah
+untuk proses penempatan level.
+
+Diwajibkan setelah memasuki grup,
+1. Salam
+2. Perkenalan dengan nama lengkap yang terdaftar.
+
+Akan ada informasi di grup tersebut dan Ustadzah Penguji yang mengarahkan.
+
+Syukron, Jazaakillah Khoiron Katsiron,
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Salam,
+Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
+*Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+                
+            } else {
+            
             $message =
             "Assalamualaikum Warrohmarullah Wabarokatuh
 
-Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan " . session('angkatan_tahsin') . "*.
+Terima kasih $request->nama_peserta, telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan " . session('angkatan_tahsin') . "*.
 
 Anda akan kami hubungi kembali secara otomatis melalui pesan WhatsApp setelah hasil bacaan Al Qur'an dikoreksi oleh tim penguji kami.
-
-Adapun lama tunggu maksimal kami hubungi kembali adalah 3 hari setelah pendaftaran dilakukan.
 
 Jazaakumullah Khoiron Katsiron,
 Wassalamualaikum warahmatullahi wabarakatuh.
@@ -290,38 +312,11 @@ Wassalamualaikum warahmatullahi wabarakatuh.
 Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
+            }
+            
+            $this->notifwa('62' . $nohp, $message);
 
-            // woo-wa.com
-            $apikey = env('WA_KEY');
-
-            $url = 'http://116.203.191.58/api/send_message';
-            $data = array(
-                "phone_no" => $phone,
-                "key" => $apikey,
-                "message" => $message,
-                "skip_link" => true, // This optional for skip snapshot of link in message
-            );
-            $data_string = json_encode($data);
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, 0);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data_string))
-            );
-            echo $res = curl_exec($ch);
-            curl_close($ch);
-
-            // woo-wa.com kasir 6282155171933
-            $phone = '+6282155171933';
-            $apikey = env('WA_KEY');
+            
             $message =
             'Assalamualaikum Warohmatullahi Wabarokaatuh,
 *Ini adalah pesan otomatis.*
@@ -330,37 +325,13 @@ Telah dikirimkan pembayaran Daftar Baru & SPP Bulan Pertama dengan detail sebaga
 
 Nama Peserta : ' . $tahsin->nama_peserta . '
 NIS : ' . $tahsin->no_tahsin . '
-Nominal SPP : ' . $nominal_pembayaran . '
+Nominal : ' . $nominal_pembayaran . '
 Keterangan : Daftar Baru & SPP Bulan Pertama
 Kontak : wa.me/62' . $tahsin->nohp_peserta . '
 
 Klik link berikut untuk memeriksa riwayat pembayaran
 https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-baru?nama=' . str_replace(' ', '+', $tahsin->nama_peserta);
-
-            $url = 'http://116.203.191.58/api/send_message';
-            $data = array(
-                "phone_no" => $phone,
-                "key" => $apikey,
-                "message" => $message,
-                "skip_link" => true, // This optional for skip snapshot of link in message
-            );
-            $data_string = json_encode($data);
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, 0);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data_string))
-            );
-            echo $res = curl_exec($ch);
-            curl_close($ch);
+            $this->notifwa('6282155171933', $message);
 
             $info = "berhasil";
         } catch (\Throwable $th) {
@@ -624,7 +595,7 @@ Panitia Ujian Tahsin Angkatan " . session('daftar_ujian') . "
                 ->where('level_peserta', '=', request('level'))
                 ->where('nama_pengajar', '=', request('pengajar'))
             // ->where('angkatan_peserta', '=', session('daftar_ujian'))
-                ->where('angkatan_peserta', '=', 22)
+                ->where('angkatan_peserta', '=', request('angkatan'))
                 ->paginate(15);
 
         } else {
@@ -659,8 +630,8 @@ Panitia Ujian Tahsin Angkatan " . session('daftar_ujian') . "
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
 
-        $angkatan = session('daftar_ujian') ?? 22;
-        $angkatandaftarulang = session('angkatan_tahsin') ?? 23;
+        $angkatan = $request->get('angkatan') ?? session('daftar_ujian');
+        $angkatandaftarulang = session('angkatan_tahsin') ?? 24;
 
         // ngambil data profile
         $calonpeserta = Tahsin::where('no_tahsin', $notahsin)
@@ -971,10 +942,26 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
                 $cekbanyakpeserta = 0;
             }
 
+            // if ($cekbanyakpeserta < $level->jumlah_peserta) {
+            //     $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
+            // } else {
+            //     $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
+            // }
+            
             if ($cekbanyakpeserta < $level->jumlah_peserta) {
-                $waktu_[] = ['waktu_jadwal' => $level->waktu_jadwal, 'id' => $level->id, 'status' => ''];
+                $waktu_[] = [
+                    'waktu_jadwal' => $level->waktu_jadwal,
+                    'id' => $level->id,
+                    'status' => '',
+                    'pembelajaran' => $level->status_belajar,
+                ];
             } else {
-                $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
+                $waktu_[] = [
+                    'waktu_jadwal' => 'Maaf Jadwal Penuh',
+                    'id' => '',
+                    'status' => 'disabled',
+                    'pembelajaran' => '',
+                ];
             }
 
             // $waktu_[] = ['waktu_jadwal_' => $level->waktu_jadwal, 'id_' => $level->id, 'status_' => $cekbanyakpeserta];
@@ -1050,7 +1037,7 @@ Terima kasih, Anda telah terverifikasi oleh Sistem Atthala sebagai Peserta Tahsi
 
 Silakan melengkapi keperluan pembelajaran antara lain :
 *1. Modul - Rp 35.000*
-*2. Buku Prestasi - Rp 25.000*
+*2. Buku Prestasi - Rp 30.000*
 
 Modul & Buku Prestasi bisa dibeli di Sekretariat LTTQ Ar Rahmah Balikpapan (Serambi Utara Masjid Ar Rahmah)
 Senin - Jum'at : 09.00 - 17.00 WITA
@@ -1135,17 +1122,25 @@ Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 
         if (strstr($peserta->no_tahsin, '-'.session('daftar_ujian').'-')) {
             $periode = ([
-                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
-                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
-                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
-                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+                // ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+                // ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+                // ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+                // ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'MEI 2024'],
+                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
+                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'JULI 2024'],
+                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
             ]);
         } else {
             $periode = ([
-                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
-                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
-                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
-                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+                // ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+                // ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+                // ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+                // ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'MEI 2024'],
+                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
+                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'JULI 2024'],
+                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
             ]);
         }
         $dataperiode = collect($periode);
@@ -1164,7 +1159,7 @@ Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 
         $pembayaran = new Pembayaran;
         $pembayaran->id_peserta = request()->id;
-        $pembayaran->nominal_pembayaran = request()->nominaltf;
+        $pembayaran->nominal_pembayaran = str_replace(",","",request()->nominaltf) ?? 0;
         $pembayaran->jenis_pembayaran = 'SPP TAHSIN';
         $pembayaran->admin_pembayaran = 'MENUNGGU KONFIRMASI';
         $pembayaran->bukti_transfer_pembayaran = Session::get('filebuktitransferspp');

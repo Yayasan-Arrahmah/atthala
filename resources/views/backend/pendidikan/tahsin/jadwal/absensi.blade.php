@@ -184,7 +184,7 @@
                                     @php
                                         $jadwal_ = $jadwal->hari_jadwal.' '.$jadwal->waktu_jadwal;
                                     @endphp
-                                    {{ $jadwal->jumlahpeserta($jadwal->level_jadwal, $jadwal_, $jadwal->angkatan_jadwal)->count() }}
+                                    {{-- $jadwal->jumlahpeserta($jadwal->level_jadwal, $jadwal_, $jadwal->angkatan_jadwal)->count() --}}
                                 </div>
                                 <div class="col d-flex align-items-center justify-content-center font-weight-bold">
                                     <button class="btn btn-sm btn-outline-dark">{{ $jadwal->angkatan_jadwal }}</button>

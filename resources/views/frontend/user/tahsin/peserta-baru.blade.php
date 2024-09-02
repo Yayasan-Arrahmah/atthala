@@ -182,10 +182,13 @@
                                         {{ $key + $tahsins->firstItem() }}
                                     </td>
                                     <td>
-                                        <a href="/admin/tahsins/{{ $tahsin->id }}/edit" style="color: rgb(56, 56, 56);">
+                                        <a href="https://wa.me/62{{ $tahsin->nohp_peserta }}" style="color: rgb(56, 56, 56);" target="_blank">
                                             <div style="text-transform: uppercase;">{{ $tahsin->nama_peserta }}</div>
                                             <div class="small text-muted">
-                                                {{ $tahsin->no_tahsin }} | {{ $tahsin->jenis_peserta }}
+                                                {{ $tahsin->no_tahsin }} | {{ $tahsin->jenis_peserta }} 
+                                            </div>
+                                            <div class="small text-muted">
+                                                {{ $tahsin->nohp_peserta }}
                                             </div>
                                         </a>
                                     </td>

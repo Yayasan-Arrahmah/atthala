@@ -83,8 +83,8 @@ hr {
                         <label class="col-4 form-control-label" >Jenis Peserta </label>
                         <div class="col-8">
                             <select name="jenis_peserta" class="gender form-control" required>
-                                <option value="IKHWAN">IKHWAN</option>
-                                <option value="AKHWAT">AKHWAT</option>
+                                <option value="IKHWAN">IKHWAN / Pria</option>
+                                <option value="AKHWAT">AKHWAT / Wanita</option>
                             </select>
                         </div><!--col-->
                     </div>
@@ -296,6 +296,7 @@ hr {
                             <select name="jenis_pembelajaran" class="gender form-control" required>
                                 <option value="OFFLINE">OFFLINE</option>
                                 <option value="ONLINE">ONLINE</option>
+                                <option value="ONLINE DAN OFFLINE">ONLINE DAN OFFLINE</option>
                             </select>
                         </div><!--col-->
                     </div>
@@ -309,14 +310,14 @@ hr {
                             </div> --}}
                         </div><!--col-->
                     </div>
-                    <div class="form-group row">
+                    <div id="rekaman-" class="form-group row">
                         {{-- <example-component></example-component> --}}
 
                         <label class="col-12 form-control-label">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</label>
                         <div class="col-12">
                             <input type="file" class="upload-rekaman"/>
                             {{-- <div class="custom-file">
-                                <input class="filestyle custom-file-input" type="file" name="rekaman_peserta" id="upload-2" required="" data-buttonText="Your label here.">
+                                <input class="filestyle custom-file-input" type="file" name="rekaman_peserta" id="upload-2" data-buttonText="Your label here.">
                                 <label class="custom-file-label" id="upload-2-label">Pilih File Rekaman Tilawah</label>
                             </div> --}}
                         </div><!--col-->
@@ -589,11 +590,13 @@ hr {
                     $("#akhwat-rek").hide();
                     $("#ikhwan").show();
                     $("#ikhwan-rek").show();
+                    $("#rekaman-").show();
                 } else if (optionValue === "AKHWAT") {
                     $("#akhwat").show();
                     $("#akhwat-rek").show();
                     $("#ikhwan").hide();
                     $("#ikhwan-rek").hide();
+                    $("#rekaman-").hide();
                 }
             });
         }).change();

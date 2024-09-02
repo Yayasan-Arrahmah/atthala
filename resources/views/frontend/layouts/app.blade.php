@@ -221,7 +221,7 @@
         @include('includes.partials.logged-in-as')
         {{-- @include('frontend.includes.nav') --}}
 
-        <div class="container">
+        <div class="">
             @auth
                 @include('frontend.includes.nav-a')
             @endauth

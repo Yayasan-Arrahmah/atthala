@@ -73,12 +73,12 @@ background-repeat: no-repeat;
         <center>
             BALIKPAPAN, {{ \Carbon\Carbon::create($data->updated_at)->format('d-m-Y') }}
             <br>
-            Panitia Ujian Tahsin
+            Peserta Ujian Tahsin
             <br>
             <br>
             <br>
             <br>
-            <strong>Rahmat Wijaya</strong>
+            <strong>{{ strtoupper($data->nama_peserta) }}</strong>
         </center>
     </div>
 
@@ -93,7 +93,7 @@ background-repeat: no-repeat;
         <br>
         <br>
         <br>
-        <center> https://arrahmahbalikpapan.or.id &copy; 2023 </center>
+        <center> https://arrahmahbalikpapan.or.id &copy; 2024 </center>
     </div>
 
 </body>

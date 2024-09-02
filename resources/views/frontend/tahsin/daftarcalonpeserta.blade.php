@@ -620,7 +620,8 @@
                          var waktu  = response[i].waktu_jadwal;
                          var id     = response[i].id;
                          var status = response[i].status;
-                         var option = "<option value='"+id+"' "+status+">"+waktu+"</option>";
+                         var pembelajaran = response[i].pembelajaran;
+                         var option = "<option value='"+id+"' "+status+">"+waktu+" - "+pembelajaran+"</option>";
                          $("#waktu").append(option);
                        }
                      }

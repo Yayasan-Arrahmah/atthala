@@ -22,9 +22,9 @@ class PeengajarController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 1 ? request()->angkatan-1 : (request()->angkatan ?? 20);
-        $this->angkatanbaru  = request()->angkatan ?? 20;
-        $this->angkatanujian = request()->angkatan ?? 19;
+        $this->angkatan      = request()->input('daftar-ulang') == 1 ? request()->angkatan-1 : (request()->angkatan ?? 24);
+        $this->angkatanbaru  = request()->angkatan ?? 24;
+        $this->angkatanujian = request()->angkatan ?? 23;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')

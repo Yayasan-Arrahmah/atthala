@@ -33,9 +33,9 @@ class AdministrasiController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 23);
-        $this->angkatanbaru  = request()->angkatan ?? 23;
-        $this->angkatanujian = request()->angkatan ?? 22;
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 24);
+        $this->angkatanbaru  = request()->angkatan ?? 24;
+        $this->angkatanujian = request()->angkatan ?? 23;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
@@ -202,7 +202,7 @@ Dari kami yang menyayangimu
         $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
 
 Bismillah,
-Bapak/Ibu Peserta Tahsin Angkatan 23,
+Bapak/Ibu Peserta Tahsin Angkatan 24,
 Mengingatkan kembali bahwa Bapak/Ibu belum memilih jadwal belajar tahsin.
 
 Silakan klik tautan di bawah ini untuk mendapatkan tempat di jadwal belajar tersebut.
@@ -524,8 +524,8 @@ Panitia Pendaftaran Tahsin
      */
     public function getKodeunik()
     {
-        $data = Tahsin::where('angkatan_peserta', '23')
-                        ->orWhere('angkatan_peserta', 23)
+        $data = Tahsin::where('angkatan_peserta', '24')
+                        // ->orWhere('angkatan_peserta', 24)
                         ->get();
         $no_ = 1;
         foreach ($data as $d) {
@@ -548,7 +548,7 @@ Panitia Pendaftaran Tahsin
         $jadwals  = Jadwal::query();
 
         $jadwals->select("id","pengajar_jadwal", "level_jadwal", "hari_jadwal", "waktu_jadwal", "status_belajar",  "jenis_jadwal", "angkatan_jadwal")
-                ->where('angkatan_jadwal', 23);
+                ->where('angkatan_jadwal', 24);
 
         foreach($data as $d){
             $this->q_ = $d;

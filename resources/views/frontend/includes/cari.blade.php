@@ -46,6 +46,8 @@
                 <label class="form-check-label">Angkatan</label>
             </div>
             <select name="angkatan" class="form-control" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Dipilih Terlebih Dahulu')" required>
+            <option value="24">24</option>
+            <option value="23">23</option>
                 <option value="22">22</option>
                 <option value="21">21</option>
                 <option value="20">20</option>

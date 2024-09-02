@@ -56,14 +56,14 @@
             <div class="row justify-content-center">
                 <div class="col-md-12 text-center" style="font-weight: 600; padding-bottom: 20px ">
                     <div class="ab" >
-                        <table id="absen" class="table table-striped table-sm">
+                        <table class="table table-sm table-bordered">
                             <thead >
                                 <tr>
                                     <th style="vertical-align: middle;">
                                         Peserta
                                     </th>
                                     <th class="text-center">
-                                        Kenaikan Level
+                                        Absensi
                                     </th>
                                     @for ($i = 1; $i <= 15; $i++)
                                     <th class="text-center">
@@ -91,7 +91,17 @@
                                             @php
                                                 $dataabsen = $absen->where('id_peserta', $peserta->id )->where('pertemuan_ke_absen', $i)->where('angkatan_absen', $angkatan)->first()
                                             @endphp
-                                            {{ $dataabsen->keterangan_absen ?? '-' }}
+                                            @if (empty($dataabsen->keterangan_absen))
+                                                -
+                                            @elseif ($dataabsen->keterangan_absen == 'HADIR')
+                                                <i class="fas fa-check" style="font-size: 18px;color:dodgerblue"></i>
+                                            @elseif ($dataabsen->keterangan_absen == 'TIDAK HADIR')
+                                                <i class="fa-solid fa-circle-xmark" style="font-size: 18px;color:rgb(255, 30, 30)"></i>
+                                            @elseif ($dataabsen->keterangan_absen != 'IZIN' || $dataabsen->keterangan_absen != 'SAKIT')
+                                                <i class="fa-solid fa-circle-xmark" style="font-size: 18px;color:rgb(254, 171, 15)"></i>
+                                            @else
+                                                -
+                                            @endif
                                         </td>
                                     @endfor
                                 </tr>

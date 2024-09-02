@@ -28,9 +28,9 @@ class PembayaranController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 22);
-        $this->angkatanbaru  = request()->angkatan ?? 22;
-        $this->angkatanujian = request()->angkatan ?? 21;
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 24);
+        $this->angkatanbaru  = request()->angkatan ?? 24;
+        $this->angkatanujian = request()->angkatan ?? 23;
         $this->status        = request()->status ?? null;
         $this->tanggal       = request()->tanggal ?? null;
         $this->start         = request()->start ?? null;

@@ -27,7 +27,7 @@ class JadwalController extends Controller
         $this->pengajar      = request()->pengajar ?? null;
         $this->hari          = request()->hari ?? null;
         $this->waktu         = request()->waktu ?? null;
-        $this->angkatan      = request()->angkatan ?? 23;
+        $this->angkatan      = request()->angkatan ?? 24;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
@@ -56,6 +56,19 @@ class JadwalController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
     }
+    
+    public function jadwalbaseabsen()
+    {
+        return Jadwal::pengajar($this->pengajar)
+                    ->level($this->level)
+                    ->hari($this->hari)
+                    ->waktu($this->waktu)
+                    ->jenis($this->jenis)
+                    ->status($this->status)
+                    ->angkatan($this->angkatan)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(100);
+    }
 
     public function jadwal($titleA)
     {
@@ -75,10 +88,34 @@ class JadwalController extends Controller
                             ->get();
         return view('backend.pendidikan.tahsin.jadwal.data', compact('jadwals', 'title', 'datalevel', 'datapengajars', 'dataangkatan', 'datawaktu', 'liststatus'));
     }
+    
+    public function absen($titleA)
+    {
+        $jadwals       = $this->jadwalbaseabsen();
+        $dataangkatan  = $this->listangkatan;
+        $datalevel     = $this->listlevel;
+        $datapengajars = $this->listpengajar;
+        $liststatus    = $this->liststatuspeserta;
+        $title         = $titleA;
+        $datawaktu     = Jadwal::select('hari_jadwal', 'waktu_jadwal')
+                            ->pengajar($this->pengajar)
+                            ->level($this->level)
+                            ->jenis($this->jenis)
+                            ->status($this->status)
+                            ->angkatan($this->angkatan)
+                            ->groupBy('hari_jadwal', 'waktu_jadwal')
+                            ->get();
+        return view('backend.pendidikan.tahsin.jadwal.data-absen', compact('jadwals', 'title', 'datalevel', 'datapengajars', 'dataangkatan', 'datawaktu', 'liststatus'));
+    }
 
     public function index()
     {
         return $this->jadwal(null, null, 'Peserta');
+    }
+    
+    public function getAbsen()
+    {
+        return $this->absen(null, null, 'Peserta');
     }
 
     public function postCreateJadwal(Request $request)
@@ -157,7 +194,7 @@ class JadwalController extends Controller
             ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
             ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
-            ->paginate(1000);
+            ->paginate(1);
 
         $datapengajars = DB::table('tahsins')
             ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
