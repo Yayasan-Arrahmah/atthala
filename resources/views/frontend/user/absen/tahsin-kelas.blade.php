@@ -68,6 +68,7 @@
             <input name="waktu" value="{{ $waktu }}" hidden>
             <input name="jenis" value="{{ $jenis }}" hidden>
             <input name="level" value="{{ $level }}" hidden>
+            <input name="angkatan" value="{{ request()->angkatan }}" hidden>
             <label>Tampilkan pertemuan ke :</label>
             <select id="ke" name="ke" onchange='if(this.value != 0) { this.form.submit(); }' style="font-size: 15px; font-weight: 600; padding: 2px 5px">
                 {{-- @isset($pertemuanke)

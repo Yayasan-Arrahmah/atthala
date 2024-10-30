@@ -60,7 +60,8 @@ class Tahsin extends Model
         'status_keaktifan',
         'kenaikan_level_peserta',
         'notif_daftar_ulang',
-        'notif_pilih_jadwal'
+        'notif_pilih_jadwal',
+        'notif_pengingat_pembayaran'
     ];
 
     // public static function boot()

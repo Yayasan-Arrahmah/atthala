@@ -3,7 +3,7 @@
 @section('title', app_name() . ' | ' . __('labels.frontend.auth.login_box_title'))
 
 @section('content')
-{{-- <div class="row justify-content-center align-items-center">
+ {{--<div class="row justify-content-center align-items-center">
     <div class="col col-sm-12 align-self-center">
         <div class="card">
             <center>
@@ -11,14 +11,15 @@
                 <div style="padding-top: 0px">
                     <h4>Daftar Ulang Peserta Tahsin</h4>
                     <div class="text-muted">
-                        Angkatan 23
+                        Angkatan 25
                     </div>
                     <p>Belum Dibuka</p>
                 </div>
             </center>
         </div>
     </div>
-</div> --}}
+</div> 
+--}}
 <div class="row justify-content-center align-items-center">
 		<div class="col col-sm-12 align-self-center">
 			<div class="card">
@@ -96,4 +97,5 @@
 
 		</div><!-- col-md-8 -->
 	</div><!-- row -->
+	
 @endsection

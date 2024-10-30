@@ -51,27 +51,32 @@ class TahsinController extends Controller
 
         // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
 
-        try {
-            #1 Send Seen
-            $requestApi->post($url . '/api/sendSeen', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+        // try {
+        //     #1 Send Seen
+        //     $requestApi->post($url . '/api/sendSeen', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
 
-            #2 Start Typing
-            $requestApi->post($url . '/api/startTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+        //     #2 Start Typing
+        //     $requestApi->post($url . '/api/startTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
 
-            sleep(1); // jeda seolah olah ngetik
+        //     sleep(1); // jeda seolah olah ngetik
 
-            #3 Stop Typing
-            $requestApi->post($url . '/api/stopTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+        //     #3 Stop Typing
+        //     $requestApi->post($url . '/api/stopTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
 
-            #4 Send Message
-            $requestApi->post($url . '/api/sendText', [
+        //     #4 Send Message
+        //     $requestApi->post($url . '/api/sendText', [
+        //         "session" => $sessionApi,
+        //         "chatId" => $nomorhp . '@c.us',
+        //         "text" => $isipesan,
+        //     ]);
+        // } catch (Throwable $th) {
+        //     throw $th;
+        // }
+        $requestApi->get($url.'/api/sendText', [
                 "session" => $sessionApi,
-                "chatId" => $nomorhp . '@c.us',
-                "text" => $isipesan,
+                "phone"  => $nomorhp.'@c.us',
+                "text"    => $isipesan,
             ]);
-        } catch (Throwable $th) {
-            throw $th;
-        }
     }
 
     public function pendaftaran(Request $request)
@@ -668,14 +673,12 @@ Panitia Ujian Tahsin Angkatan " . session('daftar_ujian') . "
         $hari = collect($hari_)->groupBy('hari_jadwal');
         $jadwalhari = $request->get('hari') ?? null;
 
-        // $hari     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
-        //             ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-        //             ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
-        //             ->select('hari_jadwal')
-        //             ->groupBy('hari_jadwal')
-        //             ->get();
+        $pilihanjadwal     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                    ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+                    ->get();
 
-        return view('frontend.tahsin.daftarulangpeserta', compact('calonpeserta', 'cekterdaftarujian', 'hari'));
+        return view('frontend.tahsin.daftarulangpeserta', compact('calonpeserta', 'cekterdaftarujian', 'hari', 'pilihanjadwal'));
     }
 
     public function daftarulangpesertadatawaktu(Request $request)
@@ -693,7 +696,7 @@ Panitia Ujian Tahsin Angkatan " . session('daftar_ujian') . "
         //cek banyak data jam sesuai level
         $ceklevel = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
             ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
-            ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+            ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpesertaf->level_peserta)
             ->where('hari_jadwal', $jadwalhari)
             ->orderBy('waktu_jadwal', 'ASC')
             ->get();
@@ -889,8 +892,13 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
             ->select('hari_jadwal')
             ->groupBy('hari_jadwal')
             ->get();
+            
+             $pilihanjadwal     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
+                    ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
+                    ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
+                    ->get();
 
-        return view('frontend.tahsin.daftarcalonpeserta', compact('calonpeserta', 'cekterdaftar', 'hari'));
+        return view('frontend.tahsin.daftarcalonpeserta', compact('calonpeserta', 'cekterdaftar', 'hari', 'pilihanjadwal'));
     }
 
     public function daftarcalonpesertawaktu(Request $request)
@@ -914,7 +922,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
         // $angkatan            = session('angkatan_tahsin');
         // $angkatandaftarulang = session('daftar_ulang_angkatan_tahsin');
         $angkatan = session('angkatan_tahsin');
-        $angkatandaftarulang = session('angkatan_tahsin');
+        $angkatandaftarulang = 25;
         $jadwalhari = $request->get('hari');
 
         $calonpeserta = Tahsin::where('id', $id)

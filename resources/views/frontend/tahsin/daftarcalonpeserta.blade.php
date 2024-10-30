@@ -82,7 +82,7 @@
                         </center>
                         <div class="text-center">
                             <h4> Formulir <br>Pendaftaran Peserta Tahsin </h4>
-                            <div class="text-muted">Angkatan 19</div>
+                            <div class="text-muted">Angkatan 25</div>
                         </div>
 
                         <div class="card-body">
@@ -203,26 +203,65 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-4 form-control-label" >Pilih Jadwal Tahsin</label>
-                                <div class="col-4" style="padding-right: 2px; padding-left: 2px">
+                                {{-- <div class="col-4" style="padding-right: 2px; padding-left: 2px">
                                     <select id="datahari" name="hari" class="form-control" required>
                                         <option value="">Pilih Hari...</option>
                                         @foreach ($hari as $h)
                                             <option value="{{ $h->hari_jadwal }}">{{ $h->hari_jadwal }}</option>
                                         @endforeach
-                                        {{-- <option value="SABTU">SABTU</option>
-                                        <option value="AHAD">AHAD</option>
-                                        <option value="SENIN">SENIN</option>
-                                        <option value="SELASA">SELASA</option>
-                                        <option value="RABU">RABU</option>
-                                        <option value="KAMIS">KAMIS</option>
-                                        <option value="JUMAT">JUMAT</option> --}}
                                     </select>
                                 </div><!--col-->
                                 <div class="col-4" style="padding-left: 2px">
                                     <select id="waktu" name="waktu" class="form-control" required>
                                         <option value="">Pilih Hari Terlebih Dahulu...</option>
                                     </select>
-                                </div><!--col-->
+                                </div><!--col--> --}}
+                                
+                                <div class="col-8" style="padding-left: 2px">
+                                    <select id="waktu" name="waktu" class="form-control" required>
+                                        <option value="">Pilih ...</option>
+                                    
+                                    @foreach ($pilihanjadwal as $datajad)
+                                         @php
+                                            $jadwal_ = $datajad->hari_jadwal.' '.$datajad->waktu_jadwal;
+                                            $banyak =  $datajad->jumlahpeserta($datajad->level_jadwal, $jadwal_, $datajad->angkatan_jadwal)->count();
+                                        @endphp
+                                        
+                                        @if($banyak < $datajad->jumlah_peserta )
+                                            <option value="{{ $datajad->id }}">{{ $datajad->hari_jadwal }} - {{ $datajad->waktu_jadwal }} - {{ $datajad->status_belajar }} ( {{ $banyak }} / {{ $datajad->jumlah_peserta }} ) - {{ $datajad->pengajar_jadwal }}</option>
+                                        @else
+                                            <option value="">Maaf, Jadwal {{ $datajad->hari_jadwal }} - {{ $datajad->waktu_jadwal }} ( {{ $banyak }} / {{ $datajad->jumlah_peserta }} ) Ini Penuh</option>
+                                        @endif
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <label class="col-4 form-control-label" ></label>
+                                <div class="col-8" style="padding-left: 2px">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Admin Ikhwan</td>
+                                                <td>:</td>
+                                                <td><a href="https://wa.me/6282149604546" target="_blank">6282149604546</a></td>
+                                            </tr>
+                                            <!--<tr>-->
+                                            <!--    <td>Admin Ikhwan</td>-->
+                                            <!--    <td>:</td>-->
+                                            <!--    <td><a href="https://wa.me/6285142819756" target="_blank">6285142819756</a></td>-->
+                                            <!--</tr>-->
+                                            <tr>
+                                                <td>Admin Akhwat</td>
+                                                <td>:</td>
+                                                <td><a href="https://wa.me/6281930418501" target="_blank">6281930418501</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Admin Akhwat</td>
+                                                <td>:</td>
+                                                <td><a href="https://wa.me/6282148293709" target="_blank">6282148293709</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             {{--
                             <div class="form-group row">

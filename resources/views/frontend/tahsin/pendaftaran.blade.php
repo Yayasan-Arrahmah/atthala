@@ -467,7 +467,7 @@ hr {
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
-<script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
+<!--<script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>-->
 <script src="/filepond/app.js"></script>
 <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
 <script type='text/javascript'>
@@ -513,7 +513,7 @@ hr {
             FilePondPluginFileValidateType,
             FilePondPluginFileValidateSize,
             FilePondPluginImageResize,
-            FilePondPluginMediaPreview
+            // FilePondPluginMediaPreview
         );
     });
 
@@ -541,7 +541,8 @@ hr {
                 labelIdle: '<span class="filepond--label-action"> Pilih File/Rekaman Tilawah</span>',
                 allowMultiple: false,
                 allowFileSizeValidation: true,
-                acceptedFileTypes: ['audio/*'],
+                // acceptedFileTypes: ['audio/*'],
+                allowImagePreview: false,
                 allowFileSizeValidation: true,
                 maxFileSize: '15MB',
                 server: {

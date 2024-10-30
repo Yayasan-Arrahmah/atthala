@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Tahsin;
 use Illuminate\Support\Carbon;
 use Throwable;
+use App\Jobs\NotifPengingatPembayaranPesertaBaru;
 // use Illuminate\Support\Facades\Request;
 
 
@@ -26,7 +27,7 @@ class DashboardController extends Controller
 
      public function __construct()
     {
-        $this->angkatan_tahsin  = 24;
+        $this->angkatan_tahsin  = 25;
         $this->listangkatan  = Tahsin::select('angkatan_peserta')
                             ->groupBy('angkatan_peserta')
                             ->orderBy('angkatan_peserta', 'desc')
@@ -56,27 +57,32 @@ class DashboardController extends Controller
 
         // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
 
-        try {
-            #1 Send Seen
-            $requestApi->post($url . '/api/sendSeen', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+        // try {
+        //     #1 Send Seen
+        //     $requestApi->post($url . '/api/sendSeen', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
 
-            #2 Start Typing
-            $requestApi->post($url . '/api/startTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+        //     #2 Start Typing
+        //     $requestApi->post($url . '/api/startTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
 
-            sleep(1); // jeda seolah olah ngetik
+        //     sleep(1); // jeda seolah olah ngetik
 
-            #3 Stop Typing
-            $requestApi->post($url . '/api/stopTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
+        //     #3 Stop Typing
+        //     $requestApi->post($url . '/api/stopTyping', ["session" => $sessionApi, "chatId" => $nomorhp . '@c.us']);
 
-            #4 Send Message
-            $requestApi->post($url . '/api/sendText', [
+        //     #4 Send Message
+        //     $requestApi->post($url . '/api/sendText', [
+        //         "session" => $sessionApi,
+        //         "chatId" => $nomorhp . '@c.us',
+        //         "text" => $isipesan,
+        //     ]);
+        // } catch (Throwable $th) {
+        //     throw $th;
+        // }
+        $requestApi->get($url.'/api/sendText', [
                 "session" => $sessionApi,
-                "chatId" => $nomorhp . '@c.us',
-                "text" => $isipesan,
+                "phone"  => $nomorhp.'@c.us',
+                "text"    => $isipesan,
             ]);
-        } catch (Throwable $th) {
-            throw $th;
-        }
     }
     public function notifwalink($nomorhp, $title, $link)
     {
@@ -155,7 +161,7 @@ class DashboardController extends Controller
             ->groupBy('jadwal_tahsin', 'level_peserta', 'jenis_peserta')
             ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
             ->where('nama_pengajar', auth()->user()->user_pengajar)
-            ->where('angkatan_peserta', $this->angkatan_tahsin)
+            ->where('angkatan_peserta',  request()->angkatan ?? $this->angkatan_tahsin)
             ->paginate(50);
 
         return view('frontend.user.absen.tahsin', compact('datajadwals'));
@@ -170,7 +176,7 @@ class DashboardController extends Controller
         $jenis        = $request->input('jenis') ?? '!!ERROR!!';
         $userpengajar = auth()->user()->user_pengajar;
         $pertemuanke  = $request->input('ke');
-        $angkatan     = $this->angkatan_tahsin;
+        $angkatan     = request()->angkatan ?? $this->angkatan_tahsin;
 
         
            
@@ -260,7 +266,7 @@ class DashboardController extends Controller
                     'user_create_absen'      => auth()->user()->id,
                     'pertemuan_ke_absen'     => $request->input('pertemuan'),
                     'jenis_absen'            => 'TAHSIN',
-                    'angkatan_absen'         => $this->angkatan_tahsin,
+                    'angkatan_absen'         => request()->angkatan ?? $this->angkatan_tahsin,
                     'level_kelas_absen'      => $request->input('level'),
                     'waktu_kelas_absen'      => $request->input('waktu'),
                     'jenis_kelas_absen'      => $request->input('jenis'),
@@ -288,7 +294,7 @@ class DashboardController extends Controller
         }
 
 
-        return redirect()->to('/absen/tahsin/kelas?waktu='.$request->input('waktu').'&jenis='.$request->input('jenis').'&level='.$request->input('level').'&ke=semua')
+        return redirect()->to('/absen/tahsin/kelas?waktu='.$request->input('waktu').'&jenis='.$request->input('jenis').'&level='.$request->input('level').'&angkatan='.$request->input('angkatan').'&ke=semua')
                 ->withFlashSuccess('Absen Ke '.$request->input('pertemuan').' Berhasil Diperbaruhi !');
     }
 
@@ -331,7 +337,7 @@ class DashboardController extends Controller
 
     public function pesertatahsinbaru(Request $request)
     {
-        $angkatanbaru = 24;
+        $angkatanbaru = 25;
         if(isset(request()->level)){
             $updatelevel = DB::table('tahsins')
               ->where('no_tahsin', request()->idtahsin)
@@ -412,7 +418,7 @@ Silakan isi format berikut sebelum mengirimkan rekaman suara:
 Nama Lengkap :
 Tanggal Mengisi Formulir Online :";
 $this->notifwa('62' . $nohp, $pesan);
-$this->notifwalink('62' . $nohp, 'Grup Whatsapp Pengujian Penempatan Level Peserta Baru Tahsin Akhwat Angkatan 24 LTTQ Ar Rahmah', 'https://chat.whatsapp.com/IdWfreku7KoLTCRppHmp0r');
+$this->notifwalink('62' . $nohp, 'Grup Whatsapp Pengujian Penempatan Level Peserta Baru Tahsin Akhwat Angkatan 25 LTTQ Ar Rahmah', 'https://chat.whatsapp.com/IdWfreku7KoLTCRppHmp0r');
 
             } else {
                 
@@ -459,6 +465,19 @@ $this->notifwa('62' . $nohp, $pesan);
         // }
 
         return view('frontend.user.tahsin.peserta-baru', compact('tahsins'));
+    }
+    
+    public function notifpengingatpembayaran(Request $request){
+        
+        $pesertas = Tahsin::where('no_tahsin', 'like', '%-25-%')->where('angkatan_peserta', 25)->get();
+        $delay = 0;
+
+    foreach ($pesertas as $peserta) {
+        NotifPengingatPembayaranPesertaBaru::dispatch($peserta->id)->delay(now()->addSeconds($delay));
+        $delay += 60; // Menambahkan 60 detik untuk delay berikutnya
+    }
+
+    return 'Notifications will be sent with a 60-second interval.';
     }
 
     public function tahsinpeserta(Request $request)

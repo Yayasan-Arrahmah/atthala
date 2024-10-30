@@ -27,7 +27,7 @@ class JadwalController extends Controller
         $this->pengajar      = request()->pengajar ?? null;
         $this->hari          = request()->hari ?? null;
         $this->waktu         = request()->waktu ?? null;
-        $this->angkatan      = request()->angkatan ?? 24;
+        $this->angkatan      = request()->angkatan ?? 25;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')

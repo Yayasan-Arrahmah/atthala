@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::get('jadwal/tahsin',                  [DashboardController::class, 'jadwaltahsin'])->name('jadwaltahsin');
 
         Route::get('peserta/tahsin-baru',            [DashboardController::class, 'pesertatahsinbaru'])->name('pesertatahsinbaru');
+        Route::get('peserta/tahsin-baru/notif-bayar',            [DashboardController::class, 'notifpengingatpembayaran'])->name('notifpengingatpembayaran');
 
         // Data Tahsin
         Route::get('tahsin/peserta',                  [DashboardController::class, 'tahsinpeserta'])->name('tahsinpeserta');

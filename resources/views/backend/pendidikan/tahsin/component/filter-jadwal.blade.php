@@ -94,7 +94,7 @@
                     <div class="col-sm-6 pl-0">
                         <select name="waktu" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
                             <option value="">Jam...</option>
-                            @for ($i = 5; $i <= 22; $i++)
+                            @for ($i = 5; $i <= 25; $i++)
                                 @php
                                     $jam_ = ($i < 10 ? '0'.$i : $i).':00';
                                 @endphp

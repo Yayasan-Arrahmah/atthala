@@ -18,6 +18,27 @@
         </div>
     </div><!--col-md-6-->
 </div><!--row-->
+<form action="" class="row pb-4">
+    <div class="col">
+    </div>
+    <div class="col">
+        <div class="text-muted text-center" style="position: absolute">
+            Angkatan
+         </div>
+        <select class="form-control mt-4" name="angkatan" onchange='if(this.value != 0) { this.form.submit(); }'>
+            @isset(request()->angkatan)
+                <option value="{{ request()->angkatan }}">{{ request()->angkatan }}</option>
+                <option value="">-------</option>
+            @endisset
+                <!--<option value="{{ session('angkatan_tahsin') }}">{{ session('angkatan_tahsin') }}</option>-->
+            @for($a = session('angkatan_tahsin');$a >= 20 ;$a--)
+                <option value="{{ $a }}">{{ $a }}</option>
+            @endfor
+        </select>
+    </div>
+    <div class="col">
+    </div>
+</form>
 <div class="row">
     <div class="col">
         <div class="row justify-content-center">
@@ -33,7 +54,7 @@
 
                         <div class="row kotak" style="margin-bottom: 3px;">
                             <div class="col-4">
-                                <a href="{{ route('frontend.user.absentahsinkelas') }}?waktu={{ $jadwal->jadwal_tahsin }}&level={{ $jadwal->level_peserta }}&jenis={{ $jadwal->jenis_peserta }}" style="color: rgb(56, 56, 56);">
+                                <a href="{{ route('frontend.user.absentahsinkelas') }}?waktu={{ $jadwal->jadwal_tahsin }}&level={{ $jadwal->level_peserta }}&jenis={{ $jadwal->jenis_peserta }}&angkatan={{ request()->angkatan ?? session('angkatan_tahsin') }}" style="color: rgb(56, 56, 56);">
                                     <div style="text-transform: uppercase;"><strong>{{ $jadwal->jadwal_tahsin }}</strong></div>
                                     <div class="small text-muted">
                                         {{ auth()->user()->jenis }}
@@ -75,7 +96,7 @@
                                 @endif
                                 <div class="small text-muted">
                                     {{-- ANGKATAN {{ session('daftar_ulang_angkatan_tahsin') }} --}}
-                                    ANGKATAN {{ session('angkatan_tahsin') }}
+                                    ANGKATAN {{ request()->angkatan ?? session('angkatan_tahsin') }}
                                 </div>
                             </div>
                             <div class="col-4">

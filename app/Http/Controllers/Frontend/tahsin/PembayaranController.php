@@ -105,6 +105,13 @@ class PembayaranController extends Controller
         );
         echo $res=curl_exec($ch);
         curl_close($ch);
+        
+        
+        $requestApi->get($url.'/api/sendText', [
+                "session" => $sessionApi,
+                "phone"  => $nomorhp.'@c.us',
+                "text"    => $isipesan,
+            ]);
     }
 
     public function moota()

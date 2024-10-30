@@ -33,9 +33,9 @@ class AdministrasiController extends Controller
         $this->nohp          = request()->nohp ?? null;
         $this->jenis         = request()->jenis ?? null;
         $this->pengajar      = request()->pengajar ?? null;
-        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 24);
-        $this->angkatanbaru  = request()->angkatan ?? 24;
-        $this->angkatanujian = request()->angkatan ?? 23;
+        $this->angkatan      = request()->input('daftar-ulang') == 2 ? request()->angkatan-1 : (request()->angkatan ?? 25);
+        $this->angkatanbaru  = request()->angkatan ?? 25;
+        $this->angkatanujian = request()->angkatan ?? 24;
         $this->status        = request()->status ?? null;
         $this->listpengajar  = Tahsin::select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
                                 ->groupBy('nama_pengajar', 'jenis_peserta')
@@ -85,27 +85,32 @@ class AdministrasiController extends Controller
 
         // SOP based on https://waha.devlike.pro/docs/overview/how-to-avoid-blocking/
 
-        try {
-            #1 Send Seen
-            $requestApi->post($url.'/api/sendSeen', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+        // try {
+        //     #1 Send Seen
+        //     $requestApi->post($url.'/api/sendSeen', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
 
-            #2 Start Typing
-            $requestApi->post($url.'/api/startTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+        //     #2 Start Typing
+        //     $requestApi->post($url.'/api/startTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
 
-            sleep(1); // jeda seolah olah ngetik
+        //     sleep(1); // jeda seolah olah ngetik
 
-            #3 Stop Typing
-            $requestApi->post($url.'/api/stopTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
+        //     #3 Stop Typing
+        //     $requestApi->post($url.'/api/stopTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
 
-            #4 Send Message
-            $requestApi->post($url.'/api/sendText', [
+        //     #4 Send Message
+        //     $requestApi->post($url.'/api/sendText', [
+        //         "session" => $sessionApi,
+        //         "chatId"  => $nomorhp.'@c.us',
+        //         "text"    => $isipesan,
+        //     ]);
+        // } catch (Throwable $th) {
+        //     throw $th;
+        // }
+        $requestApi->get($url.'/api/sendText', [
                 "session" => $sessionApi,
-                "chatId"  => $nomorhp.'@c.us',
+                "phone"  => $nomorhp.'@c.us',
                 "text"    => $isipesan,
             ]);
-        } catch (Throwable $th) {
-            throw $th;
-        }
     }
 
     public function tahsin($statusdaftar, $statuskeaktifan)
@@ -202,7 +207,7 @@ Dari kami yang menyayangimu
         $notif = 'Assalamualaikum Warohmatullahi Wabarokaatuh,
 
 Bismillah,
-Bapak/Ibu Peserta Tahsin Angkatan 24,
+Bapak/Ibu Peserta Tahsin Angkatan 25,
 Mengingatkan kembali bahwa Bapak/Ibu belum memilih jadwal belajar tahsin.
 
 Silakan klik tautan di bawah ini untuk mendapatkan tempat di jadwal belajar tersebut.
@@ -524,7 +529,7 @@ Panitia Pendaftaran Tahsin
      */
     public function getKodeunik()
     {
-        $data = Tahsin::where('angkatan_peserta', '24')
+        $data = Tahsin::where('angkatan_peserta', '25')
                         // ->orWhere('angkatan_peserta', 24)
                         ->get();
         $no_ = 1;
@@ -548,7 +553,7 @@ Panitia Pendaftaran Tahsin
         $jadwals  = Jadwal::query();
 
         $jadwals->select("id","pengajar_jadwal", "level_jadwal", "hari_jadwal", "waktu_jadwal", "status_belajar",  "jenis_jadwal", "angkatan_jadwal")
-                ->where('angkatan_jadwal', 24);
+                ->where('angkatan_jadwal', 25);
 
         foreach($data as $d){
             $this->q_ = $d;

@@ -1,19 +1,10 @@
-    @extends('frontend.user.layout')
+    @extends('frontend.user.layout-print')
 
     @section('user')
     @stack('before-styles')
         {{-- <link href="https://vitalets.github.io/x-editable/assets/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"> --}}
     @stack('after-styles')
 
-    <div class="row" >
-        <div class="col-md-12">
-            <ol class="breadcrumb" style="padding: .3rem .3rem;">
-                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/absen/tahsin">Absen</a></li>
-                <li class="breadcrumb-item active">Tahsin - {{ $level }} {{ $waktu }}</li>
-            </ol>
-        </div>
-    </div>
     <div class="row" style="padding-bottom: 30px">
         <div class="col">
             <div class="text-center" style="font-size: 19px; font-weight: 600">
@@ -55,7 +46,7 @@
         <div class="col">
             <div class="row justify-content-center">
                 <div class="col-md-12 text-center" style="font-weight: 600; padding-bottom: 20px ">
-                    <div class="ab" >
+                    <div class="ab">
                         <table class="table table-sm table-bordered">
                             <thead >
                                 <tr>
@@ -76,12 +67,17 @@
                                 @foreach ( $datapeserta as $peserta )
                                 <tr>
                                     <td class="text-left">
-                                        <a href="https://wa.me/+62{{ $peserta->nohp_peserta }}?text=Peserta Tahsin Angkatan {{ session('angkatan_tahsin') }} - {{ $peserta->nama_peserta }}" target="_blank">
-                                            <div style="text-transform: uppercase;">{{ $peserta->nama_peserta }}</div>
-                                            <div class="small text-muted">
-                                                {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }}
-                                            </div>
-                                        </a>
+                                        <span>
+                                            <a href="https://wa.me/62{{ $peserta->nohp_peserta }}" style="color: rgb(56, 56, 56);" target="_blank">
+                                                <div style="text-transform: uppercase;">{{ $peserta->nama_peserta }}</div>
+                                                <div class="small text-muted">
+                                                    {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }} 
+                                                </div>
+                                            </a>
+                                            <!--<div class="small text-muted">-->
+                                            <!--    {{ $peserta->no_tahsin }} | {{ $peserta->nohp_peserta }}-->
+                                            <!--</div>-->
+                                        </span>
                                     </td>
                                     <td class="text-center">
                                         {{ $peserta->kenaikan_level_peserta }}
@@ -113,6 +109,9 @@
             </div>
         </div>
     </div><!--row-->
+
+    
+
     {{-- @livewire('absen-tahsin') --}}
     @stack('before-scripts')
     <script type="text/javascript">
@@ -130,6 +129,21 @@
             });
         });
     </script> --}}
+    
+    <script>
+    $(document).ready(function(){
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+    });
+    </script>
 
     @stack('after-scripts')
     @endsection

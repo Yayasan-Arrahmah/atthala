@@ -89,7 +89,7 @@
                     <div class="mb-3">
                         <label lass="form-label">Angkatan <span style="color:red !important">*</span></label>
                         <select name="angkatan" class="form-control" required>
-                            @for ($i = 24; $i >= 16; $i--)
+                            @for ($i = 25; $i >= 16; $i--)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>

@@ -215,25 +215,44 @@
                             </div> --}}
                             <div class="form-group row">
                                 <label class="col-4 form-control-label" >Pilih Jadwal Tahsin</label>
+                                
+                                {{--
                                 <div class="col-4" style="padding-right: 2px; padding-left: 2px">
                                     <select id="datahari" name="hari" class="form-control" required>
                                         @foreach ($hari as $h => $key)
                                             <option value="{{ $h }}">{{ $h }}</option>
                                         @endforeach
-                                        {{-- <option value="SABTU">SABTU</option>
-                                        <option value="AHAD">AHAD</option>
-                                        <option value="SENIN">SENIN</option>
-                                        <option value="SELASA">SELASA</option>
-                                        <option value="RABU">RABU</option>
-                                        <option value="KAMIS">KAMIS</option>
-                                        <option value="JUMAT">JUMAT</option> --}}
                                     </select>
-                                </div><!--col-->
+                                </div>
+                                <!--col-->
                                 <div class="col-4" style="padding-left: 2px">
                                     <select id="waktu" name="waktu" class="form-control" required>
                                         <option value="">Pilih Jam...</option>
                                     </select>
-                                </div><!--col-->
+                                    @foreach ($pilihanjadwal as $data => $key)
+                                        <option value="{{ $data->id }}">{{ $data->hari_jadwal }} - {{ $data->waktu_jadwal }}</option>
+                                    @endforeach
+                                </div>
+                                --}}
+                                
+                                <div class="col-8" style="padding-left: 2px">
+                                    <select id="waktu" name="waktu" class="form-control" required>
+                                        <option value="">Pilih ...</option>
+                                    
+                                    @foreach ($pilihanjadwal as $datajad)
+                                         @php
+                                            $jadwal_ = $datajad->hari_jadwal.' '.$datajad->waktu_jadwal;
+                                            $banyak =  $datajad->jumlahpeserta($datajad->level_jadwal, $jadwal_, $datajad->angkatan_jadwal)->count();
+                                        @endphp
+                                        
+                                        @if($banyak < $datajad->jumlah_peserta )
+                                            <option value="{{ $datajad->id }}">{{ $datajad->hari_jadwal }} - {{ $datajad->waktu_jadwal }} - {{ $datajad->status_belajar }} ( {{ $banyak }} / {{ $datajad->jumlah_peserta }} ) - {{ $datajad->pengajar_jadwal }}</option>
+                                        @endif
+                                    @endforeach
+                                    </select>
+                                </div>
+                                
+                                <!--col-->
                             </div>
                             {{--
                             <div class="form-group row">

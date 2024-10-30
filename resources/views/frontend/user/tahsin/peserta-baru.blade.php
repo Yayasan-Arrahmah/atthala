@@ -159,6 +159,7 @@
                                     <th class="text-center">No</th>
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">Rekaman Tilawah</th>
+                                    <th class="text-center">Notif Pengingat Pembayaran</th>
                                     {{-- <th class="text-center">Level</th> --}}
                                     {{-- <th class="text-center">Jadwal</th> --}}
                                     {{-- <th class="text-center">Pengajar</th> --}}
@@ -266,6 +267,9 @@
                                             @endif
                                         @endif
 
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-success">{{ $tahsin->notif_pengingat_pembayaran }} - Kirim Notif Pengingat</a>
                                     </td>
                                 </tr>
                                 @if (isset(request()->idtahsin))

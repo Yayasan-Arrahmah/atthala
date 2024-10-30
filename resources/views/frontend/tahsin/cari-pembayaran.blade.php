@@ -114,6 +114,76 @@
                                                 @endforeach
                                             </div>
                                             <div class="col-12 mt-4 pt-2">
+                                            <div class="row kotak">
+                                                <div class="col-md-6 mt-4 pt-2">
+                                                    <h5>Total Kewajiban Tahsin Peserta Baru 1 Periode</h5>
+                                                    <div class="col-md-12 table-responsive" style="padding-top: 20px">
+                                                        <table class="table table-sm table-striped nowarp" style="width: 100%;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="">Biaya Pendaftaran</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 1</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 2</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 3</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 4</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class=""><strong>Total Kewajiban 1 Periode </strong></td>
+                                                                    <td class="text-center"><div class="text-muted"><strong>Rp. 500.000</strong></div></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mt-4 pt-2">
+                                                    <h5>Total Kewajiban Tahsin Peserta Lama 1 Periode</h5>
+                                                    <div class="col-md-12 table-responsive" style="padding-top: 20px">
+                                                        <table class="table table-sm table-striped nowarp" style="width: 100%;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="">Biaya Daftar Ulang </td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 50.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 1</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 2</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 3</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="">SPP Bulan 4</td>
+                                                                    <td class="text-center"><div class="text-muted">Rp. 100.000</div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class=""><strong>Total Kewajiban 1 Periode </strong></td>
+                                                                    <td class="text-center"><div class="text-muted"><strong>Rp. 450.000</strong></div></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-12 mt-4 pt-2">
                                                 <div class="row">
                                                     <div class="col">
                                                         <a href="/tahsin/pembayaran?id={{ $tahsin->id }}&idt={{ $tahsin->no_tahsin }}&notelp={{ $tahsin->nohp_peserta }}&angkatan={{ $tahsin->angkatan_peserta }}"
