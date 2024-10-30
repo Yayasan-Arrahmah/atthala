@@ -279,7 +279,7 @@ class TahsinController extends Controller
             }
 
             if ($request->jenis_peserta == "AKHWAT"){
-                
+
                 $message =
             "Assalamualaikum Warrohmarullah Wabarokatuh
 
@@ -301,9 +301,9 @@ Wassalamualaikum warahmatullahi wabarakatuh.
 Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
-                
+
             } else {
-            
+
             $message =
             "Assalamualaikum Warrohmarullah Wabarokatuh
 
@@ -318,10 +318,10 @@ Salam,
 Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 *Lembaga Tahsin Tahfizhil Qur'an (LTTQ) Ar Rahmah Balikpapan*";
             }
-            
+
             $this->notifwa('62' . $nohp, $message);
 
-            
+
             $message =
             'Assalamualaikum Warohmatullahi Wabarokaatuh,
 *Ini adalah pesan otomatis.*
@@ -892,7 +892,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
             ->select('hari_jadwal')
             ->groupBy('hari_jadwal')
             ->get();
-            
+
              $pilihanjadwal     = Jadwal::where('angkatan_jadwal', $angkatandaftarulang)
                     ->where('jenis_jadwal', $calonpeserta->jenis_peserta)
                     ->where('level_jadwal', $calonpeserta->kenaikan_level_peserta ?? $calonpeserta->level_peserta)
@@ -955,7 +955,7 @@ https://atthala.arrahmahbalikpapan.or.id/admin/tahsin/daftar-ulang?nama=' . str_
             // } else {
             //     $waktu_[] = ['waktu_jadwal' => 'Maaf Jadwal Penuh', 'id' => '', 'status' => 'disabled'];
             // }
-            
+
             if ($cekbanyakpeserta < $level->jumlah_peserta) {
                 $waktu_[] = [
                     'waktu_jadwal' => $level->waktu_jadwal,
@@ -1124,36 +1124,50 @@ Panitia Pendaftaran Baru Tahsin Angkatan " . session('angkatan_tahsin') . "
 
         if ($peserta->pembayaran) {
             $jumlah = $peserta->pembayaran->sum('nominal_pembayaran');
+            $angk = '-25-';
+            // Check if the string $angk is found in $peserta->no_tahsin
+            if (strpos($peserta->no_tahsin, $angk) !== false) {
+                $jumlah  = $jumlah-100000;
+            } else {
+                $jumlah  = $jumlah-50000;
+            }
         } else {
             $jumlah = 0;
         }
 
-        if (strstr($peserta->no_tahsin, '-'.session('daftar_ujian').'-')) {
-            $periode = ([
-                // ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
-                // ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
-                // ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
-                // ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
-                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'MEI 2024'],
-                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
-                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'JULI 2024'],
-                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
-            ]);
-        } else {
-            $periode = ([
-                // ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
-                // ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
-                // ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
-                // ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
-                ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'MEI 2024'],
-                ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
-                ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'JULI 2024'],
-                ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
-            ]);
-        }
+        $periode = ([
+            ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'MEI 2024'],
+            ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
+            ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2024'],
+            ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
+        ]);
+
+        // if (strstr($peserta->no_tahsin, '-'.session('daftar_ujian').'-')) {
+        //     $periode = ([
+        //         // ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+        //         // ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+        //         // ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+        //         // ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+        //         ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'MEI 2024'],
+        //         ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
+        //         ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'JULI 2024'],
+        //         ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
+        //     ]);
+        // } else {
+        //     $periode = ([
+        //         // ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 100000 ? 1 : 0, 'bulan' => 'JUNI 2023'],
+        //         // ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'JULI 2023'],
+        //         // ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'AGUSTUS 2023'],
+        //         // ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'SEPTEMBER 2023'],
+        //         ['id' => 1, 'ket' => 'SPP I', 'status' => $jumlah >= 200000 ? 1 : 0, 'bulan' => 'MEI 2024'],
+        //         ['id' => 2, 'ket' => 'SPP II', 'status' => $jumlah >= 300000 ? 1 : 0, 'bulan' => 'JUNI 2024'],
+        //         ['id' => 3, 'ket' => 'SPP III', 'status' => $jumlah >= 400000 ? 1 : 0, 'bulan' => 'JULI 2024'],
+        //         ['id' => 4, 'ket' => 'SPP IV', 'status' => $jumlah >= 500000 ? 1 : 0, 'bulan' => 'AGUSTUS 2024'],
+        //     ]);
+        // }
         $dataperiode = collect($periode);
 
-        return view('frontend.tahsin.pembayaran', compact('sesibayar', 'peserta', 'dataperiode'));
+        return view('frontend.tahsin.pembayaran', compact('sesibayar', 'peserta', 'dataperiode', 'jumlah'));
     }
 
     public function pembayaransimpan()

@@ -198,7 +198,7 @@
                                             </span>
                                         </div>
                                         <input type="text" id="totalnominal" name="nominaltf"
-                                            value="{{ old('nominaltf') }}" oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}"
+                                            value="{{ old('nominaltf') ?? 0 }}" oninvalid="setCustomValidity('Nominal Transfer')" onchange="try{setCustomValidity('')}catch(e){}"
                                             class="form-control" maxlength="12" placeholder="0"
                                             style="background-color: white;
                                             border: 0px;
@@ -206,9 +206,21 @@
                                             font-size: 18px;
                                             font-weight: 900;"
                                             readonly>
+
                                     </div><!--form-group-->
-                                    {{-- <input class="form-control" type="number" name="nohp_peserta" placeholder="No. HP Peserta (Whatsapp)" maxlength="15" required=""> --}}
+                                    <div class="input-group-append text-right">
+                                        <button class="btn btn-outline-secondary btn-sm btn-block" type="button" onclick="copyTotalNominal()">Copy Total Transfer</button>
+                                    </div>
                                 </div><!--col-->
+
+                                <script>
+                                    function copyTotalNominal() {
+                                        var copyText = document.getElementById("totalnominal");
+                                        copyText.select();
+                                        document.execCommand("copy");
+                                        alert("Berhasil menyalin Total Transfer: " + copyText.value);
+                                    }
+                                </script>
                             </div>
                             <hr>
                             <div id="bukti-tf" class="form-group row">
@@ -364,30 +376,29 @@
 
         <script>
             function hitung(){
-                var spp             = document.querySelectorAll('input[type=checkbox][name="pembayaran[]"]:checked').length;
-                var totalspp        = 100000 * Number(spp);
-                var kodeunik        = '{!! $peserta->kode_unik ?? 0 !!}';
-                var kdu             = Number(kodeunik.replace(/^0+/, ''));
-                var totalnominal    = totalspp + kdu;
-                var donasi          = document.getElementById("donasi").value;
-                var totaltf         = totalnominal + Number(donasi);
-                var cek             = Number(document.getElementById("totalnominal").value);
+                var checkboxes = document.querySelectorAll('input[type=checkbox][name="pembayaran[]"]');
+                var spp = 0;
+                checkboxes.forEach(function(checkbox, index) {
+                    if (checkbox.checked) {
+                        spp = index + 1;
+                        for (let i = 0; i <= index; i++) {
+                            checkboxes[i].checked = true;
+                        }
+                    }
+                });
+
+                var totalspp = 100000 * spp;
+                var kodeunik = '{!! $peserta->kode_unik ?? 0 !!}';
+                var kdu = Number(kodeunik.replace(/^0+/, ''));
+                var totalnominal = totalspp + kdu;
+                var donasi = document.getElementById("donasi").value;
+                var totaltf = totalnominal + Number(donasi);
+
                 if (spp == 0 && donasi == 0) {
                     document.getElementById("totalnominal").value = 0;
                 } else {
-                    document.getElementById("totalnominal").value = totaltf.toLocaleString();
+                    document.getElementById("totalnominal").value = totaltf;
                 }
-
-                // var a_ = document.querySelector('input[type=checkbox][name="pembayaran[]"]:checked');
-                // let myArray = [];
-                // let checkboxes = document.querySelectorAll('input[type=checkbox][name="pembayaran[]"]');
-                // checkboxes.forEach(function(checkbox) {
-                //     if (checkbox.checked) {
-                //         console.log(checkbox.id);
-                //     }
-                // });
-
-                // console.log(checkboxes);
             }
         </script>
 
