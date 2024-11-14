@@ -130,7 +130,9 @@ class Peserta extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implement
             $tahsin->jadwal_tahsin,
             $tahsin->jenis_peserta,
             $tahsin->angkatan_peserta,
-            Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md'),
+            $tahsin->waktu_lahir_peserta,
+            $tahsin->kode_unik,
+            // Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md'),
             $tahsin->created_at,
         ] ;
     }
@@ -147,6 +149,7 @@ class Peserta extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implement
            'Gender',
            'Angkatan',
            'BBTT',
+           'Kode Unik',
            'Terdaftar',
         ] ;
     }
