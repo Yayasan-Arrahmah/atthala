@@ -82,6 +82,9 @@ https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js
                     <thead>
                         <tr>
                             <th class="border border-gray-300 px-4 py-2">Pengajar</th>
+                            <th class="border border-gray-300 px-4 py-2">Jenis</th>
+                            <th class="border border-gray-300 px-4 py-2">Level</th>
+                            <th class="border border-gray-300 px-4 py-2">Jadwal</th>
                             @for ($i = 1; $i <= 16; $i++)
                                 <th class="border border-gray-300 px-4 py-2">Pertemuan {{ $i }}</th>
                             @endfor
@@ -91,6 +94,9 @@ https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js
                         @foreach ($jadwals as $jadwal)
                             <tr>
                                 <td class="border border-gray-300 px-4 py-2">{{ $jadwal->pengajar_jadwal }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $jadwal->jenis_jadwal }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $jadwal->level_jadwal }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $jadwal->hari_jadwal }} - {{ $jadwal->waktu_jadwal }}</td>
                                 @for ($i = 1; $i <= 16; $i++)
                                     @php
                                         $pertemuan = $jadwal->absenPertemuan->firstWhere('pertemuan', $i);
