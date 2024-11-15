@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\AbsenPertemuan;
 use App\Models\Traits\Attribute\JadwalAttribute;
 
 class Jadwal extends Model
@@ -56,6 +56,11 @@ class Jadwal extends Model
                                 ->where('jadwal_tahsin', $jadwal)
                                 ->where('angkatan_peserta', $angkatan)
                                 ->get();
+    }
+
+    public function absenPertemuan()
+    {
+        return $this->hasMany(AbsenPertemuan::class, 'id_jadwal', 'id');
     }
 
     public function scopePengajar($query, $pengajar)

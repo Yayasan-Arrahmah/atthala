@@ -132,6 +132,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('admin/tahsin/jadwal/pengajar')) ? 'active' : '' }}" href="/admin/tahsin/jadwal/pengajar">
+                        <i class="fas fa-caret-right pr-2 pl-2"></i> Kehadiran Pengajar
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ (request()->is('admin/tahsin/jadwal/kalender')) ? 'active' : '' }}" href="#">
                         <i class="fas fa-caret-right pr-2 pl-2"></i> Kalender Jadwal
                     </a>

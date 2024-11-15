@@ -56,7 +56,7 @@ class JadwalController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
     }
-    
+
     public function jadwalbaseabsen()
     {
         return Jadwal::pengajar($this->pengajar)
@@ -88,7 +88,7 @@ class JadwalController extends Controller
                             ->get();
         return view('backend.pendidikan.tahsin.jadwal.data', compact('jadwals', 'title', 'datalevel', 'datapengajars', 'dataangkatan', 'datawaktu', 'liststatus'));
     }
-    
+
     public function absen($titleA)
     {
         $jadwals       = $this->jadwalbaseabsen();
@@ -112,7 +112,7 @@ class JadwalController extends Controller
     {
         return $this->jadwal(null, null, 'Peserta');
     }
-    
+
     public function getAbsen()
     {
         return $this->absen(null, null, 'Peserta');
@@ -205,6 +205,39 @@ class JadwalController extends Controller
         // dd($datapengajars);
 
         return view('backend.pendidikan.tahsin.jadwal.absensi', compact('datajadwals', 'datapengajars', 'angkatan', 'datauser', 'dataabsen'));
+
+    }
+
+    public function getPengajar(Request $request)
+    {
+
+        $dataabsen = new Absen;
+        $datauser  = new User;
+        $angkatan  = session('angkatan_tahsin');
+
+
+
+        $datajadwals = DB::table('tahsins')
+            ->select('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('jadwal_tahsin', 'level_peserta', 'nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY jadwal_tahsin ASC'))
+            ->paginate(1);
+
+        $datapengajars = DB::table('tahsins')
+            ->select('nama_pengajar', 'jenis_peserta', (DB::raw('COUNT(*) as jumlah ')))
+            ->groupBy('nama_pengajar', 'jenis_peserta')
+            ->havingRaw(DB::raw('COUNT(*) > 0 ORDER BY nama_pengajar ASC'))
+            ->paginate(200);
+
+        // dd($datapengajars);
+
+        // Ambil data jadwals beserta absensi yang sesuai dengan angkatan_jadwal
+        $jadwals = Jadwal::with(['absenPertemuan' => function($query) {
+            $query->orderBy('pertemuan', 'asc');
+        }])->where('angkatan_jadwal', request()->angkatan ?? 25)->get();
+
+
+        return view('backend.pendidikan.tahsin.jadwal.pengajar', compact('datajadwals', 'datapengajars', 'jadwals','angkatan', 'datauser', 'dataabsen'));
 
     }
 
