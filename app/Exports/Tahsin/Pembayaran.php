@@ -141,7 +141,7 @@ class Pembayaran extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implem
             $tahsin->waktu_lahir_peserta,
             $tahsin->kode_unik,
             // Carbon::createFromFormat('d-m-Y', $tahsin->waktu_lahir_peserta ?? '01-01-1901')->format('md'),
-            $tahsin->pembayarandaftar->nominal_pembayaran,
+            $tahsin->pembayarandaftar ? $tahsin->pembayarandaftar->nominal_pembayaran : null,
             "https://atthala.arrahmahbalikpapan.or.id/app/public/bukti-transfer/".$tahsin->pembayarandaftar->bukti_transfer_pembayaran,
             $tahsin->created_at,
         ] ;
